@@ -4,7 +4,7 @@ import NextImage from 'next/image'
 import AddToCartButton from '@/components/MarketPlace/AddToCartButton'
 import ProductReel from '@/components/MarketPlace/ProductReel'
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
-import { Category, Platform, Product, ProductReviews, Store, User } from '@prisma/client'
+import { Category, Platform, Product, ProductReviews, SellerDesign, Store, User } from '@prisma/client'
 import { ArrowDown, Check, Shield } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import {
@@ -31,6 +31,7 @@ import clsx from 'clsx'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import LoadingLink from '@/components/LoadingLink'
 import Reviews from './Reviews'
+import ViewDesign from '@/components/MarketPlace/ViewDesign'
 
   
 
@@ -51,8 +52,8 @@ interface Productswithstore extends Product {
 }
 interface ViewProductProps {
   product: Productswithstore;
-  frontdesign : string
-  backdesign : string
+  frontDesign : SellerDesign
+  backDesign : SellerDesign
   user? : User
   categoryProducts:Productswithstore[]
   category : Category
@@ -60,7 +61,7 @@ interface ViewProductProps {
   platform: Platform
   productReviews:ExtraProductReviews[]
 }
-const ViewProduct: React.FC<ViewProductProps> = ({ product , frontdesign , backdesign , user ,categoryProducts , category , sizes , platform , productReviews}) => {
+const ViewProduct: React.FC<ViewProductProps> = ({ product , frontDesign , backDesign , user ,categoryProducts , category , sizes , platform , productReviews}) => {
 
   const router = useRouter()
 
@@ -239,13 +240,12 @@ const redirectToCart = () => {
               ))}
             </ol>
             <div className="flex items-center flex-col">
-              <LoadingLink href={`/MarketPlace/create-client-product/upload?category=${product.category}`} >
+              <LoadingLink href={`/MarketPlace/create-client-product/select-category`} >
                 <Button variant="link">try other designs &rarr;</Button>
               </LoadingLink>
             </div>
           </div>
 
-          <Separator className='mt-2 w-[80%]' />
 
 
              <div className='flex items-center mt-2'>
@@ -275,6 +275,11 @@ const redirectToCart = () => {
  
 
             <section className='mt-2'>
+
+            <div className="my-4"> {/* Adding margin bottom for separation */}
+                <ViewDesign frontDesign={frontDesign} backDesign={backDesign}/>
+              </div>
+              
 
             <div className="my-4"> {/* Adding margin bottom for separation */}
                 <ViewCategoryQuality category={category}/>

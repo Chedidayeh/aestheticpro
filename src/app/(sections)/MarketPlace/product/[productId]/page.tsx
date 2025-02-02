@@ -39,7 +39,9 @@ const Page = async ({ params }: PageProps) => {
     const product = await db.product.findFirst({
       where : {id : productId , isProductAccepted : true , privateProduct : false },
       include : {
-        store : true
+        store : true,
+        frontDesign : true,
+        backDesign : true,
       }
     });
 
@@ -72,9 +74,6 @@ const Page = async ({ params }: PageProps) => {
           </>
         )
 
-      
-        const frontdesign = await fetchDesignById(product.frontDesignId ? product.frontDesignId : "")
-        const backdesign = await fetchDesignById(product.backDesignId ? product.backDesignId : "")
 
         const categoryProducts = await fetchProductsByCategory(product.category)
         const filteredProducts = categoryProducts!.filter(item => item.id !== product.id);
@@ -89,7 +88,7 @@ const Page = async ({ params }: PageProps) => {
 
 
         return (
-          <ViewProduct product={product} frontdesign={frontdesign!} backdesign={backdesign!} user={user!} categoryProducts={filteredProducts} category={category!} sizes={sizes!} platform={platform!} productReviews={productReviews}  />
+          <ViewProduct product={product} frontDesign={product.frontDesign!} backDesign={product.backDesign!} user={user!} categoryProducts={filteredProducts} category={category!} sizes={sizes!} platform={platform!} productReviews={productReviews}  />
         )
 
   } catch (error) {

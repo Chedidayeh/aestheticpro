@@ -21,6 +21,7 @@ import { useState } from "react";
 import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Category } from "@prisma/client";
+import { Eye } from 'lucide-react';
 
 
 const ViewCategoryQuality = ( {category} : { category: Category } ) => {
@@ -72,8 +73,8 @@ const ViewCategoryQuality = ( {category} : { category: Category } ) => {
           </AlertDialogContent>
     </AlertDialog>
 
-      <Button onClick={() => setisOpen(true)} variant="secondary">
-      View {category.label} Quality
+      <Button onClick={() => setisOpen(true)} size={"sm"} variant="outline">
+      View {category.label} Quality <Eye size={"16"} className='ml-1'/>
       </Button>
       </>
 
