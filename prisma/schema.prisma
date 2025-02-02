@@ -1,0 +1,758 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  
+}
+
+
+
+
+
+// aesthetic pro db
+
+enum UserType {
+// Sellers who create and manage products
+    SELLER
+
+    // Administrators who manage the platform
+    ADMIN
+
+    // General users who browse and purchase products
+    USER
+
+    // Factories responsible for printing the products
+    FACTORY
+}
+
+enum OrderStatus {
+  DELIVERED
+  PROCESSING
+  REFUSED
+  CANCELED
+}
+enum OrderType {
+  CANCELED
+  CONFIRMED
+  NOT_CONFIRMED
+}
+
+
+model Account {
+  id                 String  @id @default(cuid())
+  userId             String  @map("user_id")
+  type               String
+  provider           String
+  providerAccountId  String  @map("provider_account_id")
+  refresh_token      String? @db.Text
+  access_token       String? @db.Text
+  expires_at         Int?
+  token_type         String?
+  scope              String?
+  id_token           String? @db.Text
+  session_state      String?
+ 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+ 
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model User {
+  id              String  @id @default(cuid())
+  name            String
+  image           String?
+  email           String @unique
+  emailVerified   Boolean? @default(false)
+  password        String?
+  verificationToken String? @unique
+  resetPassToken    String? @unique
+
+  phoneNumber       String?
+
+  address             String?
+
+
+  userType        UserType @default(USER)
+
+  orders          Order[]
+  preOrder        PreOrderPreview[]
+
+
+  clientDesigns     ClientDesign[]
+
+
+  isUserBanned      Boolean @default(false)
+
+  store           Store?
+
+  favList         FavList?
+
+  storeLikes      Like[]
+
+  cart            Cart?
+
+
+  accounts        Account[]
+
+  followedStores  StoreFollow[] // New field to track the stores the user follows
+
+  isAffiliate            Boolean @default(false) // New field to track affiliate status
+  affiliate              Affiliate?
+
+  ProductReviews ProductReviews[]
+
+  affiliateOrderSessionId String? 
+
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime? @updatedAt
+
+
+}
+
+model Platform {
+  id              String  @id @default(cuid())
+  userId          String  @unique
+  profit          Float     @default(0)
+
+  topBarContent   String[] 
+  totalIncome     Float     @default(0)
+
+  closeStoreCreation Boolean     @default(false)
+  closeCreation      Boolean      @default(false)
+
+  maxProductSellerProfit     Int     @default(20)
+  ExtraDesignForProductPrice Int     @default(5)
+  maxDesignSellerProfit      Int     @default(10)
+  platformDesignProfit       Int     @default(3)
+  clientDesignPrice           Int    @default(5)
+  shippingFee                Int     @default(7)
+  maxProductQuantity          Int     @default(5)
+  affiliateUserProfit         Int   @default(10)
+  freeShippingFeeLimit        Int     @default(150)
+
+  productsLimitPerPage        Int     @default(4)
+  
+}
+
+model Notification {
+    id              String  @id @default(cuid())
+
+    storeId         String  
+    store           Store        @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+    sender          String
+    content         String
+
+    isViewed        Boolean @default(false)
+
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime? @updatedAt
+}
+
+
+model Store {
+  id              String  @id @default(cuid())
+
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id] , onDelete: Cascade)
+
+  userPhoneNumber String
+
+
+  storeName       String @unique
+  logoUrl         String
+  storeBio        String?
+  facebookLink    String?
+  instagramLink   String?
+  displayContact  Boolean @default(false)
+
+  level           Int  @default(1)
+  unlimitedCreation   Boolean  @default(false)
+
+  revenue         Float         @default(0)
+  receivedPayments  Float         @default(0)
+  totalSales      Int           @default(0)
+  totalViews      Int           @default(0)
+
+  products        Product[]
+  designs         SellerDesign[]
+
+
+  notifications   Notification[]
+
+  totalRejectedElements  Int      @default(0)
+
+  likes           Like[]
+
+  followers      StoreFollow[] // New field to track the users following the store
+
+
+
+  paymentRequest  PaymentRequest[]
+
+  cardHolder     String?
+  cardPhoneNumber String?
+  bankAccount    String?
+  bankName       String?
+  accountHolder  String?
+
+  createdAt       DateTime       @default(now())
+  updatedAt      DateTime?      @updatedAt
+}
+
+model Level {
+  id            Int      @id @default(autoincrement())
+  levelNumber   Int      @unique
+  minSales      Int      @default(0)
+  productLimit  Int
+  designLimit   Int
+  benefits      String[]
+}
+
+
+model StoreFollow {
+  id        String   @id @default(cuid())
+  userId    String
+  storeId   String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, storeId])  // Ensure a user can't follow the same store more than once
+}
+
+
+
+model Like {
+  id        String   @id @default(cuid())
+  userId    String
+  storeId   String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  store     Store    @relation(fields: [storeId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Product {
+  id              String       @id @default(cuid())
+  category        String
+  colors          String[]
+  croppedFrontProduct   String[]
+  croppedBackProduct    String[]
+
+  collectionName        String
+
+  collectionId   String?
+  collection     Collection?  @relation(fields: [collectionId], references: [id])
+
+  title           String
+  description     String
+  tags            String[]
+  oldPrice        Float?
+  price           Float
+  basePrice       Float           @default(0)
+  sellerProfit    Float           @default(0)
+
+  isDiscountEnabled   Boolean        @default(false)
+  discount        Float?         
+
+
+
+  isProductAccepted Boolean      @default(false)
+
+  isProductRefused Boolean      @default(false)
+
+  privateProduct   Boolean      @default(false)
+
+  disableCategory  Boolean      @default(false)
+
+  revenue         Float         @default(0)
+  totalSales      Int           @default(0)
+  totalViews      Int           @default(0)
+  topSales        Boolean       @default(false)
+  NewProduct      Boolean       @default(true)
+
+
+
+  frontDesignId   String? 
+  frontDesign     SellerDesign? @relation("FrontDesign", fields: [frontDesignId], references: [id], onDelete: Cascade)
+
+  backDesignId    String? 
+  backDesign      SellerDesign? @relation("BackDesign", fields: [backDesignId], references: [id], onDelete: Cascade)
+
+  storeId         String  
+  store           Store        @relation(fields: [storeId], references: [id], onDelete: Cascade)
+ 
+  favLists        FavList[]     @relation("FavListProducts")
+
+  cartProducts    CartProduct[] 
+  order           OrderItem[]
+
+  productViews    ProductViews[]
+
+  AffiliateLink AffiliateLink[]
+
+  productReviews ProductReviews[]
+
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime?      @updatedAt
+
+
+}
+
+model ProductReviews {
+  id          String   @id @default(cuid())
+
+  productId   String
+  product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  content  String
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+}
+
+model ProductViews {
+  id         String   @id @default(cuid())
+  productId  String
+  product    Product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  userId     String?   // Nullable, in case the user is not logged in
+  sessionId  String?   // Used if the user isn't logged in
+  ipAddress  String?   // Optional: can track by IP address for non-logged-in users
+  viewedAt   DateTime  @default(now())
+
+  @@unique([productId, userId, sessionId, ipAddress]) // Ensure that views are unique per product-user-session-IP
+}
+
+model Collection {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  products  Product[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+
+
+model CartProduct {
+  id              String  @id @default (cuid())
+
+  productId       String?
+  product         Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  price           Float?
+  quantity        Int?
+  color           String?
+  size            String?
+  category        String?
+  productImg      String[]
+
+
+  cartId          String? 
+  cart            Cart? @relation(fields: [cartId], references: [id], onDelete: Cascade)
+}
+
+model Cart {
+  id              String  @id @default(cuid())
+
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id] , onDelete: Cascade)
+
+  selectedProducts   CartProduct[]
+
+}
+
+
+model FavList {
+  id              String  @id @default(cuid())
+
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id] , onDelete: Cascade)
+
+  products        Product[]  @relation("FavListProducts")
+
+}
+
+model SellerDesign {
+  id              String  @id @default(cuid())
+  name            String
+  width           Int
+  height          Int
+  imageUrl        String
+  tags            String[]
+  price           Float           @default(3)
+  sellerProfit    Float           @default(1)
+
+
+  isDesignForSale Boolean      @default(false)
+
+  isDesignAccepted Boolean      @default(false)
+
+  isDesignRefused Boolean      @default(false)
+
+
+  revenue         Float         @default(0)
+  totalSales      Int           @default(0)
+
+  frontOrders     OrderItem[]   @relation("FrontDesign")
+  backOrders      OrderItem[]   @relation("BackDesign")
+
+  frontProducts   Product[]   @relation("FrontDesign")
+  backProducts    Product[]   @relation("BackDesign")
+
+  storeId         String 
+  store           Store  @relation(fields: [storeId], references: [id] , onDelete: Cascade)
+
+  createdAt       DateTime @default(now())
+}
+
+model ClientDesign {
+  id              String  @id @default(cuid())
+  name            String?
+  width           Int?
+  height          Int?
+  imageUrl        String
+
+  userId          String?  
+  user            User?    @relation(fields: [userId], references: [id] , onDelete: Cascade)
+
+
+
+  frontOrders   OrderItem[]   @relation("ClientFrontDesign")
+  backOrders    OrderItem[]   @relation("ClientBackDesign")
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime? @updatedAt
+}
+
+model Order {
+  id              String  @id @default(cuid())
+  amount          Float
+  isPaid          Boolean @default(false)
+  status          OrderStatus @default(PROCESSING)
+  type            OrderType  @default(NOT_CONFIRMED)
+
+  isSellerOrder   Boolean     @default(false)
+  sellerStore     String?
+
+
+  isClientMadeOrder Boolean  @default(false)
+
+  updated           Boolean   @default(false)
+
+  printed           Boolean   @default(false)
+  
+  
+  userId          String  
+  user            User    @relation(fields: [userId], references: [id] ,onDelete: Cascade)
+
+  shippingFee     Int     @default(7)
+
+  shippingAddress String
+  phoneNumber     String
+  clientName      String?
+
+  orderItems      OrderItem[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime? @updatedAt
+
+}
+
+model OrderItem {
+  id                    String  @id @default(cuid())
+
+  orderId               String 
+  order                 Order   @relation(fields: [orderId], references: [id] , onDelete: Cascade)
+
+  frontsellerDesignId   String?
+  frontsellerDesign     SellerDesign? @relation("FrontDesign",fields: [frontsellerDesignId], references: [id],onDelete: Cascade )
+
+  backsellerDesignId    String?  
+  backsellerDesign      SellerDesign? @relation("BackDesign",fields: [backsellerDesignId], references: [id],onDelete: Cascade )
+
+  frontclientDesignId   String?
+  frontclientDesign     ClientDesign? @relation("ClientFrontDesign",fields: [frontclientDesignId], references: [id],onDelete: Cascade )
+
+  backclientDesignId    String?
+  backclientDesign      ClientDesign? @relation("ClientBackDesign",fields: [backclientDesignId], references: [id],onDelete: Cascade )
+
+  productId             String? 
+  product               Product? @relation(fields: [productId], references: [id] , onDelete: Cascade)
+
+  commission            Commission?
+
+
+  productPrice          Float
+  productTitle          String?
+  quantity              Int
+  productColor          String
+  productSize           String
+  productCategory       String
+  capturedMockup        String[]
+
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime? @updatedAt
+}
+
+
+model PreOrderPreview {
+    id                    String  @id @default(cuid())
+
+    userId                String 
+    user                  User    @relation(fields: [userId] , references: [id] , onDelete: Cascade)
+
+    frontsellerDesignId   String?
+    backsellerDesignId    String?
+
+    frontclientDesign   String?  
+    backclientDesign    String?
+ 
+    amount                Int
+    productPrice          Float
+    quantity              Int
+    productColor          String
+    productSize           String
+    productCategory       String
+    capturedMockup        String[]
+
+
+    createdAt             DateTime @default(now())
+    updatedAt             DateTime? @updatedAt
+}
+
+
+
+
+
+
+
+
+// affilate program : 
+
+model Affiliate {
+  id            String      @id @default(cuid())
+  userId        String      @unique // A user can have one affiliate account
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  phoneNumber   String?
+
+  totalIncome    Float         @default(0)
+  receivedPayments  Float         @default(0)
+
+
+  links         AffiliateLink[] // Relation to created links
+
+  affiliatePaymentRequest AffiliatePaymentRequest[]
+  cardHolder     String?
+  cardPhoneNumber String?
+  bankAccount    String?
+  bankName       String?
+  accountHolder  String?
+
+  AffiliateNotification AffiliateNotification[]
+
+
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime?   @updatedAt
+}
+
+
+
+model AffiliateLink {
+  id            String        @id @default(cuid())
+
+  affiliateId   String
+  affiliate     Affiliate      @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+
+  commission    Commission[]   
+
+  totalSales    Int         @default(0)
+
+  probableProfit Float         @default(0)
+
+  productId     String
+  product       Product        @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  originalLink  String
+  code          String         @unique
+  link          String    
+  totalViews    Int            @default(0)
+  createdAt     DateTime       @default(now())
+
+  AffiliateClick AffiliateClick[]
+}
+
+model AffiliateClick {
+  id              String      @id @default(cuid())
+  affiliateLinkId String      // The ID of the affiliate link
+  affiliateLink   AffiliateLink @relation(fields: [affiliateLinkId], references: [id], onDelete: Cascade)
+  
+  sessionId       String?     // If the user is not logged in, track by session or cookie
+  clickedAt       DateTime    @default(now())
+}
+
+
+model Commission {
+  id              String         @id @default(cuid())
+  
+  affiliateLinkId String         
+  affiliateLink   AffiliateLink   @relation(fields: [affiliateLinkId], references: [id], onDelete: Cascade)
+
+  orderItemId         String         @unique
+  orderItem          OrderItem       @relation(fields: [orderItemId], references: [id], onDelete: Cascade)
+
+  profit          Float           @default(0)
+
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime?       @updatedAt
+}
+
+model AffiliatePaymentRequest {
+  id             String      @id @default(cuid())
+
+  affiliateId   String
+  affiliate     Affiliate      @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+
+  method         PaymentMethod
+  cardHolder     String?
+  cardPhoneNumber String?
+  bankAccount    String?
+  bankName       String?
+  accountHolder  String?
+  requestedAmount Float      @default(0)
+  status         PaymentStatus @default(PENDING)
+
+
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime?   @updatedAt
+}
+
+
+model AffiliateNotification {
+    id              String  @id @default(cuid())
+
+    affiliateId     String
+    affiliate     Affiliate      @relation(fields: [affiliateId], references: [id], onDelete: Cascade)
+
+    sender          String
+    content         String
+
+    isViewed        Boolean @default(false)
+
+    createdAt       DateTime @default(now())
+    updatedAt       DateTime? @updatedAt
+}
+
+
+
+
+
+// category section : 
+model Category {
+  id              String          @id @default(cuid())
+  label           String
+  quality         String[]
+  value           String
+  price           Float
+  discount        Float?         
+  colors          Color[]
+  sizes           Size[]
+  frontBorders    FrontBorder[]
+  backBorders     BackBorder[]  
+
+  disableCategory  Boolean      @default(false)
+    
+}
+
+model Color {
+  id              String          @id @default(cuid())
+  label           String
+  value           String
+  tw              String
+  frontImageUrl   String
+  backImageUrl    String
+  categoryId      String
+  category        Category        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+model Size {
+  id              String          @id @default(cuid())
+  label           String
+  value           String
+  categoryId      String
+  category        Category        @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+model FrontBorder {
+  id              String          @id @default(cuid())
+  label           String
+  value           String
+  categoryId      String
+  category        Category     @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+model BackBorder {
+  id              String          @id @default(cuid())
+  label           String
+  value           String
+  categoryId      String
+  category        Category      @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+}
+
+
+
+
+
+
+
+
+
+// payment schema : 
+model PaymentRequest {
+  id             String      @id @default(cuid())
+  storeId        String      
+  store            Store     @relation(fields: [storeId], references: [id] , onDelete: Cascade)
+
+
+  method         PaymentMethod
+  cardHolder     String?
+  cardPhoneNumber String?
+  bankAccount    String?
+  bankName       String?
+  accountHolder  String?
+  requestedAmount Float      @default(0)
+  status         PaymentStatus @default(PENDING)
+
+
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime?   @updatedAt
+}
+
+enum PaymentMethod {
+  D17
+  Flouci
+  BankDeposit
+}
+
+enum PaymentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+
+
+
+
