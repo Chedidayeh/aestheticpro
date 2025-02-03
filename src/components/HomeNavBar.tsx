@@ -249,7 +249,7 @@ const Navbar = async () => {
             <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
               <li className="row-span-3">
                 <NavigationMenuLink asChild>
-                  <Link
+                  <LoadingLink
                     className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                     href="/"
                   >
@@ -259,20 +259,27 @@ const Navbar = async () => {
               <p className="text-sm leading-relaxed text-muted-foreground">
                 Where creativity meets opportunity, turning art into profit.
               </p>
-
-
-                  </Link>
+                  </LoadingLink>
                 </NavigationMenuLink>
               </li>
-              <ListItem href="/about" title="About Us">
+              <LoadingLink href="/about">
+              <ListItem title="About Us">
                 Discover our mission, vision, and the values that drive us.
               </ListItem>
-              <ListItem href="/services" title="Services">
+              </LoadingLink>
+
+              <LoadingLink href="/services">
+              <ListItem  title="Services">
                 Explore the services we offer.
               </ListItem>
-              <ListItem href="/contact" title="Contact">
+              </LoadingLink>
+
+              <LoadingLink href="/contact">
+              <ListItem  title="Contact">
                 Get in touch with us.
               </ListItem>
+              </LoadingLink>
+
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
