@@ -758,16 +758,14 @@ const viewProductData = (product : ExtraProduct) => {
 
                                               {/* downloading Loader  */}
                                               <AlertDialog open={isDownloadOpen} >
-                                          <AlertDialogContent className=" flex flex-col items-center justify-center">
+                                              <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
                                               <AlertDialogHeader className="flex flex-col items-center justify-center">
-                                              <Loader className="text-blue-700 h-[30%] w-[30%] animate-spin mt-3" />
-                                              <AlertDialogTitle className="flex flex-col items-center justify-center">Loading</AlertDialogTitle>
-                                            </AlertDialogHeader>
-                                            <AlertDialogDescription className="flex flex-col items-center justify-center">
+                                              <AlertDialogTitle className="flex flex-col items-center justify-center">Downloading</AlertDialogTitle>
+                                              <AlertDialogDescription className="flex flex-col items-center justify-center">
                                               Please wait while downloading...
                                             </AlertDialogDescription>
-                                                    <AlertDialogFooter>
-                                                    </AlertDialogFooter>
+                                            <Loader size={20} className="text-blue-700 animate-spin mt-3" />
+                                            </AlertDialogHeader>
                                                 </AlertDialogContent>
                                          </AlertDialog>
 
@@ -775,8 +773,8 @@ const viewProductData = (product : ExtraProduct) => {
 
                           {/* The AlertDialog delete product component  */}
                           <AlertDialog open={isDeleteOpen}>
-                            <AlertDialogContent>
-                                   <AlertDialogHeader className="flex flex-col items-center">
+                          <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                          <AlertDialogHeader className="flex flex-col items-center">
                                        <div className="text-red-500 mb-2">
                                            <OctagonAlert className=''/>
                                                </div>
@@ -799,8 +797,8 @@ const viewProductData = (product : ExtraProduct) => {
                      </AlertDialog> 
 
                           <AlertDialog open={isDialogOpen}>
-                                    <AlertDialogContent>
-                                      <AlertDialogHeader>
+                          <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                          <AlertDialogHeader>
                                         <AlertDialogTitle>Reason for rejecting</AlertDialogTitle>
                                       </AlertDialogHeader>
                                       <div className="grid gap-4 py-4">
@@ -808,7 +806,7 @@ const viewProductData = (product : ExtraProduct) => {
                                           onChange={(e) => setReasonForRejection(e.target.value)} 
                                           type="text" 
                                           placeholder='Type the reason' 
-                                          className="w-full bg-gray-100" />
+                                          className="w-full " />
                                       </div>
                                       <AlertDialogFooter>
                                         <AlertDialogCancel onClick={()=>setisDialogOpen(false)}>Cancel</AlertDialogCancel>
@@ -825,24 +823,24 @@ const viewProductData = (product : ExtraProduct) => {
 {selectedDataProduct && (
 
                     <AlertDialog open={openData} >
-      <AlertDialogContent className="p-6 rounded-md shadow-lg max-w-md mx-auto">
-        <AlertDialogHeader>
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader>
           <AlertDialogTitle className="text-xl font-bold">
             Product Data
           </AlertDialogTitle>
         </AlertDialogHeader>
         <div className="mt-4 space-y-2">
           <p>
-            <strong>Collection:</strong> {selectedDataProduct.collectionName}
+            <strong className="text-blue-600">Collection:</strong> {selectedDataProduct.collectionName}
           </p>
           <p>
-            <strong>Title:</strong> {selectedDataProduct.title}
+            <strong className="text-blue-600"> Title:</strong> {selectedDataProduct.title}
           </p>
           <p>
-            <strong>Description:</strong> {selectedDataProduct.description}
+            <strong className="text-blue-600"> Description:</strong> {selectedDataProduct.description}
           </p>
           <p>
-            <strong>Tags:</strong> {selectedDataProduct.tags.join(", ")}
+            <strong className="text-blue-600">Tags:</strong> {selectedDataProduct.tags.join(", ")}
           </p>
         </div>
         <AlertDialogFooter className="mt-6 flex justify-end">

@@ -387,8 +387,8 @@ const [open, setOpen] = useState<boolean>(false);
                           <AlertDialogTrigger asChild>
                             <SquarePen className=" cursor-pointer absolute bottom-2 left-3 mt-1 mr-1 text-gray-400 hover:text-blue-500 transform hover:scale-110 hover:rotate-6 transition duration-200" />
                           </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
+                          <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                          <AlertDialogHeader>
                               <AlertDialogTitle>Edit Your Design</AlertDialogTitle>
                               <AlertDialogDescription className='flex flex-col'>
                                 <div>
@@ -466,8 +466,8 @@ const [open, setOpen] = useState<boolean>(false);
                           <AlertDialogTrigger asChild>
                             <Trash2 className="cursor-pointer absolute bottom-2 right-3 mt-1 mr-1 text-gray-400 hover:text-red-500 transform hover:scale-110 hover:rotate-6 transition duration-200" />
                           </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader className="flex flex-col items-center">
+                          <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                          <AlertDialogHeader className="flex flex-col items-center">
                               <div className="text-red-500 mb-2">
                                 <OctagonAlert className='' />
                               </div>

@@ -84,6 +84,7 @@ interface ProductsViewProps {
   
   interface GroupedOrder {
     id: string;
+    date : Date
     status : string;
     type : string;
     isSellerOrder : boolean;
@@ -296,6 +297,7 @@ const ProductsView = ({
   <TableHeader>
     <TableRow>
       <TableHead>Order Id</TableHead>
+      <TableHead>Order Date</TableHead>
       <TableHead>Order Status</TableHead>
       <TableHead>Order Type</TableHead>
       <TableHead>Order Payment</TableHead>
@@ -318,12 +320,15 @@ const ProductsView = ({
           <TableRow key={item.id}>
             {index === 0 && (
               <>
-                <TableCell className=" text-left" rowSpan={order.items.length}>
+                <TableCell className=" text-xs text-left" rowSpan={order.items.length}>
                   {order.isSellerOrder ? (
                     <span className="text-blue-500">{order.id}</span>
                   ) : (
                     order.id
                   )}
+                </TableCell>
+                <TableCell className="text-xs text-left" rowSpan={order.items.length}>
+                  {new Date(order.date).toLocaleString()}
                 </TableCell>
                 <TableCell className="text-left" rowSpan={order.items.length}>
                   <Badge
@@ -431,8 +436,8 @@ const ProductsView = ({
                       <AlertDialog open={isDeleteOpen}>
                <AlertDialogTrigger asChild>
                          </AlertDialogTrigger>
-                            <AlertDialogContent>
-                                   <AlertDialogHeader className="flex flex-col items-center">
+                         <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                         <AlertDialogHeader className="flex flex-col items-center">
                                        <div className="text-red-500 mb-2">
                                            <OctagonAlert className=''/>
                                                </div>
@@ -455,7 +460,7 @@ const ProductsView = ({
                       {selectedOrder && (
                     <AlertDialog open={isViewOpen}>
                     <AlertDialogTrigger asChild></AlertDialogTrigger>
-                    <AlertDialogContent className="flex flex-col items-center justify-center">
+                    <AlertDialogContent className="rounded-xl max-w-[80%] flex flex-col items-center justify-center sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
                       {/* Image Slider */}
                       <div className="w-56 md:w-96">
                         <ImageSlider urls={selectedOrder.items[0].capturedMockup} />

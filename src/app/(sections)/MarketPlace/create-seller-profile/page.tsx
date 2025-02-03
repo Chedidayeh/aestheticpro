@@ -405,35 +405,37 @@ const Page = () => {
     <AlertDialog open={isCreating}>
     <AlertDialogTrigger asChild>
     </AlertDialogTrigger>
-    <AlertDialogContent className="flex flex-col items-center">
-      <AlertDialogHeader className="flex flex-col items-center">
+    <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+    <AlertDialogHeader className="flex flex-col items-center">
       <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
           Creating Your Store !
         </AlertDialogTitle>
                      <AlertDialogDescription className="text-center">
         Please wait while we create your store !
         </AlertDialogDescription>
-      </AlertDialogHeader>
-      <div className="text-blue-700 mb-2">
+        <div className="text-blue-700 mb-2">
                         <Loader className="animate-spin" />
-                      </div>          </AlertDialogContent>
+                      </div>        
+      </AlertDialogHeader>
+  </AlertDialogContent>
   </AlertDialog>
 
   <AlertDialog open={isRedirecting}>
     <AlertDialogTrigger asChild>
     </AlertDialogTrigger>
-    <AlertDialogContent className="flex flex-col items-center">
-      <AlertDialogHeader className="flex flex-col items-center">
+    <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+    <AlertDialogHeader className="flex flex-col items-center">
       <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
           Redirecting You !
         </AlertDialogTitle>
                      <AlertDialogDescription className="text-center">
             Please wait while we redirect you !
         </AlertDialogDescription>
-      </AlertDialogHeader>
-      <div className="text-blue-700 mb-2">
+        <div className="text-blue-700 mb-2">
                         <Loader className="animate-spin" />
-                      </div>         </AlertDialogContent>
+                      </div>     
+      </AlertDialogHeader>
+    </AlertDialogContent>
   </AlertDialog>
 
     </>

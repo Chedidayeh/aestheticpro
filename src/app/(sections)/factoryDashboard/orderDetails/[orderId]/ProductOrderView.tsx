@@ -409,8 +409,8 @@ const checkMatch = async (item: ExtraOrderItem) => {
         )}
 
 <AlertDialog open={openMatchDialog}>
-          <AlertDialogContent>
-            <AlertDialogHeader className="flex flex-col items-center">
+<AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+<AlertDialogHeader className="flex flex-col items-center">
               <div className="text-green-500 mb-2">
                 <CircleCheck size={42} />
               </div>
@@ -418,12 +418,12 @@ const checkMatch = async (item: ExtraOrderItem) => {
                 Here's the matched order Id !
               </AlertDialogTitle>
               <AlertDialogDescription>
-                <p className="text-xs mt-4">
+                <p className="text-xs mt-2">
                   click to copy the link !
                 </p>
                 <Badge 
                   onClick={copyToClipboard} 
-                  className="my-6 text-white text-xs animate-pulse font-bold cursor-pointer transition-colors"
+                  className="my-4 text-white text-xs animate-pulse font-bold cursor-pointer transition-colors"
                   aria-label="Click to copy affiliate link"
                 >                  
                 {matchedOrderId}

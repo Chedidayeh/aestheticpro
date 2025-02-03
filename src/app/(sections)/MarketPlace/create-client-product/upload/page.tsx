@@ -67,8 +67,8 @@ const Page = async ({ searchParams }: PageProps) => {
       return (
         <>
         <AlertDialog open={true} >
-  <AlertDialogContent>
-  <AlertDialogHeader className="flex flex-col items-center">
+        <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+        <AlertDialogHeader className="flex flex-col items-center">
   <div className="text-red-500 mb-2">
   <OctagonAlert className=''/>
   </div>
@@ -78,13 +78,11 @@ const Page = async ({ searchParams }: PageProps) => {
   <AlertDialogDescription>
   Please return to the previous page !
   </AlertDialogDescription>
-  </AlertDialogHeader>
-  <AlertDialogFooter>
-  <LoadingLink  href="/MarketPlace/create-client-product/select-category" ><Button variant="link">
-  Return
+  <LoadingLink  href="/MarketPlace/create-client-product/select-category" ><Button size={"sm"} variant="default">
+  Return 
       </Button>
       </LoadingLink>
-  </AlertDialogFooter>
+  </AlertDialogHeader>
   </AlertDialogContent>
         </AlertDialog>
         <div className="mb-40"></div>
@@ -109,8 +107,8 @@ const Page = async ({ searchParams }: PageProps) => {
     ) : (
       <>
       <AlertDialog open={true} >
-<AlertDialogContent>
-<AlertDialogHeader className="flex flex-col items-center">
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader className="flex flex-col items-center">
 <div className="text-red-500 mb-2">
 <OctagonAlert className=''/>
 </div>
@@ -120,13 +118,11 @@ No Category selected or found !
 <AlertDialogDescription>
 Please return to the previous page !
 </AlertDialogDescription>
-</AlertDialogHeader>
-<AlertDialogFooter>
-<LoadingLink  href="/MarketPlace/create-client-product/select-category" ><Button variant="link">
-  Return
+<LoadingLink  href="/MarketPlace/create-client-product/select-category" ><Button size={"sm"} variant="default">
+  Return 
     </Button>
     </LoadingLink>
-</AlertDialogFooter>
+</AlertDialogHeader>
 </AlertDialogContent>
       </AlertDialog>
       <div className="mb-40"></div>

@@ -1,7 +1,7 @@
 'use client'
 import NextImage from "next/image"
 import { formatDistanceToNow } from 'date-fns'; // Import for time formatting
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel } from '@/components/ui/alert-dialog';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel, AlertDialogFooter } from '@/components/ui/alert-dialog';
 
 interface ProductReelProps {
   title: string
@@ -201,8 +201,8 @@ const Reviews = (props: ProductReelProps) => {
     <div className="text-right">
     <Button disabled={content.length===0 || content.length>100} onClick={createReview} size={"sm"} className="text-white" >Add</Button>
     </div>
-        </AlertDescription>
-      </Alert>
+    </AlertDescription>
+    </Alert>
 
 
 {visibleReviews.map((review: ExtraProductReviews, index: number) => (
@@ -272,24 +272,24 @@ const Reviews = (props: ProductReelProps) => {
 
 
     <AlertDialog open={openDeleteDialog} onOpenChange={setOpenDeleteDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
+    <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+    <AlertDialogHeader>
             <AlertDialogTitle>Delete Review</AlertDialogTitle>
             <AlertDialogDescription>
               Are you sure you want to delete this review? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <div className="flex justify-end space-x-2">
-          <AlertDialogCancel onClick={() => setOpenDeleteDialog(false)}>
-            Cancel
-          </AlertDialogCancel>
-          <AlertDialogAction 
-            onClick={handleRemoveReview} 
-            className="bg-red-500 hover:bg-red-500 text-white"
-          >
-            Delete
-          </AlertDialogAction>
-        </div>
+          <AlertDialogFooter>
+            <AlertDialogCancel onClick={() => setOpenDeleteDialog(false)}>
+             Cancel
+            </AlertDialogCancel>
+            <AlertDialogAction 
+              onClick={handleRemoveReview} 
+              className="bg-red-500 hover:bg-red-500 text-white"
+            >
+              Delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 

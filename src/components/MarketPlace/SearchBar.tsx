@@ -83,18 +83,20 @@ const SearchBar = () => {
         <>
           <AlertDialog open={isPending}>
             <AlertDialogTrigger asChild />
-            <AlertDialogContent className="flex flex-col items-center">
-              <AlertDialogHeader className="flex flex-col items-center">
+            <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+            <AlertDialogHeader className="flex  justify-center items-center">
               <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
               Searching for products!
                 </AlertDialogTitle>
                 <AlertDialogDescription className="flex flex-col items-center">
                   This will take a moment.
                 </AlertDialogDescription>
-              </AlertDialogHeader>
-      <div className="text-blue-700 mb-2">
+                <div className="text-blue-700 mb-2 text-center">
                         <Loader className="animate-spin" />
-                      </div>                </AlertDialogContent>
+                      </div>  
+              </AlertDialogHeader>
+                    
+          </AlertDialogContent>
           </AlertDialog>
 
           <div className='flex gap-4 items-center justify-center mt-2'>

@@ -286,7 +286,7 @@ const [isOpen, setIsOpen] = useState < boolean > (false);
       </div>
 
       <AlertDialog open={isOpen}>
-        <AlertDialogContent className="flex flex-col items-center">
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
           <AlertDialogHeader className="flex flex-col items-center">
             <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
               Creating Your Account !
@@ -294,15 +294,15 @@ const [isOpen, setIsOpen] = useState < boolean > (false);
                      <AlertDialogDescription className="text-center">
                           Please wait while we create your account...
                         </AlertDialogDescription>
-          </AlertDialogHeader>
-                      <div className="text-blue-700 mb-2">
+                        <div className="text-blue-700 mb-2">
                         <Loader className="animate-spin" />
                       </div>
+          </AlertDialogHeader>
         </AlertDialogContent>
       </AlertDialog>
 
       <AlertDialog open={isRedirecting}>
-    <AlertDialogContent className="flex flex-col items-center">
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
       <AlertDialogHeader className="flex flex-col items-center">
       <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
       Redirecting You !
@@ -310,10 +310,11 @@ const [isOpen, setIsOpen] = useState < boolean > (false);
         <AlertDialogDescription className="text-center">
         Please wait while we redirect you !
         </AlertDialogDescription>
-      </AlertDialogHeader>
-      <div className="text-blue-700 mb-2">
+        <div className="text-blue-700 mb-2">
                         <Loader className="animate-spin" />
                       </div>      
+      </AlertDialogHeader>
+
           </AlertDialogContent>
   </AlertDialog>
     </>

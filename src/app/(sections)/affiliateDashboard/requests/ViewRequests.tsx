@@ -99,7 +99,7 @@ const ViewRequests = ({ paymentRequests }: ViewProps) => {
   <TabsList className="grid w-full grid-cols-3">
   <TabsTrigger value="D17">D17</TabsTrigger>
   <TabsTrigger value="Flouci">Flouci</TabsTrigger>
-  <TabsTrigger value="BankDeposit">Bank Deposit</TabsTrigger>
+  <TabsTrigger value="BankDeposit">Bank</TabsTrigger>
     </TabsList>
   </Tabs>
   </div>

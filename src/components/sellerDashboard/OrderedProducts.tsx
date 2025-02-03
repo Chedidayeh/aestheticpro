@@ -44,7 +44,6 @@ const OrderedProducts = async () => {
         <ScrollArea className="w-full h-96 mt-4">
           <TableHeader>
             <TableRow>
-              <TableHead>Product Id</TableHead>
               <TableHead>Product Title</TableHead>
               <TableHead>Product Category</TableHead>
               <TableHead className="text-center">Product Price</TableHead>
@@ -60,7 +59,6 @@ const OrderedProducts = async () => {
           <TableBody>
             {storeOrdersForProducts.map((product) => (
               <TableRow key={product.id}>
-                <TableCell>{product.id}</TableCell>
                 <TableCell>{product.title}</TableCell>
                 <TableCell>{product.category}</TableCell>
                 <TableCell className="text-center">{(product.price).toFixed(2)} TND</TableCell>

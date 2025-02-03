@@ -40,7 +40,6 @@ const DesignsOrder = async () => {
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead>Design Id</TableHead>
               <TableHead>Design Name</TableHead>
               <TableHead className="text-center">Design Price</TableHead>
               <TableHead className="text-center">Seller Profit</TableHead>
@@ -55,7 +54,6 @@ const DesignsOrder = async () => {
           <TableBody>
             {storeOrdersForDesigns.map((design) => (
               <TableRow key={design.id}>
-                <TableCell>{design.id}</TableCell>
                 <TableCell>{design.name}</TableCell>
                 <TableCell className="text-center">{(design.price).toFixed(2)} TND</TableCell>
                 <TableCell className="text-center">{(design.sellerProfit).toFixed(2)} TND</TableCell>

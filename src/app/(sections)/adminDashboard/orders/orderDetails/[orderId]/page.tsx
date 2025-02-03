@@ -25,16 +25,14 @@ interface PageProps {
 const Page = async ({ params }: PageProps) => {
   const { orderId } = params;
   try {
-    const productOrderProfit = await calculateTotalSellerProfitForProducts(orderId);
-    const designOrderProfit = await calculateTotalSellerProfitForDesigns(orderId);
 
     const order = await getOrderWithItemsAndProducts(orderId);
 
     if(!order) {
       return (
         <AlertDialog open={true}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader>
             <AlertDialogTitle>No Order Found</AlertDialogTitle>
             <AlertDialogDescription>
               We couldn't find the order with the provided ID. Please check the order ID and try again.
@@ -49,6 +47,11 @@ const Page = async ({ params }: PageProps) => {
       </AlertDialog>
       )
     }
+    
+    const productOrderProfit = await calculateTotalSellerProfitForProducts(orderId);
+    const designOrderProfit = await calculateTotalSellerProfitForDesigns(orderId);
+
+
 
     if (!order?.isClientMadeOrder) {
       return <ProductOrderView order={order} profit={productOrderProfit} />;

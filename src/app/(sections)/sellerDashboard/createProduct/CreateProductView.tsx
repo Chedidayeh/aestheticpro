@@ -984,10 +984,10 @@ const handleFileChange = (file : File) => {
 
                       {/* The AlertDialog component */}
                       <AlertDialog  open={openDialog}>
-                          <AlertDialogContent>
-                            <AlertDialogHeader className="flex flex-col items-center">
+                      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                      <AlertDialogHeader className="flex flex-col items-center">
                               <div></div>
-                              <AlertDialogTitle className="text-2xl text-blue-700 font-bold text-center">
+                              <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
                                 Saving Your Product!
                               </AlertDialogTitle>
                               <AlertDialogDescription className="flex flex-col items-center">

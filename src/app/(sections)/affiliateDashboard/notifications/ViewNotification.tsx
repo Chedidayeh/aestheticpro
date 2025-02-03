@@ -167,8 +167,8 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
 
       {selectedNotification && (
         <AlertDialog open={selectedNotification !== null} onOpenChange={() => setSelectedNotification(null)}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader>
               <AlertDialogTitle>Notification Content</AlertDialogTitle>
             </AlertDialogHeader>
             <div className="text-gray-600">{selectedNotification.content}</div>

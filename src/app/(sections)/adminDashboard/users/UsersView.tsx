@@ -1,5 +1,5 @@
 'use client'
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel } from '@/components/ui/alert-dialog';
+import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogAction, AlertDialogCancel, AlertDialogFooter } from '@/components/ui/alert-dialog';
 import { Affiliate, AffiliateLink, Commission, User, UserType } from "@prisma/client";
 import {
   Select,
@@ -469,14 +469,14 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
   </div>
 
       <AlertDialog open={openDeleteDialog} onOpenChange={setOpenDeleteDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader>
             <AlertDialogTitle>Delete User</AlertDialogTitle>
             <AlertDialogDescription>
               Are you sure you want to delete this user? This action cannot be undone.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <div className="flex justify-end space-x-2">
+          <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setOpenDeleteDialog(false)}>
             Cancel
           </AlertDialogCancel>
@@ -486,22 +486,22 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
           >
             Delete
           </AlertDialogAction>
-        </div>
+        </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 
       <AlertDialog open={openBanDialog} onOpenChange={setOpenBanDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader>
             <AlertDialogTitle>Ban User</AlertDialogTitle>
             <AlertDialogDescription>
               Are you sure you want to ban this user? This action can be undone later.
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <div className="flex justify-end space-x-2">
+          <AlertDialogFooter>
           <AlertDialogCancel onClick={() => setOpenBanDialog(false)}>Cancel</AlertDialogCancel>
           <AlertDialogAction onClick={handleBan} className="bg-purple-500 hover:bg-purple-500 text-white">Ban</AlertDialogAction>
-          </div>
+          </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
 

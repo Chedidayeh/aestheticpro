@@ -237,21 +237,18 @@ const ProductView = ({
     <>
 
                                               {/* downloading Loader  */}
+                                 {/* downloading Loader  */}
                                               <AlertDialog open={isDownloadOpen} >
-                                       <AlertDialogTrigger asChild>
-                                        </AlertDialogTrigger>
-                                          <AlertDialogContent className=" flex flex-col items-center justify-center">
+                                              <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
                                               <AlertDialogHeader className="flex flex-col items-center justify-center">
-          <Loader className="text-blue-700 h-[30%] w-[30%] animate-spin mt-3" />
-                                              <AlertDialogTitle className="flex flex-col items-center justify-center">Loading</AlertDialogTitle>
-                                            </AlertDialogHeader>
-                                            <AlertDialogDescription className="flex flex-col items-center justify-center">
+                                              <AlertDialogTitle className="flex flex-col items-center justify-center">Downloading</AlertDialogTitle>
+                                              <AlertDialogDescription className="flex flex-col items-center justify-center">
                                               Please wait while downloading...
                                             </AlertDialogDescription>
-                                                    <AlertDialogFooter>
-                                                    </AlertDialogFooter>
+                                            <Loader size={20} className="text-blue-700 animate-spin mt-3" />
+                                            </AlertDialogHeader>
                                                 </AlertDialogContent>
-                                  </AlertDialog>
+                                         </AlertDialog>
 
 
 
@@ -455,8 +452,8 @@ const ProductView = ({
         <>
         {/* Edit product */}
         <AlertDialog open={isEditOpen}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
+        <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+        <AlertDialogHeader>
               <AlertDialogTitle>Edit Your Product</AlertDialogTitle>
               <AlertDialogDescription className='flex flex-col'>
                 <div>
@@ -525,11 +522,11 @@ const ProductView = ({
             </div>
 
             <AlertDialogFooter>
-              <AlertDialogCancel onClick={()=>{                      
+              <AlertDialogCancel className='w-20' onClick={()=>{                      
               setnewTitle("")
               setSelectedCollection("")
               setIsEditOpen(false)}}>Cancel</AlertDialogCancel>
-              <AlertDialogAction
+              <AlertDialogAction className='w-20'
                 disabled={newTitle === "" || selectedCollection === undefined}
                 onClick={() => handleSave(selectedProduct.id)}
               >
@@ -541,8 +538,8 @@ const ProductView = ({
 
         {/* Delete product */}
         <AlertDialog open={isDeleteOpen}>
-          <AlertDialogContent>
-            <AlertDialogHeader className="flex flex-col items-center">
+        <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+        <AlertDialogHeader className="flex flex-col items-center">
               <div className="text-red-500 mb-2">
                 <OctagonAlert className='' />
               </div>

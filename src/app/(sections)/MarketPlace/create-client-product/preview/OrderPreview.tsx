@@ -186,8 +186,8 @@ const [openDialog, setOpenDialog] = useState(false);
 
                       {/* The AlertDialog component */}
                       <AlertDialog open={openDialog} >
-                          <AlertDialogContent>
-                            <AlertDialogHeader className="flex flex-col items-center">
+                      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                      <AlertDialogHeader className="flex flex-col items-center">
                               <div></div>
                               <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
                               Confirming your order !
@@ -195,7 +195,7 @@ const [openDialog, setOpenDialog] = useState(false);
                               <AlertDialogDescription className="flex flex-col items-center">
                                 This will take a moment.
                                 {/* Replace Loader with your loader component */}
-          <Loader className="text-blue-700 h-[30%] w-[30%] animate-spin mt-3" />
+                              <Loader className="text-blue-700 h-[30%] w-[30%] animate-spin mt-3" />
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                           </AlertDialogContent>
@@ -223,9 +223,11 @@ const [openDialog, setOpenDialog] = useState(false);
   <>
 
 <div className="mt-6 flex flex-col justify-center items-center sm:col-span-9 md:row-end-1">
+<div className="text-center flex items-center">
 <h3 className="text-2xl sm:text-3xl font-bold tracking-tight ">
   Your preOrder is safely saved
 </h3>
+</div>
 <div className="text-center">
 <div className="mt-3 text-red-500 flex items-center gap-1.5 text-sm sm:text-base">
   You can't make a new preOrder until this one is confirmed or deleted!
@@ -243,7 +245,7 @@ const [openDialog, setOpenDialog] = useState(false);
     <div className="flex justify-center my-8">
     <div className='px-2 lg:px-10'>
     <div className='flex-shrink-0 mb-10'>
-      <div className='relative h-64 w-64 xl:h-96 xl:w-96 '>
+      <div className='relative h-[316px] w-[316px] xl:h-[484px] xl:w-[484px] '>
         <ImageSlider urls={preOrder.capturedMockup} />
      </div>
      </div>
@@ -350,15 +352,15 @@ const [openDialog, setOpenDialog] = useState(false);
           className="flex ml-3 px-1 hover:text-red-500 sm:px-6 lg:px-8"
         >
           <span className="ml-1">Delete PreOrder</span>
-          <X className="h-4 w-4 inline" />
+          <X className="h-4 w-4 mt-0.5 inline" />
         </Button>
         <Button
           onClick={handleOrder}
           disabled={!isCheckoutEnabled || isDelete}
           loadingText="Loading..."
-          className="px-4 sm:px-6 lg:px-8 ml-12 text-white"
+          className="px-4 sm:px-6 lg:px-8 ml-8 text-white"
         >
-          Confirm Order <ArrowRight className="h-4 w-4 ml-1.5 inline" />
+          Confirm Order <ArrowRight className="h-4 w-4 mt-0.5 ml-1.5 inline" />
         </Button>
       </div>
     </div>

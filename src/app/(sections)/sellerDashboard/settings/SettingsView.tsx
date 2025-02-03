@@ -555,8 +555,8 @@ export default function SettingsView({store} : {store : Store}) {
             <LoadingState isOpen={open} />
 
             <AlertDialog open={isDialogOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
+            <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+            <AlertDialogHeader>
             <AlertDialogTitle>Confirm Deletion</AlertDialogTitle>
             <AlertDialogDescription>
               Are you sure you want to delete this store? This action cannot be undone.
@@ -566,7 +566,7 @@ export default function SettingsView({store} : {store : Store}) {
             <AlertDialogCancel onClick={() => setDialogOpen(false)}>
               Cancel
             </AlertDialogCancel>
-            <AlertDialogAction className="text-white bg-red-500" onClick={handleStoreDelete}>Confirm</AlertDialogAction>
+            <AlertDialogAction className="text-white hover:bg-red-500 bg-red-500" onClick={handleStoreDelete}>Confirm</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

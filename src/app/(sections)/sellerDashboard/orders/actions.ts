@@ -4,41 +4,51 @@ import { db } from "@/db";
 
 
   // get the orders of the store products
-export async function getProductsOrdersForStore(storeId : string, userId : string) {
-  // Fetch the store based on storeId and userId
-  const store = await db.store.findUnique({
-    where: { id: storeId, userId: userId },
-    include: {
-      products: true,
-    },
-  });
-
-  // Check if the store exists and belongs to the user
-  if (!store) {
-    throw new Error("Store not found for the given user");
-  }
-
-  // Extract product IDs from the store's products
-  const productIds = store.products.map(product => product.id);
-
-  // Fetch orders containing any of the store's products
-  const orders = await db.order.findMany({
-    where: {      
-      orderItems: {
-        some: {
-          productId: {
-            in: productIds,
+  export async function getProductsOrdersForStore(storeId: string, userId: string) {
+    try {
+      return await db.$transaction(async (prisma) => {
+        // Fetch the store based on storeId and userId
+        const store = await prisma.store.findUnique({
+          where: { id: storeId, userId: userId },
+          include: {
+            products: true,
           },
-        },
-      },
-    },
-    include: {
-      orderItems: true,
-    },
-  });
-
-  return orders;
-}
+        });
+  
+        // Check if the store exists and belongs to the user
+        if (!store) {
+          throw new Error("Store not found for the given user");
+        }
+  
+        // Extract product IDs from the store's products
+        const productIds = store.products.map((product) => product.id);
+  
+        // Fetch orders containing any of the store's products
+        const orders = await prisma.order.findMany({
+          where: {
+            orderItems: {
+              some: {
+                productId: {
+                  in: productIds,
+                },
+              },
+            },
+          },
+          include: {
+            orderItems: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        });
+  
+        return orders;
+      });
+    } catch (error) {
+      console.error("Error fetching product orders for store:", error);
+      throw new Error("Failed to fetch product orders. Please try again later.");
+    }
+  }
   
   
   
@@ -83,6 +93,9 @@ export async function getStoreDesignOrders(storeId : string) {
         frontsellerDesign: true,
         backsellerDesign: true,
       },
+      orderBy :{
+        createdAt : 'desc'
+      }
     });
 
     const result = orders.map((orderItem) => {

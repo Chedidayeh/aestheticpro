@@ -435,15 +435,14 @@ useEffect(() => {
 
                                 {/* The AlertDialog loading component */}
                                 <AlertDialog open={openDialog} >
-          
-                          <AlertDialogContent>
-                            <AlertDialogHeader className="flex flex-col items-center">
+                                <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                                <AlertDialogHeader className="flex flex-col items-center">
                             <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
                             Creating Your Order!
                               </AlertDialogTitle>
                               <AlertDialogDescription className="flex flex-col items-center">
                                 This will take a moment.
-          <Loader className="text-blue-700 h-[30%] w-[30%] animate-spin mt-3" />
+                                <Loader className="text-blue-700 h-[30%] w-[30%] animate-spin mt-3" />
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                           </AlertDialogContent>
@@ -456,8 +455,8 @@ useEffect(() => {
 <AlertDialog open={isConfirmOpen}>
       <AlertDialogTrigger asChild>
       </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
+      <AlertDialogContent className="rounded-xl max-w-[90%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader>
           <AlertDialogTitle>Creating your Order</AlertDialogTitle>
           <AlertDialogDescription>
             Please make sure to fill all the necessary details!
@@ -466,7 +465,7 @@ useEffect(() => {
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-left">
-              Your Name :
+              Your Name:
             </Label>
             <Input id="name" type="text" className="col-span-3" value={name} onChange={handleNameChange} />
           </div>
@@ -496,7 +495,7 @@ useEffect(() => {
             <Label htmlFor="address" className="text-left">
               Your Address:
             </Label>
-            <Input id="address" placeholder='Region And City | الولاية و المدينة' maxLength={20} type="text" className="col-span-3" value={address} onChange={handleAddressChange} />
+            <Input id="address" placeholder='الولاية و المدينة' maxLength={20} type="text" className="col-span-3" value={address} onChange={handleAddressChange} />
           </div>
         </div>
         <AlertDialogFooter>

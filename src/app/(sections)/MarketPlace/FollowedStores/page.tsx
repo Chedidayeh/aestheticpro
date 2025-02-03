@@ -37,7 +37,7 @@ export default async function Page() {
   if(!user) {
     return (
       <AlertDialog open={true} >
-      <AlertDialogContent>
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
       <AlertDialogHeader className="flex flex-col items-center">
           <div className="text-red-500 mb-2">
               <OctagonAlert className=''/>
@@ -48,13 +48,11 @@ export default async function Page() {
           <AlertDialogDescription>
               Log In to view this page !
             </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <LoadingLink  href="/auth/sign-in" ><Button variant="link">
+            <LoadingLink  href="/auth/sign-in" ><Button size={"sm"} variant="default">
             Log In
               </Button>
               </LoadingLink>
-          </AlertDialogFooter>
+          </AlertDialogHeader>
       </AlertDialogContent>
   </AlertDialog>
     )

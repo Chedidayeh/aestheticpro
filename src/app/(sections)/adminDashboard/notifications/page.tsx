@@ -98,18 +98,20 @@ export default function Page() {
     <>
     
     <AlertDialog open={isPending}>
-    <AlertDialogContent className="flex flex-col items-center">
-      <AlertDialogHeader className="flex flex-col items-center">
+    <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+    <AlertDialogHeader className="flex flex-col items-center">
       <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
           Sending !
         </AlertDialogTitle>
         <AlertDialogDescription className="flex flex-col items-center">
-          This can take a while.
+          This will take a moment.
         </AlertDialogDescription>
+        <div className="text-blue-700 mb-2">
+          <Loader className="animate-spin" />
+       </div>  
       </AlertDialogHeader>
-      <div className="text-blue-700 mb-2">
-                        <Loader className="animate-spin" />
-                      </div>          </AlertDialogContent>
+        
+    </AlertDialogContent>
   </AlertDialog>
   
   

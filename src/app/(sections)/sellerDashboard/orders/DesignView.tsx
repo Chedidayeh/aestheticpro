@@ -161,6 +161,7 @@ const DesignView: React.FC<DesignViewProps> = ({ orderedDesigns }) => {
       <TableHeader>
         <TableRow>
           <TableHead>Order Id</TableHead>
+          <TableHead>Order Date</TableHead>
           <TableHead>Order Status</TableHead>
           <TableHead>Order Type</TableHead>
           <TableHead >Order Payment</TableHead>
@@ -174,9 +175,12 @@ const DesignView: React.FC<DesignViewProps> = ({ orderedDesigns }) => {
       <TableBody>
         {filteredOrders.map((orderItem) => (
           <TableRow key={orderItem.order.id}>
-            <TableCell>{orderItem.order.id}</TableCell>
+            <TableCell className="text-xs">{orderItem.order.id}</TableCell>
+            <TableCell className="text-xs">
+              {new Date(orderItem.order.createdAt).toLocaleString()}
+            </TableCell>
             <TableCell>
-              <Badge className={`${{
+              <Badge className={`text-white ${{
                 'PROCESSING': 'bg-blue-700',
                 'DELIVERED': 'bg-green-700',
                 'REFUSED': 'bg-red-700',
@@ -186,12 +190,12 @@ const DesignView: React.FC<DesignViewProps> = ({ orderedDesigns }) => {
               </Badge>
             </TableCell>
             <TableCell>
-              <Badge className={`${orderItem.order.type === 'CONFIRMED' ? 'bg-green-700' : orderItem.order.type === 'NOT_CONFIRMED' ? 'bg-orange-400' : orderItem.order.type === 'CANCELED' ? 'bg-red-700' : 'bg-gray-700'} hover:bg-gray-700`}>
+              <Badge className={`text-white ${orderItem.order.type === 'CONFIRMED' ? 'bg-green-700' : orderItem.order.type === 'NOT_CONFIRMED' ? 'bg-orange-400' : orderItem.order.type === 'CANCELED' ? 'bg-red-700' : 'bg-gray-700'} hover:bg-gray-700`}>
                 {orderItem.order.type}
               </Badge>
             </TableCell>
             <TableCell >
-              <Badge className={`${orderItem.order.isPaid ? 'bg-green-700' : 'bg-red-700'} hover:bg-gray-700`}>
+              <Badge className={`text-white ${orderItem.order.isPaid ? 'bg-green-700' : 'bg-red-700'} hover:bg-gray-700`}>
                 {orderItem.order.isPaid ? "Is Paid" : "Not Paid"}
               </Badge>
             </TableCell>

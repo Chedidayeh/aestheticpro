@@ -45,8 +45,8 @@ export default async function Page({ params }: PageProps) {
     if (cat?.disableCategory === true) return (
       <>
       <AlertDialog open={true} >
-<AlertDialogContent>
-<AlertDialogHeader className="flex flex-col items-center">
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader className="flex flex-col items-center">
 <div className="text-red-500 mb-2">
 <OctagonAlert className=''/>
 </div>
@@ -56,13 +56,11 @@ This category is unavailable for now !
 <AlertDialogDescription>
 Please return to the home page !
 </AlertDialogDescription>
-</AlertDialogHeader>
-<AlertDialogFooter>
-<LoadingLink  href="/" ><Button variant="link">
-  Return
+<LoadingLink  href="/" ><Button size={"sm"} variant="default">
+  Return 
     </Button>
     </LoadingLink>
-</AlertDialogFooter>
+</AlertDialogHeader>
 </AlertDialogContent>
       </AlertDialog>
       <div className="mb-96"></div>

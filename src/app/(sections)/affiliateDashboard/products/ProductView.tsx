@@ -797,8 +797,8 @@ const ProductView = ({ initialProducts,totalCount,initialPage, limit, user , aff
 
 
 <AlertDialog open={openWindow}>
-          <AlertDialogContent>
-            <AlertDialogHeader className="flex flex-col items-center">
+<AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+<AlertDialogHeader className="flex flex-col items-center">
               <div className="text-green-500 mb-2">
                 <CircleCheck size={42} />
               </div>
@@ -835,20 +835,16 @@ const ProductView = ({ initialProducts,totalCount,initialPage, limit, user , aff
 
                                               {/* downloading Loader  */}
                                               <AlertDialog open={isDownloadOpen} >
-                                       <AlertDialogTrigger asChild>
-                                        </AlertDialogTrigger>
-                                          <AlertDialogContent className=" flex flex-col items-center justify-center">
+                                              <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
                                               <AlertDialogHeader className="flex flex-col items-center justify-center">
-          <Loader className="text-blue-700 h-[30%] w-[30%] animate-spin mt-3" />
-                                              <AlertDialogTitle className="flex flex-col items-center justify-center">Loading</AlertDialogTitle>
-                                            </AlertDialogHeader>
-                                            <AlertDialogDescription className="flex flex-col items-center justify-center">
+                                              <AlertDialogTitle className="flex flex-col items-center justify-center">Downloading</AlertDialogTitle>
+                                              <AlertDialogDescription className="flex flex-col items-center justify-center">
                                               Please wait while downloading...
                                             </AlertDialogDescription>
-                                                    <AlertDialogFooter>
-                                                    </AlertDialogFooter>
+                                            <Loader size={20} className="text-blue-700 animate-spin mt-3" />
+                                            </AlertDialogHeader>
                                                 </AlertDialogContent>
-                                  </AlertDialog>
+                                         </AlertDialog>
 
 
                             </>

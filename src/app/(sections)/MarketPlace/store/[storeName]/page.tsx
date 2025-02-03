@@ -40,8 +40,6 @@ interface PageProps {
 export default async function Page({ params }: PageProps) {
 
   try {
-    
-
   
   const { storeName } = params;
   const platform = await getPlatformForTheWebsite()
@@ -49,19 +47,14 @@ export default async function Page({ params }: PageProps) {
   const page = 1; // Initial page
   const decodedStoreName = decodeURIComponent(storeName);
 
-  let user = null;
-  let store = null;
-
-    user = await getUser();
-
-
-    store = await getStoreByStoreName(decodedStoreName);
+  const user = await getUser();
+  const store = await getStoreByStoreName(decodedStoreName);
 
   if (!store) {
         return <NotFound />;
 
   } else {
-    try {
+
       const storeProductsCount = await getStoreProductsCount(store.id!);
       const { products, totalCount } = await getStoreProducts(
         store.id!,
@@ -98,38 +91,10 @@ export default async function Page({ params }: PageProps) {
           </section>
         </>
       );
-    } catch (error) {
-      console.error("Error fetching store data:", error);
-      return (
-        <AlertDialog open={true}>
-          <AlertDialogContent>
-            <AlertDialogHeader className="flex flex-col items-center">
-              <div className="text-red-500 mb-2">
-                <OctagonAlert />
-              </div>
-              <AlertDialogTitle className="text-xl font-semibold text-center text-red-500">
-                Something went wrong!
-              </AlertDialogTitle>
-              <AlertDialogDescription>
-                We encountered an error while loading the store data. Please try
-                again later.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <Link className="text-right" href="/">
-                <Button variant="link">Return</Button>
-              </Link>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      );
-    }
   }
 
 } catch (error) {
   console.error("Error rendering store page:", error);
   return <ErrorState/>
-
-    
 }
 }

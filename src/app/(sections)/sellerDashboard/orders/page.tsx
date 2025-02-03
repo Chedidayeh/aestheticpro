@@ -9,6 +9,7 @@ import ErrorState from '@/components/ErrorState';
 
 interface GroupedOrder {
   id: string;
+  date : Date
   status : string;
   type : string;
   isSellerOrder : boolean;
@@ -47,7 +48,7 @@ const Page = async () => {
   for (const order of storeOrdersForProducts) {
     const orderId = order.id;
     if (!groupedProductsOrders[orderId]) {
-      groupedProductsOrders[orderId] = { id: orderId, status : order.status , type : order.type, isSellerOrder : order.isSellerOrder, isPaid : order.isPaid , items: [] };
+      groupedProductsOrders[orderId] = { id: orderId, date : order.createdAt, status : order.status , type : order.type, isSellerOrder : order.isSellerOrder, isPaid : order.isPaid , items: [] };
     }
 
     for (const item of order.orderItems) {

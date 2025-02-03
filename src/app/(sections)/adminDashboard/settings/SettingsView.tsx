@@ -788,15 +788,15 @@ const SettingsView = ({ platform , collections , levels }: ViewProps ) => {
                         </Card>
 
                         <AlertDialog open={isCreateOpen}>
-  <AlertDialogContent>
-    <AlertDialogHeader className="flex flex-col items-center">
+                        <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                        <AlertDialogHeader className="flex flex-col items-center">
       <h2 className="text-xl font-semibold mb-4">Add New Level</h2>
     </AlertDialogHeader>
     <ScrollArea className=" w-full h-72 p-2">
 
     <div className="grid gap-4">
       <div className="flex flex-col">
-        <label htmlFor="levelNumber" className="mb-1 text-sm font-medium text-gray-700">
+        <label htmlFor="levelNumber" className="mb-1 text-sm font-medium ">
           Level Number
         </label>
         <Input
@@ -812,7 +812,7 @@ const SettingsView = ({ platform , collections , levels }: ViewProps ) => {
       </div>
 
       <div className="flex flex-col">
-        <label htmlFor="minSales" className="mb-1 text-sm font-medium text-gray-700">
+        <label htmlFor="minSales" className="mb-1 text-sm font-medium ">
           Minimum Sales
         </label>
         <Input
@@ -828,7 +828,7 @@ const SettingsView = ({ platform , collections , levels }: ViewProps ) => {
       </div>
 
       <div className="flex flex-col">
-        <label htmlFor="productLimit" className="mb-1 text-sm font-medium text-gray-700">
+        <label htmlFor="productLimit" className="mb-1 text-sm font-medium ">
           Product Limit
         </label>
         <Input
@@ -844,7 +844,7 @@ const SettingsView = ({ platform , collections , levels }: ViewProps ) => {
       </div>
 
       <div className="flex flex-col">
-        <label htmlFor="designLimit" className="mb-1 text-sm font-medium text-gray-700">
+        <label htmlFor="designLimit" className="mb-1 text-sm font-medium ">
           Design Limit
         </label>
         <Input
@@ -861,7 +861,7 @@ const SettingsView = ({ platform , collections , levels }: ViewProps ) => {
 
       {/* Benefit Input */}
       <div className="flex flex-col">
-              <label htmlFor="benefitInput" className="mb-1 text-sm font-medium text-gray-700">
+              <label htmlFor="benefitInput" className="mb-1 text-sm font-medium ">
                 Add Benefit
               </label>
               <Input
@@ -880,7 +880,7 @@ const SettingsView = ({ platform , collections , levels }: ViewProps ) => {
               <h3 className="text-lg font-semibold">Benefits:</h3>
               <ul className="list-disc pl-5">
                 {newLevel.benefits.map((benefit, index) => (
-                  <li key={index} className="text-sm text-gray-700">{benefit}</li>
+                  <li key={index} className="text-sm ">{benefit}</li>
                 ))}
               </ul>
             </div>

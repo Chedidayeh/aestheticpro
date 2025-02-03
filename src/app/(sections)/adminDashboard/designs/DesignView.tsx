@@ -742,24 +742,22 @@ const handleSwitchChange = () => {
 
                                               {/* downloading Loader  */}
                                               <AlertDialog open={open} >
-                                          <AlertDialogContent className=" flex flex-col items-center justify-center">
+                                              <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
                                               <AlertDialogHeader className="flex flex-col items-center justify-center">
-                                              <Loader className="text-blue-700 h-[30%] w-[30%] animate-spin mt-3" />
-                                              <AlertDialogTitle className="flex flex-col items-center justify-center">Loading</AlertDialogTitle>
-                                            </AlertDialogHeader>
-                                            <AlertDialogDescription className="flex flex-col items-center justify-center">
+                                              <AlertDialogTitle className="flex flex-col items-center justify-center">Downloading</AlertDialogTitle>
+                                              <AlertDialogDescription className="flex flex-col items-center justify-center">
                                               Please wait while downloading...
                                             </AlertDialogDescription>
-                                                    <AlertDialogFooter>
-                                                    </AlertDialogFooter>
+                                            <Loader size={20} className="text-blue-700 animate-spin mt-3" />
+                                            </AlertDialogHeader>
                                                 </AlertDialogContent>
                                          </AlertDialog>
 
 
 
                           <AlertDialog open={isDeleteOpen}>
-                            <AlertDialogContent>
-                                   <AlertDialogHeader className="flex flex-col items-center">
+                          <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                          <AlertDialogHeader className="flex flex-col items-center">
                                        <div className="text-red-500 mb-2">
                                            <OctagonAlert className=''/>
                                                </div>
@@ -781,8 +779,8 @@ const handleSwitchChange = () => {
                      </AlertDialog> 
 
                                   <AlertDialog open={isDialogOpen}>
-                                    <AlertDialogContent>
-                                      <AlertDialogHeader>
+                                  <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                                  <AlertDialogHeader>
                                         <AlertDialogTitle>Reason for rejecting</AlertDialogTitle>
                                       </AlertDialogHeader>
                                       <div className="grid gap-4 py-4">

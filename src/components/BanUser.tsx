@@ -47,8 +47,8 @@ const BanUser= () => {
     {user && user.isUserBanned && (
 
   <AlertDialog open={true} >
-  <AlertDialogContent>
-    <AlertDialogHeader className="flex flex-col items-center">
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader className="flex flex-col items-center">
       <AlertDialogTitle className="font-bold text-center">
       <Label className='text-red-500 text-xl'>You've been banned !</Label>
       </AlertDialogTitle>

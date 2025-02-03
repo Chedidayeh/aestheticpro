@@ -746,7 +746,7 @@ const handleSortChange = (event: string) => {
             
                 const saveCapturedFrontDesign = async (user : User, designPath : string, designType : string, isSellerDesign : boolean) => {
                   const containerRef = designType === 'front' ? FrontcontainerRef : BackcontainerRef;
-                  const dataUrl = await toPng(containerRef.current!, { cacheBust: false, pixelRatio: 10 });
+                  const dataUrl = await toPng(containerRef.current!, { cacheBust: false, pixelRatio: 15 });
                 
                   const file = getFile(dataUrl);
                   const capturedProductPath = await uploadCapturedMockup(file);
@@ -760,7 +760,7 @@ const handleSortChange = (event: string) => {
             
                 const saveCapturedBackDesign = async (user : User, designPath : string, designType : string, isSellerDesign : boolean) => {
                   const containerRef = designType === 'front' ? FrontcontainerRef : BackcontainerRef;
-                  const dataUrl = await toPng(containerRef.current!, { cacheBust: false, pixelRatio: 10 });
+                  const dataUrl = await toPng(containerRef.current!, { cacheBust: false, pixelRatio: 15 });
                 
                   const file = getFile(dataUrl);
                   const capturedProductPath = await uploadCapturedMockup(file);
@@ -773,8 +773,8 @@ const handleSortChange = (event: string) => {
                 
             
                 const saveCapturedBothDesigns = async () => {
-                  const frontDataUrl = await toPng(FrontcontainerRef.current!, { cacheBust: false, pixelRatio: 10 });
-                  const backDataUrl = await toPng(BackcontainerRef.current!, { cacheBust: false, pixelRatio: 10 });
+                  const frontDataUrl = await toPng(FrontcontainerRef.current!, { cacheBust: false, pixelRatio: 15 });
+                  const backDataUrl = await toPng(BackcontainerRef.current!, { cacheBust: false, pixelRatio: 15 });
                 
                   const frontFile = getFile(frontDataUrl);
                   const backFile = getFile(backDataUrl);
@@ -1480,8 +1480,8 @@ const handleSortChange = (event: string) => {
                       {/* The AlertDialog component */}
                       <AlertDialog open={openDialog} >
 
-                          <AlertDialogContent>
-                            <AlertDialogHeader className="flex flex-col items-center">
+                      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                      <AlertDialogHeader className="flex flex-col items-center">
                               <div></div>
                               <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
                               Passing to shipping informations !

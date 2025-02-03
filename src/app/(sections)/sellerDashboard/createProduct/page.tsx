@@ -21,6 +21,7 @@ import Link from "next/link";
 import { unstable_noStore as noStore } from "next/cache"
 import { getAllCollections } from "../../adminDashboard/settings/actions"
 import ErrorState from "@/components/ErrorState";
+import LoadingLink from "@/components/LoadingLink";
 const Page =  async () => {
 
   try {
@@ -38,7 +39,7 @@ const Page =  async () => {
   if(platform?.closeCreation) {
     return (
       <AlertDialog open={true} >
-      <AlertDialogContent>
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
       <AlertDialogHeader className="flex flex-col items-center">
           <div className="text-red-500 mb-2">
               <OctagonAlert className=''/>
@@ -47,15 +48,13 @@ const Page =  async () => {
               Product Creation is Deactivated ! 
           </AlertDialogTitle>
           <AlertDialogDescription>
-              We will send you a notification when product creation is activated !
+              We will send you a notification when product creation is activated!
             </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <Link  href="/sellerDashboard" ><Button variant="link">
+            <LoadingLink  href="/sellerDashboard" ><Button size={"sm"} variant="default">
             Return to Seller Dashboard
               </Button>
-              </Link>
-          </AlertDialogFooter>
+              </LoadingLink>
+          </AlertDialogHeader>
       </AlertDialogContent>
   </AlertDialog>
     )
@@ -63,8 +62,8 @@ const Page =  async () => {
   if ((store.productCount === level.productLimit) && store.unlimitedCreation === false ) {
     return (
       <AlertDialog open={true}>
-        <AlertDialogContent>
-          <AlertDialogHeader className="flex flex-col items-center">
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader className="flex flex-col items-center">
             <div className="text-red-500 mb-2">
               <OctagonAlert className='' />
             </div>
@@ -74,14 +73,11 @@ const Page =  async () => {
             <AlertDialogDescription>
               You have reached your product upload limit.
             </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <Link href="/sellerDashboard">
-              <Button variant="link">
-                Return to Seller Dashboard
+            <LoadingLink  href="/sellerDashboard" ><Button size={"sm"} variant="default">
+            Return to Seller Dashboard
               </Button>
-            </Link>
-          </AlertDialogFooter>
+              </LoadingLink>
+          </AlertDialogHeader>
         </AlertDialogContent>
       </AlertDialog>
     );

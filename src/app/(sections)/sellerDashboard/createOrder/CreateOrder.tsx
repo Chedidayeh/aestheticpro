@@ -523,9 +523,8 @@ const CreateOrder = ({
                              
                              {/* The AlertDialog loading component */}
                              <AlertDialog open={openDialog} >
-
-                          <AlertDialogContent>
-                            <AlertDialogHeader className="flex flex-col items-center">
+                             <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                             <AlertDialogHeader className="flex flex-col items-center">
                             <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
                             Creating Your Order!
                               </AlertDialogTitle>
@@ -544,8 +543,8 @@ const CreateOrder = ({
                     <AlertDialog open={isDialogOpen}>
                           <AlertDialogTrigger asChild>
                           </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
+                          <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+                          <AlertDialogHeader>
                               <AlertDialogTitle>Creating a client Order</AlertDialogTitle>
                               <AlertDialogDescription>
                                 Please make sure to fill all the necessary details!

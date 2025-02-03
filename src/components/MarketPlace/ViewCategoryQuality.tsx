@@ -34,7 +34,7 @@ const ViewCategoryQuality = ( {category} : { category: Category } ) => {
 
       <>
               <AlertDialog open={isOpen}  >
-        <AlertDialogContent className={`flex flex-col items-center justify-center bg-slate-200`}>
+              <AlertDialogContent className="rounded-xl p-16 md:p-8 max-w-[90%] flex flex-col items-center justify-center bg-slate-200 sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
         <div className="flex items-center justify-center cursor-pointer">
           <Badge variant="secondary">
           {category.label}

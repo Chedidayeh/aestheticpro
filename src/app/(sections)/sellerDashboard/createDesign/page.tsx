@@ -37,8 +37,8 @@ import ErrorState from '@/components/ErrorState';
     if(platform?.closeCreation) {
       return (
         <AlertDialog open={true} >
-        <AlertDialogContent>
-        <AlertDialogHeader className="flex flex-col items-center">
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader className="flex flex-col items-center">
             <div className="text-red-500 mb-2">
                 <OctagonAlert className=''/>
             </div>
@@ -48,13 +48,11 @@ import ErrorState from '@/components/ErrorState';
             <AlertDialogDescription>
                 We will send you a notification when Design creation is activated !
               </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <LoadingLink  href="/sellerDashboard" ><Button variant="link">
+              <LoadingLink  href="/sellerDashboard" ><Button size={"sm"} variant="default">
               Return to Seller Dashboard
                 </Button>
                 </LoadingLink>
-            </AlertDialogFooter>
+            </AlertDialogHeader>
         </AlertDialogContent>
     </AlertDialog>
       )
@@ -63,8 +61,8 @@ import ErrorState from '@/components/ErrorState';
     if ((store.designsCount === level.designLimit) && store.unlimitedCreation === false ) {
       return (
         <AlertDialog open={true} >
-        <AlertDialogContent>
-        <AlertDialogHeader className="flex flex-col items-center">
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader className="flex flex-col items-center">
             <div className="text-red-500 mb-2">
                 <OctagonAlert className=''/>
             </div>
@@ -74,13 +72,11 @@ import ErrorState from '@/components/ErrorState';
             <AlertDialogDescription>
             You have reached your design upload limit.
             </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <LoadingLink  href="/sellerDashboard" ><Button variant="link">
+            <LoadingLink  href="/sellerDashboard" ><Button size={"sm"} variant="default">
               Return to Seller Dashboard
                 </Button>
                 </LoadingLink>
-            </AlertDialogFooter>
+            </AlertDialogHeader>
         </AlertDialogContent>
     </AlertDialog>
       )

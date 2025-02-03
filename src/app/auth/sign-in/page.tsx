@@ -125,7 +125,7 @@ const Page = () => {
 
 
 <div className='relative flex mt-32 pb-10 flex-col items-center justify-center lg:px-0 lg:mb-36 mb-44'>
-  <Card className=' flex w-full shadow-xl flex-col justify-center sm:w-[450px]'>
+  <Card className=' flex w-[350px] flex-col justify-center sm:w-[450px]'>
     <CardHeader className="flex flex-col items-center space-y-3 text-center">
       <div className='animate-pulse' style={{ width: '100px', height: '100px' }}>
         <NextImage

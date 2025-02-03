@@ -55,8 +55,8 @@ const RedirectPage = ({  affiliateLink , user }: PageProps) => {
       {/* Your AlertDialog and countdown UI */}
       {user ? (
       <AlertDialog open={true}>
-        <AlertDialogContent>
-          <AlertDialogHeader className="flex flex-col items-center">
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+        <AlertDialogHeader className="flex flex-col items-center">
             <div className="text-blue-700 mb-2">
               <Loader className="animate-spin" />
             </div>
@@ -71,9 +71,9 @@ const RedirectPage = ({  affiliateLink , user }: PageProps) => {
       </AlertDialog>
       ) : (
         <AlertDialog open={true}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-2xl text-center font-bold tracking-tight">
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+        <AlertDialogHeader>
+            <AlertDialogTitle className="text-xl text-center font-bold tracking-tight">
               Log in to continue
             </AlertDialogTitle>
             <AlertDialogDescription className="text-sm text-center py-2">
