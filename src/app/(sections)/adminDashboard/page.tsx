@@ -23,6 +23,7 @@ import { unstable_noStore as noStore } from "next/cache"
 import { Component } from "@/components/adminDashboard/Chart";
 import { StoresTableStats } from "@/components/adminDashboard/StoresTableStats";
 import { ProductsViewsChart } from "@/components/adminDashboard/ProductsViewsChart";
+import ReportData from "@/components/adminDashboard/ReportData";
 
 
 export default async function Page() {
@@ -46,6 +47,8 @@ export default async function Page() {
             </Button>
           </Link>
          )}
+
+         <ReportData/>
 
 
 

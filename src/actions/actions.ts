@@ -4,6 +4,68 @@ import { auth } from "@/auth";
 import { db } from "@/db"
 import { Order, OrderItem, Product, SellerDesign, Store, UserType } from "@prisma/client";
 
+
+export async function getReportData() {
+  try {
+    // Fetch platform data for total income
+    const platform = await getPlatformForTheWebsite();
+
+    // Fetch users along with their stores, affiliates, and related data
+    const users = await db.user.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        phoneNumber: true,
+        store: {
+          select: {
+            id: true,
+            storeName: true,
+            userPhoneNumber : true,
+            revenue: true,  // Store's revenue (profit)
+          },
+        },
+        affiliate: {
+          select: {
+            id: true,
+            phoneNumber: true,
+            totalIncome: true,  // Affiliate's total income (profit)
+          },
+        },
+      },
+    });
+
+    // Filter users who have either a store or are an affiliate
+    const filteredUsers = users.filter((user) => user.store || user.affiliate);
+
+    // Organize the data to include platform total income and individual user/store/affiliate data
+    const reportData = filteredUsers.map((user) => {
+      const storeProfit = user.store ? user.store.revenue : 0;
+      const affiliateProfit = user.affiliate ? user.affiliate.totalIncome : 0;
+
+      return {
+        userName: user.name,
+        userEmail: user.email,
+        userPhone: user.phoneNumber ?? user.affiliate?.phoneNumber ?? user.store?.userPhoneNumber,
+        storeProfit,
+        storeName: user.store?.storeName,
+        affiliateProfit,
+        affiliateId: user.affiliate?.id,
+      };
+    });
+
+    return {
+      platformProfit: platform?.totalIncome || 0,
+      reportData,
+    };
+
+  } catch (error) {
+    console.error('Error fetching report data:', error);
+    throw new Error('Unable to fetch report data');
+  }
+}
+
+
 export async function createPlatform(userId:string) {
 
   await db.platform.create({
