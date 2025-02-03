@@ -30,7 +30,7 @@ const ErrorState = () =>{
         </AlertDialogHeader>
         <AlertDialogFooter>
           <LoadingLink className="text-right" href="/">
-            <Button size={"sm"} variant="default">Return &rarr;</Button>
+            <Button className='bg-red-500 hover:bg-red-500 text-white' size={"sm"} variant="default">Return &rarr;</Button>
           </LoadingLink>
         </AlertDialogFooter>
       </AlertDialogContent>

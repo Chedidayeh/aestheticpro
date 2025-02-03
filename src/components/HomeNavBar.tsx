@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import MaxWidthWrapper from './MaxWidthWrapper'
 import { buttonVariants } from './ui/button'
-import { CircleDollarSign, Heart, Home, Menu, Shirt, ShoppingBasket, ShoppingCart, Store, UserRoundX } from 'lucide-react'
+import { AppWindow, CircleDollarSign, Heart, Home, LayoutPanelLeft, Menu, Shirt, ShoppingBasket, ShoppingCart, Store, UserRoundX } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { fetchCartProductCount, getAllProductsCategories, getUser, getUserOrders } from '@/actions/actions'
 import UserProfile from './UserProfile'
@@ -18,11 +18,51 @@ import { db } from '@/db'
 import { getUserFavoriteList } from '@/app/(sections)/MarketPlace/favList/actions'
 import { countBestSellingProducts } from '@/app/(sections)/MarketPlace/BestSelling/actions'
 import LoadingLink from './LoadingLink'
-import { cn } from '@/lib/utils'
 import ErrorState from './ErrorState'
+import { cn } from "@/lib/utils"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
+import React from 'react'
+import Link from 'next/link'
+
+
+const ListItem = React.forwardRef<
+  React.ElementRef<"a">,
+  React.ComponentPropsWithoutRef<"a">
+>(({ className, title, children, ...props }, ref) => {
+  return (
+    <li>
+      <NavigationMenuLink asChild>
+        <a
+          ref={ref}
+          className={cn(
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            className
+          )}
+          {...props}
+        >
+          <div className="text-sm font-medium leading-none">{title}</div>
+          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+            {children}
+          </p>
+        </a>
+      </NavigationMenuLink>
+    </li>
+  )
+})
+ListItem.displayName = "ListItem"
 
 
 const Navbar = async () => {
+
+
 
   try {
     
@@ -66,7 +106,7 @@ const Navbar = async () => {
           </SheetTrigger>
             <SheetContent side="top" className='w-full'>
               {/* Middle Section for small devices */}
-              <div className='flex justify-center items-center flex-col space-y-4 mt-20'>
+              <div className='flex justify-center items-center flex-col space-y-4 mt-12'>
                 <DialogClose>
                 <LoadingLink href="/" className={buttonVariants({
                   size: 'sm',
@@ -102,7 +142,7 @@ const Navbar = async () => {
                 </DialogClose>
               )}
 
-          <DialogClose>
+          {/* <DialogClose>
                 <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button size="sm" variant="outline" className="hover:text-purple-500">
@@ -126,9 +166,8 @@ const Navbar = async () => {
                 </DropdownMenuContent>
               </DropdownMenu>
 
-                </DialogClose>   
+                </DialogClose>    */}
                 
-
                 <DialogClose>
                   <Button variant={"outline"} size={"sm"} >                 
                     <ModeToggle/>
@@ -162,7 +201,7 @@ const Navbar = async () => {
               MarketPlace ✨
             </LoadingLink>
 
-            {bestSellingProducts! > 0 && (
+            {/* {bestSellingProducts! > 0 && (
             <LoadingLink href="/MarketPlace/BestSelling" className={buttonVariants({
               size: 'sm',
               variant: 'ghost',
@@ -171,9 +210,9 @@ const Navbar = async () => {
               <CircleDollarSign size={15} className='mr-1' />
               Best Selling
             </LoadingLink>
-          )}
+          )} */}
 
-            <DropdownMenu>
+            {/* <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button size="sm" variant="ghost" className="hover:text-purple-500">
                   <Shirt size={15} className="mr-1" />
@@ -195,9 +234,51 @@ const Navbar = async () => {
                     <DropdownMenuItem disabled>No data for now!</DropdownMenuItem>
                   )}
                 </DropdownMenuContent>
-            </DropdownMenu>
+            </DropdownMenu> */}
+
+            <NavigationMenu>
+      <NavigationMenuList>
+
+        <NavigationMenuItem>
+          <NavigationMenuTrigger className={buttonVariants({
+              size: 'sm',
+              variant: 'ghost',
+              className: "hover:text-purple-500"
+            })}><LayoutPanelLeft size={15} className='mr-1' /> About</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+              <li className="row-span-3">
+                <NavigationMenuLink asChild>
+                  <Link
+                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                    href="/"
+                  >
+              <div className="mb-2 mt-4 text-lg font-semibold">
+                Aesthetic Pro Platform
+              </div>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                Where creativity meets opportunity, turning art into profit.
+              </p>
 
 
+                  </Link>
+                </NavigationMenuLink>
+              </li>
+              <ListItem href="/about" title="About Us">
+                Discover our mission, vision, and the values that drive us.
+              </ListItem>
+              <ListItem href="/services" title="Services">
+                Explore the services we offer.
+              </ListItem>
+              <ListItem href="/contact" title="Contact">
+                Get in touch with us.
+              </ListItem>
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+
+      </NavigationMenuList>
+    </NavigationMenu>
 
             <div className='h-8 w-px bg-zinc-200 hidden sm:block' />
 
