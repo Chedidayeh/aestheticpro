@@ -99,7 +99,7 @@ const SearchBar = () => {
           </AlertDialogContent>
           </AlertDialog>
 
-          <div className='flex gap-4 items-center justify-center mt-2'>
+          <div className='flex gap-2 items-center justify-center mt-2'>
             <Input
               type="search"
               className="w-[500px] border-2 border-blue-500"

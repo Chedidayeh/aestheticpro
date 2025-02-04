@@ -106,7 +106,7 @@ const Navbar = async () => {
           </SheetTrigger>
             <SheetContent side="top" className='w-full'>
               {/* Middle Section for small devices */}
-              <div className='flex justify-center items-center flex-col space-y-4 mt-12'>
+              <div className='flex justify-center items-center flex-col space-y-4 mt-16'>
                 <DialogClose>
                 <LoadingLink href="/" className={buttonVariants({
                   size: 'sm',
