@@ -124,7 +124,7 @@ const CategoryView: React.FC<CategoryViewProps> = ({ categories  }) => {
           </div>
         </div>
 
-        <div className="grid mt-2 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-2 w-full max-w-6xl">
+        <div className="grid mt-2 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-2 w-full max-w-6xl">
           {categories.map((category, index) => (
             <div
               key={index}
