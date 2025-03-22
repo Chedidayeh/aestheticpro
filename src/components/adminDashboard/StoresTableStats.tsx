@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ScrollArea } from '../ui/scroll-area';
 
 interface ChartData {
   storeId : string
@@ -99,7 +100,7 @@ export function StoresTableStats({chartData} : {chartData : ChartData[]}) {
 
   return (
     <Card className="w-full">
-      <CardHeader>
+      <CardHeader className="bg-muted/50 rounded-t-lg">
         <CardTitle className="text-lg">Store Stats</CardTitle>
         <CardDescription>
             <p>Total stores is : {chartData.length} </p>
@@ -107,10 +108,11 @@ export function StoresTableStats({chartData} : {chartData : ChartData[]}) {
       </CardHeader>
 
       <CardContent>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
+        <div className="grid mt-2 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
           {Object.keys(chartConfig).map((key) => (
             <Button
               variant={activeChart === key ? "default" : "secondary"}
+              className={activeChart === key ? "text-white" : ""}
               size="sm"
               key={key}
               onClick={() => setActiveChart(key as keyof typeof chartConfig)}
@@ -126,6 +128,11 @@ export function StoresTableStats({chartData} : {chartData : ChartData[]}) {
 
 
         <Table className="min-w-full">
+        <ScrollArea
+          className={`${
+            sortedChartData.length < 10 ? "max-h-max" : "h-[560px]"
+          } w-full border rounded-lg mt-4`}
+        >    
           <TableHeader>
             <TableRow>
              <TableHead className=" text-left">Logo</TableHead>
@@ -169,6 +176,8 @@ export function StoresTableStats({chartData} : {chartData : ChartData[]}) {
               </TableCell>
             </TableRow>
           </tfoot>
+
+          </ScrollArea>
         </Table>
 
         </section>

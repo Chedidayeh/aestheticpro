@@ -15,10 +15,10 @@ import { useToast } from '@/components/ui/use-toast'
 import {  ChangeEvent, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import React from 'react';
-import {  CircleDollarSign, CreditCard, OctagonAlert, SquarePen, Trash2 } from 'lucide-react';
+import {  CircleAlert, CircleDollarSign, CreditCard, OctagonAlert, SquarePen, Trash2 } from 'lucide-react';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -234,21 +234,19 @@ const [open, setOpen] = useState<boolean>(false);
 <p className="text-sm text-muted-foreground mb-2">SellerDashboard/All Designs</p>
   <h1 className="text-2xl font-semibold mb-8">All Designs</h1>
   <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-  <CardHeader className="px-7 space-y-4">
+  <CardHeader className="px-7 space-y-4 bg-muted/50 rounded-t-lg">
   <CardDescription>Total Designs: {SellerDesignsData.length} | <span className="text-blue-500">your store limit : {!store.unlimitedCreation ?  level.designLimit : "unlimited"} designs</span></CardDescription>
   
-      <LoadingLink href="/sellerDashboard/createDesign">
-          <Button
-            className="w-full sm:w-auto text-white"
-            loadingText='Redirecting'
-            isLoading={isClicked}
-            disabled={isClicked}
-            onClick={() => setIsClicked(true)}
-            variant="default"
-          >
-            Add Design
-          </Button>
-        </LoadingLink>
+
+        <LoadingLink href="/sellerDashboard/createDesign"
+    className={buttonVariants({
+      size: 'sm',
+      className: 'items-center w-36 gap-1 text-white',
+    })}
+    >
+      Create new design
+  </LoadingLink>
+  
         <div className="flex items-center space-x-2 mt-4">
 
         <Input
@@ -276,31 +274,36 @@ const [open, setOpen] = useState<boolean>(false);
         </div>
 
 
-      <p className='text-gray-600 text-sm mt-4'><span className='text-blue-600 font-medium'>Guide :</span> Refresh Page to view new added designs!</p>
-      <p className='text-gray-600 text-sm'><span className='text-blue-600 font-medium'>Guide :</span> Awaiting Action = Design status will be revealed after review!</p>
+      <p className='text-muted-foreground text-sm mt-4'><span className='text-blue-600 font-medium'>Guide :</span> Refresh Page to view new added designs!</p>
+      <p className='text-muted-foreground text-sm'><span className='text-blue-600 font-medium'>Guide :</span> Under review = Design status will be revealed after review!</p>
       <div className='text-center'>
         <Button variant="default" size="sm" className=" mt-2 text-white" onClick={handleToggleMode}>
           Toggle Mode
         </Button>
       </div>
   </CardHeader>
-  <hr className="border-t border-gray-300 mb-5" /> {/* Add this line for the header line */}
   <CardContent>
-    {SellerDesignsData.length == 0 && (
+    {SellerDesignsData.length === 0 && (
       <>
-        <h1 className="text-center text-3xl font-bold col-span-full">You don't have any Designs for now!</h1>
-        <div className="flex justify-center items-center mt-4">
-          <NextImage alt="" src="/upload.png" width={900} height={900} />
-        </div>
+      <div className="flex mt-2 items-center justify-center flex-col text-muted-foreground">
+        <h1 className="text-center text-3xl font-bold">
+          <CircleAlert />
+        </h1>
+        <p className="text-center text-sm mt-2">No records of any designs found for now !</p>
+        <p className="text-center text-xs mt-2">Try to create new designs.</p>
+
+      </div>
       </>
     )}
 
     {filteredDesigns.length === 0 && SellerDesignsData.length != 0 ? (
       <>
-        <h1 className="text-center text-3xl font-bold col-span-full">No Design found by that<span className='text-purple-800'> Name</span>!</h1>
-        <div className="flex justify-center items-center mt-4">
-          <NextImage alt="" src="/upload.png" width={900} height={900} />
-        </div>
+      <div className="flex mt-2 items-center justify-center flex-col text-muted-foreground">
+        <h1 className="text-center text-3xl font-bold">
+          <CircleAlert />
+        </h1>
+        <p className="text-center text-sm mt-2">No designs found by that name !</p>
+      </div>
       </>
     ) : (
       <>
@@ -331,7 +334,7 @@ const [open, setOpen] = useState<boolean>(false);
                           )}
                           {!design.isDesignAccepted && !design.isDesignRefused && (
                             <Badge className="bg-gray-500 text-white px-2 py-1 rounded">
-                              Awaiting Action
+                              Under review
                             </Badge>
                           )}
 

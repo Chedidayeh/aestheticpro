@@ -42,8 +42,8 @@ export default async function Page() {
          {count.awaitingActionProductCount + count.awaitingActionDesignCount > 0 && (
          <Link 
          href={"/adminDashboard/stores"}>
-          <Button variant={"link"}>
-            You Have {count.awaitingActionProductCount + count.awaitingActionDesignCount} elements awaiting action
+          <Button variant={"link"} >
+            You Have {count.awaitingActionProductCount + count.awaitingActionDesignCount} elements under review
             </Button>
           </Link>
          )}
@@ -60,7 +60,7 @@ export default async function Page() {
     <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4">
 
 
-          <Card x-chunk="dashboard-01-chunk-0">
+          <Card x-chunk="dashboard-01-chunk-0" className="bg-muted/50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Revenue
@@ -73,7 +73,7 @@ export default async function Page() {
 
             </CardContent>
           </Card>
-          <Card x-chunk="dashboard-01-chunk-1">
+          <Card x-chunk="dashboard-01-chunk-1" className="bg-muted/50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Products
@@ -84,7 +84,7 @@ export default async function Page() {
               <div className="text-2xl font-bold">{count.productCount} products</div>
             </CardContent>
           </Card>
-          <Card x-chunk="dashboard-01-chunk-3">
+          <Card x-chunk="dashboard-01-chunk-3" className="bg-muted/50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Designs
@@ -95,7 +95,7 @@ export default async function Page() {
               <div className="text-2xl font-bold">{count.sellerDesignCount} designs</div>
             </CardContent>
           </Card>
-          <Card x-chunk="dashboard-01-chunk-4">
+          <Card x-chunk="dashboard-01-chunk-4" className="bg-muted/50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Stores

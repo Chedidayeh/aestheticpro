@@ -367,7 +367,7 @@ const viewProductData = (product : ExtraProduct) => {
               <SelectItem value="all">All</SelectItem>
               <SelectItem value="accepted">Accepted</SelectItem>
               <SelectItem value="refused">Refused</SelectItem>
-              <SelectItem value="action">Awaiting action</SelectItem>
+              <SelectItem value="action">Under review</SelectItem>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -626,7 +626,7 @@ const viewProductData = (product : ExtraProduct) => {
                       <SelectItem value="all">All</SelectItem>
                       <SelectItem value="accepted">Accepted</SelectItem>
                       <SelectItem value="refused">Refused</SelectItem>
-                      <SelectItem value="action">Awaiting action</SelectItem>
+                      <SelectItem value="action">Under review</SelectItem>
                     </SelectGroup>
                   </SelectContent>
                 </Select>

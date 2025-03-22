@@ -83,7 +83,12 @@ const ViewAffiliateRequests = ({  affiliatePaymentRequests }: ViewProps) => {
     setfilteredRequests(updatedPaymentRequests);
   }, [searchQuery, filterBy, affiliatePaymentRequests]);
 
-  const [activeTab, setActiveTab] = useState('D17');
+  const getInitialTab = () => {
+    const pendingRequest = affiliatePaymentRequests.find(request => request.status === "PENDING");
+    return pendingRequest ? pendingRequest.method as string : "D17"; // Default to "D17" if no pending requests exist
+  };
+
+  const [activeTab, setActiveTab] = useState(getInitialTab());
   const handleTabChange = (value : string) => {
     setActiveTab(value);
   };
@@ -99,7 +104,7 @@ const ViewAffiliateRequests = ({  affiliatePaymentRequests }: ViewProps) => {
         </CardHeader>
         <CardContent>
         <div className="flex justify-center items-center">
-          <Tabs defaultValue="D17" className="w-full sm:w-[500px]" onValueChange={handleTabChange}>
+        <Tabs defaultValue={activeTab} className="w-full sm:w-[500px]" onValueChange={handleTabChange}>
           <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="D17">D17</TabsTrigger>
           <TabsTrigger value="Flouci">Flouci</TabsTrigger>

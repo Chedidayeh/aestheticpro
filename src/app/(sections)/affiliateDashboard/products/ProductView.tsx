@@ -25,7 +25,7 @@ import {  ChangeEvent, useEffect, useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import React from 'react';
-import {  CircleCheck, CircleDollarSign, CreditCard, Eye, Loader, Search, Shirt } from 'lucide-react';
+import {  CircleAlert, CircleCheck, CircleDollarSign, CreditCard, Eye, Link, Loader, Search, Shirt } from 'lucide-react';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -481,7 +481,7 @@ const ProductView = ({ initialProducts,totalCount,initialPage, limit, user , aff
 
       <Card   ref={productDetailsRef}  // Add the ref to the element you want to scroll to
       className="col-span-full mt-4" x-chunk="dashboard-01-chunk-4">
-        <CardHeader className="">
+        <CardHeader className="bg-muted/50 rounded-t-lg">
           <div className="grid gap-2">
             <CardTitle className="font-bold">Product Infos :</CardTitle>
             <CardDescription>
@@ -528,8 +528,8 @@ const ProductView = ({ initialProducts,totalCount,initialPage, limit, user , aff
 
                 <Button 
                 onClick={() => handleGenerateAffiliateLink(selectedProduct)}
-                  variant="link" className="text-green-500 animate-wiggle">
-                Generate Affiliate Link
+                variant="link" className="text-green-500 animate-wiggle">
+                Generate Affiliate Link 
                   <CircleDollarSign size={16} className="ml-1 mt-[2px]" />
                 </Button>
 
@@ -564,7 +564,7 @@ const ProductView = ({ initialProducts,totalCount,initialPage, limit, user , aff
 
 
   <Card ref={ref} className="col-span-full my-4" x-chunk="dashboard-01-chunk-4">
-  <CardHeader className="px-4 sm:px-7 space-y-2">
+  <CardHeader className="px-4 sm:px-7 space-y-2 bg-muted/50 rounded-t-lg">
   <CardDescription>Total Products: {totalCount}</CardDescription>
 
   <div className="mt-3 space-y-3">
@@ -639,6 +639,7 @@ const ProductView = ({ initialProducts,totalCount,initialPage, limit, user , aff
     <Button
       disabled={searchQuery === ""}
       onClick={handleSearch}
+      size={"sm"}
       className="bg-blue-500 text-white px-4 py-2 rounded flex items-center"
     >
       Search
@@ -663,19 +664,30 @@ const ProductView = ({ initialProducts,totalCount,initialPage, limit, user , aff
 
 
   </CardHeader>
-  <hr className="border-t border-gray-300 mb-5" />
+  <Separator className="w-full mb-4"/>
   <CardContent>
-    {totalCount === 0 && (
+    {totalCount == 0 && (
       <>
-        <h1 className="text-center text-2xl font-bold col-span-full">There is No Products for now!</h1>
-      </>
+  <div className="flex items-center justify-center flex-col text-muted-foreground">
+  <h1 className="text-center text-3xl font-bold">
+    <CircleAlert />
+  </h1>
+  <p className="text-center text-sm mt-2">No records of any products found for now !</p>
+  <p className="text-center text-xs mt-2">New products will appear here.</p>
+
+</div>    
+  </>
     )}
 
     {totalCountState === 0 ? (
       <>
-        <h1 className="text-center text-2xl font-bold col-span-full">
-          No Products found !
-        </h1>
+  <div className="flex items-center justify-center flex-col text-muted-foreground">
+  <h1 className="text-center text-3xl font-bold">
+    <CircleAlert />
+  </h1>
+  <p className="text-center text-sm mt-2">No products found !</p>
+
+</div>    
       </>
     ) : (
       <>

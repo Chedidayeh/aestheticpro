@@ -134,9 +134,9 @@ const StoreView = ({ initialProducts,totalCount,initialPage, limit, priceRanges,
           />
      </div>
   
-     <Badge className="text-center hover:bg-gray-200 bg-gray-200 font-semibold text-sm text-black mt-4">
-          {store.storeName}
-        </Badge>
+     <div className="text-center border rounded-lg p-1 px-8  bg-muted/50 font-semibold mt-4">
+      {store.storeName}
+        </div>
         
   <p className="mt-2 text-sm text-muted-foreground">
     {store?.storeBio}

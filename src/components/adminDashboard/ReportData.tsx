@@ -66,7 +66,7 @@ const ReportData = () => {
   return (
     <>
     <div className="flex items-end justify-end">
-      <Button onClick={downloadReport} size={"sm"} variant={"default"}>
+      <Button onClick={downloadReport} size={"sm"} className="text-white" variant={"default"}>
       Download report
       </Button>
     </div>

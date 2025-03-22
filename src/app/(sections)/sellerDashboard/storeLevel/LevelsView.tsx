@@ -16,7 +16,7 @@ const LevelsView = ({ levels, storeLevel }: { levels: Level[], storeLevel: Level
             className={`shadow-md rounded-lg   w-full max-w-sm border-2 ${
               level.levelNumber === storeLevel.levelNumber
                 ? 'bg-blue-50 border-blue-500 text-black h-[620px] animate-pulse '
-                : 'h-[570px] border-gray-200 mt-8'
+                : 'h-[570px] border-gray-200 mt-8 bg-muted/50'
             }`}
           >
             <CardHeader>

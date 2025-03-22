@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/card"
 import { Component } from '@/components/sellerDashboard/Chart';
 import { StoresTableStats } from '@/components/sellerDashboard/StoresTableStats';
+import LoadingLink from '@/components/LoadingLink';
 
 
 
@@ -62,12 +63,12 @@ const Page =  async () => {
          <h1 className="text-2xl font-semibold">Seller Dashboard</h1>
          <div className="w-full flex-1">
           <div className="relative ">
-            <Link href={"/sellerDashboard/storeLevel"}>
+            <LoadingLink href={"/sellerDashboard/storeLevel"}>
             <Badge variant={"secondary"} className="text-white bg-yellow-400 hover:bg-yellow-300 ">
             <Star className="mr-1 mb-1/2 w-4 h-4 text-white"/>
             Store Level {level?.levelNumber}               
             </Badge>
-            </Link>
+            </LoadingLink>
           </div>
       </div>
          {notifications.length > 0 && (
@@ -87,9 +88,9 @@ const Page =  async () => {
         </div>
       </div>
 
-      <Badge className="text-center hover:bg-gray-200 bg-gray-200 font-semibold text-sm text-black mt-4">
+      <div className="text-center border rounded-lg p-1 px-8  bg-muted/50 font-semibold animate-borderPulse mt-4">
       {store.storeName}
-        </Badge>
+        </div>
 
 
       </div>
@@ -104,7 +105,7 @@ const Page =  async () => {
 
 
 
-          <Card x-chunk="dashboard-01-chunk-0">
+          <Card x-chunk="dashboard-01-chunk-0 " className='bg-muted/50'>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Revenue
@@ -117,7 +118,7 @@ const Page =  async () => {
           </Card>
 
 
-          <Card x-chunk="dashboard-01-chunk-3">
+          <Card x-chunk="dashboard-01-chunk-3"  className='bg-muted/50'>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Sales
@@ -130,7 +131,7 @@ const Page =  async () => {
           </Card>
 
 
-          <Card x-chunk="dashboard-01-chunk-1">
+          <Card x-chunk="dashboard-01-chunk-1"  className='bg-muted/50'>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Followers
@@ -142,7 +143,7 @@ const Page =  async () => {
             </CardContent>
           </Card>
 
-          <Card x-chunk="dashboard-01-chunk-4">
+          <Card x-chunk="dashboard-01-chunk-4"  className='bg-muted/50'>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total views

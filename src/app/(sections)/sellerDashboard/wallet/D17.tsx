@@ -194,7 +194,7 @@ const D17 = ({ store }:Props) => {
           </div>
 
           <div className="flex items-center justify-center my-6 ">
-            <Button disabled={!isFormValid} className='text-white' onClick={handleRequest}>Request Payment</Button>
+            <Button disabled={!isFormValid} size={"sm"} className='text-white' onClick={handleRequest}>Request Payment</Button>
           </div>
 
           <LoadingState isOpen={open} />

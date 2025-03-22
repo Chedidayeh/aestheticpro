@@ -32,6 +32,8 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { CircleAlert } from "lucide-react";
 
 interface ExtraOrderItem extends OrderItem {
   order : Order
@@ -129,48 +131,57 @@ const ViewOrders = ({ orderItems }: ViewProps) => {
   
   
       <Card className="xl:col-span-4" x-chunk="dashboard-01-chunk-4">
-        <CardHeader className="flex flex-row items-center bg-muted/50">
-          <div className="grid gap-2">
+        <CardHeader className=" bg-muted/50 rounded-t-lg">
+          <div className="grid flex-row items-center gap-2">
             <CardTitle>Orders Items</CardTitle>
             <CardDescription>Total: {orderItems.length}</CardDescription>
           </div>
-        </CardHeader>
-        <CardContent>
 
-        <div className="flex flex-row  space-x-2 items-center my-2">
+          <div className="flex flex-row  space-x-2 items-center mt-6">
 
-        <Input
-              type="search"
-              className="md:w-[30%] w-full"
-              placeholder="Search by Commission Id..."
-              value={searchTerm}
-              onChange={handleSearchChange}
-            /> 
+<Input
+      type="search"
+      className="md:w-[30%] w-full"
+      placeholder="Search by Commission Id..."
+      value={searchTerm}
+      onChange={handleSearchChange}
+    /> 
 
-  <Select onValueChange={handleFilterChange}>
-    <SelectTrigger className="w-[200px] ">
-      <SelectValue placeholder="Filter By" />
-    </SelectTrigger>
-    <SelectContent>
-      <SelectGroup>
-        <SelectLabel>Select</SelectLabel>
-        <SelectItem value="CONFIRMED">Confirmed</SelectItem>
-        <SelectItem value="NOT_CONFIRMED">Not Confirmed</SelectItem>
-        <SelectItem value="CANCELED">Canceled</SelectItem>
-        <SelectItem value="DELIVERED">Delivered</SelectItem>
-        <SelectItem value="Paid">Paid</SelectItem>
-        <SelectItem value="NOT_Paid">Not Paid</SelectItem>
-        <SelectItem value="Printed">Printed</SelectItem>
-        <SelectItem value="NOT_Printed">Not Printed</SelectItem>
-      </SelectGroup>
-    </SelectContent>
-  </Select>
+<Select onValueChange={handleFilterChange}>
+<SelectTrigger className="w-[200px] ">
+<SelectValue placeholder="Filter By" />
+</SelectTrigger>
+<SelectContent>
+<SelectGroup>
+<SelectLabel>Select</SelectLabel>
+<SelectItem value="CONFIRMED">Confirmed</SelectItem>
+<SelectItem value="NOT_CONFIRMED">Not Confirmed</SelectItem>
+<SelectItem value="CANCELED">Canceled</SelectItem>
+<SelectItem value="DELIVERED">Delivered</SelectItem>
+<SelectItem value="Paid">Paid</SelectItem>
+<SelectItem value="NOT_Paid">Not Paid</SelectItem>
+<SelectItem value="Printed">Printed</SelectItem>
+<SelectItem value="NOT_Printed">Not Printed</SelectItem>
+</SelectGroup>
+</SelectContent>
+</Select>
 </div>
 
 
+        </CardHeader>
+        <CardContent>
+
+
+
+{filteredOrders.length> 0 ? (
+
+
         <Table>
-        <ScrollArea className="mt-4 w-full h-96">
-          <TableHeader>
+        <ScrollArea
+          className={`${
+            filteredOrders.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >               <TableHeader>
             <TableRow>
               {/* Order Status column */}
               <TableHead className="">Order Status</TableHead>
@@ -244,6 +255,21 @@ const ViewOrders = ({ orderItems }: ViewProps) => {
         </TableBody>
         </ScrollArea>
         </Table>
+
+) : (
+  <>
+  <div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+  <h1 className="text-center text-3xl font-bold">
+    <CircleAlert />
+  </h1>
+  <p className="text-center text-sm mt-2">No records of any orders made for now !</p>
+  <p className="text-center text-xs mt-2">New orders will appear here.</p>
+
+</div>
+
+</>
+)}
+
         </CardContent>
       </Card>  
 

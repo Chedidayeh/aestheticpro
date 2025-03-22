@@ -45,9 +45,6 @@ interface ChartData {
   linkDetails: { title: string; views: number }[];
 }
 
-interface PageProps {
-  chartData: ChartData[];
-}
 
 export function Component({affiliateId} : {affiliateId : string}) {
 

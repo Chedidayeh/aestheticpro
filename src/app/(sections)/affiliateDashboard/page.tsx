@@ -22,6 +22,7 @@ import React from "react"
 import BanUser from '@/components/BanUser';
 import CommissionsTable from '@/components/affiliateDashboard/CommissionsTable';
 import { Component } from '@/components/affiliateDashboard/AffiliateChart';
+import LoadingLink from "@/components/LoadingLink";
 
 
 
@@ -51,7 +52,7 @@ const Page =  async () => {
   
          <h1 className="text-2xl font-semibold">Affiliate Dashboard</h1>
          {notifications.length > 0 && (
-         <Link href={"/affiliateDashboard/notifications"}><Button variant={"link"}>You Have {notifications.length} unread notifications</Button></Link>
+         <LoadingLink href={"/affiliateDashboard/notifications"}><Button variant={"link"}>You Have {notifications.length} unread notifications</Button></LoadingLink>
          )}
 
 
@@ -64,7 +65,7 @@ const Page =  async () => {
 
 
 
-          <Card x-chunk="dashboard-01-chunk-0">
+          <Card x-chunk="dashboard-01-chunk-0"  className='bg-muted/50'>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Revenue
@@ -77,7 +78,7 @@ const Page =  async () => {
           </Card>
 
 
-          <Card x-chunk="dashboard-01-chunk-3">
+          <Card x-chunk="dashboard-01-chunk-3"  className='bg-muted/50'>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Links
@@ -90,7 +91,7 @@ const Page =  async () => {
           </Card>
 
 
-          <Card x-chunk="dashboard-01-chunk-1">
+          <Card x-chunk="dashboard-01-chunk-1"  className='bg-muted/50'>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Clicks
@@ -102,7 +103,7 @@ const Page =  async () => {
             </CardContent>
           </Card>
 
-          <Card x-chunk="dashboard-01-chunk-4">
+          <Card x-chunk="dashboard-01-chunk-4"  className='bg-muted/50'>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total sales

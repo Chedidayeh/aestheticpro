@@ -1061,33 +1061,36 @@ export async function checkProductInFavList(productId: string, userId: string) {
   // add product to a user fav list :
   export async function addProductToFavList(productId: string, userId: string): Promise<boolean | null> {
     try {
-      // Upsert favorite list in one step
-      const favList = await db.favList.upsert({
-        where: { userId },
-        create: { userId },
-        update: {}, // No updates needed for existing records
-      });
-  
-      if (!favList) {
-        return false;
-      }
-  
-      // Add product to the user's favorite list
-      const result = await db.favList.update({
-        where: { id: favList.id },
-        data: {
-          products: {
-            connect: { id: productId }, // Connect product directly
-          },
-        },
-      });
-  
-      return !!result;
+        const result = await db.$transaction(async (tx) => {
+            // Upsert favorite list in one step
+            const favList = await tx.favList.upsert({
+                where: { userId },
+                create: { userId },
+                update: {}, // No updates needed for existing records
+            });
+
+            if (!favList) {
+                throw new Error("Failed to create or fetch favList");
+            }
+
+            // Add product to the user's favorite list
+            return await tx.favList.update({
+                where: { id: favList.id },
+                data: {
+                    products: {
+                        connect: { id: productId }, // Connect product directly
+                    },
+                },
+            });
+        });
+
+        return !!result;
     } catch (error) {
-      console.error("Error adding product to favList:", error);
-      return null;
+        console.error("Error adding product to favList:", error);
+        return null;
     }
-  }
+}
+
   
 
 
@@ -1325,6 +1328,9 @@ export async function getPlatformForTheWebsite() {
 
 // get the count infos for the admin dashboard :
 export async function getTotalCounts() {
+
+  
+  
   const [
     userCount, 
     productCount, 

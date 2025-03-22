@@ -25,6 +25,7 @@ import { useRouter } from "next/navigation"
 import clsx from "clsx"
 import { useInView } from "react-intersection-observer"
 import LoadingLink from "../LoadingLink"
+import LoadingState from "../LoadingState"
 
 interface Productswithstore extends Product {
   store : Store
@@ -44,6 +45,7 @@ const ProductListing = ({
   const [isFavSaved, setIsFavSaved] = useState(false)
   const { toast } = useToast()
   const router  = useRouter()
+  const [open, setOpen] = useState<boolean>(false);
 
 
  // Using useInView to detect when the product is in the viewport
@@ -112,12 +114,14 @@ const ProductListing = ({
 
   const saveToFavList = useCallback(async () => {
     try {
+      setOpen(true)
       if (!user) {
         toast({
           title: 'No logged in user found!',
           description: 'Try to login first!',
           variant: 'destructive',
         })
+        setOpen(false)
         return
       }
 
@@ -130,6 +134,7 @@ const ProductListing = ({
             title: 'Product added to fav list!',
             variant: 'default',
           })
+          setOpen(false)
           router.refresh()
         }
       } else {
@@ -140,6 +145,7 @@ const ProductListing = ({
             title: 'Product removed from fav list!',
             variant: 'default',
           })
+          setOpen(false)
           router.refresh()
 
         }
@@ -151,6 +157,7 @@ const ProductListing = ({
         description: 'Please try again later.',
         variant: 'destructive',
       })
+      setOpen(false)
     }
   }, [user, isFavSaved, toast, product.id, router])
 
@@ -279,7 +286,24 @@ const ProductListing = ({
         </div>
       </div>    
         </div>
+        
+    <AlertDialog open={open} >
+        <AlertDialogTrigger>
+        </AlertDialogTrigger>
+        <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+        <AlertDialogHeader className="flex flex-col items-center">
+            <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
+              Loading!
+            </AlertDialogTitle>
+            <AlertDialogDescription className="flex flex-col items-center">
+              This will take a moment.
+             <Loader className="text-blue-700 h-[30%] w-[30%] animate-spin mt-3" />
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+        </AlertDialogContent>
+      </AlertDialog>  
     </Card>
+
              
     </>
       

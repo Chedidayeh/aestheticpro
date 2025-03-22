@@ -370,7 +370,7 @@ export default function SettingsView({store} : {store : Store}) {
     return (
         <>
             <div className="flex min-h-screen w-full flex-col">
-                <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
+                <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
                     <div className="mx-auto grid w-full max-w-6xl gap-2">
                         <h1 className="text-3xl font-semibold">Settings</h1>
                     </div>
@@ -392,7 +392,7 @@ export default function SettingsView({store} : {store : Store}) {
                             {selectedSection === "general" && (
                                 <>
                                 <Card x-chunk="dashboard-04-chunk-1">
-                                    <CardHeader>
+                                    <CardHeader className="bg-muted/50 rounded-t-lg mb-4">
                                         <CardTitle>Store Name</CardTitle>
                                         <CardDescription>
                                             Change your store name.
@@ -412,7 +412,7 @@ export default function SettingsView({store} : {store : Store}) {
                                 </Card>
 
                                 <Card>
-                                        <CardHeader>
+                                        <CardHeader className="bg-muted/50 rounded-t-lg mb-4">
                                             <CardTitle>Store Bio</CardTitle>
                                             <CardDescription>Add your store bio.</CardDescription>
                                         </CardHeader>
@@ -431,7 +431,7 @@ export default function SettingsView({store} : {store : Store}) {
                                     </Card>
 
                                     <Card>
-                                        <CardHeader>
+                                        <CardHeader className="bg-muted/50 rounded-t-lg mb-4">
                                             <CardTitle>Store Logo</CardTitle>
                                             <CardDescription>Change your store logo.</CardDescription>
                                         </CardHeader>
@@ -455,7 +455,7 @@ export default function SettingsView({store} : {store : Store}) {
                             {selectedSection === "SocialLinks" && (
                                 <>
                                  <Card x-chunk="dashboard-04-chunk-1">
-                                    <CardHeader>
+                                    <CardHeader className="bg-muted/50 rounded-t-lg mb-4">
                                         <CardTitle>Display / Hide your Contact</CardTitle>
                                         <CardDescription>
                                             Use the switch to manage your contact.
@@ -474,7 +474,7 @@ export default function SettingsView({store} : {store : Store}) {
                                 </Card>
 
                                 <Card x-chunk="dashboard-04-chunk-1">
-                                    <CardHeader>
+                                    <CardHeader className="bg-muted/50 rounded-t-lg mb-4">
                                         <CardTitle>Phone Number</CardTitle>
                                         <CardDescription>
                                             Update your phone number.
@@ -506,7 +506,7 @@ export default function SettingsView({store} : {store : Store}) {
 
 
                                 <Card x-chunk="dashboard-04-chunk-1">
-                                    <CardHeader>
+                                    <CardHeader className="bg-muted/50 rounded-t-lg mb-4">
                                         <CardTitle>Social Links</CardTitle>
                                         <CardDescription>
                                             Add your social media links so clients can contact you for custom designs.
@@ -535,7 +535,7 @@ export default function SettingsView({store} : {store : Store}) {
 
                             {selectedSection === "deletestore" && (
                                 <Card x-chunk="dashboard-04-chunk-1">
-                                    <CardHeader>
+                                    <CardHeader className="bg-muted/50 rounded-t-lg">
                                         <CardTitle>Delete your store</CardTitle>
                                         <CardDescription>
                                         Your store will be permanently deleted, and you will no longer have access to it.                                        

@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { Copy } from "lucide-react";
+import { CircleAlert, Copy } from "lucide-react";
 
 import {
   Card,
@@ -33,6 +33,7 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { useToast } from "@/components/ui/use-toast";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 
 interface ExtraAffiliateLink extends AffiliateLink {
   product : Product
@@ -118,7 +119,7 @@ const ManageLinks = ({ Links , platform }: ViewProps) => {
 
 
       <Card>
-        <CardHeader>
+        <CardHeader className="bg-muted/50 rounded-t-lg">
           <CardTitle>Links</CardTitle>
           <CardDescription>Total : {Links.length}</CardDescription>
           {Links.length === 0 && (
@@ -159,9 +160,15 @@ const ManageLinks = ({ Links , platform }: ViewProps) => {
         </CardHeader>
         <CardContent>
 
+          {filteredLinks.length > 0 ? (
+
+
         <Table>
-        <ScrollArea className="w-full h-96 mt-4">
-                <TableHeader>
+        <ScrollArea
+          className={`${
+            filteredLinks.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >                     <TableHeader>
                     <TableRow>
                         <TableHead>Link Id</TableHead>
                         <TableHead className="">Product Title</TableHead>
@@ -200,6 +207,21 @@ const ManageLinks = ({ Links , platform }: ViewProps) => {
                 </TableBody>
                 </ScrollArea>
             </Table>
+            
+          ) : (
+            <>
+            <Separator className="w-full my-4"/>
+            <div className="flex items-center justify-center flex-col text-muted-foreground">
+            <h1 className="text-center text-3xl font-bold">
+              <CircleAlert />
+            </h1>
+            <p className="text-center text-sm mt-2">No records of any links created for now !</p>
+            <p className="text-center text-xs mt-2">New links will appear here.</p>
+
+          </div>
+
+          </>
+          )}
 
         </CardContent>
       </Card>

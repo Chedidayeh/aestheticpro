@@ -193,7 +193,7 @@ const BankDeposit = ({ store }:Props) => {
       </div>
 
       <div className="flex items-center justify-center my-6">
-        <Button disabled={!isFormValid} onClick={handleRequest} className='text-white'>
+        <Button disabled={!isFormValid} onClick={handleRequest} size={"sm"} className='text-white'>
           Request Payment
         </Button>
       </div>

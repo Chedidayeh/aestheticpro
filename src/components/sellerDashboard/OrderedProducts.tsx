@@ -32,7 +32,7 @@ const OrderedProducts = async () => {
   <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-1 xl:grid-cols-1">
 
       <Card>
-      <CardHeader className="flex flex-row items-center">
+      <CardHeader className="flex flex-row items-center bg-muted/50 rounded-t-lg">
         <div className="grid gap-2">
           <CardTitle>Ordered Products</CardTitle>
           <CardDescription>Total: {storeOrdersForProducts.length}</CardDescription>
@@ -41,8 +41,12 @@ const OrderedProducts = async () => {
       <CardContent>
 
         <Table>
-        <ScrollArea className="w-full h-96 mt-4">
-          <TableHeader>
+        <ScrollArea
+          className={`${
+            storeOrdersForProducts.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >
+        <TableHeader>
             <TableRow>
               <TableHead>Product Title</TableHead>
               <TableHead>Product Category</TableHead>

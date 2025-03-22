@@ -35,10 +35,10 @@ import { useToast } from '@/components/ui/use-toast'
 import {  ChangeEvent, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import React from 'react';
-import {  CircleDollarSign, CreditCard, Loader, PenTool } from 'lucide-react';
+import {  CircleAlert, CircleDollarSign, CreditCard, Eye, Loader, PenTool } from 'lucide-react';
 import {
   Select,
   SelectContent,
@@ -296,21 +296,16 @@ const CreateOrder = ({
   
   
 <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-  <CardHeader className="px-7 space-y-4">
+  <CardHeader className="px-7 space-y-4 bg-muted/50 rounded-t-lg">
 
-    <LoadingLink href="/sellerDashboard/createProduct">
-      <Button
-        className="w-full sm:w-auto mt-0 text-white"
-        loadingText="Redirecting"
-        isLoading={isClicked}
-        disabled={isClicked}
-        onClick={() => setIsClicked(true)}
-        variant="default"
-      >
-        Create New Product
-        <PenTool className="h-4 w-4 ml-2" />
-      </Button>
-    </LoadingLink>
+  <LoadingLink href="/sellerDashboard/createProduct"
+    className={buttonVariants({
+      size: 'sm',
+      className: 'items-center w-36 gap-1 text-white',
+    })}
+    >
+      Create new product
+  </LoadingLink>
 
     <div className="flex items-center space-x-2 mt-4">
 
@@ -339,45 +334,42 @@ const CreateOrder = ({
       </Select>
     </div>
 
-  <p className="text-gray-600 text-sm mt-4">
+  <p className="text-muted-foreground text-sm mt-4">
     <span className="text-blue-600 font-medium">Guide:</span> Select a product!
   </p>
 
 </CardHeader>
-    <hr className="border-t border-gray-300 mb-5" /> {/* Add this line for the header line */}
     <CardContent >
 
      {sellerProductsData.length == 0  && (
             <>
-             <h1 className="text-center text-3xl font-bold col-span-full">You don't have any Products for now !</h1>
-                <div className="flex justify-center items-center mt-4">
-             <NextImage
-                alt=""
-                src="/upload.png"
-                width={900}
-                height={900}
-            />
-            </div>
+      <div className="flex mt-2 items-center justify-center flex-col text-muted-foreground">
+        <h1 className="text-center text-3xl font-bold">
+          <CircleAlert />
+        </h1>
+        <p className="text-center text-sm mt-2">No records of any products found for now !</p>
+        <p className="text-center text-xs mt-2">Try to create new products.</p>
+
+      </div>
              </>
      )}
 
                   {filteredProduct.length === 0 && sellerProductsData.length != 0  ? (
                      <>
-                        <h1 className="text-center text-3xl font-bold col-span-full">No Product found by that
-                           <span className='text-purple-800'> Title</span> !</h1>
-                            <div className="flex justify-center items-center mt-4">
-                        <NextImage
-                            alt=""
-                            src="/upload.png"
-                            width={900}
-                            height={900}
-                        />
-                        </div>
+      <div className="flex mt-2 items-center justify-center flex-col text-muted-foreground">
+        <h1 className="text-center text-3xl font-bold">
+          <CircleAlert />
+        </h1>
+        <p className="text-center text-sm mt-2">No products found by that title !</p>
+      </div>
                         </>       
                        ) : (        
                        <>
-                               <ScrollArea className="h-[984px] w-full">
-                       
+          <ScrollArea
+          className={`${
+            filteredProduct.length < 10 ? "max-h-max" : "h-[984px]"
+          } w-full mt-4`}
+        >                           
               <div className="relative mt-2 grid grid-cols-1">
                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
 
@@ -398,6 +390,13 @@ const CreateOrder = ({
                                   <div className="flex items-center">
                                         <CreditCard className="mr-2 h-4 w-4 text-green-800 opacity-70" />{" "}
                                         <span className="text-xs text-gray-600">{product.totalSales} sales</span>
+                                    </div>                                  
+                                    </Badge>
+
+                                    <Badge variant="secondary" className="absolute bg-gray-200 top-[70px] left-2 px-2 py-1 rounded">
+                                  <div className="flex items-center">
+                                  <Eye className="mr-2 h-4 w-4 text-blue-800 opacity-70" />
+                                  <span className="text-xs text-gray-600">{product.totalViews} views</span>
                                     </div>                                  
                                     </Badge>
 
@@ -435,47 +434,47 @@ const CreateOrder = ({
                                       </SheetHeader>
                                       <ScrollArea className="w-full h-96">
                                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1 bg-gray-900/5">
-  {product.croppedFrontProduct.map((frontImage, index) => {
-    const backImage = product.croppedBackProduct[index]; // Corresponding back image
-    return (
-      <React.Fragment key={`product-${index}`}>
-        {/* Front Image */}
-        <Card
-          onClick={() => handleCatClick(index, product)}
-          className={cn("border w-full sm:w-48", selectedCat === index && "border-primary")}
-        >
-          <CardContent className="flex flex-col items-center justify-center p-2">
-            <NextImage
-              src={frontImage}
-              alt={`Front view of product ${index}`}
-              width={900}
-              height={900}
-              className="mb-2 w-full h-auto object-cover"
-            />
-          </CardContent>
-        </Card>
+                                  {product.croppedFrontProduct.map((frontImage, index) => {
+                                    const backImage = product.croppedBackProduct[index]; // Corresponding back image
+                                    return (
+                                      <React.Fragment key={`product-${index}`}>
+                                        {/* Front Image */}
+                                        <Card
+                                          onClick={() => handleCatClick(index, product)}
+                                          className={cn("border w-full sm:w-48", selectedCat === index && "border-primary")}
+                                        >
+                                          <CardContent className="flex flex-col items-center justify-center p-2">
+                                            <NextImage
+                                              src={frontImage}
+                                              alt={`Front view of product ${index}`}
+                                              width={900}
+                                              height={900}
+                                              className="mb-2 w-full h-auto object-cover"
+                                            />
+                                          </CardContent>
+                                        </Card>
 
-        {/* Back Image */}
-        {backImage && (
-          <Card
-            onClick={() => handleCatClick(index, product)}
-            className={cn("border w-full sm:w-48", selectedCat === index && "border-primary")}
-          >
-            <CardContent className="flex flex-col items-center justify-center p-2">
-              <NextImage
-                src={backImage}
-                alt={`Back view of product ${index}`}
-                width={900}
-                height={900}
-                className="mb-2 w-full h-auto object-cover"
-              />
-            </CardContent>
-          </Card>
-        )}
-      </React.Fragment>
-    );
-  })}
-</div>
+                                        {/* Back Image */}
+                                        {backImage && (
+                                          <Card
+                                            onClick={() => handleCatClick(index, product)}
+                                            className={cn("border w-full sm:w-48", selectedCat === index && "border-primary")}
+                                          >
+                                            <CardContent className="flex flex-col items-center justify-center p-2">
+                                              <NextImage
+                                                src={backImage}
+                                                alt={`Back view of product ${index}`}
+                                                width={900}
+                                                height={900}
+                                                className="mb-2 w-full h-auto object-cover"
+                                              />
+                                            </CardContent>
+                                          </Card>
+                                        )}
+                                      </React.Fragment>
+                                    );
+                                  })}
+                                </div>
 
 
                                       </ScrollArea>
@@ -609,7 +608,9 @@ const CreateOrder = ({
                               </div>
                             </div>
                             <AlertDialogFooter>
-                              <AlertDialogCancel onClick={()=>setisDialogOpen(false)}>Cancel</AlertDialogCancel>
+                              <AlertDialogCancel onClick={()=>{
+                                setSelectedCat(null)
+                                setisDialogOpen(false)}}>Cancel</AlertDialogCancel>
                               <AlertDialogAction className="text-white" disabled={!isValid} onClick={()=>{
                                 setisDialogOpen(false)
                                 createOrder()

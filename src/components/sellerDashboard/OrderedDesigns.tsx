@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/card";
 import { getOrderedDesignsByStoreId, getStoreByUserId, getUser } from "@/actions/actions";
 import React from "react";
+import { ScrollArea } from "../ui/scroll-area";
 
 
 const DesignsOrder = async () => {
@@ -30,7 +31,7 @@ const DesignsOrder = async () => {
     <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-1 xl:grid-cols-1">
   
     <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-      <CardHeader className="flex flex-row items-center">
+      <CardHeader className="flex flex-row items-center bg-muted/50 rounded-t-lg ">
         <div className="grid gap-2">
           <CardTitle>Ordered Designs</CardTitle>
           <CardDescription>Total: {storeOrdersForDesigns.length}</CardDescription>
@@ -38,7 +39,11 @@ const DesignsOrder = async () => {
       </CardHeader>
       <CardContent>
         <Table>
-          <TableHeader>
+        <ScrollArea
+          className={`${
+            storeOrdersForDesigns.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >          <TableHeader>
             <TableRow>
               <TableHead>Design Name</TableHead>
               <TableHead className="text-center">Design Price</TableHead>
@@ -66,6 +71,7 @@ const DesignsOrder = async () => {
               </TableRow>
             ))}
           </TableBody>
+          </ScrollArea>
         </Table>
       </CardContent>
     </Card>

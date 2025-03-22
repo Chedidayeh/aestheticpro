@@ -76,7 +76,7 @@ const ViewRequests = ({ paymentRequests }: ViewProps) => {
       <p className="text-sm text-muted-foreground mb-2">AffiliateDashboard/RequestedPayments</p>
       <h1 className="text-2xl font-semibold mb-8">All Requests</h1>
       <Card>
-        <CardHeader>
+        <CardHeader className="bg-muted/50 rounded-t-lg">
           <CardTitle>Requests</CardTitle>
           <CardDescription>Total : {paymentRequests.length}</CardDescription>
 
@@ -94,7 +94,7 @@ const ViewRequests = ({ paymentRequests }: ViewProps) => {
              )}
         </CardHeader>
         <CardContent>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center mt-2">
   <Tabs defaultValue={activeTab} className="w-full sm:w-[500px]" onValueChange={handleTabChange}>
   <TabsList className="grid w-full grid-cols-3">
   <TabsTrigger value="D17">D17</TabsTrigger>

@@ -69,7 +69,7 @@ export default function Page() {
     return (
         <>
             <div className="flex min-h-screen w-full flex-col">
-                <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
+                <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 p-4 md:gap-8 md:p-10">
                     <div className="mx-auto grid w-full max-w-6xl gap-2">
                         <h1 className="text-3xl font-semibold">Settings</h1>
                     </div>
@@ -84,14 +84,14 @@ export default function Page() {
                         <div className="grid gap-6">
                             {selectedSection === "delete" && (
                                 <Card x-chunk="dashboard-04-chunk-1">
-                                    <CardHeader>
+                                    <CardHeader className="rounded-t-lg bg-muted/50">
                                         <CardTitle>Delete your account</CardTitle>
                                         <CardDescription>
                                         Your account will be permanently deleted, and you will no longer have access to it.                                        
                                         </CardDescription>
                                     </CardHeader>
                                     <CardFooter className="border-t px-6 py-4">
-                                        <Button onClick={handleAffiliateAccountDelete} className="bg-red-500 hover:bg-red-400" >Delete</Button>
+                                        <Button onClick={handleAffiliateAccountDelete} className="bg-red-500 text-white hover:bg-red-400" >Delete</Button>
                                     </CardFooter>
                                 </Card>
                             )}

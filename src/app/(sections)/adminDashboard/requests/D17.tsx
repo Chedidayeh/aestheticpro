@@ -165,7 +165,7 @@ const handleDelete = async () => {
             <TableCell>{request.store.userPhoneNumber}</TableCell>
             <TableCell>
               <Badge
-                className={`${
+                className={`text-white ${
                   {
                     PENDING: 'bg-blue-700',
                     APPROVED: 'bg-green-700',

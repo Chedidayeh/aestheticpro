@@ -22,12 +22,13 @@ import {
 import { PaymentRequest } from "@prisma/client";
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { OctagonAlert, Trash2 } from 'lucide-react';
+import { CircleAlert, OctagonAlert, Trash2 } from 'lucide-react';
 import { deletePaymentRequestById } from "./actions";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import LoadingState from "@/components/LoadingState";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 
 interface ViewProps {
     paymentRequests: PaymentRequest[];
@@ -79,10 +80,14 @@ const handleDelete = async () => {
   <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-1 xl:grid-cols-1">
 
 
+  {paymentRequests.length > 0 ? (
 
             <Table>
-            <ScrollArea className="w-full h-96 mt-4">
-                <TableHeader>
+        <ScrollArea
+          className={`${
+            paymentRequests.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg`}
+        >                <TableHeader>
                     <TableRow>
                         <TableHead >Payment Method</TableHead>
                         <TableHead >Bank Name</TableHead>
@@ -103,7 +108,7 @@ const handleDelete = async () => {
                             <TableCell>{request.requestedAmount.toFixed(2)} TND</TableCell>
                             <TableCell>
                             <Badge
-                                className={`${
+                                className={` text-white${
                                 {
                                     PENDING: 'bg-blue-700',
                                     APPROVED: 'bg-green-700',
@@ -140,7 +145,20 @@ const handleDelete = async () => {
                 </ScrollArea>
 
             </Table>
+) : (
+    <>
+  <Separator className="w-full mb-4"/>
+  <div className="flex items-center justify-center flex-col text-muted-foreground">
+  <h1 className="text-center text-3xl font-bold">
+    <CircleAlert />
+  </h1>
+  <p className="text-center text-sm mt-2">No records of any requests made for now !</p>
+  <p className="text-center text-xs mt-2">New Bank requests will appear here.</p>
 
+</div>
+
+</>
+)}
             </section>
             </div>
 

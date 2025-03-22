@@ -2,6 +2,7 @@
 'use server'
 
 import {
+  CircleAlert,
   CircleCheck,
   CircleX,
   PackageCheck,
@@ -89,7 +90,7 @@ const Page =  async () => {
 
 
 
-          <Card x-chunk="dashboard-01-chunk-0">
+          <Card x-chunk="dashboard-01-chunk-0" className="bg-muted/50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Confirmed Orders
@@ -100,7 +101,7 @@ const Page =  async () => {
               <div className="text-2xl font-bold">{count.confirmedOrdersCount} orders</div>
             </CardContent>
           </Card>
-          <Card x-chunk="dashboard-01-chunk-1">
+          <Card x-chunk="dashboard-01-chunk-1" className="bg-muted/50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Delivered Orders
@@ -111,7 +112,7 @@ const Page =  async () => {
               <div className="text-2xl font-bold">{count.deliveredOrdersCount} orders</div>
             </CardContent>
           </Card>
-          <Card x-chunk="dashboard-01-chunk-3">
+          <Card x-chunk="dashboard-01-chunk-3" className="bg-muted/50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Canceled Orders
@@ -122,7 +123,7 @@ const Page =  async () => {
               <div className="text-2xl font-bold">{count.canceledOrdersCount} orders</div>
             </CardContent>
           </Card>
-          <Card x-chunk="dashboard-01-chunk-4">
+          <Card x-chunk="dashboard-01-chunk-4" className="bg-muted/50">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
                 Total Orders
@@ -148,16 +149,22 @@ const Page =  async () => {
 
 
     <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-        <CardHeader className="flex flex-row items-center">
+        <CardHeader className="flex flex-row items-center bg-muted/50 rounded-t-lg">
           <div className="grid gap-2">
             <CardTitle>Orders</CardTitle>
             <CardDescription>Orders Displayed: {orders ? orders.length : 0}</CardDescription>
           </div>
         </CardHeader>
         <CardContent>
+        {orders && orders?.length > 0 ? (
+
             <Table>
-            <ScrollArea className="w-full h-72">
-              <TableHeader>
+            <ScrollArea
+          className={`${
+            orders.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >                  
+        <TableHeader>
                 <TableRow>
                   <TableHead >Order Id</TableHead>
                   <TableHead >Order Status</TableHead>
@@ -167,8 +174,7 @@ const Page =  async () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {orders !== null && (
-                orders.map(order => (
+                {orders.map(order => (
                   <TableRow key={order.id}>
                     <TableCell>{order.id}</TableCell>
                     <TableCell>
@@ -194,10 +200,19 @@ const Page =  async () => {
                     </TableCell>
                     </TableRow>
                 ))
-                )}
+                }
               </TableBody>
               </ScrollArea>
             </Table>
+        ) : (
+          <div className="flex mt-2 items-center justify-center flex-col text-muted-foreground">
+          <h1 className="text-center text-3xl font-bold">
+            <CircleAlert />
+          </h1>
+          <p className="text-center text-sm mt-2">No records of any orders made for now !</p>
+            <p className="text-center text-xs mt-2">New orders will appear here.</p>
+        </div>
+        )}
         </CardContent>
       </Card>  
 

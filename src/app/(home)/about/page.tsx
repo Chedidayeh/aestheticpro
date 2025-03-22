@@ -31,8 +31,8 @@ const Page = () => {
         </div>
           </div>
           <p className='text-base font-medium text-primary'>About Us !</p>
-          <h1 className='mt-2 text-4xl font-bold tracking-tight sm:text-5xl'>
-            Dicover the purpose of our brand!
+          <h1 className='mt-2 text-4xl font-bold tracking-tight sm:text-4xl'>
+            Discover the purpose of our brand!
           </h1>
           <div className='mt-2 flex items-center text-base text-zinc-500'>
               <RocketIcon className="h-4 w-4 mr-2 text-primary" />

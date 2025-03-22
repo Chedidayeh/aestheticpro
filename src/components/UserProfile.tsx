@@ -80,7 +80,7 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                   />
                 </div>
         ) : (
-          <Button variant="outline" className="bg-transparent rounded-full">
+          <Button  variant="outline" className="bg-transparent rounded-full">
           <UserRound />
         </Button>
         )}

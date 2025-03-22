@@ -125,13 +125,13 @@ const DesignView: React.FC<DesignViewProps> = ({ orderedDesigns }) => {
 
 
 <Card className="xl:col-span-full mt-4" x-chunk="dashboard-01-chunk-4">
-  <CardHeader className="px-7 space-y-4">
+  <CardHeader className="px-7 space-y-4 bg-muted/50 rounded-t-lg">
     <CardTitle>Designs Details</CardTitle>
     <CardDescription>Total Orders: {orderedDesigns.length}</CardDescription>
       <div className="flex items-center space-x-2">
         <Input
           type="search"
-          className="w-full "
+          className="md:w-[30%] w-full"
           placeholder="search by id..."
           value={searchQuery}
           onChange={handleSearchChange}
@@ -157,8 +157,12 @@ const DesignView: React.FC<DesignViewProps> = ({ orderedDesigns }) => {
   </CardHeader>
   <CardContent>
     <Table className='mt-8'>
-    <ScrollArea  className="h-[384px] w-full">
-      <TableHeader>
+    <ScrollArea
+          className={`${
+            filteredOrders.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg`}
+        >      
+        <TableHeader>
         <TableRow>
           <TableHead>Order Id</TableHead>
           <TableHead>Order Date</TableHead>

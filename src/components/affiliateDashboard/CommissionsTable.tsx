@@ -27,6 +27,8 @@ import {
 import { ScrollArea } from '../ui/scroll-area';
 import { useToast } from '../ui/use-toast';
 import { Input } from '../ui/input';
+import { Separator } from '../ui/separator';
+import { CircleAlert } from 'lucide-react';
 
 interface AffiliateCommission {
   commissionId: string;
@@ -96,19 +98,15 @@ const CommissionsTable: React.FC<CommissionsTableProps> = ({ commissions, affili
   <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-1 xl:grid-cols-1">
 
       <Card x-chunk="dashboard-05-chunk-3">
-        <CardHeader className="flex flex-row items-center">
+        <CardHeader className="flex flex-row items-center bg-muted/50 rounded-t-lg">
           <div className="grid gap-2">
             <CardTitle>Commissions</CardTitle>
             <CardDescription>Total: {commissions ? commissions.length : 0}</CardDescription>
             <CardDescription>Total Commissions Profit: {commissions ? (affiliateStats.totalIncome.toFixed(2)) : 0.00} TND</CardDescription>
-
-          </div>
-        </CardHeader>
-        <CardDescription className="px-4 gap-2">
-        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center mt-2">
+            <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center mt-2">
         <Input
               type="search"
-              className='w-full'
+              className='w-[400px]'
               placeholder="Search by Commission Id , Link Id or Product title..."
               onChange={handleSearchChange}
               value={searchTerm}
@@ -127,12 +125,20 @@ const CommissionsTable: React.FC<CommissionsTableProps> = ({ commissions, affili
             </SelectContent>
           </Select>
           </div>
+          </div>
+        </CardHeader>
+        <CardDescription className="px-4 gap-2">
+
         </CardDescription>
         <CardContent>
-          {sortedCommissions && (
+          {sortedCommissions.length > 0 ? (
               <Table>
-                 <ScrollArea className="w-full h-72 mt-4">
-                <TableHeader>
+        <ScrollArea
+          className={`${
+            sortedCommissions.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >               
+         <TableHeader>
                   <TableRow>
                     <TableHead>Commission Id</TableHead>
                     <TableHead>Affiliate Link Id</TableHead>
@@ -157,7 +163,19 @@ const CommissionsTable: React.FC<CommissionsTableProps> = ({ commissions, affili
                 </ScrollArea>
 
               </Table>
-          )}
+) : (
+  <>
+  <div className="flex items-center justify-center flex-col text-muted-foreground mt-4">
+  <h1 className="text-center text-3xl font-bold">
+    <CircleAlert />
+  </h1>
+  <p className="text-center text-sm mt-2">No records of any Commissions made for now !</p>
+  <p className="text-center text-xs mt-2">New Commissions will appear here.</p>
+
+</div>
+
+</>
+)}
         </CardContent>
       </Card>
 

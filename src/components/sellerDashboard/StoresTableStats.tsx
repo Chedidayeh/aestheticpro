@@ -17,6 +17,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { ScrollArea } from '../ui/scroll-area';
 
 interface ChartData {
   storeId : string
@@ -74,7 +75,7 @@ export function StoresTableStats({ storeId , chartData }: { storeId: string , ch
 
   return (
     <Card className="w-full">
-      <CardHeader>
+      <CardHeader className='bg-muted/50 mb-2 rounded-t-lg'>
         <CardTitle className="text-lg">Store Stats</CardTitle>
         <CardDescription>
             <p>Total stores is : {chartData.length} </p>
@@ -90,6 +91,7 @@ export function StoresTableStats({ storeId , chartData }: { storeId: string , ch
             <Button
               variant={activeChart === key ? "default" : "secondary"}
               size="sm"
+              className={activeChart === key ? "text-white" : ""}
               key={key}
               onClick={() => setActiveChart(key as keyof typeof chartConfig)}
             >
@@ -104,6 +106,11 @@ export function StoresTableStats({ storeId , chartData }: { storeId: string , ch
 
 
   <Table>
+  <ScrollArea
+          className={`${
+            sortedChartData.length < 10 ? "max-h-max" : "h-[540px]"
+          } w-full border rounded-lg mt-4`}
+        >
     <TableHeader>
       <TableRow>
         <TableHead className="px-4 py-2 text-left">Logo</TableHead>
@@ -137,6 +144,7 @@ export function StoresTableStats({ storeId , chartData }: { storeId: string , ch
         </TableRow>
       ))}
     </TableBody>
+    </ScrollArea>
   </Table>
 
   </section>

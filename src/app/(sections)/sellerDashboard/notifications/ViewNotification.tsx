@@ -1,6 +1,6 @@
 'use client'
 
-import { MoreHorizontal } from "lucide-react";
+import { CircleAlert, MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -39,6 +39,7 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import LoadingState from "@/components/LoadingState";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Separator } from "@/components/ui/separator";
 interface NotiViewProps {
   notifications: Notification[];
 }
@@ -105,7 +106,7 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
       <p className="text-sm text-muted-foreground mb-2">SellerDashboard/Notifications</p>
       <h1 className="text-2xl font-semibold mb-8">All Notifications</h1>
       <Card>
-        <CardHeader>
+        <CardHeader className="bg-muted/50 rounded-t-lg">
           <CardTitle>Notifications</CardTitle>
           <CardDescription>Total : {notifications.length}</CardDescription>
           {notifications.length > 0 && (
@@ -116,10 +117,18 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
           </>
         )}
         </CardHeader>
-        <CardContent>
+        <CardContent className="mt-2">
+
+          {notifications.length > 0 ? (
+
+       
           <Table>
-          <ScrollArea className="h-[384px] w-full border rounded-lg">
-            <TableHeader>
+        <ScrollArea
+          className={`${
+            notifications.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >            
+        <TableHeader>
               <TableRow>
                 <TableHead>Sender</TableHead>
                 <TableHead>Received At</TableHead>
@@ -161,7 +170,19 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
             </TableBody>
             </ScrollArea>
           </Table>
+   ) : (
+    <>
+              <div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+          <h1 className="text-center text-3xl font-bold">
+            <CircleAlert />
+          </h1>
+          <p className="text-center text-sm mt-2">No records of any notifications found for now !</p>
+          <p className="text-center text-xs mt-2">New notifications will appear here.</p>
+  
+        </div>
 
+          </>
+   )}
         </CardContent>
       </Card>
 

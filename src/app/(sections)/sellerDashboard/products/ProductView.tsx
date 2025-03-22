@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/card"
 import {  ChangeEvent, useState } from 'react';
 import { Label } from '@/components/ui/label';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import React from 'react';
-import {  CircleDollarSign, CreditCard, Eye, Loader, OctagonAlert, PenTool, SquarePen, Trash2 } from 'lucide-react';
+import {  CircleAlert, CircleDollarSign, CreditCard, Eye, Loader, OctagonAlert, PenTool, SquarePen, Trash2 } from 'lucide-react';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -257,24 +257,19 @@ const ProductView = ({
 
 
   <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-  <CardHeader className="px-7 space-y-4">
+  <CardHeader className="px-7 space-y-4 bg-muted/50 rounded-t-lg">
   <CardDescription>Total Products: {sellerProductsData.length} | <span className="text-blue-500">your store limit : {!store.unlimitedCreation ? level.productLimit  : "unlimited"} products</span></CardDescription>
   
   <CardDescription className="text-blue-500">Total Products Views : {totalProductViews}</CardDescription>
 
-      <LoadingLink href="/sellerDashboard/createProduct">
-          <Button
-            className="w-full sm:w-auto text-white"
-            loadingText="Redirecting"
-            isLoading={isClicked}
-            disabled={isClicked}
-            onClick={() => setIsClicked(true)}
-            variant="default"
-          >
-            Create new product
-            <PenTool className="h-4 w-4 ml-2" />
-          </Button>
-        </LoadingLink>
+        <LoadingLink href="/sellerDashboard/createProduct"
+    className={buttonVariants({
+      size: 'sm',
+      className: 'items-center w-36 gap-1 text-white',
+    })}
+    >
+      Create new product
+  </LoadingLink>
 
         {/* Sorting select */}
         <div className="flex items-center space-x-2 mt-4">
@@ -303,37 +298,40 @@ const ProductView = ({
 
 </div>
 
-      <p className="text-gray-600 text-sm mt-4">
+      <p className="text-muted-foreground text-sm mt-4">
         <span className="text-blue-600 font-medium">Guide :</span> Refresh Page to view newly added products!
       </p>
-      <p className="text-gray-600 text-sm">
-        <span className="text-blue-600 font-medium">Guide :</span> Awaiting Action = Product status will be revealed after review!
+      <p className="text-muted-foreground text-sm">
+        <span className="text-blue-600 font-medium">Guide :</span> Under review = Product status will be revealed after review!
       </p>
   </CardHeader>
-  <hr className="border-t border-gray-300 mb-5" />
   <CardContent>
-    {sellerProductsData.length === 0 && (
+    {sellerProductsData.length == 0 && (
       <>
-        <h1 className="text-center text-3xl font-bold col-span-full">You don't have any Products for now!</h1>
-        <div className="flex justify-center items-center mt-4">
-          <NextImage alt="" src="/upload.png" width={900} height={900} />
-        </div>
+      <div className="flex mt-2 items-center justify-center flex-col text-muted-foreground">
+        <h1 className="text-center text-3xl font-bold">
+          <CircleAlert />
+        </h1>
+        <p className="text-center text-sm mt-2">No records of any products found for now !</p>
+        <p className="text-center text-xs mt-2">Try to create new products.</p>
+
+      </div>
       </>
     )}
 
     {filteredProduct.length === 0 && sellerProductsData.length !== 0 ? (
       <>
-        <h1 className="text-center text-3xl font-bold col-span-full">
-          No Product found by that
-          <span className="text-purple-800"> Title</span>!
+      <div className="flex mt-2 items-center justify-center flex-col text-muted-foreground">
+        <h1 className="text-center text-3xl font-bold">
+          <CircleAlert />
         </h1>
-        <div className="flex justify-center items-center mt-4">
-          <NextImage alt="" src="/upload.png" width={900} height={900} />
-        </div>
+        <p className="text-center text-sm mt-2">No products found by that title !</p>
+      </div>
+
       </>
     ) : (
       <>
-        <ScrollArea className="h-[984px] w-full">
+        <ScrollArea className="h-[984px] w-full ">
         <div className="relative mt-5 grid grid-cols-1">
            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-2">
             {/* Product Cards */}
@@ -360,7 +358,7 @@ const ProductView = ({
                         )}
                         {!product.isProductAccepted && !product.isProductRefused && (
                           <Badge className="bg-gray-500 text-white px-2 py-1 rounded">
-                            Awaiting Action
+                            Under review
                           </Badge>
                         )}
                       </div>
@@ -400,7 +398,7 @@ const ProductView = ({
                       </div>
 
                       <div className="absolute bottom-8 left-0 right-0 z-10 text-center">
-                        <Badge variant="secondary" className="bg-gray-200 text-muted-foreground">
+                        <Badge variant="secondary" className="bg-gray-200 text-black">
                           {product.title}
                         </Badge>
                       </div>

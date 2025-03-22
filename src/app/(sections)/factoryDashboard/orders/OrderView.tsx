@@ -25,6 +25,7 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import {
+  CircleAlert,
     Eye,
     Loader,
     Search,
@@ -199,19 +200,12 @@ const handleToggle = async () => {
   
   
       <Card className="xl:col-span-4" x-chunk="dashboard-01-chunk-4">
-      <CardHeader className="flex flex-row items-center bg-muted/50">
-      <div className="grid gap-2">
+      <CardHeader className=" bg-muted/50 rounded-t-lg">
+      <div className="flex flex-col gap-2">
             <CardTitle>Orders</CardTitle>
             <CardDescription>Total: {orders.length}</CardDescription>
-            <p className="text-red-600 text-sm">
-        <span className="text-red-600 font-medium">Guide :</span> use the Eye action to view the order details !
-      </p>
           </div>
-        </CardHeader>
-        <CardContent>
-
-
-        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center mt-2">
+          <div className="flex mt-4 flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center">
           <Input
             type="search"
             className="w-full sm:w-[50%] "
@@ -267,10 +261,24 @@ const handleToggle = async () => {
     </div>
     
         </div>
+        <p className="text-blue-600 text-sm mt-4">
+        <span className="text-blue-600 font-medium">Guide :</span> use the Eye action to view the order details !
+      </p>
+        </CardHeader>
+        <CardContent>
+
+
+
+
+        { orders.length > 0 ? (
 
             <Table>
-            <ScrollArea className="mt-4 w-full h-96">
-              <TableHeader>
+            <ScrollArea
+          className={`${
+            orders.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >                 
+        <TableHeader>
                 <TableRow>
                   <TableHead >Order Id</TableHead>
                   <TableHead >Order Status</TableHead>
@@ -337,6 +345,18 @@ const handleToggle = async () => {
               </TableBody>
               </ScrollArea>
             </Table>
+
+        ) : (
+          <div className="flex mt-2 items-center justify-center flex-col text-muted-foreground">
+          <h1 className="text-center text-3xl font-bold">
+            <CircleAlert />
+          </h1>
+          <p className="text-center text-sm mt-2">No records of any orders made for now !</p>
+            <p className="text-center text-xs mt-2">New orders will appear here.</p>
+        </div>
+        )}
+
+
         </CardContent>
       </Card>  
         

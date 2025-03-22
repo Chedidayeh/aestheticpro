@@ -57,15 +57,16 @@ const RedirectPage = ({  affiliateLink , user }: PageProps) => {
       <AlertDialog open={true}>
       <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
         <AlertDialogHeader className="flex flex-col items-center">
-            <div className="text-blue-700 mb-2">
-              <Loader className="animate-spin" />
-            </div>
+
             <AlertDialogTitle className="text-xl font-bold text-center">
               Redirecting...
             </AlertDialogTitle>
             <AlertDialogDescription className="text-center">
               Please wait while we redirect you to your destination...
             </AlertDialogDescription>
+            <div className="text-blue-700 mb-2">
+              <Loader className="animate-spin" />
+            </div>
           </AlertDialogHeader>
         </AlertDialogContent>
       </AlertDialog>

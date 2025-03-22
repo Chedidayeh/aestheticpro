@@ -73,7 +73,6 @@ const Navbar = async () => {
   const cartProductList = await fetchCartProductCount(user?.id ? user.id : "")
   const orders = await getUserOrders(user?.id ? user.id : "")
   const favListProducts = await getUserFavoriteList(user?.id? user?.id : "");
-  const categories = await getAllProductsCategories()
   const bestSellingProducts = await countBestSellingProducts();
 
   return (

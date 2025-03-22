@@ -41,10 +41,10 @@ import {
 } from "@/components/ui/card"
 import { useToast } from '@/components/ui/use-toast'
 import {  ChangeEvent, useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import React from 'react';
-import {   Eye, OctagonAlert, PenTool, Trash2 } from 'lucide-react';
+import {   CircleAlert, Eye, OctagonAlert, PenTool, Trash2 } from 'lucide-react';
 import {
     AlertDialog,
     AlertDialogAction,
@@ -65,6 +65,7 @@ import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from "@/components/ui/scroll-area";
 import ImageSlider from "@/components/MarketPlace/ImageSlider"
 import LoadingLink from "@/components/LoadingLink"
+import { Separator } from "@/components/ui/separator"
 
 interface ProductsViewProps {
   ordersData: Order[];
@@ -219,7 +220,7 @@ const ProductsView = ({
   <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-1 xl:grid-cols-1">
 
       <Card className="xl:col-span-4" x-chunk="dashboard-01-chunk-4">
-  <CardHeader className="px-7 space-y-4">
+  <CardHeader className="px-7 space-y-4 bg-muted/50 rounded-t-lg">
 
     <div className="space-y-2">
       <CardTitle>Products Details</CardTitle>
@@ -227,18 +228,13 @@ const ProductsView = ({
     </div>
 
     
-    <LoadingLink href="/sellerDashboard/createOrder">
-    <Button
-      className="w-full sm:w-auto text-white"
-      loadingText="Redirecting"
-      isLoading={isClicked}
-      disabled={isClicked}
-      onClick={() => setIsClicked(true)}
-      variant="default"
+    <LoadingLink href="/sellerDashboard/createOrder"
+    className={buttonVariants({
+      size: 'sm',
+      className: 'items-center w-36 gap-1 text-white',
+    })}
     >
-      Create Order
-      <PenTool className="h-4 w-4 ml-2" />
-    </Button>
+      Create new order
   </LoadingLink>
 
   <div className="flex items-center space-x-2">
@@ -274,15 +270,15 @@ const ProductsView = ({
 
 
       <div className="mt-4">
-        <p className="text-gray-600 text-sm">
+        <p className="text-muted-foreground text-sm">
           <span className="text-blue-600 font-medium">Note: </span>
           The orders Ids with the <span className="text-blue-600">blue</span> color are your own orders!
         </p>
-        <p className="text-gray-600 text-sm">
+        <p className="text-muted-foreground text-sm">
           <span className="text-blue-600 font-medium">Note: </span>
           You can't delete any <span className="text-red-600">client orders!</span>
         </p>
-        <p className="text-gray-600 text-sm">
+        <p className="text-muted-foreground text-sm">
           <span className="text-blue-600 font-medium">Note: </span>
           Any changes you make on your products or designs <span className="text-red-600">won't affect the current orders!</span>
         </p>
@@ -291,10 +287,16 @@ const ProductsView = ({
   </CardHeader>
   <CardContent>
 
+
+  {filteredOrders.length> 0 ? (
+
     
   <Table className="mt-8">
-  <ScrollArea  className="h-96 w-full">
-  <TableHeader>
+        <ScrollArea
+          className={`${
+            filteredOrders.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg`}
+        >  <TableHeader>
     <TableRow>
       <TableHead>Order Id</TableHead>
       <TableHead>Order Date</TableHead>
@@ -423,6 +425,21 @@ const ProductsView = ({
   </ScrollArea>
 
 </Table>
+
+) : (
+  <>
+  <Separator className="w-full my-4"/>
+  <div className="flex items-center justify-center flex-col text-muted-foreground">
+  <h1 className="text-center text-3xl font-bold">
+    <CircleAlert />
+  </h1>
+  <p className="text-center text-sm mt-2">No records of any orders made for now !</p>
+  <p className="text-center text-xs mt-2">New orders will appear here.</p>
+
+</div>
+
+</>
+)}
 
 
   </CardContent>

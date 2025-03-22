@@ -5,7 +5,7 @@ import AddToCartButton from '@/components/MarketPlace/AddToCartButton'
 import ProductReel from '@/components/MarketPlace/ProductReel'
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import { Category, Platform, Product, ProductReviews, SellerDesign, Store, User } from '@prisma/client'
-import { ArrowDown, Check, Shield } from 'lucide-react'
+import { ArrowDown, Check, Plus, Shield, SquareMinus, SquarePlus } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import {
   Select,
@@ -87,11 +87,25 @@ const combinedUrls = interleaveArrays(product.croppedFrontProduct, product.cropp
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-
+  console.log(quantity)
   const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(event.target.value);
+    if (!isNaN(newQuantity) && newQuantity >= 1 && newQuantity <= platform.maxProductQuantity) {
       setQuantity(newQuantity);
-    };
+    }
+  };
+
+  const increaseQuantity = () => {
+    if (quantity < platform.maxProductQuantity) {
+      setQuantity((prev) => prev + 1);
+    }
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity((prev) => prev - 1);
+    }
+  };
 
 
     const handleColorChange = (color: string, index: number) => {
@@ -151,14 +165,14 @@ const redirectToCart = () => {
     <MaxWidthWrapper>
 
 
-      <div className='pb-4 mx-auto text-center flex flex-col items-center max-w-1xl'>
+      {/* <div className='pb-4 mx-auto text-center flex flex-col items-center max-w-1xl'>
       <h1 className='text-4xl font-bold tracking-tight md:text-5xl'>
       Product{' '}
             <span className='text-blue-600'>
               Details
             </span>
           </h1>
-        </div>
+        </div> */}
 
 
 
@@ -395,14 +409,24 @@ const redirectToCart = () => {
 
               <div className='mt-6 flex items-center'>
               <Label htmlFor="username" className="text-left">
-                Select Quantity : <p className='text-xs text-muted-foreground mt-1'>( max {platform.maxProductQuantity} ) </p>
+                Select Quantity : 
              </Label>
-             <div className='ml-3'>
-             <Input type='number'           
-              onChange={handleQuantityChange}  // Handle change
-              defaultValue={1} min={1} max={platform.maxProductQuantity}/>
+             <div className='ml-3 flex items-center gap-2'>
+             <SquareMinus 
+                className='text-muted-foreground hover:text-blue-600 cursor-pointer' 
+                onClick={decreaseQuantity} 
+              />              
+              <div className='rounded-lg border border-muted-foreground w-10 text-center bg-gray-50 flex items-center justify-center'>
+                        {quantity}
+                      </div>
+                      <SquarePlus 
+                className='text-muted-foreground hover:text-blue-600 cursor-pointer' 
+                onClick={increaseQuantity} 
+              />            
+              </div>
+
              </div>
-             </div>
+             <p className='text-xs text-muted-foreground mt-1'>( max {platform.maxProductQuantity} ) </p>
 
 
 
