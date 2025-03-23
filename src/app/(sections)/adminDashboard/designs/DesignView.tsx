@@ -27,6 +27,7 @@ import {
     AlertDialogTitle,
   } from "@/components/ui/alert-dialog"
 import {
+  CircleAlert,
     CircleCheck,
     CircleX,
     Eye,
@@ -321,15 +322,12 @@ const handleSwitchChange = () => {
       <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4"> 
   
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-        <CardHeader className="flex flex-row items-center bg-muted/50">
-          <div className="grid gap-2">
+      <CardHeader className="bg-muted/50 space-y-2">
+      <div className="grid gap-2">
             <CardTitle>Designs</CardTitle>
             <CardDescription>Total: {designs.length}</CardDescription>
           </div>
-        </CardHeader>
-        <CardContent>
-
-        <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 mt-2">
+          <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 mt-2">
         <Input
           type="search"
           className="w-full sm:w-[50%] "
@@ -374,10 +372,19 @@ const handleSwitchChange = () => {
                         </Select>
 
             </div>
+        </CardHeader>
+        <CardContent>
+
+        {designs.length > 0 ? (
+
 
       <Table>
-      <ScrollArea className="mt-4 w-full h-96">
-        <TableHeader>
+        <ScrollArea
+          className={`${
+            designs.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >   
+                <TableHeader>
           <TableRow>
             {/* Design Id column */}
             <TableHead>Design Id</TableHead>
@@ -470,6 +477,21 @@ const handleSwitchChange = () => {
         </TableBody>
         </ScrollArea>
       </Table>
+
+) : (
+  <>
+<div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+<h1 className="text-center text-3xl font-bold">
+  <CircleAlert />
+</h1>
+<p className="text-center text-sm mt-2">No records of any designs found for now !</p>
+<p className="text-center text-xs mt-2">New designs will appear here.</p>
+
+</div>
+
+</>
+)}
+
         </CardContent>
       </Card>  
         
@@ -480,7 +502,7 @@ const handleSwitchChange = () => {
         <>
 
 <Card className="col-span-full mt-4" x-chunk="dashboard-01-chunk-4">
-  <CardHeader className="flex flex-col md:flex-row items-center">
+  <CardHeader className="flex flex-col bg-muted/50 md:flex-row items-center">
     <div className="grid gap-2">
       <CardTitle className="font-bold">Design Infos :</CardTitle>
       <CardDescription>
@@ -541,7 +563,7 @@ const handleSwitchChange = () => {
   <CardContent className="p-4 md:p-6 lg:p-8 max-w-full">
   <p className=" flex items-center justify-center font-bold my-4">View Design :</p>
   <div className='flex items-center justify-center mt-4'>
-            <Button variant="default" size="sm" className="w-full sm:w-[30%]" onClick={handleToggleMode}>
+            <Button variant="default" size="sm" className="w-full sm:w-[30%] text-white" onClick={handleToggleMode}>
               Toggle Mode
             </Button>
     </div>
@@ -578,8 +600,8 @@ const handleSwitchChange = () => {
   <div className='mt-4'>
       {designs && (
         <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-          <CardHeader className="">
-            <div className="grid gap-2">
+          <CardHeader className="bg-muted/50">
+          <div className="grid gap-2">
               <CardTitle className="font-bold">All Designs :</CardTitle>
               <CardDescription>
               <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 mt-2">
@@ -628,113 +650,114 @@ const handleSwitchChange = () => {
 
             </div>
             <div className='flex items-center justify-center mt-4'>
-            <Button variant="default" size="sm" className="w-full sm:w-[30%]" onClick={handleToggleMode}>
+            <Button variant="default" size="sm" className="w-full sm:w-[30%] text-white" onClick={handleToggleMode}>
               Toggle Mode
             </Button>
               </div>
 
               </CardDescription>
-              <CardContent>
 
-              <div className='mt-4 w-full grid 
-              xl:grid-cols-3 
-              lg:grid-cols-2 
-              md:grid-cols-1 
-              sm:grid-cols-1
-              gap-y-10
-              sm:gap-x-8  
-              md:gap-y-10
-              lg:gap-x-4'>
-
-  {designs.map((design, index) => {
-    return (
-      <>
-
-    <div key={index} className='flex flex-col items-center mb-4'>
-    <div
-    className={cn(
-    'relative h-52 border-2 rounded-lg w-52 sm:h-52 sm:w-52 lg:h-80 lg:w-80 lg:rounded-2xl flex justify-center flex-col items-center',
-    isDarkMode ? 'bg-gray-900' : 'bg-gray-100'
-    )}>
-
-        <div className='p-8'>
-
-                  <NextImage
-                     onContextMenu={(e) => e.preventDefault()}
-                     src={design.imageUrl}
-                     alt={design.name}
-                     loading="eager"
-                     blurDataURL="/Loading.png"
-                     placeholder="blur"
-                     className="aspect-square w-full rounded-md object-contain"
-                     height={1000}
-                     width={1000}
-                    />
-
-        </div>
-
-       <div className="absolute top-2 left-2 px-2 py-1 z-10 rounded">
-          <Badge variant="default">
-          <span className="text-xs text-white">{design.store.storeName}</span>
-          </Badge>
-      </div>
-
-      
-      <div className="absolute top-2 right-2 px-2 py-1 z-10 rounded">
-          <Badge variant="default">
-          <span className="text-xs text-white">{design.name}</span>
-          </Badge>
-      </div>
-
-      <div className="absolute bottom-2 right-2 px-2 py-1 z-10 rounded">
-      <Badge
-        onClick={() => { 
-          downloadDesign(design.imageUrl) }} 
-        className='bg-purple-500 hover:bg-purple-300 text-white cursor-pointer'>
-          Download Design
-        </Badge>
-      </div>
-
-
-    </div>
-
-        <div className="mt-4">
-         {!design.isDesignAccepted && !design.isDesignRefused && (
-            <>
-               <Badge onClick={()=>{
-                setSelectedDesign(design)
-                setisDialogOpen(true)}} className='hover:text-red-500 cursor-pointer' variant={`outline`}>
-                <CircleX/>
-               </Badge>
-                 <Badge onClick={()=>handleAccept(design.id)} className='ml-2 hover:text-green-500 cursor-pointer' variant={`outline`}>
-              <CircleCheck/>
-            </Badge>
-               </>
-            )}
-             {design.isDesignAccepted &&(
-            <Badge className='bg-green-500 text-white' variant={`default`}>
-             Accepted
-             </Badge>
-             )}
-            {design.isDesignRefused &&(
-            <Badge className='bg-red-500 text-white' variant={`default`}>
-             Refused
-          </Badge>
-       )}
-      </div>
-    </div>
-
-
-
-      </>
-    );
-  })}
-
-
-  </div>
-              </CardContent>
             </div>
           </CardHeader>
+          <CardContent>
+
+<div className='mt-4 w-full grid 
+xl:grid-cols-3 
+lg:grid-cols-2 
+md:grid-cols-1 
+sm:grid-cols-1
+gap-y-10
+sm:gap-x-8  
+md:gap-y-10
+lg:gap-x-4'>
+
+{designs.map((design, index) => {
+return (
+<>
+
+<div key={index} className='flex flex-col items-center mb-4'>
+<div
+className={cn(
+'relative h-52 border-2 rounded-lg w-52 sm:h-52 sm:w-52 lg:h-80 lg:w-80 lg:rounded-2xl flex justify-center flex-col items-center',
+isDarkMode ? 'bg-gray-900' : 'bg-gray-100'
+)}>
+
+<div className='p-8'>
+
+    <NextImage
+       onContextMenu={(e) => e.preventDefault()}
+       src={design.imageUrl}
+       alt={design.name}
+       loading="eager"
+       blurDataURL="/Loading.png"
+       placeholder="blur"
+       className="aspect-square w-full rounded-md object-contain"
+       height={1000}
+       width={1000}
+      />
+
+</div>
+
+<div className="absolute top-2 left-2 px-2 py-1 z-10 rounded">
+<Badge variant="default">
+<span className="text-xs text-white">{design.store.storeName}</span>
+</Badge>
+</div>
+
+
+<div className="absolute top-2 right-2 px-2 py-1 z-10 rounded">
+<Badge variant="default">
+<span className="text-xs text-white">{design.name}</span>
+</Badge>
+</div>
+
+<div className="absolute bottom-2 right-2 px-2 py-1 z-10 rounded">
+<Badge
+onClick={() => { 
+downloadDesign(design.imageUrl) }} 
+className='bg-purple-500 hover:bg-purple-300 text-white cursor-pointer'>
+Download Design
+</Badge>
+</div>
+
+
+</div>
+
+<div className="mt-4">
+{!design.isDesignAccepted && !design.isDesignRefused && (
+<>
+ <Badge onClick={()=>{
+  setSelectedDesign(design)
+  setisDialogOpen(true)}} className='hover:text-red-500 cursor-pointer' variant={`outline`}>
+  <CircleX/>
+ </Badge>
+   <Badge onClick={()=>handleAccept(design.id)} className='ml-2 hover:text-green-500 cursor-pointer' variant={`outline`}>
+<CircleCheck/>
+</Badge>
+ </>
+)}
+{design.isDesignAccepted &&(
+<Badge className='bg-green-500 text-white' variant={`default`}>
+Accepted
+</Badge>
+)}
+{design.isDesignRefused &&(
+<Badge className='bg-red-500 text-white' variant={`default`}>
+Refused
+</Badge>
+)}
+</div>
+</div>
+
+
+
+</>
+);
+})}
+
+
+</div>
+</CardContent>
         </Card>
       )}
   </div>

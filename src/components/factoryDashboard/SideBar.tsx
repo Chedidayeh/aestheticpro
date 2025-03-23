@@ -20,7 +20,7 @@ interface Count {
   notPrintedOrders: number;
 
 }
-const SideBar = () => {
+const SideBar = ({totalCounts} : {totalCounts : Count}) => {
 
     const pathname = usePathname();
     const router = useRouter()

@@ -170,7 +170,7 @@ export async function trackProductView(
         privateProduct : false,
         disableCategory : false,
       },
-      take: 5,
+      take: 4,
       include : {
         store : true
       },

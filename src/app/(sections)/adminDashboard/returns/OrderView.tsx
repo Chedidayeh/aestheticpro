@@ -27,6 +27,7 @@ import {
     
   } from "@/components/ui/alert-dialog"
 import {
+  CircleAlert,
     Loader,
     OctagonAlert,
     Trash2,
@@ -239,15 +240,12 @@ interface OrderViewProps {
   
   
       <Card className="xl:col-span-4" x-chunk="dashboard-01-chunk-4">
-        <CardHeader className="flex flex-row items-center bg-muted/50">
+        <CardHeader className="bg-muted/50">
           <div className="grid gap-2">
             <CardTitle>Returned Orders</CardTitle>
             <CardDescription>Total: {orders.length}</CardDescription>
           </div>
-        </CardHeader>
-        <CardContent>
-
-        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center mt-2">
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center mt-2">
   <Input
     type="search"
     className="w-full sm:w-[50%] "
@@ -268,10 +266,19 @@ interface OrderViewProps {
     </SelectContent>
   </Select>
 </div>
+        </CardHeader>
+        <CardContent>
+
+        {orders.length > 0 ? (
+
 
 
         <Table>
-        <ScrollArea className="mt-4 w-full h-96">
+        <ScrollArea
+          className={`${
+            orders.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >        
         <TableHeader>
           <TableRow>
             {/* Order Id column */}
@@ -395,6 +402,20 @@ interface OrderViewProps {
         </TableBody>
         </ScrollArea>
       </Table>
+) : (
+  <>
+<div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+<h1 className="text-center text-3xl font-bold">
+  <CircleAlert />
+</h1>
+<p className="text-center text-sm mt-2">No records of any returned orders found for now !</p>
+<p className="text-center text-xs mt-2">Returned orders will appear here.</p>
+
+</div>
+
+</>
+)}
+
         </CardContent>
       </Card>  
 

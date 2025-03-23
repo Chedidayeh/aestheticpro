@@ -12,6 +12,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
   import {
+    CircleAlert,
     CircleCheck,
       DatabaseBackup,
       FileType,
@@ -49,6 +50,7 @@ import { Separator } from "@/components/ui/separator"
 import { changeStatus, changeType, CheckIfMatches, updateRevenueAndSalesForProducts } from "./actions"
 import LoadingState from "@/components/LoadingState"
 import ImageSlider from "@/components/MarketPlace/ImageSlider"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface ExtraProduct extends Product{
   store : Store
@@ -335,7 +337,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
   
   
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-  <CardHeader className="flex flex-col md:flex-row items-center">
+  <CardHeader className="flex flex-col md:flex-row items-center bg-muted/50">
     <div className="grid gap-2">
       <CardTitle className="font-extrabold">Order Infos :</CardTitle>
       <CardDescription>
@@ -444,7 +446,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
         {/* profit infos */}
       {!order.isClientMadeOrder  && (
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-            <CardHeader className="flex flex-row items-center">
+            <CardHeader className="flex flex-row items-center bg-muted/50">
               <div className="grid gap-2">
                 <CardTitle className="font-extrabold">Profit Infos : <span className="text-sm text-gray-600">Products</span></CardTitle>
                 <CardDescription>
@@ -478,7 +480,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
                         <div>
                             <p className="font-bold">Profit Updated: </p>
                             <p>
-                              <Badge className={`${order.updated ? 'bg-green-700' :  'bg-red-700'} hover:bg-gray-700`}>
+                              <Badge className={`text-white ${order.updated ? 'bg-green-700' :  'bg-red-700'} hover:bg-gray-700`}>
                               {order.updated ? "yes" : "No"}
                               </Badge>
                               </p>
@@ -510,7 +512,14 @@ const checkMatch = async (item: ExtraOrderItem) => {
             <CardContent>
               <div className="mt-2">
 
+              {profit.orderItemProfits.length > 0 ? (
+
               <Table>
+              <ScrollArea
+          className={`${
+            profit.orderItemProfits.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >   
                   <TableHeader>
                     <TableRow>
                     <TableHead>Product Id</TableHead>
@@ -536,7 +545,22 @@ const checkMatch = async (item: ExtraOrderItem) => {
                       </TableRow>
                     ))}
                   </TableBody>
+                  </ScrollArea>
                 </Table>
+
+) : (
+  <>
+<div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+<h1 className="text-center text-3xl font-bold">
+  <CircleAlert />
+</h1>
+<p className="text-center text-sm mt-2">No records of any data found for now !</p>
+<p className="text-center text-xs mt-2">New data will appear here.</p>
+
+</div>
+
+</>
+)}
 
               </div>
               
@@ -552,7 +576,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
 
     {selectedItem && selectedItem.product && (
  <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
- <CardHeader className="flex flex-col md:flex-row items-center">
+ <CardHeader className="flex flex-col md:flex-row items-center bg-muted/50">
    <div className="grid gap-2">
      <CardTitle className="font-extrabold">Order Item Infos :</CardTitle>
      <CardDescription>

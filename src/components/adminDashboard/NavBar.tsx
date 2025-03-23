@@ -38,29 +38,8 @@ interface Count {
   returnedOrders : number
 }
 
-const NavBar = () => {
-
+  const NavBar = ({totalCounts , user} : {totalCounts : Count , user : User}) => {
   const pathname = usePathname();
-  const router = useRouter()
-  const [count, setCount] = useState<Count>(); // Initialize count state
-  const [user, setUser] = useState<User>();
-
-
-  useEffect(() => {
-    const fetchCounts = async () => {
-      try {
-        const user = await getUser()
-        if(!user) return
-        setUser(user)
-        const totalCounts = await getSideBarTotalCounts()
-        setCount(totalCounts); // Update count state with fetched data
-      } catch (error) {
-        console.error('Error fetching sidebar counts:', error);
-      }
-    };
-
-    fetchCounts();
-  }, []);
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
       <Sheet>
@@ -136,10 +115,10 @@ const NavBar = () => {
                 <HandCoins className="h-4 w-4" />
               </div>
               Manage Requests
-              {(count?.storeRequestsCount ?? 0) > 0 && (count?.affiliateRequestsCount ?? 0) > 0 && (
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+              {(totalCounts.storeRequestsCount > 0 || totalCounts.affiliateRequestsCount > 0) && (
+                <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {
-                  (count?.storeRequestsCount ?? 0) + (count?.affiliateRequestsCount ?? 0)
+                  (totalCounts?.storeRequestsCount ?? 0) + (totalCounts?.affiliateRequestsCount ?? 0)
                     }
                 </Badge>
                 )}
@@ -158,10 +137,10 @@ const NavBar = () => {
                 <Shirt className="h-4 w-4" />
               </div>
               Manage Products
-              {(count?.awaitingActionProductCount ?? 0) > 0 && (
-              <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+              {(totalCounts?.awaitingActionProductCount ?? 0) > 0 && (
+              <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                 {
-                (count?.awaitingActionProductCount ?? 0)
+                (totalCounts?.awaitingActionProductCount ?? 0)
                   }
               </Badge>
                )}
@@ -180,10 +159,10 @@ const NavBar = () => {
                 <Palette className="h-4 w-4" />
               </div>
               Manage Designs
-              {(count?.awaitingActionDesignCount ?? 0) > 0 && (
-              <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+              {(totalCounts?.awaitingActionDesignCount ?? 0) > 0 && (
+              <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                 {
-                (count?.awaitingActionDesignCount ?? 0)
+                (totalCounts?.awaitingActionDesignCount ?? 0)
                   }
               </Badge>
                )}
@@ -202,10 +181,10 @@ const NavBar = () => {
                 <ShoppingBasket  className="h-4 w-4" />
               </div>
               Manage Orders
-              {(count?.printedOrdersCount ?? 0) > 0 && (
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+              {(totalCounts?.printedOrdersCount ?? 0) > 0 && (
+                <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {
-                  (count?.printedOrdersCount ?? 0)
+                  (totalCounts?.printedOrdersCount ?? 0)
                     }
                 </Badge>
                 )}
@@ -225,10 +204,10 @@ const NavBar = () => {
               </div>
               
               Manage Returns
-              {(count?.returnedOrders ?? 0) > 0 && (
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+              {(totalCounts?.returnedOrders ?? 0) > 0 && (
+                <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {
-                  (count?.returnedOrders ?? 0)
+                  (totalCounts?.returnedOrders ?? 0)
                     }
                 </Badge>
                 )}

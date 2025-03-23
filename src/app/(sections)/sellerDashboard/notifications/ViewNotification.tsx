@@ -192,7 +192,7 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
       <AlertDialogHeader>
               <AlertDialogTitle>Notification Content</AlertDialogTitle>
             </AlertDialogHeader>
-            <div className="text-gray-600">{selectedNotification.content}</div>
+            <div className="">{selectedNotification.content}</div>
             <AlertDialogCancel onClick={()=>router.refresh()} className="w-20">Cancel</AlertDialogCancel>
           </AlertDialogContent>
         </AlertDialog>

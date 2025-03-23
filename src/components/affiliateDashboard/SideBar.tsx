@@ -25,28 +25,9 @@ import LoadingLink from '../LoadingLink'
 
 
 
-const SideBar = () => {
+const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) => {
 
   const pathname = usePathname();
-  const router = useRouter()
-  // user state
-  const [notifications, setNotifications] = useState<AffiliateNotification[]>([]); 
-
-    useEffect(() => {
-      const fetchCounts = async () => {
-        try {
-          const user = await getUser()
-          if(!user) return
-          const affiliateId = await getAffiliateIdByUserId(user.id)
-          const notifications = await getUnreadAffiliateNotifications(affiliateId)
-          setNotifications(notifications); 
-        } catch (error) {
-          console.error('Error fetching sidebar counts:', error);
-        }
-      };
-    
-      fetchCounts();
-    }, []);
 
   return (
     <div className="hidden w-[230px] border-r bg-muted/40 xl:block">

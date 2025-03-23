@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import MaxWidthWrapper from './MaxWidthWrapper'
 import { buttonVariants } from './ui/button'
-import { AppWindow, CircleDollarSign, Heart, Home, LayoutPanelLeft, Menu, Shirt, ShoppingBasket, ShoppingCart, Store, UserRoundX } from 'lucide-react'
+import { AppWindow, CircleDollarSign, Heart, Home, LayoutPanelLeft, Menu, Shirt, ShoppingBasket, ShoppingCart, Store as St, UserRoundX } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { fetchCartProductCount, getAllProductsCategories, getUser, getUserOrders } from '@/actions/actions'
 import UserProfile from './UserProfile'
@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/navigation-menu"
 import React from 'react'
 import Link from 'next/link'
+import { FavList, Order, OrderItem, Platform, Product, Store, User } from '@prisma/client'
 
 
 const ListItem = React.forwardRef<
@@ -59,21 +60,21 @@ const ListItem = React.forwardRef<
 })
 ListItem.displayName = "ListItem"
 
+interface extraOrder extends Order {
+  orderItems : OrderItem []
+}
 
-const Navbar = async () => {
 
 
+const Navbar = (
+  {user , platform , cartProductList , orders , favListProducts , bestSellingProducts} : 
+  {user : User , platform : Platform , cartProductList : number , orders : extraOrder[] , favListProducts: number , bestSellingProducts : number}) => {
 
   try {
     
 
 
-  const user = await getUser()
-  const platform = await db.platform.findFirst()
-  const cartProductList = await fetchCartProductCount(user?.id ? user.id : "")
-  const orders = await getUserOrders(user?.id ? user.id : "")
-  const favListProducts = await getUserFavoriteList(user?.id? user?.id : "");
-  const bestSellingProducts = await countBestSellingProducts();
+
 
   return (
     <nav className='sticky z-[100] h-14 inset-x-0 top-0 w-full  backdrop-blur-lg transition-all'>
@@ -123,12 +124,12 @@ const Navbar = async () => {
               variant: 'outline',
               className: "hover:text-yellow-500"
             })}>
-              <Store size={15} className='mr-1' />
+              <St size={15} className='mr-1' />
               MarketPlace ✨
             </LoadingLink>
                 </DialogClose>
 
-                {bestSellingProducts! > 0 && (
+                {bestSellingProducts > 0 && (
                 <DialogClose>
                 <LoadingLink href="/MarketPlace/BestSelling" className={buttonVariants({
               size: 'sm',
@@ -196,7 +197,7 @@ const Navbar = async () => {
               variant: 'ghost',
               className: "hover:text-yellow-500"
             })}>
-              <Store size={15} className='mr-1' />
+              <St size={15} className='mr-1' />
               MarketPlace ✨
             </LoadingLink>
 
@@ -295,7 +296,7 @@ const Navbar = async () => {
             })}>
               <Heart size={15} className='mr-1' />
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">
-                {favListProducts?.length > 9 ? '9+' : favListProducts?.length ?? 0}
+                {favListProducts > 9 ? '9+' : favListProducts ?? 0}
                 </span>
               Fav List
             </LoadingLink>
@@ -361,7 +362,7 @@ const Navbar = async () => {
             })}>
               <Heart size={22} className='mr-1' />
               <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">
-              {favListProducts?.length > 9 ? '9+' : favListProducts?.length ?? 0}
+              {favListProducts > 9 ? '9+' : favListProducts ?? 0}
                 </span>
             </LoadingLink>
             <LoadingLink href="/MarketPlace/cart" className={buttonVariants({

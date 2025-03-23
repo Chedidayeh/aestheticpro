@@ -23,29 +23,10 @@ interface Count {
   notPrintedOrders: number;
 }
 
-const NavBar = () => {
+const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
 
   const pathname = usePathname();
-  const router = useRouter()
-  const [count, setCount] = useState<Count>(); // Initialize count state
-  const [user, setUser] = useState<User>();
 
-
-  useEffect(() => {
-    const fetchCounts = async () => {
-      try {
-                const user = await getUser()
-                if(!user) return
-                setUser(user)
-        const totalCounts = await getFactoryDashboardCounts();
-        setCount(totalCounts); // Update count state with fetched data
-      } catch (error) {
-        console.error('Error fetching sidebar counts:', error);
-      }
-    };
-
-    fetchCounts();
-  }, []);
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
       <Sheet>
@@ -96,10 +77,10 @@ const NavBar = () => {
               </div>
               
               Manage Orders
-              {(count?.notPrintedOrders ?? 0) > 0 && (
+              {(totalCounts?.notPrintedOrders ?? 0) > 0 && (
                 <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {
-                  (count?.notPrintedOrders ?? 0)
+                  (totalCounts?.notPrintedOrders ?? 0)
                     }
                 </Badge>
                 )}

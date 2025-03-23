@@ -34,25 +34,10 @@ interface Count {
   affiliateRequestsCount : number
   returnedOrders : number
 }
-const SideBar = () => {
+const SideBar = ({totalCounts} : {totalCounts : Count}) => {
 
     const pathname = usePathname();
-    const router = useRouter()
-    const [count, setCount] = useState<Count>(); // Initialize count state
 
-
-    useEffect(() => {
-      const fetchCounts = async () => {
-        try {
-          const totalCounts = await getSideBarTotalCounts();
-          setCount(totalCounts); // Update count state with fetched data
-        } catch (error) {
-          console.error('Error fetching sidebar counts:', error);
-        }
-      };
-  
-      fetchCounts();
-    }, []);
 
   return (
     <div className="hidden w-[240px] border-r bg-muted/40 xl:block">
@@ -132,10 +117,10 @@ const SideBar = () => {
                 <HandCoins className="h-4 w-4" />
               </div>
               Manage Requests
-              {(count?.storeRequestsCount ?? 0) > 0 && (count?.affiliateRequestsCount ?? 0) > 0 && (
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+              {(totalCounts.storeRequestsCount > 0 || totalCounts.affiliateRequestsCount > 0) && (
+                <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {
-                  (count?.storeRequestsCount ?? 0) + (count?.affiliateRequestsCount ?? 0)
+                  (totalCounts.storeRequestsCount ?? 0) + (totalCounts.affiliateRequestsCount ?? 0)
                     }
                 </Badge>
                 )}
@@ -154,10 +139,10 @@ const SideBar = () => {
                 <Shirt className="h-4 w-4" />
               </div>
               Manage Products
-              {(count?.awaitingActionProductCount ?? 0) > 0 && (
-              <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+              {(totalCounts?.awaitingActionProductCount ?? 0) > 0 && (
+              <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                 {
-                (count?.awaitingActionProductCount ?? 0)
+                (totalCounts?.awaitingActionProductCount ?? 0)
                   }
               </Badge>
                )}
@@ -176,10 +161,10 @@ const SideBar = () => {
                 <Palette className="h-4 w-4" />
               </div>
               Manage Designs
-              {(count?.awaitingActionDesignCount ?? 0) > 0 && (
-              <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+              {(totalCounts?.awaitingActionDesignCount ?? 0) > 0 && (
+              <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                 {
-                (count?.awaitingActionDesignCount ?? 0)
+                (totalCounts?.awaitingActionDesignCount ?? 0)
                   }
               </Badge>
                )}
@@ -198,10 +183,10 @@ const SideBar = () => {
                 <ShoppingBasket  className="h-4 w-4" />
               </div>
               Manage Orders
-              {(count?.printedOrdersCount ?? 0) > 0 && (
-                <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+              {(totalCounts?.printedOrdersCount ?? 0) > 0 && (
+                <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {
-                  (count?.printedOrdersCount ?? 0)
+                  (totalCounts?.printedOrdersCount ?? 0)
                     }
                 </Badge>
                 )}
@@ -221,10 +206,10 @@ const SideBar = () => {
               </div>
               
               Manage Returns
-              {(count?.returnedOrders ?? 0) > 0 && (
+              {(totalCounts?.returnedOrders ?? 0) > 0 && (
                 <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {
-                  (count?.returnedOrders ?? 0)
+                  (totalCounts?.returnedOrders ?? 0)
                     }
                 </Badge>
                 )}

@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
   import {
+    CircleAlert,
       DatabaseBackup,
       FileType,
     } from "lucide-react"
@@ -34,6 +35,7 @@ import { Separator } from "@/components/ui/separator"
 import { changeStatus, changeType, updateRevenueAndSalesForDesigns } from "./actions"
 import ImageSlider from "@/components/MarketPlace/ImageSlider"
 import LoadingState from "@/components/LoadingState"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface ExtraOrderItem extends OrderItem {
     frontsellerDesign : SellerDesign | null
@@ -248,7 +250,7 @@ const handleUpdate = async (orderId : string , platformProfit : number) =>{
   
   
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-      <CardHeader className="flex flex-col md:flex-row items-center">
+      <CardHeader className="flex flex-col md:flex-row items-center bg-muted/50">
         <div className="grid gap-2">
             <CardTitle className="font-extrabold">Order Infos :</CardTitle>
             <CardDescription>
@@ -342,7 +344,7 @@ const handleUpdate = async (orderId : string , platformProfit : number) =>{
 
         {/* designs profit */}
       <Card className="xl:col-span-4" x-chunk="dashboard-01-chunk-4">
-            <CardHeader className="flex flex-row items-center">
+            <CardHeader className="flex flex-row items-center bg-muted/50">
               <div className="grid gap-2">
                 <CardTitle className="font-extrabold">Order Profit : <span className="text-sm text-gray-600">Designs</span></CardTitle>
                 <CardDescription>
@@ -362,7 +364,7 @@ const handleUpdate = async (orderId : string , platformProfit : number) =>{
 
                         <div>
                             <p className="font-bold">Profit Updated: </p>
-                            <p><Badge className={`${order.updated ? 'bg-green-700' :  'bg-red-700'} hover:bg-gray-700`}>
+                            <p><Badge className={`text-white ${order.updated ? 'bg-green-700' :  'bg-red-700'} hover:bg-gray-700`}>
                               {order.updated ? "yes" : "No"}
                               </Badge></p>
                         </div>
@@ -385,7 +387,15 @@ const handleUpdate = async (orderId : string , platformProfit : number) =>{
             <CardContent>
               <div className="mt-2">
 
+              {profit.orderItemProfits.length > 0 ? (
+
+
               <Table>
+                        <ScrollArea
+          className={`${
+            profit.orderItemProfits.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >   
                   <TableHeader>
                     <TableRow>
                     <TableHead>Design Id</TableHead>
@@ -409,7 +419,22 @@ const handleUpdate = async (orderId : string , platformProfit : number) =>{
                       </TableRow>
                     ))}
                   </TableBody>
+                  </ScrollArea>
                 </Table>
+
+) : (
+  <>
+<div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+<h1 className="text-center text-3xl font-bold">
+  <CircleAlert />
+</h1>
+<p className="text-center text-sm mt-2">No records of any data found for now !</p>
+<p className="text-center text-xs mt-2">New data will appear here.</p>
+
+</div>
+
+</>
+)}
 
               </div>        
             </CardContent>
@@ -422,7 +447,7 @@ const handleUpdate = async (orderId : string , platformProfit : number) =>{
               {/* client products */}
               {selectedItem && selectedItem.productTitle === 'Client Product' && (
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-        <CardHeader className="flex flex-row items-center">
+        <CardHeader className="flex flex-row items-center bg-muted/50">
           <div className="grid gap-2">
             <CardTitle className="font-extrabold">Order Item Infos :</CardTitle>
             <CardDescription>

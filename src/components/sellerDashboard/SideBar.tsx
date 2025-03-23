@@ -26,28 +26,9 @@ import LoadingLink from '../LoadingLink'
 
 
 
-const SideBar = () => {
+const SideBar = ({notifications} : {notifications : Notification[]}) => {
 
     const pathname = usePathname();
-    const router = useRouter()
-    const [notifications, setnotifications] = useState<Notification[]>(); // Initialize count state
-
-
-    useEffect(() => {
-      const fetchCounts = async () => {
-        try {
-          const user = await getUser()
-          if(!user) return
-          const store = await getStoreByUserId(user!.id!)
-          const notifications = await getUnreadNotificationsForStore(store.id)
-          setnotifications(notifications); // Update count state with fetched data
-        } catch (error) {
-          console.error('Error fetching sidebar counts:', error);
-        }
-      };
-  
-      fetchCounts();
-    }, []);
 
   return (
     <div className="hidden w-[230px] border-r bg-muted/40 xl:block">
@@ -191,7 +172,7 @@ const SideBar = () => {
               </div>
               Notifications
               {notifications && notifications?.length > 0 && (
-              <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+              <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                 {
                 notifications?.length
                   }

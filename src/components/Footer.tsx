@@ -5,12 +5,10 @@ import { FaFacebook, FaInstagram } from 'react-icons/fa'
 import { getPlatformForTheWebsite, getUser } from '@/actions/actions'
 import LoadingLink from './LoadingLink'
 import Link from 'next/link'
+import { Platform, User } from '@prisma/client'
 
-const Footer = async () => {
+const Footer = ({user , platform} : {user : User , platform : Platform}) => {
 
-
-  const user = await getUser()
-  const platform = await getPlatformForTheWebsite()
 
   return (
 

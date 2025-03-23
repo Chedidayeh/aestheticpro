@@ -26,6 +26,7 @@ import {
     AlertDialogTitle,
   } from "@/components/ui/alert-dialog"
 import {
+  CircleAlert,
     Eye,
     Loader,
     OctagonAlert,
@@ -227,31 +228,13 @@ interface OrderViewProps {
   
   
       <Card className="xl:col-span-4" x-chunk="dashboard-01-chunk-4">
-        <CardHeader className="flex flex-row items-center bg-muted/50">
+        <CardHeader className="bg-muted/50">
           <div className="grid gap-2">
             <CardTitle>Orders</CardTitle>
             <CardDescription>Total: {orders.length}</CardDescription>
           </div>
-        </CardHeader>
-        <CardContent>
-
-        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center mt-2">
-  <Input
-    type="search"
-    className="w-full sm:w-[50%] "
-    placeholder="Enter the order Id, client Name, client Phone Number to make a search..."
-    value={searchQuery}
-    onChange={(e) => setSearchQuery(e.target.value)}
-    />
-    <Button
-     disabled={searchQuery === ""}
-     onClick={handleSearch}
-     className="bg-blue-500 text-white px-4 py-2 rounded flex items-center"
-    >
-    Search
-    <Search size={14} className="ml-1" />
-  </Button>   
-  <Select onValueChange={handleFilterBy1}>
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center mt-2">
+          <Select onValueChange={handleFilterBy1}>
     <SelectTrigger className="w-full sm:w-[180px] ">
       <SelectValue placeholder="Filter By" />
     </SelectTrigger>
@@ -283,6 +266,22 @@ interface OrderViewProps {
       </SelectGroup>
     </SelectContent>
   </Select>
+  <Input
+    type="search"
+    className="w-full sm:w-[50%] "
+    placeholder="Enter the order Id, client Name, client Phone Number to make a search..."
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    />
+    <Button
+     disabled={searchQuery === ""}
+     onClick={handleSearch}
+     className="bg-blue-500 text-white px-4 py-2 rounded flex items-center"
+    >
+    Search
+    <Search size={14} className="ml-1" />
+  </Button>   
+
 
     <div className="flex items-center space-x-2">
       <Switch
@@ -294,11 +293,20 @@ interface OrderViewProps {
     </div>
 
 </div>
+        </CardHeader>
+        <CardContent>
+
+
+        {orders.length > 0 ? (
 
 
         <Table>
-        <ScrollArea className="mt-4 w-full h-96">
-  <TableHeader>
+        <ScrollArea
+          className={`${
+            orders.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >     
+          <TableHeader>
     <TableRow>
       {/* Order Id column */}
       <TableHead>Order Id</TableHead>
@@ -440,6 +448,20 @@ interface OrderViewProps {
 
 </Table>
 
+) : (
+  <>
+<div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+<h1 className="text-center text-3xl font-bold">
+  <CircleAlert />
+</h1>
+<p className="text-center text-sm mt-2">No records of any orders found for now !</p>
+<p className="text-center text-xs mt-2">New orders will appear here.</p>
+
+</div>
+
+</>
+)}
+
         </CardContent>
       </Card>  
 
@@ -453,7 +475,7 @@ interface OrderViewProps {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mt-2">
                           <div>
                              <p className="font-bold">Order Id:</p>
-                             <p>{selectedOrder?.id}</p>
+                             <p className="text-xs">{selectedOrder?.id}</p>
                          </div>
                          <div>
                              <p className="font-bold">Order Status:</p>
@@ -498,8 +520,8 @@ interface OrderViewProps {
                              <p>{selectedOrder.clientName}</p>
                          </div>
                          <div>
-                             <p className="font-bold">Client Email:</p>
-                             <p>{selectedOrder.user.email}</p>
+                             <p className="font-bold ">Client Email:</p>
+                             <p className="text-xs">{selectedOrder.user.email}</p>
                          </div>
                          <div>
                              <p className="font-bold">Client Phone Number:</p>

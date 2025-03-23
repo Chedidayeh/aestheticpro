@@ -1,6 +1,6 @@
 'use client'
 
-import { MoreHorizontal, OctagonAlert } from "lucide-react"
+import { CircleAlert, MoreHorizontal, OctagonAlert } from "lucide-react"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -45,6 +45,7 @@ import { apply, changePrice, deleteCategoryAndAssociated, disableCategoryProduct
 import LoadingState from "@/components/LoadingState"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
 interface CatWithInfos extends Category {
     colors : Color[]
@@ -373,14 +374,20 @@ const enableCategory = async (category: Category) => {
 
 
     <Card className="mt-4">
-      <CardHeader>
+      <CardHeader className="bg-muted/50">
         <CardTitle>Categories</CardTitle>
         <CardDescription>
           Total : {}
         </CardDescription>
       </CardHeader>
       <CardContent>
+      {categories.length > 0 ? (
       <Table>
+                <ScrollArea
+          className={`${
+            categories.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >   
   <TableHeader>
     <TableRow>
       {/* Category Id column */}
@@ -417,7 +424,7 @@ const enableCategory = async (category: Category) => {
         {/* Category Colors cell */}
         <TableCell>
           {category.colors.map((color) => (
-            <Badge key={color.id} className="mr-1">
+            <Badge key={color.id} className="mr-1 text-white">
               {color.label}
             </Badge>
           ))}
@@ -426,7 +433,7 @@ const enableCategory = async (category: Category) => {
         {/* Category Sizes cell */}
         <TableCell>
           {category.sizes.map((size) => (
-            <Badge key={size.id} className="mr-1">
+            <Badge key={size.id} className="mr-1 text-white">
               {size.label}
             </Badge>
           ))}
@@ -474,7 +481,22 @@ const enableCategory = async (category: Category) => {
       </TableRow>
     ))}
   </TableBody>
+  </ScrollArea>
 </Table>
+
+) : (
+  <>
+<div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+<h1 className="text-center text-3xl font-bold">
+  <CircleAlert />
+</h1>
+<p className="text-center text-sm mt-2">No records of any categories found for now !</p>
+<p className="text-center text-xs mt-2">New categories will appear here.</p>
+
+</div>
+
+</>
+)}
 
       </CardContent>
       <CardFooter>

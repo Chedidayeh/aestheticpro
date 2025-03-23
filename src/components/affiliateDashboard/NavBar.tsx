@@ -36,30 +36,9 @@ import { getAffiliateIdByUserId } from "@/app/(sections)/affiliateDashboard/prod
 import Profile from "./Profile"
 import LoadingLink from "../LoadingLink"
 
-const NavBar = () => {
+  const NavBar = ({user , notifications} : {user : User ,notifications : AffiliateNotification[]}) => {
 
   const pathname = usePathname();
-  const router = useRouter()
-// user state
-const [user, setUser] = useState<User>();
-const [notifications, setNotifications] = useState<AffiliateNotification[]>([]); 
-
-useEffect(() => {
-  const fetchCounts = async () => {
-    try {
-      const user = await getUser()
-      if(!user) return
-      setUser(user)
-      const affiliateId = await getAffiliateIdByUserId(user.id)
-      const notifications = await getUnreadAffiliateNotifications(affiliateId)
-      setNotifications(notifications); 
-    } catch (error) {
-      console.error('Error fetching sidebar counts:', error);
-    }
-  };
-
-  fetchCounts();
-}, []);
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">

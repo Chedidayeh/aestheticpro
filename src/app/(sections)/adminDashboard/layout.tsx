@@ -5,6 +5,7 @@ import SideBar from "@/components/adminDashboard/SideBar";
 import NavBar from "@/components/adminDashboard/NavBar";
 
 import type { Metadata } from "next";
+import { getSideBarTotalCounts, getUser } from "@/actions/actions";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
@@ -12,13 +13,16 @@ export const metadata: Metadata = {
   description: "Tunisian Platfrom",
 };
 
-const Layout = ({ children }: { children: ReactNode }) => {
+const Layout = async ({ children }: { children: ReactNode }) => {
+  const totalCounts = await getSideBarTotalCounts();
+  const user = await getUser()
+
     return (
 
     <div className="grid min-h-screen w-full xl:grid-cols-[240px_1fr]">
-    <SideBar />
+    <SideBar totalCounts={totalCounts} />
       <div className="flex flex-col">
-        <NavBar />
+        <NavBar totalCounts={totalCounts} user={user!} />
         <div className="p-8">
         {children}
         </div>

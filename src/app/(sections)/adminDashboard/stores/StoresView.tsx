@@ -22,6 +22,7 @@ import {
     AlertDialogTrigger,
   } from "@/components/ui/alert-dialog"
 import {
+  CircleAlert,
     OctagonAlert,
     Search,
     Trash2,
@@ -170,15 +171,25 @@ interface StoresViewProps {
   
   
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-        <CardHeader className="flex flex-row items-center bg-muted/50">
-          <div className="grid gap-2">
+      <CardHeader className="space-y-2 bg-muted/50">
+      <div className="grid gap-2">
             <CardTitle>Stores</CardTitle>
             <CardDescription>Total: {stores.length}</CardDescription>
             <CardDescription>Total Income: {calculateTotalIncome()} TND</CardDescription>
           </div>
-        </CardHeader>
-        <CardDescription className='flex items-center justify-center'>
-        <div className='mt-2 m-2 gap-4 flex flex-wrap items-center justify-center'>
+          <div className='grid md:flex gap-4'>
+          <Select onValueChange={handleSortBy}>
+                               <SelectTrigger className="w-full sm:w-[180px]">
+                                     <SelectValue placeholder="Sort By" />
+                                   </SelectTrigger>
+                                   <SelectContent>
+                                     <SelectGroup>
+                                       <SelectLabel>Select</SelectLabel>
+                                       <SelectItem value="rejected">Total rejected elements</SelectItem>
+                                       <SelectItem value="level">level</SelectItem>
+                                     </SelectGroup>
+                                   </SelectContent>
+                                 </Select>   
         <Input
               type="search"
               className='w-full sm:w-auto'
@@ -195,26 +206,25 @@ interface StoresViewProps {
                        <Search size={14} className="ml-1" />
                  </Button>
 
-                             <Select onValueChange={handleSortBy}>
-                               <SelectTrigger className="w-full sm:w-[180px]">
-                                     <SelectValue placeholder="Sort By" />
-                                   </SelectTrigger>
-                                   <SelectContent>
-                                     <SelectGroup>
-                                       <SelectLabel>Select</SelectLabel>
-                                       <SelectItem value="rejected">Total rejected elements</SelectItem>
-                                       <SelectItem value="level">level</SelectItem>
-                                     </SelectGroup>
-                                   </SelectContent>
-                                 </Select>   
+
          
         </div>
+        </CardHeader>
+        <CardDescription className='flex items-center justify-center'>
+
         </CardDescription>
 
         <CardContent>
+
+        {stores.length > 0 ? (
+
+
         <Table>
-        <ScrollArea className="w-full mt-8 h-96">
-        <TableHeader>
+        <ScrollArea
+          className={`${
+            stores.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >               <TableHeader>
           <TableRow>
             {/* Store Id column */}
             <TableHead >Store Id</TableHead>
@@ -301,6 +311,20 @@ interface StoresViewProps {
         </TableBody>
         </ScrollArea>
       </Table>
+
+) : (
+  <>
+<div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+<h1 className="text-center text-3xl font-bold">
+  <CircleAlert />
+</h1>
+<p className="text-center text-sm mt-2">No records of any stores found for now !</p>
+<p className="text-center text-xs mt-2">New stores will appear here.</p>
+
+</div>
+
+</>
+)}
 
         </CardContent>
       </Card> 

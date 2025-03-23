@@ -26,6 +26,7 @@ import {
     AlertDialogTitle,
   } from "@/components/ui/alert-dialog"
 import {
+  CircleAlert,
     CircleCheck,
     CircleX,
     Eye,
@@ -330,15 +331,13 @@ const viewProductData = (product : ExtraProduct) => {
       <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-2 xl:grid-cols-4"> 
   
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-        <CardHeader className="flex flex-row items-center bg-muted/50">
+        <CardHeader className="bg-muted/50 space-y-2">
           <div className="grid gap-2">
             <CardTitle>Products</CardTitle>
             <CardDescription>Total: {products.length}</CardDescription>
+            
           </div>
-        </CardHeader>
-        <CardContent>
-
-        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 mt-2">
+          <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 mt-2">
         <Input
           type="search"
           className="w-full sm:w-[50%] "
@@ -388,10 +387,19 @@ const viewProductData = (product : ExtraProduct) => {
 
 
       </div>
+        </CardHeader>
+        <CardContent>
+
+
+        {products.length > 0 ? (
 
         <Table>
-        <ScrollArea className="mt-4 w-full h-96">
-  <TableHeader>
+        <ScrollArea
+          className={`${
+            products.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >      
+        <TableHeader>
     <TableRow>
       {/* Product Id column */}
       <TableHead>Product Id</TableHead>
@@ -492,6 +500,20 @@ const viewProductData = (product : ExtraProduct) => {
 
         </Table>
 
+) : (
+  <>
+<div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+<h1 className="text-center text-3xl font-bold">
+  <CircleAlert />
+</h1>
+<p className="text-center text-sm mt-2">No records of any products found for now !</p>
+<p className="text-center text-xs mt-2">New products will appear here.</p>
+
+</div>
+
+</>
+)}
+
         </CardContent>
       </Card>  
         
@@ -502,11 +524,11 @@ const viewProductData = (product : ExtraProduct) => {
         <>
 
 <Card className="col-span-full mt-4" x-chunk="dashboard-01-chunk-4">
-  <CardHeader className="flex flex-col md:flex-row items-center">
+  <CardHeader className="flex flex-col md:flex-row bg-muted/50 items-center ">
     <div className="grid gap-2">
       <CardTitle className="font-bold">Product Infos :</CardTitle>
       <CardDescription>
-        <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mt-2">
+        <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-2">
           <div>
             <p className="font-bold">Product Title :</p>
             <p >{selectedProduct.title}</p>
@@ -561,6 +583,15 @@ const viewProductData = (product : ExtraProduct) => {
           </Button>
           </div>
 
+          <div className="col-span-2 md:col-span-1">
+          <Button
+          onClick={() => {
+          viewProductData(selectedProduct) }} 
+          variant="link" className="text-blue-500 flex items-center">
+          View Data
+          </Button>
+          </div>
+
 
         </div>
       </CardDescription>
@@ -594,7 +625,7 @@ const viewProductData = (product : ExtraProduct) => {
       {/* store products view */}
       {products && (
         <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-          <CardHeader className="">
+          <CardHeader className="bg-muted/50">
             <div className="grid gap-2">
               <CardTitle className="font-bold">All Products :</CardTitle>
               <CardDescription>
@@ -649,108 +680,109 @@ const viewProductData = (product : ExtraProduct) => {
 
 
               </CardDescription>
-              <CardContent>
 
-              <div className='mt-4 w-full grid  
-              lg:grid-cols-2 
-              md:grid-cols-2
-              sm:grid-cols-1
-              gap-y-10
-              sm:gap-x-8  
-              md:gap-y-10
-              lg:gap-x-4'>
-
-  {products.map((product, index) => {
-    // Combine front and back product URLs
-    const combinedUrls = [
-      ...product.croppedFrontProduct,
-      ...product.croppedBackProduct
-    ];
-
-    return (
-      <>
-        {/* ImageSlider with combinedUrls */}
-
-
-  {/* Product Cards */}
-    <div key={index} className='flex flex-col items-center mb-4'>
-    <div className='relative h-72 w-72 lg:h-80 lg:w-80'>
-
-
-       <ImageSlider urls={combinedUrls} />
-
-
-       <div className="absolute top-2 left-2 px-2 py-1 z-10 rounded">
-          <Badge variant="default">
-          <span className="text-xs text-white">{product.store.storeName}</span>
-          </Badge>
-      </div>
-
-      <div className="absolute top-8 left-2 px-2 py-1 z-10 rounded">
-      <Badge
-        onClick={() => {
-          viewProductData(product) }} 
-        className='bg-green-500 hover:bg-green-300 text-white cursor-pointer'>
-          View Data
-        </Badge>
-      </div>
-
-      
-      <div className="absolute top-2 right-2 px-2 py-1 z-10 rounded">
-          <Badge variant="default">
-          <span className="text-xs text-white">{product.title}</span>
-          </Badge>
-      </div>
-
-      <div className="absolute top-8 right-2 px-2 py-1 z-10 rounded">
-      <Badge
-        onClick={() => { setIsDownloadOpen(true) 
-          downloadMockup(product) }} 
-        className='bg-purple-500 hover:bg-purple-300 text-white cursor-pointer'>
-          Download Product
-        </Badge>
-      </div>
-
-
-    </div>
-
-        <div className="mt-20">
-         {!product.isProductAccepted && !product.isProductRefused && (
-            <>
-               <Badge onClick={()=>{
-                setSelectedProduct(product)
-                setisDialogOpen(true)}} className='hover:text-red-500 cursor-pointer' variant={`outline`}>
-                <CircleX/>
-               </Badge>
-                 <Badge onClick={()=>handleAccept(product.id)} className='ml-2 hover:text-green-500 cursor-pointer' variant={`outline`}>
-              <CircleCheck/>
-            </Badge>
-               </>
-            )}
-             {product.isProductAccepted &&(
-            <Badge className='bg-green-500 text-white' variant={`default`}>
-             Accepted
-             </Badge>
-             )}
-            {product.isProductRefused &&(
-            <Badge className='bg-red-500 text-white' variant={`default`}>
-             Refused
-          </Badge>
-       )}
-      </div>
-    </div>
-
-
-
-      </>
-    );
-  })}
-
-
-  </div>
-              </CardContent>
             </div>
           </CardHeader>
+          <CardContent>
+
+<div className='mt-4 w-full grid  
+lg:grid-cols-2 
+md:grid-cols-2
+sm:grid-cols-1
+gap-y-10
+sm:gap-x-8  
+md:gap-y-10
+lg:gap-x-4'>
+
+{products.map((product, index) => {
+// Combine front and back product URLs
+const combinedUrls = [
+...product.croppedFrontProduct,
+...product.croppedBackProduct
+];
+
+return (
+<>
+{/* ImageSlider with combinedUrls */}
+
+
+{/* Product Cards */}
+<div key={index} className='flex flex-col items-center mb-4'>
+<div className='relative h-72 w-72 lg:h-80 lg:w-80'>
+
+
+<ImageSlider urls={combinedUrls} />
+
+
+<div className="absolute top-2 left-2 px-2 py-1 z-10 rounded">
+<Badge variant="default">
+<span className="text-xs text-white">{product.store.storeName}</span>
+</Badge>
+</div>
+
+<div className="absolute top-8 left-2 px-2 py-1 z-10 rounded">
+<Badge
+onClick={() => {
+viewProductData(product) }} 
+className='bg-green-500 hover:bg-green-300 text-white cursor-pointer'>
+View Data
+</Badge>
+</div>
+
+
+<div className="absolute top-2 right-2 px-2 py-1 z-10 rounded">
+<Badge variant="default">
+<span className="text-xs text-white">{product.title}</span>
+</Badge>
+</div>
+
+<div className="absolute top-8 right-2 px-2 py-1 z-10 rounded">
+<Badge
+onClick={() => { setIsDownloadOpen(true) 
+downloadMockup(product) }} 
+className='bg-purple-500 hover:bg-purple-300 text-white cursor-pointer'>
+Download Product
+</Badge>
+</div>
+
+
+</div>
+
+<div className="mt-20">
+{!product.isProductAccepted && !product.isProductRefused && (
+<>
+ <Badge onClick={()=>{
+  setSelectedProduct(product)
+  setisDialogOpen(true)}} className='hover:text-red-500 cursor-pointer' variant={`outline`}>
+  <CircleX/>
+ </Badge>
+   <Badge onClick={()=>handleAccept(product.id)} className='ml-2 hover:text-green-500 cursor-pointer' variant={`outline`}>
+<CircleCheck/>
+</Badge>
+ </>
+)}
+{product.isProductAccepted &&(
+<Badge className='bg-green-500 text-white' variant={`default`}>
+Accepted
+</Badge>
+)}
+{product.isProductRefused &&(
+<Badge className='bg-red-500 text-white' variant={`default`}>
+Refused
+</Badge>
+)}
+</div>
+</div>
+
+
+
+</>
+);
+})}
+
+
+</div>
+</CardContent>
         </Card>
       )}
   </div>

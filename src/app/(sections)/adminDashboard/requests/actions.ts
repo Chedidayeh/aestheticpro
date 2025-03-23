@@ -1,6 +1,7 @@
 'use server'
 
 import { db } from "@/db";
+import { sendAffiliateApprovedPaymentRequestEmail, sendStoreApprovedPaymentRequestEmail } from "@/lib/mailer";
 import { Store, User , PaymentRequest, Affiliate, AffiliatePaymentRequest} from "@prisma/client";
 
 interface ExtraStore extends Store {
@@ -66,12 +67,52 @@ export async function deletePaymentRequestById(paymentRequestId : string) {
               increment: request.requestedAmount,
             },
           },
+          include : {
+            user : true
+          }
         });
-  
+
+        await sendStoreApprovedPaymentRequestEmail(
+          updatedStore.user.email,
+          updatedStore.user.name,
+          request.requestedAmount,
+          request.createdAt.toLocaleString(),
+          updatedStore.revenue,
+          updatedStore.receivedPayments,
+          updatedStore.revenue - updatedStore.receivedPayments,
+        );
+
         // Return the updated request with the updated store
         return {
           ...request,
           store: updatedStore,
+        };
+      },{
+        maxWait: 10000, // Wait for a connection for up to 10 seconds
+        timeout: 20000, // Allow the transaction to run for up to 20 seconds
+      });
+  
+      return updatedRequest;
+    } catch (error) {
+      console.error('Error approving store request:', error);
+      throw new Error('Could not approve the store request');
+    }
+  }
+
+  export async function rejectStoreRequest(selectedRequest: ExtraPaymentRequest) {
+    try {
+      // Start a transaction to ensure atomicity
+      const updatedRequest = await db.$transaction(async (tx) => {
+        // Update the status of the payment request to 'APPROVED'
+        const request = await tx.paymentRequest.update({
+          where: { id: selectedRequest.id },
+          data: { status:'REJECTED' },
+        });
+  
+  
+        // Return the updated request with the updated store
+        return {
+          ...request,
         };
       },{
         maxWait: 10000, // Wait for a connection for up to 10 seconds
@@ -150,7 +191,20 @@ export async function deletePaymentRequestById(paymentRequestId : string) {
               increment: request.requestedAmount,
             },
           },
+          include : {
+            user : true
+          }
         });
+
+        await sendAffiliateApprovedPaymentRequestEmail(
+          updatedAffiliate.user.email,
+          updatedAffiliate.user.name,
+          request.requestedAmount,
+          request.createdAt.toLocaleString(),
+          updatedAffiliate.totalIncome,
+          updatedAffiliate.receivedPayments,
+          updatedAffiliate.totalIncome - updatedAffiliate.receivedPayments,
+        ); 
   
         // Return the updated request with the updated store
         return {
@@ -163,5 +217,28 @@ export async function deletePaymentRequestById(paymentRequestId : string) {
     } catch (error) {
       console.error('Error approving store request:', error);
       throw new Error('Could not approve the store request');
+    }
+  }
+
+  export async function rejectAffiliateRequest(selectedRequest: ExtraAffiliatePaymentRequest) {
+    try {
+      // Start a transaction to ensure atomicity
+      const updatedRequest = await db.$transaction(async (tx) => {
+        // Update the status of the payment request to 'APPROVED'
+        const request = await tx.affiliatePaymentRequest.update({
+          where: { id: selectedRequest.id },
+          data: { status: 'REJECTED' },
+        });
+  
+  
+        return {
+          ...request,
+        };
+      });
+  
+      return updatedRequest;
+    } catch (error) {
+      console.error('Error rejecting store request:', error);
+      throw new Error('Could not reject the store request');
     }
   }

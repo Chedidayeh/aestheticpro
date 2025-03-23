@@ -11,6 +11,9 @@ import TopBar from "@/components/TopBar";
 import { ReactNode } from "react";
 import SearchBar from "@/components/MarketPlace/SearchBar";
 import { SessionProvider } from "next-auth/react";
+import { fetchCartProductCount, getPlatformForTheWebsite, getUser, getUserOrders } from "@/actions/actions";
+import { getUserFavoriteList } from "../(sections)/MarketPlace/favList/actions";
+import { countBestSellingProducts, getUserFavoriteListProductsCount } from "../(sections)/MarketPlace/BestSelling/actions";
 const recursive = Recursive({ subsets: ["latin-ext"] });
 export const dynamic = 'force-dynamic';
 
@@ -23,18 +26,33 @@ export const metadata: Metadata = {
 type LayoutProps = {
   children: ReactNode;
 };
-const Layout = ({ children }: LayoutProps) => {
+const Layout = async ({ children }: LayoutProps) => {
+
+  const platform = await getPlatformForTheWebsite()
+
+  const user = await getUser()
+  const cartProductList = await fetchCartProductCount(user?.id ? user.id : "")
+  const orders = await getUserOrders(user?.id ? user.id : "")
+  const favListProducts = await getUserFavoriteListProductsCount(user?.id? user?.id : "");
+  const bestSellingProducts = await countBestSellingProducts();
 
 
   return (
 
 <>
-    <TopBar/>
-    <HomeNavBar/>
+    <TopBar platform={platform!} />
+    <HomeNavBar 
+    user={user!} 
+    platform={platform!} 
+    cartProductList={cartProductList}  
+    orders={orders} 
+    favListProducts={favListProducts}  
+    bestSellingProducts={bestSellingProducts ?? 0} />
+
     <SearchBar/>
     {children}      
-    <Footer />
-</>       
+    <Footer user={user!} platform={platform!} />
+    </>       
 
   );
 }

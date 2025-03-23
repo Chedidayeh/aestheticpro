@@ -27,8 +27,8 @@ import {
 import { PaymentRequest, Store, User } from "@prisma/client";
 import { Badge } from '@/components/ui/badge';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import { OctagonAlert, Trash2 } from 'lucide-react';
-import { approveStoreRequest, deletePaymentRequestById } from "./actions";
+import { CircleAlert, OctagonAlert, Trash2 } from 'lucide-react';
+import { approveStoreRequest, deletePaymentRequestById, rejectStoreRequest } from "./actions";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
 import LoadingState from "@/components/LoadingState";
@@ -127,6 +127,30 @@ const handleDelete = async () => {
             }
         }
 
+                // handleChange function
+                const rejectRequest = async () => {
+                  try {
+                    setOpen(true)
+                      await rejectStoreRequest(selectedRequest!)
+                      toast({
+                        title: 'Request has been rejected !',
+                        variant: 'default',
+                        });
+                        router.refresh()
+                        setselectedRequest(null)
+                        setOpen(false)
+                  } catch (error) {
+                    console.error(error);
+                    setOpen(false)
+                    toast({
+                      title: 'Error !',
+                      description: "Please try again later !",
+                      variant: 'destructive',
+                      });
+                      
+                  }
+              }
+
     return (
         <>
 
@@ -134,11 +158,16 @@ const handleDelete = async () => {
   
   <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-1 xl:grid-cols-1">
 
+  {paymentRequests.length > 0 ? (
 
 
   <Table>
-    <ScrollArea className="w-full h-96 mt-4">
-      <TableHeader>
+  <ScrollArea
+          className={`${
+            paymentRequests.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >         
+         <TableHeader>
         <TableRow>
           <TableHead>Card Holder</TableHead>
           <TableHead>Card Phone Number</TableHead>
@@ -202,6 +231,20 @@ const handleDelete = async () => {
     </ScrollArea>
   </Table>
 
+) : (
+  <>
+<div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+<h1 className="text-center text-3xl font-bold">
+  <CircleAlert />
+</h1>
+<p className="text-center text-sm mt-2">No records of any requests made for now !</p>
+<p className="text-center text-xs mt-2">New D17 requests will appear here.</p>
+
+</div>
+
+</>
+)}
+
   </section>
   </div>
 
@@ -219,11 +262,17 @@ const handleDelete = async () => {
                              <p className="font-bold  ">Request Id:</p>
                              <p className="text-xs">{selectedRequest.id}</p>
                          </div>
+
+                         <div>
+                             <p className="font-bold">Request date:</p>
+                             <p className="text-xs">{new Date(selectedRequest.createdAt).toLocaleString()}</p>
+                         </div>
+
                          <div>
                             <p className="font-bold">Request Status:</p>
                             <p>
                                 <Badge 
-                                className={`${
+                                className={`text-white ${
                                     {
                                     "PENDING": 'bg-blue-700',
                                     'APPROVED': 'bg-green-700',
@@ -260,9 +309,14 @@ const handleDelete = async () => {
                              <p className="font-bold">Store UnReceived Payments:</p>
                              <p>{(selectedRequest.store.revenue - selectedRequest.store.receivedPayments).toFixed(2)} TND</p>
                          </div>
-                         {selectedRequest.status != "APPROVED" && (
+                         {selectedRequest.status != "APPROVED" && selectedRequest.status != "REJECTED" && (
                          <div>
                          <Button onClick={approveRequest} variant="link" className="block mb-2 md:mb-0">Approve Request</Button>
+                         </div>
+                           )}
+                          {selectedRequest.status != "APPROVED" && selectedRequest.status != "REJECTED" && (
+                         <div className="col-span-2 md:col-span-1">
+                         <Button onClick={rejectRequest} variant="link" className="block text-red-500 mb-2 md:mb-0">Reject Request</Button>
                          </div>
                            )}
                      </div>

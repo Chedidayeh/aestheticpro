@@ -127,7 +127,8 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
           className={`${
             notifications.length < 10 ? "max-h-max" : "h-[384px]"
           } w-full border rounded-lg mt-4`}
-        >                <TableHeader>
+        >                
+        <TableHeader>
               <TableRow>
                 <TableHead>Sender</TableHead>
                 <TableHead>Received At</TableHead>
@@ -192,7 +193,7 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
       <AlertDialogHeader>
               <AlertDialogTitle>Notification Content</AlertDialogTitle>
             </AlertDialogHeader>
-            <div className="text-gray-600">{selectedNotification.content}</div>
+            <div className="">{selectedNotification.content}</div>
             <AlertDialogCancel onClick={()=>router.refresh()} className="w-20">Cancel</AlertDialogCancel>
           </AlertDialogContent>
         </AlertDialog>

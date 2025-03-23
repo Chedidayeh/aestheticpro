@@ -40,32 +40,10 @@ import SellerProfile from "./SellerProfile"
 import LoadingLink from "../LoadingLink"
 
 
-const NavBar = () => {
+const NavBar = ({user , notifications , storeName} : {user : User , notifications : Notification[] , storeName : string }) => {
 
   const pathname = usePathname();
-  const router = useRouter()
-  const [notifications, setNotifications] = useState<Notification[]>([]); 
-  const [storeName, setStore] = useState(""); 
-// user state
-const [user, setUser] = useState<User>();
 
-  useEffect(() => {
-    const fetchCounts = async () => {
-      try {
-        const user = await getUser()
-        if(!user) return
-        setUser(user)
-        const store = await getStoreByUserId(user!.id!)
-        setStore(store.storeName)
-        const notifications = await getUnreadNotificationsForStore(store.id)
-        setNotifications(notifications); // Update count state with fetched data
-      } catch (error) {
-        console.error('Error fetching sidebar counts:', error);
-      }
-    };
-
-    fetchCounts();
-  }, []);
 
   const handleButtonClick = () => {
     const url = `/MarketPlace/store/${storeName}`;
@@ -215,7 +193,7 @@ const [user, setUser] = useState<User>();
               </div>
               Notifications
               {notifications && notifications?.length > 0 && (
-              <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
+              <Badge className="ml-auto  text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                 {
                 notifications?.length
                   }

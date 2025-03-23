@@ -1,9 +1,9 @@
 import { getPlatformForTheWebsite } from '@/actions/actions'
+import { Platform } from '@prisma/client'
 import Marquee from 'react-fast-marquee'
 
-const TopBar = async () => {
+const TopBar = ({platform} : {platform : Platform}) => {
   
-  const platform = await getPlatformForTheWebsite()
 
   return (
     <nav className='sticky z-[100] h-8 inset-x-0 top-0 w-full border-b border-gray-200 dark:border-muted-foreground backdrop-blur-lg transition-all flex items-center justify-between px-4'>

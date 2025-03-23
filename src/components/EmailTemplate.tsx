@@ -576,6 +576,155 @@ export const generateAffiliateProductSoldEmailHTML = (
 };
 
 
+export const generateStoreApprovedPaymentRequestEmailHTML = (
+  username: string,
+  paymentAmount: number,
+  requestDate: string,
+  storeRevenue: number,
+  receivedPayments: number,
+  unreceivedPayments: number
+) => {
+  const formattedAmount = paymentAmount.toFixed(2);
+  const formattedStoreRevenue = storeRevenue.toFixed(2);
+  const formattedReceivedPayments = receivedPayments.toFixed(2);
+  const formattedUnreceivedPayments = unreceivedPayments.toFixed(2);
+
+  const emailHTML = `
+    <html>
+      <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 20px;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #fff; border: 1px solid #dcdcdc; 
+                    border-radius: 8px; padding: 20px; text-align: center;">
+          <div style="margin-bottom: 10px;">
+            <img src="https://firebasestorage.googleapis.com/v0/b/tactical-hydra-424919-a1.appspot.com/o/aestheticpro.png?alt=media&token=3d5c4c50-bc46-4e81-af42-4ab3763a9ed5" 
+                 alt="Company Logo - AestheticPro" width="100" height="100" role="presentation"
+                 style="max-width: 100px; margin-bottom: 10px;">
+          </div>
+          <h1 style="font-size: 24px; font-weight: bold; color: #0070f3; margin-bottom: 20px;">
+            Payment Request Approved ✅
+          </h1>
+          <p style="font-size: 16px; line-height: 1.6; color: #333;">
+            Hello <strong>${username}</strong>, we're pleased to inform you that your payment request has been successfully approved.
+          </p>
+          <p style="font-size: 16px; line-height: 1.6; color: #333;">
+          <p style="font-size: 16px; line-height: 1.6; color: #333;">
+            Payment Amount: <strong>${formattedAmount} TND</strong>, as per your request dated <strong>${requestDate}</strong>.
+          </p>
+          </p>
+          <p style="font-size: 16px; line-height: 1.6; color: #333;">
+            The transaction has been successfully completed! If you haven't received the amount yet, please make sure to contact us for assistance.
+          </p>
+          <h2 style="font-size: 18px; color: #0070f3; margin-top: 20px;">Your Current Financial Status:</h2>
+          <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <tr style="background-color: #0070f3; color: #fff;">
+              <th style="padding: 10px; border: 1px solid #dcdcdc;">Details</th>
+              <th style="padding: 10px; border: 1px solid #dcdcdc;">Amount (TND)</th>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #dcdcdc;">Store Revenue</td>
+              <td style="padding: 10px; border: 1px solid #dcdcdc;">${formattedStoreRevenue}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #dcdcdc;">Received Payments</td>
+              <td style="padding: 10px; border: 1px solid #dcdcdc;">${formattedReceivedPayments}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #dcdcdc;">Unreceived Payments</td>
+              <td style="padding: 10px; border: 1px solid #dcdcdc;">${formattedUnreceivedPayments}</td>
+            </tr>
+          </table>
+          <p style="font-size: 16px; line-height: 1.6; color: #333; margin-top: 20px;">
+            If you have any questions, please don't hesitate to reach out to our support team.
+          </p>
+          <div style="margin-top: 20px; font-size: 12px; color: #777;">
+            <p>&copy; ${new Date().getFullYear()} AestheticPro.tn. All rights reserved.</p>
+            <p>Contact us: <a href="mailto:astheticprocontact@gmail.com" style="color: #0070f3;">
+              astheticprocontact@gmail.com</a>
+            </p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+
+  return emailHTML;
+};
+
+export const generateAffiliateApprovedPaymentRequestEmailHTML = (
+  username: string,
+  paymentAmount: number,
+  requestDate: string,
+  affiliateUserRevenue: number,
+  receivedPayments: number,
+  unreceivedPayments: number
+) => {
+  const formattedAmount = paymentAmount.toFixed(2);
+  const formattedaffiliateUserRevenue = affiliateUserRevenue.toFixed(2);
+  const formattedReceivedPayments = receivedPayments.toFixed(2);
+  const formattedUnreceivedPayments = unreceivedPayments.toFixed(2);
+
+  const emailHTML = `
+    <html>
+      <body style="font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 20px;">
+        <div style="max-width: 600px; margin: 0 auto; background-color: #fff; border: 1px solid #dcdcdc; 
+                    border-radius: 8px; padding: 20px; text-align: center;">
+          <div style="margin-bottom: 10px;">
+            <img src="https://firebasestorage.googleapis.com/v0/b/tactical-hydra-424919-a1.appspot.com/o/aestheticpro.png?alt=media&token=3d5c4c50-bc46-4e81-af42-4ab3763a9ed5" 
+                 alt="Company Logo - AestheticPro" width="100" height="100" role="presentation"
+                 style="max-width: 100px; margin-bottom: 10px;">
+          </div>
+          <h1 style="font-size: 24px; font-weight: bold; color: #0070f3; margin-bottom: 20px;">
+            Payment Request Approved ✅
+          </h1>
+          <p style="font-size: 16px; line-height: 1.6; color: #333;">
+            Hello <strong>${username}</strong>, we're pleased to inform you that your payment request has been successfully approved.
+          </p>
+          <p style="font-size: 16px; line-height: 1.6; color: #333;">
+          <p style="font-size: 16px; line-height: 1.6; color: #333;">
+            Payment Amount: <strong>${formattedAmount} TND</strong>, as per your request dated <strong>${requestDate}</strong>.
+          </p>
+          </p>
+          <p style="font-size: 16px; line-height: 1.6; color: #333;">
+            The transaction has been successfully completed! If you haven't received the amount yet, please make sure to contact us for assistance.
+          </p>
+          <h2 style="font-size: 18px; color: #0070f3; margin-top: 20px;">Your Current Financial Status:</h2>
+          <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+            <tr style="background-color: #0070f3; color: #fff;">
+              <th style="padding: 10px; border: 1px solid #dcdcdc;">Details</th>
+              <th style="padding: 10px; border: 1px solid #dcdcdc;">Amount (TND)</th>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #dcdcdc;">Affiliate Revenue</td>
+              <td style="padding: 10px; border: 1px solid #dcdcdc;">${formattedaffiliateUserRevenue}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #dcdcdc;">Received Payments</td>
+              <td style="padding: 10px; border: 1px solid #dcdcdc;">${formattedReceivedPayments}</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid #dcdcdc;">Unreceived Payments</td>
+              <td style="padding: 10px; border: 1px solid #dcdcdc;">${formattedUnreceivedPayments}</td>
+            </tr>
+          </table>
+          <p style="font-size: 16px; line-height: 1.6; color: #333; margin-top: 20px;">
+            If you have any questions, please don't hesitate to reach out to our support team.
+          </p>
+          <div style="margin-top: 20px; font-size: 12px; color: #777;">
+            <p>&copy; ${new Date().getFullYear()} AestheticPro.tn. All rights reserved.</p>
+            <p>Contact us: <a href="mailto:astheticprocontact@gmail.com" style="color: #0070f3;">
+              astheticprocontact@gmail.com</a>
+            </p>
+          </div>
+        </div>
+      </body>
+    </html>
+  `;
+
+  return emailHTML;
+};
+
+
+
+
 
 
 

@@ -1,4 +1,4 @@
-import { generateAffiliateProductSoldEmailHTML, generateDesignRejectedEmailHTML, generateDesignSoldEmailHTML, generateLevelUpEmailHTML, generateOrderEmailHTML, generateProductRejectedEmailHTML, generateProductSoldEmailHTML, generateResetPassEmailHTML, generateVerificationEmailHTML } from '@/components/EmailTemplate';
+import { generateStoreApprovedPaymentRequestEmailHTML, generateAffiliateProductSoldEmailHTML, generateDesignRejectedEmailHTML, generateDesignSoldEmailHTML, generateLevelUpEmailHTML, generateOrderEmailHTML, generateProductRejectedEmailHTML, generateProductSoldEmailHTML, generateResetPassEmailHTML, generateVerificationEmailHTML, generateAffiliateApprovedPaymentRequestEmailHTML } from '@/components/EmailTemplate';
 import { Order, OrderItem, User } from '@prisma/client';
 import nodemailer from 'nodemailer';
 
@@ -184,6 +184,58 @@ export const sendAffiliateProductSoldEmail = async (
     console.log(`Affiliate product sold email sent successfully to ${receiverEmail}`);
   } catch (error) {
     console.error(`Failed to send affiliate product sold email to ${receiverEmail}:`, error);
+    throw new Error('Failed to send email');
+  }
+};
+
+export const sendStoreApprovedPaymentRequestEmail = async (
+  receiverEmail: string,
+  username: string,
+  paymentAmount: number,
+  requestDate: string,
+  storeRevenue: number,
+  receivedPayments: number,
+  unreceivedPayments: number
+): Promise<void> => {
+  try {
+    const mailOptions = {
+      from: email,
+      to: receiverEmail,
+      subject: `Great News! Your payment request has been approved!`,
+      html: generateStoreApprovedPaymentRequestEmailHTML(username, paymentAmount , requestDate , storeRevenue , receivedPayments , unreceivedPayments),
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    console.log(`Store approved payment request email sent successfully to ${receiverEmail}`);
+  } catch (error) {
+    console.error(`Failed to send Store approved payment request email to ${receiverEmail}:`, error);
+    throw new Error('Failed to send email');
+  }
+};
+
+export const sendAffiliateApprovedPaymentRequestEmail = async (
+  receiverEmail: string,
+  username: string,
+  paymentAmount: number,
+  requestDate: string,
+  affiliateUserRevenue: number,
+  receivedPayments: number,
+  unreceivedPayments: number
+): Promise<void> => {
+  try {
+    const mailOptions = {
+      from: email,
+      to: receiverEmail,
+      subject: `Great News! Your payment request has been approved!`,
+      html: generateAffiliateApprovedPaymentRequestEmailHTML(username, paymentAmount , requestDate , affiliateUserRevenue , receivedPayments , unreceivedPayments),
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    console.log(`Affiliate approved payment request email sent successfully to ${receiverEmail}`);
+  } catch (error) {
+    console.error(`Failed to send affiliate approved payment request email to ${receiverEmail}:`, error);
     throw new Error('Failed to send email');
   }
 };

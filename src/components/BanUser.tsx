@@ -17,18 +17,12 @@ import { Loader } from 'lucide-react';
 import { getUser } from '@/actions/actions';
 
 
-const BanUser= () => {
+const BanUser= ({user}:{user : User}) => {
   const router = useRouter();
-  const [user, setUser] = React.useState<User | null>();
 
   useEffect(() => {
     const fetchUser = async () => {
-      // Fetch user data from an API or other source
-      const user = await getUser()
-      setUser(user)
-      
-      // Update the user state (assuming you have a state for this)
-  
+        
       if (user?.isUserBanned) {
         const timeout = setTimeout(() => {
           router.push('/api/auth/logout');

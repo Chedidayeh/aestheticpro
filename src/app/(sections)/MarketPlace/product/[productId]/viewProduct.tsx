@@ -87,12 +87,17 @@ const combinedUrls = interleaveArrays(product.croppedFrontProduct, product.cropp
   const [selectedColor, setSelectedColor] = useState(product.colors[0]);
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
-  console.log(quantity)
-  const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const newQuantity = parseInt(event.target.value);
-    if (!isNaN(newQuantity) && newQuantity >= 1 && newQuantity <= platform.maxProductQuantity) {
-      setQuantity(newQuantity);
-    }
+  // const handleQuantityChange = (event: ChangeEvent<HTMLInputElement>) => {
+  //   const newQuantity = parseInt(event.target.value);
+  //   if (!isNaN(newQuantity) && newQuantity >= 1 && newQuantity <= platform.maxProductQuantity) {
+  //     setQuantity(newQuantity);
+  //   }
+  // };
+
+
+  const handleQuantityChange = (value : string) => {
+    setQuantity(parseInt(value));
+    console.log('Selected Quantity:', value); // You can remove or modify this based on your needs
   };
 
   const increaseQuantity = () => {
@@ -411,7 +416,7 @@ const redirectToCart = () => {
               <Label htmlFor="username" className="text-left">
                 Select Quantity : 
              </Label>
-             <div className='ml-3 flex items-center gap-2'>
+             {/* <div className='ml-3 flex items-center gap-2'>
              <SquareMinus 
                 className='text-muted-foreground hover:text-blue-600 cursor-pointer' 
                 onClick={decreaseQuantity} 
@@ -423,7 +428,24 @@ const redirectToCart = () => {
                 className='text-muted-foreground hover:text-blue-600 cursor-pointer' 
                 onClick={increaseQuantity} 
               />            
-              </div>
+              </div> */}
+              <div className='ml-3'>
+              <Select value={String(quantity)} onValueChange={(value) => handleQuantityChange(value)}>
+              <SelectTrigger className="w-[70px]">
+                <SelectValue placeholder="Select quantity" />
+              </SelectTrigger>
+              <SelectContent className="w-[70px]">
+                <SelectGroup>
+                  <SelectItem value="1">1</SelectItem>
+                  <SelectItem value="2">2</SelectItem>
+                  <SelectItem value="3">3</SelectItem>
+                  <SelectItem value="4">4</SelectItem>
+                  <SelectItem value="5">5</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+
+             </div>
 
              </div>
              <p className='text-xs text-muted-foreground mt-1'>( max {platform.maxProductQuantity} ) </p>

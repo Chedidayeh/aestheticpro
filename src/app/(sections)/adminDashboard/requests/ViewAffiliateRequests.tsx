@@ -98,12 +98,12 @@ const ViewAffiliateRequests = ({  affiliatePaymentRequests }: ViewProps) => {
     <>
 
       <Card className="mt-4">
-        <CardHeader>
-          <CardTitle>Affiliate Users Requests</CardTitle>
+      <CardHeader className="bg-muted/50 rounded-t-lg">
+      <CardTitle>Affiliate Users Requests</CardTitle>
           <CardDescription>Total : {affiliatePaymentRequests.length}</CardDescription>
         </CardHeader>
         <CardContent>
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center mt-2">
         <Tabs defaultValue={activeTab} className="w-full sm:w-[500px]" onValueChange={handleTabChange}>
           <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="D17">D17</TabsTrigger>

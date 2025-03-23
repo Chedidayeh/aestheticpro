@@ -26,7 +26,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import { Ban, CircleX, Search } from "lucide-react";
+import { Ban, CircleAlert, CircleX, Search } from "lucide-react";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useToast } from '@/components/ui/use-toast';
@@ -251,28 +251,13 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
 
 
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-        <CardHeader className="flex flex-row items-center">
+        <CardHeader className="space-y-2 bg-muted/50">
           <div className="grid gap-2">
             <CardTitle>Users</CardTitle>
             <CardDescription>Total: {users.length}</CardDescription>
           </div>
-        </CardHeader>
-        <CardDescription className="flex flex-col sm:flex-row items-center justify-center gap-2 p-2">
-        <Input
-            type="search"
-            className="w-full md:w-[40%]"
-            placeholder="Enter users Id, username, email to make a search..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-        />
-        <Button
-        disabled={searchQuery === ""}
-        onClick={handleSearch}
-        className="bg-blue-500 text-white px-4 py-2 rounded flex items-center"
-        >
-        Search
-        <Search size={14} className="ml-1" />
-        </Button>  
+
+          <div className='grid md:flex gap-4'>
           <Select onValueChange={handleFilterChange}>
             <SelectTrigger className="w-full md:w-[180px] ">
               <SelectValue placeholder="Filter By" />
@@ -289,6 +274,22 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
               </SelectGroup>
             </SelectContent>
           </Select>
+        <Input
+            type="search"
+            className="w-full md:w-[40%]"
+            placeholder="Enter users Id, username, email to make a search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <Button
+        disabled={searchQuery === ""}
+        onClick={handleSearch}
+        className="bg-blue-500 text-white px-4 py-2 rounded flex items-center"
+        >
+        Search
+        <Search size={14} className="ml-1" />
+        </Button>  
+
 
             <div className="flex items-center space-x-2">
             <Switch
@@ -297,13 +298,24 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
             />
             <Label>All Users</Label>
             </div>
+          </div>
+        </CardHeader>
+        <CardDescription className="flex flex-col sm:flex-row items-center justify-center gap-2 p-2">
+
       
         </CardDescription>
         <CardContent>
-          {users && (
-              <Table>
-               <ScrollArea className=" h-96 mt-4">
-                <TableHeader>
+
+
+        {users.length > 0 ? (
+   
+   <Table>
+        <ScrollArea
+          className={`${
+            users.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >                 
+         <TableHeader>
                   <TableRow>
                     <TableHead>User Id</TableHead>
                     <TableHead>User Name</TableHead>
@@ -372,7 +384,19 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
                 </ScrollArea>
 
               </Table>
-          )}
+                    ) : (
+                      <>
+                    <div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+                    <h1 className="text-center text-3xl font-bold">
+                      <CircleAlert />
+                    </h1>
+                    <p className="text-center text-sm mt-2">No records of any users found for now !</p>
+                    <p className="text-center text-xs mt-2">New users will appear here.</p>
+            
+                  </div>
+          
+                  </>
+                  )}
         </CardContent>
 
       </Card>
@@ -383,14 +407,25 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
 
 
 <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
-  <CardHeader className="flex flex-row items-center">
-    <div className="grid gap-2">
+<CardHeader className="space-y-2 bg-muted/50">
+<div className="grid gap-2">
       <CardTitle>Affiliates</CardTitle>
       <CardDescription>Total: {affiliates.length}</CardDescription>
     </div>
-  </CardHeader>
-  <CardDescription className="flex flex-col sm:flex-row items-center justify-center gap-2 p-2">
-  <Input
+    <div className='grid md:flex gap-4'>
+    <Select onValueChange={handleSortChange}>
+      <SelectTrigger className="w-full md:w-[180px] ">
+        <SelectValue placeholder="Sort By" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          <SelectLabel>Select</SelectLabel>
+          <SelectItem value="revenue">Revenue</SelectItem>
+          <SelectItem value="links">total links</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
+    <Input
       type="search"
       className="w-full md:w-[40%]"
       placeholder="Enter affiliate Id, username, useremail to make a search..."
@@ -405,32 +440,29 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
   Search
   <Search size={14} className="ml-1" />
   </Button>  
-    <Select onValueChange={handleSortChange}>
-      <SelectTrigger className="w-full md:w-[180px] ">
-        <SelectValue placeholder="Sort By" />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectLabel>Select</SelectLabel>
-          <SelectItem value="revenue">Revenue</SelectItem>
-          <SelectItem value="links">total links</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+
 
       <div className="flex items-center space-x-2">
       <Switch
           defaultChecked={allAffiliates}
           onClick={handleAffiliateToggle} // Handle the state change on toggle
       />
-      <Label>All Affiliates</Label>
+      <Label>All affiliates users</Label>
       </div>
+    </div>
+  </CardHeader>
+  <CardDescription className="flex flex-col sm:flex-row items-center justify-center gap-2 p-2">
+
 
   </CardDescription>
   <CardContent>
-    {affiliates && (
+  {affiliates.length > 0 ? (
         <Table>
-           <ScrollArea className="w-full h-96 mt-4">
+        <ScrollArea
+          className={`${
+            affiliates.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >  
           <TableHeader>
             <TableRow>
               <TableHead>User Name</TableHead>
@@ -458,8 +490,19 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
           </ScrollArea>
 
         </Table>
-    )}
-  </CardContent>
+    ) : (
+      <>
+    <div className="flex items-center justify-center flex-col text-muted-foreground mt-3">
+    <h1 className="text-center text-3xl font-bold">
+      <CircleAlert />
+    </h1>
+    <p className="text-center text-sm mt-2">No records of any affiliates users found for now !</p>
+    <p className="text-center text-xs mt-2">New affiliates users will appear here.</p>
+
+  </div>
+
+  </>
+  )}  </CardContent>
 </Card>
 
 </section>
