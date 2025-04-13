@@ -5,22 +5,31 @@ import { Button } from './ui/button'
 import { useDispatch } from 'react-redux';
 import { saveRedirectUrl } from '@/store/actions/action';
 import { useRouter } from 'next/navigation';
+interface RedirectProps {
+  className?: string
+  href: string
+  children?: React.ReactNode
+}
 
-const RedirectToCreateAffiliateAccount = () => {
+const RedirectToCreateAffiliateAccount: React.FC<RedirectProps> = ({ className, children , href }) => {
 
     const dispatch = useDispatch();
     const router = useRouter()
 
       // redirectToCreateSellerProfile function
-  const redirectToCreateSellerProfile = () => {
-    dispatch(saveRedirectUrl("/createAffiliateAccount"));
-    router.push("/createAffiliateAccount")
+  const redirectToCreateAffiliateAccount = () => {
+    dispatch(saveRedirectUrl("/createAffiliateAccount"))
+    router.push(href)
   }
 
   return (
-    <Button onClick={redirectToCreateSellerProfile} className="px-4 py-3 text-sm font-semibold bg-purple-600 text-white rounded-md shadow-md hover:bg-purple-700 transition">
-    Join Now &rarr;
-    </Button>
+        <Button
+          size={"sm"}
+          onClick={redirectToCreateAffiliateAccount}
+          className={`${className}`}
+        >
+          {children}
+        </Button>
   )
 }
 

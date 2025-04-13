@@ -6,6 +6,7 @@ import "@/app/globals.css";
 
 import type { Metadata } from "next";
 import { getFactoryDashboardCounts, getUser } from "@/actions/actions";
+import Redirecting from "@/components/Redirecting";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
@@ -16,6 +17,9 @@ export const metadata: Metadata = {
 const Layout = async ({ children }: { children: ReactNode }) => {
    const totalCounts = await getFactoryDashboardCounts();
    const user = await getUser()
+   if(!user || user.userType !== "FACTORY"){
+      return <Redirecting/>
+   }
     return (
          <div className="grid min-h-screen w-full md:grid-cols-[210px_1fr]"> {/* Updated grid columns */}
         <SideBar totalCounts={totalCounts} />

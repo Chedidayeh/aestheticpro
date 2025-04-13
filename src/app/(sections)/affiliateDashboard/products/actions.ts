@@ -15,13 +15,11 @@ export async function getAffiliateIdByUserId(userId: string) {
         id: true, // Only select the affiliate ID
       },
     });
-    if (!affiliate) {
-      throw new Error('Affiliate not found for the given user');
-    }
-    return affiliate.id;
+    
+    return affiliate?.id;
   } catch (error) {
     console.error('Error fetching affiliate:', error);
-    throw new Error('Failed to retrieve affiliate ID');
+    return null
   }
 }
 

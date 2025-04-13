@@ -33,7 +33,7 @@ const BanUser= ({user}:{user : User}) => {
     };
   
     fetchUser();
-  }, [router]); // Make sure to rerun this effect if the router changes
+  }); // Make sure to rerun this effect if the router changes
   
 
   return (

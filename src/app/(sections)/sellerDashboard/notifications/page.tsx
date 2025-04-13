@@ -13,7 +13,7 @@ export default async function Page() {
     noStore()
     const user = await getUser()
     const store = await getStoreByUserId(user!.id)
-    const notifications = await getNotificationsForStore(store.id)
+    const notifications = await getNotificationsForStore(store ? store.id : "")
 
   return (
     <>

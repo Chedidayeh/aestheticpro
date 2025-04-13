@@ -46,6 +46,7 @@ import LoadingState from "@/components/LoadingState"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
+import LoadingLink from "@/components/LoadingLink"
 
 interface CatWithInfos extends Category {
     colors : Color[]
@@ -364,8 +365,8 @@ const enableCategory = async (category: Category) => {
 <p className="text-sm text-muted-foreground mb-2">AdminDashboard/Category</p>
 <h1 className="text-2xl font-semibold">Manage Categories</h1>
 
-<Link href="/adminDashboard/category/addCategory" className="mt-4"><Button variant={"link"}>Add Category</Button></Link>
-<Link href="/adminDashboard/category/tryCategory" className="mt-4"><Button variant={"link"}>Try Category</Button></Link>
+<LoadingLink href="/adminDashboard/category/addCategory" className="mt-4"><Button variant={"link"}>Add Category</Button></LoadingLink>
+<LoadingLink href="/adminDashboard/category/tryCategory" className="mt-4"><Button variant={"link"}>Try Category</Button></LoadingLink>
 
 
 <div className="flex flex-col gap-5 w-full">

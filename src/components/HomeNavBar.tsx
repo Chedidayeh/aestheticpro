@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import MaxWidthWrapper from './MaxWidthWrapper'
 import { buttonVariants } from './ui/button'
-import { AppWindow, CircleDollarSign, Heart, Home, LayoutPanelLeft, Menu, Shirt, ShoppingBasket, ShoppingCart, Store as St, UserRoundX } from 'lucide-react'
+import { AppWindow, CircleDollarSign, Handshake, Heart, Home, LayoutPanelLeft, Menu, Shirt, ShoppingBasket, ShoppingCart, Store as St, UserRoundX } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { fetchCartProductCount, getAllProductsCategories, getUser, getUserOrders } from '@/actions/actions'
 import UserProfile from './UserProfile'
@@ -34,31 +34,6 @@ import Link from 'next/link'
 import { FavList, Order, OrderItem, Platform, Product, Store, User } from '@prisma/client'
 
 
-const ListItem = React.forwardRef<
-  React.ElementRef<"a">,
-  React.ComponentPropsWithoutRef<"a">
->(({ className, title, children, ...props }, ref) => {
-  return (
-    <li>
-      <NavigationMenuLink asChild>
-        <a
-          ref={ref}
-          className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
-          )}
-          {...props}
-        >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
-        </a>
-      </NavigationMenuLink>
-    </li>
-  )
-})
-ListItem.displayName = "ListItem"
 
 interface extraOrder extends Order {
   orderItems : OrderItem []
@@ -77,10 +52,11 @@ const Navbar = (
 
 
   return (
-    <nav className='sticky z-[100] h-14 inset-x-0 top-0 w-full  backdrop-blur-lg transition-all'>
+    <nav className='sticky z-[50] h-14 inset-x-0 top-0 w-full  backdrop-blur-lg transition-all'>
       <MaxWidthWrapper>
         <div className='flex h-14 items-center justify-between'>
           {/* Logo */}
+          <LoadingLink href="/">
           <div
             style={{ width: '40px', height: '40px' }}
             className="hidden xl:block h-full xl:right-0 sm:items-center"
@@ -93,6 +69,7 @@ const Navbar = (
               draggable={false}
             />
           </div>
+          </LoadingLink>
 
 
 
@@ -236,56 +213,16 @@ const Navbar = (
                 </DropdownMenuContent>
             </DropdownMenu> */}
 
-            <NavigationMenu>
-      <NavigationMenuList>
-
-        <NavigationMenuItem>
-          <NavigationMenuTrigger className={buttonVariants({
+            <LoadingLink href="/services" className={buttonVariants({
               size: 'sm',
               variant: 'ghost',
-              className: "hover:text-purple-500"
-            })}><LayoutPanelLeft size={15} className='mr-1' /> About</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
-              <li className="row-span-3">
-                <NavigationMenuLink asChild>
-                  <LoadingLink
-                    className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
-                    href="/"
-                  >
-              <div className="mb-2 mt-4 text-lg font-semibold">
-                Aesthetic Pro Platform
-              </div>
-              <p className="text-sm leading-relaxed text-muted-foreground">
-                Where creativity meets opportunity, turning art into profit.
-              </p>
-                  </LoadingLink>
-                </NavigationMenuLink>
-              </li>
-              <LoadingLink href="/about">
-              <ListItem title="About Us">
-                Discover our mission, vision, and the values that drive us.
-              </ListItem>
-              </LoadingLink>
+              className: "relative hover:text-purple-500"
+            })}>
+              <Handshake size={15} className='mr-1' />
+              Services
+            </LoadingLink>
 
-              <LoadingLink href="/services">
-              <ListItem  title="Services">
-                Explore the services we offer.
-              </ListItem>
-              </LoadingLink>
 
-              <LoadingLink href="/contact">
-              <ListItem  title="Contact">
-                Get in touch with us.
-              </ListItem>
-              </LoadingLink>
-
-            </ul>
-          </NavigationMenuContent>
-        </NavigationMenuItem>
-
-      </NavigationMenuList>
-    </NavigationMenu>
 
             <div className='h-8 w-px bg-zinc-200 hidden sm:block' />
 

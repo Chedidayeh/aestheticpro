@@ -2,7 +2,7 @@
 "use client"
 import NextImage from "next/image"
 
-import { UserRound, UserRoundPlus, UserRoundX } from "lucide-react"
+import { CircleUser, User as U, UserPlus, UserRound, UserRoundPlus, UserRoundX, UserX } from "lucide-react"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -80,9 +80,9 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                   />
                 </div>
         ) : (
-          <Button  variant="outline" className="bg-transparent rounded-full">
-          <UserRound />
-        </Button>
+          <div className="border rounded-full hover:text-blue-600 p-1 border-muted-foreground hover:border-blue-600">
+          <U /> 
+          </div>
         )}
       </DropdownMenuTrigger>
       <DropdownMenuContent className=" w-56 mt-2 mr-2">
@@ -194,7 +194,7 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
 
         <DropdownMenuItem>
         <Button onClick={()=>SignOutUser()} size={"sm"}  variant={"ghost"} className="flex justify-between items-center w-full">
-        Sign out                 <UserRoundX size={20} />
+        Sign out                 <UserX size={20} />
         </Button>
         </DropdownMenuItem>
 
@@ -226,7 +226,7 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
             )}
             >
             Sign In
-            <UserRoundPlus size={20} />
+            <UserPlus size={20} />
             </LoadingLink>
             </DropdownMenuItem>            
             </DropdownMenuGroup>

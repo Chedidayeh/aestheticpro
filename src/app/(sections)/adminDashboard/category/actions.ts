@@ -120,7 +120,7 @@ export async function getAllCategoriesWithDetails() {
         });
   
         // Delete pre-order previews associated with the products
-        await prisma.preOrderPreview.deleteMany({
+        await prisma.preOrderDraft.deleteMany({
           where: {
             productCategory: category!.label,
           },

@@ -1,16 +1,16 @@
 'use server'
 
 import { db } from '@/db';
-import { PreOrderPreview } from '@prisma/client';
+import { PreOrderDraft } from '@prisma/client';
 
 
 
 
 // get user preOrder
-export async function getUserPreOrderByUserId(userId: string): Promise<PreOrderPreview | null> {
+export async function getUserPreOrderByUserId(userId: string): Promise<PreOrderDraft | null> {
     try {
-      // Fetch the PreOrderPreview associated with the given user
-      const preOrder = await db.preOrderPreview.findFirst({
+      // Fetch the preOrderDraft associated with the given user
+      const preOrder = await db.preOrderDraft.findFirst({
         where: {
           userId: userId,
         },
@@ -48,7 +48,7 @@ export async function savePreOrderFBClient(
 
 
             // Create a new pre-order if none exists
-        const preOrder =  await tx.preOrderPreview.create({
+        const preOrder =  await tx.preOrderDraft.create({
                 data: {
                     userId: userId,
                     frontclientDesign: frontDesignPath,
@@ -98,7 +98,7 @@ export async function savePreOrderFBSeller(
 
 
             // Create a new pre-order if none exists
-        const preOrder =  await tx.preOrderPreview.create({
+        const preOrder =  await tx.preOrderDraft.create({
                 data: {
                     userId: userId,
                     frontsellerDesignId: selectedFrontDesignId,
@@ -146,7 +146,7 @@ export async function savePreOrderFB1(
 
 
             // Create a new pre-order if none exists
-        const preOrder =  await tx.preOrderPreview.create({
+        const preOrder =  await tx.preOrderDraft.create({
                 data: {
                     userId: userId,
                     frontclientDesign: frontDesignPath,
@@ -194,7 +194,7 @@ export async function savePreOrderFB2(
 
 
             // Create a new pre-order if none exists
-        const preOrder =  await tx.preOrderPreview.create({
+        const preOrder =  await tx.preOrderDraft.create({
                 data: {
                     userId: userId,
                     frontsellerDesignId: selectedFrontDesignId,
@@ -240,7 +240,7 @@ export async function savePreOrderFB2(
             const frontDesignProperty = value ? 'frontsellerDesignId' : 'frontclientDesign';
 
             // Create the pre-order
-            const preOrder = await tx.preOrderPreview.create({
+            const preOrder = await tx.preOrderDraft.create({
                 data: {
                     userId,
                     [frontDesignProperty]: frontDesign,
@@ -285,7 +285,7 @@ export async function savePreOrderFB2(
             const backDesignProperty = value ? 'backsellerDesignId' : 'backclientDesign';
 
             // Create the pre-order
-            const preOrder = await tx.preOrderPreview.create({
+            const preOrder = await tx.preOrderDraft.create({
                 data: {
                     userId,
                     [backDesignProperty]: backDesign,

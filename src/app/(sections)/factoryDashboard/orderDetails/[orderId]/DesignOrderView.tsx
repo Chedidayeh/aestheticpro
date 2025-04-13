@@ -252,7 +252,7 @@ const handleChange = async () =>{
 
 
               {/* client products */}
-              {selectedItem && selectedItem.productTitle === 'Client Product' && (
+              {selectedItem && selectedItem.productTitle === 'Personalized Product' && (
       <Card className="xl:col-span-4" x-chunk="dashboard-01-chunk-4">
         <CardHeader className="flex flex-row items-center">
           <div className="grid gap-2">
@@ -287,8 +287,8 @@ const handleChange = async () =>{
         <div className="mt-6 space-y-4">
           <Button onClick={()=>{downloadMockup(selectedItem.capturedMockup)}} variant={"link"}>Download Product Mockup</Button>
 
-            {/* client product */}
-          {selectedItem.productTitle === "Client Product" && (
+            {/* Personalized Product */}
+          {selectedItem.productTitle === "Personalized Product" && (
             <>
           <div className="text-sm">
           <div className="flex flex-col md:flex-row md:space-x-10 space-y-2 md:space-y-0">

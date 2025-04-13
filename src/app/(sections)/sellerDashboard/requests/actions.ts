@@ -13,7 +13,7 @@ export async function getPaymentRequestsForStore(storeId :string) {
       return paymentRequests;
     } catch (error) {
       console.error('Error fetching notifications:', error);
-      throw error;
+      return []
     }
   }
 

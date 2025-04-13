@@ -1,6 +1,8 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
 'use client'
+import NextImage from 'next/image'
+
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -13,7 +15,7 @@ import {
 import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation' // Import useRouter from next/router
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Loader, TriangleAlert, X } from 'lucide-react'
+import { ArrowRight, ChevronLeft, ChevronRight, Loader, TriangleAlert, X } from 'lucide-react'
 import {
   Card,
   CardContent,
@@ -26,19 +28,29 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import {  useToast } from '@/components/ui/use-toast'
-import { Platform, PreOrderPreview, User } from '@prisma/client'
+import { Platform, PreOrderDraft, User } from '@prisma/client'
 import { deletePreOrder, deletePreOrderWithImages, saveOrder } from "./actions"
 import ImageSlider from "@/components/MarketPlace/ImageSlider"
 import LoadingState from "@/components/LoadingState"
 import LoadingLink from "@/components/LoadingLink"
+import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { ScrollArea } from '@/components/ui/scroll-area'
+import { Badge } from '@/components/ui/badge'
+import { cn } from '@/lib/utils'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import type SwiperType from 'swiper'
+import { Pagination } from 'swiper/modules'
 
 
-
-
-const OrderPreview =  ({preOrder , user , platform} : {preOrder?: PreOrderPreview , user :User , platform : Platform}) => {
+const OrderPreview =  ({preOrder , user , platform , preOrders} : {preOrder?: PreOrderDraft | null , user :User , platform : Platform , preOrders : PreOrderDraft[]}) => {
 
 
   const router = useRouter(); // Ensure this is placed within the component where the router is available
+  const [openSheet, setOpenSheet] = useState(false)
+  const [selectedDraft, setSelectedDraft] = useState<number | null>(null);
+  const [draft, setDraft] = useState<PreOrderDraft | null>(() => preOrder ?? preOrders?.[0] ?? null);
   const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber ?? "");
   const [phoneNumberError, setPhoneNumberError] = useState('');
   const inputClassName = phoneNumberError ? 'border-red-500' : (phoneNumber ? 'border-green-500' : '');
@@ -51,6 +63,55 @@ const OrderPreview =  ({preOrder , user , platform} : {preOrder?: PreOrderPrevie
   const orderTotal = preOrder?.amount! + fee
   const [open, setOpen] = useState<boolean>(false);
   const [isDelete, setIsDelete] = useState(false);
+
+
+  const [swiper, setSwiper] = useState<null | import('swiper').default>(null)
+  const [activeIndex, setActiveIndex] = useState(0)
+
+  const [slideConfig, setSlideConfig] = useState({
+    isBeginning: true,
+    isEnd: (draft?.capturedMockup ?? []).length <= 1,
+  });
+  
+
+  useEffect(() => {
+    if (!swiper) return
+  
+    const onSlideChange = ({ activeIndex }: SwiperType) => {
+      setActiveIndex(activeIndex);
+    
+      const capturedMockups = draft?.capturedMockup ?? [];
+    
+      setSlideConfig({
+        isBeginning: activeIndex === 0,
+        isEnd: activeIndex === capturedMockups.length - 1,
+      });
+    };
+    
+  
+    swiper.on('slideChange', onSlideChange)
+  
+    return () => {
+      swiper.off('slideChange', onSlideChange)
+    }
+  }, [draft, swiper])
+  
+  useEffect(() => {
+    // When draft changes, reset slider
+    setActiveIndex(0)
+    setSlideConfig({
+      isBeginning: true,
+      isEnd: (draft?.capturedMockup ?? []).length <= 1,
+    });
+    
+  
+    if (swiper) swiper.slideTo(0)
+  }, [draft, swiper])
+  
+
+  const activeStyles =
+  'active:scale-[0.97] grid opacity-100 hover:scale-105 absolute top-1/2 -translate-y-1/2 aspect-square h-8 w-8 z-50 place-items-center rounded-full border-2 bg-white border-zinc-300'
+const inactiveStyles = 'hidden text-gray-400'
 
 
 
@@ -104,9 +165,9 @@ const OrderPreview =  ({preOrder , user , platform} : {preOrder?: PreOrderPrevie
   const handleOrder = async () => {
     try {
       setOpenDialog(true)
-    const result = await saveOrder(user!.id,preOrder as PreOrderPreview,clientName,address,phoneNumber,orderTotal)
+    const result = await saveOrder(user!.id,draft as PreOrderDraft,clientName,address,phoneNumber,orderTotal)
     if(result.success){
-      await deletePreOrder(user.id)
+      await deletePreOrder(draft!.id)
       toast({
       title: 'Great!',
       description: 'Order Saved successfully.',
@@ -146,33 +207,43 @@ const OrderPreview =  ({preOrder , user , platform} : {preOrder?: PreOrderPrevie
 
 
 
-  const handleDelete = async () => {
-
+  const handleDelete = async (draftId: string) => {
     try {
-      setOpen(true)
-      const result = await deletePreOrderWithImages(user.id)
-      if(result){
+      setOpen(true);
+      const result = await deletePreOrderWithImages(draftId);
+      if (result) {
         toast({
-          title: 'Your PreOrder was successfully deleted !',
+          title: 'Your draft was successfully deleted!',
           variant: 'default',
         });
-        router.refresh()
-        setOpen(false)
-        return
+  
+        // Filter out the deleted draft from the list
+        const updatedDrafts = preOrders.filter((item) => item.id !== draftId);
+  
+        // Update the currently selected draft
+        if (updatedDrafts.length > 0) {
+          setSelectedDraft(0)
+          setDraft(updatedDrafts[0]); // pick first one, or use logic to restore last viewed
+        } else {
+          setDraft(null); // No drafts left
+        }
+  
+        setOpen(false);
+        setIsDelete(false)
+        router.refresh();
+        return;
       }
-
     } catch (error) {
-      setOpen(false)
+      setOpen(false);
       toast({
         title: 'Error',
-        description: 'Failed to delete preOrder! Please try again later.',
+        description: 'Failed to delete draft! Please try again later.',
         variant: 'destructive',
       });
-      return
-      
+      return;
     }
-
-}
+  };
+  
 
 
 
@@ -202,15 +273,32 @@ const [openDialog, setOpenDialog] = useState(false);
                         </AlertDialog>
 
 
-              {!preOrder &&(
-              <div className='mt-6 mb-20 text-center sm:col-span-9 md:row-end-1'>
-              <h3 className='text-3xl font-bold tracking-tight '>
-              Your don't have any preOrders for now ! try to create one.
-              </h3>
-              <LoadingLink href="/MarketPlace/create-client-product/upload">
-              <Button variant="link" size="default">Create PreOrder</Button>
-              </LoadingLink>
-              </div>
+              {!draft && preOrders.length === 0 &&(
+                <>
+
+                    <div className='flex h-full flex-col items-center justify-center space-y-2 mt-10 px-4 text-center'>
+                    <h3 className='font-semibold text-lg sm:text-2xl'>
+                      No preOrder found !
+                      </h3>
+                      <div
+                        aria-hidden='true'
+                        className='relative h-32 w-32 sm:h-40 sm:w-40 text-muted-foreground'
+                      >
+                        <NextImage
+                          fill
+                          src='/hippo-empty-cart.png'
+                          loading='eager'
+                          alt='empty shopping cart hippo'
+                        />
+                      </div>
+
+                      <LoadingLink href="/MarketPlace/create-client-product/select-category">
+                      <Button variant="link" size="default">&larr; return to category selection </Button>
+                      </LoadingLink>
+                    </div>
+                
+                </>
+
               )}
 
 
@@ -218,20 +306,96 @@ const [openDialog, setOpenDialog] = useState(false);
 
 
 
-{preOrder && (
+{draft && (
 
   <>
 
 <div className="mt-6 flex flex-col justify-center items-center sm:col-span-9 md:row-end-1">
 <div className="text-center flex items-center">
 <h3 className="text-2xl sm:text-3xl font-bold tracking-tight ">
-  Your preOrder is safely saved
+  Your preOrder is safely saved as a draft
 </h3>
 </div>
 <div className="text-center">
-<div className="mt-3 text-red-500 flex items-center gap-1.5 text-sm sm:text-base">
-  You can't make a new preOrder until this one is confirmed or deleted!
+<div className="mt-3 text-blue-500 flex items-center gap-1.5 text-sm">
+Feel free to order this draft or pick a different one ! </div>
 </div>
+
+<div className='flex mt-3 items-center justify-center'>
+<Sheet open={openSheet} onOpenChange={setOpenSheet}>
+<SheetTrigger asChild>
+    <Button size={"sm"} className='text-white' variant="default">Select</Button>
+  </SheetTrigger>
+  <SheetContent side="bottom">
+    <SheetHeader>
+      <SheetTitle>Select Draft</SheetTitle>
+      <SheetDescription />
+    </SheetHeader>
+    <ScrollArea className="w-full h-[420px]">
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 bg-gray-900/5 p-6 rounded-xl">
+    {preOrders.map((draft, index) => (
+      <div key={index} className="relative w-full">
+        {/* Draft Number Badge - centered above the card */}
+        <div className="absolute top-[-16px] left-1/2 transform -translate-x-1/2 z-10">
+          <Badge className="bg-indigo-600 hover:bg-indigo-600  text-white" variant="secondary">
+            Draft #{index + 1}
+          </Badge>
+        </div>
+
+        {/* Card */}
+        <Card onClick={()=>{
+          setDraft(draft)
+          setSelectedDraft(index)
+          router.push(`/MarketPlace/create-client-product/preview?preOrderId=${draft.id}`)
+          setOpenSheet(false)
+         }}  className={cn("border cursor-pointer", selectedDraft === index && "border-primary border-2")}>
+  
+          <CardContent className="flex justify-center p-1 relative">
+            <NextImage
+              width={1000}
+              height={1000}
+              src={draft.capturedMockup[0]!}
+              alt={draft.id}
+              placeholder="blur"
+              blurDataURL="/Loading.png"
+              loading="lazy"
+              className="h-full w-full rounded-xl object-cover"
+              onContextMenu={(e) => e.preventDefault()}
+              draggable={false}
+            />
+            <div className="absolute top-2 left-2">
+              <Badge className="bg-gray-800 hover:bg-gray-800 text-white" variant="secondary">
+                {draft.productCategory}
+              </Badge>
+            </div>
+            <div className="absolute top-2 right-2">
+              <Badge className="bg-gray-800 hover:bg-gray-800 text-white" variant="secondary">
+                Price: {draft.productPrice.toFixed(2)} TND
+              </Badge>
+            </div>
+            <div className="absolute bottom-2 left-2">
+              <Badge className="bg-gray-800 hover:bg-gray-800 text-white" variant="secondary">
+                Size: {draft.productSize}
+              </Badge>
+            </div>
+            <div className="absolute bottom-2 right-2">
+              <Badge className="bg-gray-800 hover:bg-gray-800 text-white" variant="secondary">
+                Quantity: {draft.quantity}
+              </Badge>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    ))}
+  </div>
+</ScrollArea>
+
+
+    <SheetFooter>
+      <SheetClose asChild />
+    </SheetFooter>
+  </SheetContent>
+</Sheet>
 </div>
 
 </div>
@@ -241,18 +405,118 @@ const [openDialog, setOpenDialog] = useState(false);
     
 
 
-    {/* Right Side */}
-    <div className="flex justify-center my-8">
+    {/* left Side */}
+    <div className="flex justify-center ">
     <div className='px-2 lg:px-10'>
     <div className='flex-shrink-0 mb-10'>
       <div className='relative h-[316px] w-[316px] xl:h-[484px] xl:w-[484px] '>
-        <ImageSlider urls={preOrder.capturedMockup} />
+      <Card className={cn('border')}>
+      <CardContent className="flex justify-center p-1 relative">
+        {/* Slider or Single Image */}
+        {draft.capturedMockup.length > 1 ? (
+          <div className="group relative h-full w-full rounded-xl overflow-hidden">
+            {/* Slide Buttons */}
+            <div className="absolute z-10 inset-0 pointer-events-none">
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  swiper?.slidePrev()
+                }}
+                className={cn(activeStyles, 'left-3 pointer-events-auto transition', {
+                  [inactiveStyles]: slideConfig.isBeginning,
+                  'hover:bg-primary-300 text-primary-800 opacity-100': !slideConfig.isBeginning,
+                })}
+                aria-label="previous image">
+                <ChevronLeft className="h-4 w-4 text-zinc-700" />
+              </button>
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  swiper?.slideNext()
+                }}
+                className={cn(activeStyles, 'right-3 pointer-events-auto transition', {
+                  [inactiveStyles]: slideConfig.isEnd,
+                  'hover:bg-primary-300 text-primary-800 opacity-100': !slideConfig.isEnd,
+                })}
+                aria-label="next image">
+                <ChevronRight className="h-4 w-4 text-zinc-700" />
+              </button>
+            </div>
+
+            {/* Swiper Images */}
+            <Swiper
+              pagination={{
+                renderBullet: (_, className) =>
+                  `<span class="rounded-full transition ${className}"></span>`,
+              }}
+              onSwiper={(swiper) => setSwiper(swiper)}
+              spaceBetween={50}
+              modules={[Pagination]}
+              slidesPerView={1}
+              className="h-full w-full"
+            >
+              {draft.capturedMockup.map((url, index) => (
+                <SwiperSlide key={index}>
+                  <NextImage
+                    width={1000}
+                    height={1000}
+                    src={url}
+                    alt={`Mockup ${index}`}
+                    placeholder="blur"
+                    blurDataURL="/Loading.png"
+                    loading="lazy"
+                    className="h-full w-full object-cover object-center rounded-xl"
+                    onContextMenu={(e) => e.preventDefault()}
+                    draggable={false}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        ) : (
+          <NextImage
+            width={1000}
+            height={1000}
+            src={draft.capturedMockup[0]!}
+            alt={draft.id}
+            placeholder="blur"
+            blurDataURL="/Loading.png"
+            loading="lazy"
+            className="h-full w-full rounded-xl object-cover"
+            onContextMenu={(e) => e.preventDefault()}
+            draggable={false}
+          />
+        )}
+
+        {/* Badges */}
+        <div className="absolute top-2 left-2 z-10">
+          <Badge className="bg-gray-800 hover:bg-gray-800 text-white" variant="secondary">
+            {draft.productCategory}
+          </Badge>
+        </div>
+        <div className="absolute top-2 right-2 z-10">
+          <Badge className="bg-gray-800 hover:bg-gray-800 text-white" variant="secondary">
+            Price: {draft.productPrice.toFixed(2)} TND
+          </Badge>
+        </div>
+        <div className="absolute bottom-2 left-2 z-10">
+          <Badge className="bg-gray-800 hover:bg-gray-800 text-white" variant="secondary">
+            Size: {draft.productSize}
+          </Badge>
+        </div>
+        <div className="absolute bottom-2 right-2 z-10">
+          <Badge className="bg-gray-800 hover:bg-gray-800 text-white" variant="secondary">
+            Quantity: {draft.quantity}
+          </Badge>
+        </div>
+      </CardContent>
+    </Card>
      </div>
      </div>
             </div>
     </div>
 
-    {/* Left Side  */}
+    {/* right Side  */}
     <div className="flex flex-col justify-center">
     <div className="w-full">
           <Card>
@@ -343,17 +607,19 @@ const [openDialog, setOpenDialog] = useState(false);
       </div>
 
       <div className="flex justify-center">
-        <Button
+
+      <Button
           onClick={()=>{
             setIsDelete(true)
-            handleDelete()
+            handleDelete(draft.id)
           }}
           variant="outline"
-          className="flex ml-3 px-1 hover:text-red-500 sm:px-6 lg:px-8"
+          className="flex ml-3 px-1 bg-red-500 hover:bg-red-400 text-white hover:text-white sm:px-6"
         >
-          <span className="ml-1">Delete PreOrder</span>
-          <X className="h-4 w-4 mt-0.5 inline" />
+          <span className="ml-1">Delete this draft</span>
+          <X className="h-4 w-4 mt-0.5 inline ml-2" />
         </Button>
+
         <Button
           onClick={handleOrder}
           disabled={!isCheckoutEnabled || isDelete}

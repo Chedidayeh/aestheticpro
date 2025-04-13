@@ -226,7 +226,7 @@ const ProductListing = ({
 
       {product.NewProduct && (
   <div className="absolute top-0 right-0 m-1 text-xs lg:text-sm">
-        <Badge variant="secondary" className="bg-blue-700  text-white">
+        <Badge variant="secondary" className="bg-blue-700 hover:bg-blue-700  text-white">
         New
       </Badge>
   </div>
@@ -234,7 +234,7 @@ const ProductListing = ({
 
           {product.topSales && (
   <div className="absolute top-0 left-0 m-1 text-xs lg:text-sm">
-        <Badge variant="secondary" className="bg-emerald-700 text-white">
+        <Badge variant="secondary" className="bg-emerald-700 hover:bg-emerald-700 text-white">
           Best Sell
         </Badge>
   </div>
@@ -242,7 +242,7 @@ const ProductListing = ({
 
   {product.isDiscountEnabled && (
       <div className="absolute bottom-0 right-0 m-1 text-xs lg:text-sm">
-    <Badge variant="secondary" className="bg-red-700 text-white">
+    <Badge variant="secondary" className="bg-red-700 hover:bg-red-700 text-white">
     {product.discount}% OFF
   </Badge>
   </div>
@@ -263,9 +263,9 @@ const ProductListing = ({
         {/* add to fav list icon */}
     <div onClick={saveToFavList} className="relative group rounded-full p-1  text-gray-600 cursor-pointer ">
         <Heart className={`w-5 h-5 lg:w-6 lg:h-6  ${isFavSaved ? 'text-red-600 fill-current' : 'text-gray-600 hover:text-red-600'}`} />
-        <span className="absolute bottom-12 left-[2%] transform -translate-x-1/2 w-max px-1 py-1 text-xs bg-black text-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
+        {/* <span className="absolute bottom-4 right-[2%] transform -translate-x-1/2 w-max px-1 py-1 text-xs bg-black text-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
         {isFavSaved ? 'Saved!' : 'Save in fav list'}
-        </span>
+        </span> */}
     </div>
     
     </div>

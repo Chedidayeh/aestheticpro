@@ -12,7 +12,7 @@ export default async function Page() {
     noStore()
     const user = await getUser()
     const store = await getStoreByUserId(user!.id)
-    const paymentRequests = await getPaymentRequestsForStore(store.id)
+    const paymentRequests = await getPaymentRequestsForStore(store  ?store.id : "")
 
   return (
     <>

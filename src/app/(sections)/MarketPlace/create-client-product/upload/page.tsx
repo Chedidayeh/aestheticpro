@@ -19,6 +19,7 @@ import Link from "next/link";
 import { getPlatformForTheWebsite, getUser } from "@/actions/actions";
 import ErrorState from "@/components/ErrorState";
 import LoadingLink from "@/components/LoadingLink";
+import Redirecting from "@/components/Redirecting";
 
 
 
@@ -32,6 +33,13 @@ interface PageProps {
 const Page = async ({ searchParams }: PageProps) => {
 
   try {
+
+    const user = await getUser()
+
+    if(!user){
+      return <Redirecting/>
+    }
+
     
 
   const categories = await getAllCategories()
@@ -61,7 +69,6 @@ const Page = async ({ searchParams }: PageProps) => {
 
     const platform  = await getPlatformForTheWebsite()
 
-    const user = await getUser()
 
     if(selectedCat?.disableCategory === true) {
       return (
@@ -95,11 +102,11 @@ const Page = async ({ searchParams }: PageProps) => {
   return (
     <>
 
-    {categories.length !== 0 && selectedCat ? ( 
+    {categories.length !== 0  ? ( 
 
       <DesignConfigurator
       SellersDesignsData={sellersDesigns}
-      selectedCategory = {selectedCat}
+      selectedCategory = {selectedCat || null}
       categories={categories}
       platform={platform!}
       user={user!}

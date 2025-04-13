@@ -144,6 +144,19 @@ export async function updateStoreCreation(platformId: string, closeStoreCreation
   }
 }
 
+export async function updateAffiliateProgram(platformId: string, closeAffiliateProgram: boolean) {
+  try {
+    const updatedPlatform = await db.platform.update({
+      where: { id: platformId },
+      data: { closeAffiliateProgram : closeAffiliateProgram },
+    });
+    return updatedPlatform;
+  } catch (error) {
+    console.error("Failed to update Affiliate Program setting:", error);
+    return null;
+  }
+}
+
 export async function updateCreation(platformId: string, closeCreation: boolean) {
   try {
     const updatedPlatform = await db.platform.update({

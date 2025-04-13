@@ -37,7 +37,7 @@ import { useState } from "react"
 import LoadingState from "@/components/LoadingState"
 import { useRouter } from "next/navigation"
 import { useToast } from "@/components/ui/use-toast"
-import { addNewCollection, addTopBarContent, createLevel, deleteLevel, deleteTopBarCollection, deleteTopBarContent, updateCreation, updatePlatformData, updateStoreCreation } from "./actions"
+import { addNewCollection, addTopBarContent, createLevel, deleteLevel, deleteTopBarCollection, deleteTopBarContent, updateAffiliateProgram, updateCreation, updatePlatformData, updateStoreCreation } from "./actions"
 import { Collection, Level, Platform, Product } from '@prisma/client';
 import { Switch } from "@/components/ui/switch"
 import { Label } from "@/components/ui/label"
@@ -65,6 +65,9 @@ const SettingsView = ({ platform , collections , levels }: ViewProps ) => {
     const [newCollection, setNewCollection] = useState("");
 
     const [isStoreCreationEnabled, setIsStoreCreationEnabled] = useState(!platform.closeStoreCreation);
+
+    const [isAffiliateProgramEnabled, setIsAffiliateProgramEnabled] = useState(!platform.closeAffiliateProgram);
+
 
     const [isCreationEnabled, setIsCreationEnabled] = useState(!platform.closeCreation);
 
@@ -303,6 +306,27 @@ const SettingsView = ({ platform , collections , levels }: ViewProps ) => {
         }
     };
 
+    const handleToggleAffiliateProgram = async () => {
+      try {
+          setOpen(true);
+          const res = await updateAffiliateProgram(platform.id, isAffiliateProgramEnabled);
+          if (res) {
+              setIsAffiliateProgramEnabled(!isAffiliateProgramEnabled);
+              setOpen(false);
+              toast({ title: 'Affiliate Program Updated Successfully', variant: 'default' });
+              router.refresh();
+          } else {
+              setOpen(false);
+              toast({ title: 'Failed to Update Affiliate Program', variant: 'destructive' });
+              router.refresh();
+          }
+      } catch (error) {
+          console.log(error);
+          setOpen(false);
+          toast({ title: 'Error', variant: 'destructive' });
+      }
+  };
+
     const handleToggleCreation = async () => {
       try {
           setOpen(true);
@@ -363,6 +387,9 @@ const SettingsView = ({ platform , collections , levels }: ViewProps ) => {
                     </Link>
                     <Link href="#" className={`font-semibold ${selectedSection === "StoreCreation" ? "text-primary" : ""}`} onClick={() => setSelectedSection("StoreCreation")}>
                         Store Creation
+                    </Link>
+                    <Link href="#" className={`font-semibold ${selectedSection === "AffiliateProgram" ? "text-primary" : ""}`} onClick={() => setSelectedSection("AffiliateProgram")}>
+                        Affiliate Program
                     </Link>
                     <Link href="#" className={`font-semibold ${selectedSection === "Creation" ? "text-primary" : ""}`} onClick={() => setSelectedSection("Creation")}>
                         Creation
@@ -535,6 +562,29 @@ const SettingsView = ({ platform , collections , levels }: ViewProps ) => {
                                                 onCheckedChange={handleToggleStoreCreation}
                                             />
                                             <Label htmlFor="store-creation-switch">{!platform.closeStoreCreation ? "Disable Store Creation" : "Enable Store Creation"}</Label>
+                                        </div>    
+                           </CardContent>
+
+                        </Card>
+
+                    )}
+
+                      {selectedSection === "AffiliateProgram" && (
+                            <Card x-chunk="dashboard-04-chunk-1">
+                            <CardHeader>
+                                <CardTitle>Affiliate Program</CardTitle>
+                                <CardDescription>
+                                    Configure Affiliate Program: 
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                            <div className="flex items-center space-x-2">
+                                            <Switch
+                                                id="store-creation-switch"
+                                                checked={isAffiliateProgramEnabled}
+                                                onCheckedChange={handleToggleAffiliateProgram}
+                                            />
+                                            <Label htmlFor="store-creation-switch">{!platform.closeAffiliateProgram ? "Disable Affiliate Program" : "Enable Affiliate Program"}</Label>
                                         </div>    
                            </CardContent>
 

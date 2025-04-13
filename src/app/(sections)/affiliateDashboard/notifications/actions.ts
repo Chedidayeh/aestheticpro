@@ -16,7 +16,7 @@ export async function getAffiliateNotification(affiliateId : string) {
     return notifications;
   } catch (error) {
     console.error('Error fetching notifications:', error);
-    throw error;
+    return []
   }
 }
 

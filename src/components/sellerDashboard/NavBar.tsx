@@ -316,9 +316,9 @@ const NavBar = ({user , notifications , storeName} : {user : User , notification
   <DropdownMenuContent align="end">
   <DropdownMenuLabel className="flex justify-between items-center">
   <span>My Notifications</span>
-  <Link href={"/sellerDashboard/notifications"}>
+  <LoadingLink href={"/sellerDashboard/notifications"}>
     <Button size={"sm"} variant={"link"}>View all</Button>
-  </Link>
+  </LoadingLink>
 </DropdownMenuLabel>
 
     <DropdownMenuSeparator />

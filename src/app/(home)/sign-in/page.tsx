@@ -14,9 +14,6 @@ const Page = async () => {
   
   if (user) return <RedirectingToHomePage/>
 
-  
-
-
   return (
     <SignIn/>
   )

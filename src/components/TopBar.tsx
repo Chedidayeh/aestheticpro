@@ -6,7 +6,7 @@ const TopBar = ({platform} : {platform : Platform}) => {
   
 
   return (
-    <nav className='sticky z-[100] h-8 inset-x-0 top-0 w-full border-b border-gray-200 dark:border-muted-foreground backdrop-blur-lg transition-all flex items-center justify-between px-4'>
+    <nav className='sticky h-8 inset-x-0 top-0 w-full border-b border-gray-200 dark:border-muted-foreground backdrop-blur-lg transition-all flex items-center justify-between px-4'>
       <Marquee>
         <div className='flex items-center text-blue-700 dark:text-blue-500 text-sm'>
           {platform?.topBarContent.map((content, index) => (

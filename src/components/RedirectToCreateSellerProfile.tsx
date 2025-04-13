@@ -2,24 +2,33 @@
 
 import React from 'react'
 import { Button } from './ui/button'
-import { useDispatch } from 'react-redux';
-import { saveRedirectUrl } from '@/store/actions/action';
-import { useRouter } from 'next/navigation';
+import { useDispatch } from 'react-redux'
+import { saveRedirectUrl } from '@/store/actions/action'
+import { useRouter } from 'next/navigation'
 
-const RedirectToCreateSellerProfile = () => {
+interface RedirectProps {
+  className?: string
+  href: string
+  children?: React.ReactNode
+}
 
-    const dispatch = useDispatch();
-    const router = useRouter()
+const RedirectToCreateSellerProfile: React.FC<RedirectProps> = ({ className, children , href }) => {
+  const dispatch = useDispatch()
+  const router = useRouter()
 
-      // redirectToCreateSellerProfile function
-  const redirectToCreateSellerProfile = () => {
-    dispatch(saveRedirectUrl("/MarketPlace/create-seller-profile"));
-    router.push("/MarketPlace/create-seller-profile")
+  const handleRedirect = () => {
+    const targetUrl = href
+    dispatch(saveRedirectUrl("/MarketPlace/create-seller-profile"))
+    router.push(targetUrl)
   }
 
   return (
-    <Button onClick={redirectToCreateSellerProfile} className="px-4 py-3 text-sm font-semibold bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 transition">
-    Get Started &rarr;
+    <Button
+      size={"sm"}
+      onClick={handleRedirect}
+      className={`${className}`}
+    >
+      {children}
     </Button>
   )
 }

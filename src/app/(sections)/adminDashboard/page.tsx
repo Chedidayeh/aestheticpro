@@ -24,6 +24,7 @@ import { Component } from "@/components/adminDashboard/Chart";
 import { StoresTableStats } from "@/components/adminDashboard/StoresTableStats";
 import { ProductsViewsChart } from "@/components/adminDashboard/ProductsViewsChart";
 import ReportData from "@/components/adminDashboard/ReportData";
+import LoadingLink from "@/components/LoadingLink";
 
 
 export default async function Page() {
@@ -40,12 +41,12 @@ export default async function Page() {
   
          <h1 className="text-2xl font-semibold">Admin Dashboard</h1>
          {count.awaitingActionProductCount + count.awaitingActionDesignCount > 0 && (
-         <Link 
+         <LoadingLink 
          href={"/adminDashboard/stores"}>
           <Button variant={"link"} >
             You Have {count.awaitingActionProductCount + count.awaitingActionDesignCount} elements under review
             </Button>
-          </Link>
+          </LoadingLink>
          )}
 
          <ReportData/>

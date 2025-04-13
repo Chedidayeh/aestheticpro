@@ -445,7 +445,7 @@ const handleUpdate = async (orderId : string , platformProfit : number) =>{
 
 
               {/* client products */}
-              {selectedItem && selectedItem.productTitle === 'Client Product' && (
+              {selectedItem && selectedItem.productTitle === 'Personalized Product' && (
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
         <CardHeader className="flex flex-row items-center bg-muted/50">
           <div className="grid gap-2">
@@ -486,8 +486,8 @@ const handleUpdate = async (orderId : string , platformProfit : number) =>{
         <div className="mt-6 space-y-4">
         <Button onClick={()=>{downloadMockup(selectedItem.capturedMockup)}} variant={"link"}>Download Product Mockup</Button>
 
-            {/* client product */}
-          {selectedItem.productTitle === "Client Product" && (
+            {/* Personalized Product */}
+          {selectedItem.productTitle === "Personalized Product" && (
             <>
           <div className="text-sm">
           <div className="flex flex-col md:flex-row md:space-x-10 space-y-2 md:space-y-0">

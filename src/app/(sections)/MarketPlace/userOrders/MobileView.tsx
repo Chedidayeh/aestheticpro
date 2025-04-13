@@ -119,7 +119,7 @@ const MobileView = ({ordersData}: ViewProps) => {
         Creation Date <time dateTime={currentOrder.createdAt ? currentOrder.createdAt.toISOString() : undefined}>
           {currentOrder.updatedAt ? new Date(currentOrder.updatedAt).toLocaleString() : ''}
         </time></CardDescription>
-        <CardDescription className="my-4 space-x-2"> 
+        <CardDescription className="flex my-4 gap-1"> 
 
 <Badge
   variant="outline"

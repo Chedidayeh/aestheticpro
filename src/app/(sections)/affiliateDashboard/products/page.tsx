@@ -31,7 +31,7 @@ const Page = async () => {
      initialPage={page}
      limit={limit}
      user={user!}
-     affiliateId={affiliateId}
+     affiliateId={affiliateId!}
      categories={categories!}
      collections={collections}
      platform={platform!}

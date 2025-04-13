@@ -3,7 +3,7 @@
 import { deleteFiles } from '@/app/(sections)/sellerDashboard/products/actions';
 import { db } from '@/db';
 import { sendOrderEmail } from '@/lib/mailer';
-import { PreOrderPreview } from '@prisma/client';
+import { PreOrderDraft } from '@prisma/client';
 
 async function createClientDesign(imageUrl : string, userId : string) {
     try {
@@ -20,7 +20,7 @@ async function createClientDesign(imageUrl : string, userId : string) {
     }
   }
 
-export async function saveOrder(userId : string, preOrder : PreOrderPreview, 
+export async function saveOrder(userId : string, preOrder : PreOrderDraft, 
   clientName : string, address : string, phoneNumber : string , orderTotal : number) {
     try {
       // Start a transaction
@@ -54,7 +54,7 @@ export async function saveOrder(userId : string, preOrder : PreOrderPreview,
                 frontclientDesignId: frontclientDesignId ? frontclientDesignId : null,
                 backclientDesignId: backclientDesignId ? backclientDesignId : null,
                 productPrice: preOrder.productPrice,
-                productTitle : "Client Product",
+                productTitle : "Personalized Product",
                 quantity: preOrder.quantity,
                 productColor: preOrder.productColor,
                 productSize: preOrder.productSize,
@@ -77,7 +77,7 @@ export async function saveOrder(userId : string, preOrder : PreOrderPreview,
         return {success : true , orderId :order.id}
       },{
         maxWait: 10000, // Wait for a connection for up to 10 seconds
-        timeout: 20000, // Allow the transaction to run for up to 20 seconds
+        timeout: 30000, // Allow the transaction to run for up to 20 seconds
       });
   
       return result;
@@ -88,21 +88,21 @@ export async function saveOrder(userId : string, preOrder : PreOrderPreview,
   }
 
 // delete user preOrder
-export async function deletePreOrder(userId: string) {
+export async function deletePreOrder(draftId: string) {
   try {
-    // Find the PreOrderPreview associated with the given userId
-    const preOrder = await db.preOrderPreview.findFirst({
+    // Find the preOrderDraft associated with the given userId
+    const preOrder = await db.preOrderDraft.findUnique({
       where: {
-        userId: userId,
+        id: draftId,
       },
     });
 
     if (!preOrder) {
-      throw new Error(`No PreOrderPreview found for userId: ${userId}`);
+      throw new Error(`No preOrderDraft found for draftId: ${draftId}`);
     }
 
-    // Delete the found PreOrderPreview
-    await db.preOrderPreview.delete({
+    // Delete the found preOrderDraft
+    await db.preOrderDraft.delete({
       where: {
         id: preOrder.id,
       },
@@ -115,12 +115,12 @@ export async function deletePreOrder(userId: string) {
   }
 }
 
-export async function deletePreOrderWithImages(userId: string) {
+export async function deletePreOrderWithImages(draftId: string) {
   try {
-    // Find the PreOrderPreview associated with the given userId
-    const preOrder = await db.preOrderPreview.findFirst({
+    // Find the preOrderDraft associated with the given userId
+    const preOrder = await db.preOrderDraft.findUnique({
       where: {
-        userId: userId,
+        id: draftId,
       },
       select: {
         id: true,
@@ -131,7 +131,7 @@ export async function deletePreOrderWithImages(userId: string) {
     });
 
     if (!preOrder) {
-      throw new Error(`No PreOrderPreview found for userId: ${userId}`);
+      throw new Error(`No preOrderDraft found for draftId: ${draftId}`);
     }
 
     // Gather all file paths to delete from Firebase Storage
@@ -148,8 +148,8 @@ export async function deletePreOrderWithImages(userId: string) {
       await deleteFiles(filePathsToDelete);
     }
 
-    // Delete the found PreOrderPreview
-    await db.preOrderPreview.delete({
+    // Delete the found preOrderDraft
+    await db.preOrderDraft.delete({
       where: {
         id: preOrder.id,
       },
@@ -164,26 +164,19 @@ export async function deletePreOrderWithImages(userId: string) {
 
 
 // get user preOrder
-export async function getUserPreOrder(preOrderId: string , userId : string): Promise<PreOrderPreview | null> {
+export async function getUserPreOrder(preOrderId: string): Promise<PreOrderDraft | null> {
   try {
-    let preOrder
-    if(preOrderId && preOrderId != "") {
-      preOrder = await db.preOrderPreview.findFirst({
+      const preOrder = await db.preOrderDraft.findUnique({
         where: {
           id: preOrderId,
         },
       });
-    } else {
-      preOrder = await db.preOrderPreview.findFirst({
-        where: {
-          userId: userId,
-        },
-      });
-    }
-    return preOrder; // Return the found preorder or null if not found
+   
+    return preOrder;
   } catch (error) {
-    console.error('Error fetching user preorder:', error);
-    throw new Error('Failed to fetch user preorder');
+    console.error('Error fetching user preorders:', error);
+    throw new Error('Failed to fetch user preorders');
   }
 }
+
 

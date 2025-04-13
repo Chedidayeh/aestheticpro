@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import LoadingLink from "@/components/LoadingLink";
 
 const arabicInfos = [
   "جودة التصاميم: لضمان أفضل جودة للمنتجات، يجب أن تكون التصاميم المقدمة عالية الدقة. يساهم هذا في الحفاظ على وضوح التفاصيل وضمان طباعة مثالية على المنتجات",
@@ -170,11 +171,11 @@ const Page = () => {
               </div>
             </div> */}
             <div className='flex items-center justify-center mt-10'>
-              <Link href={"/sellerDashboard/createProduct"}>
+              <LoadingLink href={"/sellerDashboard/createProduct"}>
               <Button variant={"default"} className='text-white' >
                 Get Started
               </Button>
-              </Link>
+              </LoadingLink>
 
             </div>
           </div>

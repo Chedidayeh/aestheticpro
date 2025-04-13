@@ -1,20 +1,12 @@
 import type { Metadata } from "next";
-import { Recursive } from "next/font/google";
 import "../globals.css";
 import Footer from "@/components/Footer";
-import { Toaster } from "@/components/ui/toaster";
-import Providers from "@/components/Providers";
-import { StoreProvider } from "@/store/StoreProvider";
 import HomeNavBar from "@/components/HomeNavBar";
-import { ThemeProvider } from "@/components/theme-provider";
 import TopBar from "@/components/TopBar";
 import { ReactNode } from "react";
 import SearchBar from "@/components/MarketPlace/SearchBar";
-import { SessionProvider } from "next-auth/react";
 import { fetchCartProductCount, getPlatformForTheWebsite, getUser, getUserOrders } from "@/actions/actions";
-import { getUserFavoriteList } from "../(sections)/MarketPlace/favList/actions";
 import { countBestSellingProducts, getUserFavoriteListProductsCount } from "../(sections)/MarketPlace/BestSelling/actions";
-const recursive = Recursive({ subsets: ["latin-ext"] });
 export const dynamic = 'force-dynamic';
 
 
@@ -39,7 +31,7 @@ const Layout = async ({ children }: LayoutProps) => {
 
   return (
 
-<>
+    <div className="min-h-screen flex flex-col">
     <TopBar platform={platform!} />
     <HomeNavBar 
     user={user!} 
@@ -50,9 +42,12 @@ const Layout = async ({ children }: LayoutProps) => {
     bestSellingProducts={bestSellingProducts ?? 0} />
 
     <SearchBar/>
-    {children}      
+        {/* Main content grows to fill available space */}
+        <main className="flex-grow">
+          {children}
+        </main>    
     <Footer user={user!} platform={platform!} />
-    </>       
+    </div>       
 
   );
 }

@@ -204,14 +204,11 @@ export async function getStoreByUserId(userId : string) {
       },
     });
 
-    if (!store) {
-      throw new Error('Store not found for the given userId');
-    }
 
     return store;
   } catch (error) {
     console.error('Error fetching store:', error);
-    throw error;
+    return null;
   }
 }
 
@@ -1281,7 +1278,7 @@ export async function getUserOrders(userId: string) {
     return filteredOrders;
   } catch (error) {
     console.error('Error fetching user orders:', error);
-    throw error;
+    return []
   }
 }
 
@@ -1304,7 +1301,7 @@ export async function getUnreadNotificationsForStore(storeId : string) {
     return unreadNotifications;
   } catch (error) {
     console.error('Error fetching unread notifications:', error);
-    throw error;
+    return []
   }
 }
 
@@ -1492,7 +1489,8 @@ export async function searchProducts(query: string) {
       return uniqueResults;
   } catch (error) {
       console.error('Error searching products:', error);
-      throw error;
+      return []
+
   }
 }
 
@@ -1636,7 +1634,7 @@ export async function getUnreadAffiliateNotifications(affiliateId : string) {
     return unreadNotifications;
   } catch (error) {
     console.error('Error fetching unread notifications:', error);
-    throw error;
+    return []
   }
 }
 

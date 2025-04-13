@@ -21,57 +21,50 @@ const Footer = ({user , platform} : {user : User , platform : Platform}) => {
           <ul>
             <p className="font-bold text-xl pb-4">Services</p>
 
-            <Link href={"/MarketPlace"}>
-                        <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                       Start Shopping
-               </li>
-            </Link>
 
-            {/* {!user && (
-            <Link href={"/createAffiliateAccount"}>
-                        <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                       Affiliate  Marketing <span className='text-green-500'>$</span>
-               </li>
-            </Link>
-             )}
-
-            {user?.isAffiliate === false && (
-            <Link href={"/createAffiliateAccount"}>
-                        <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                       Affiliate  Marketing <span className='text-green-500'>$</span>
-               </li>
-            </Link>
-             )}
-
-              {user?.isAffiliate === true && (
-            <LoadingLink href={"/createAffiliateAccount"}>
-                        <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                        Affiliate Dashboard
-               </li>
+            {platform.closeAffiliateProgram ? (
+            <LoadingLink href="/MarketPlace">
+              <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
+                Start Shopping
+              </li>
             </LoadingLink>
-             )} */}
+          ) : (
+            <>
+              {!user || user?.isAffiliate === false ? (
+                <LoadingLink href="/createAffiliateAccount">
+                  <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
+                    Affiliate Marketing <span className="text-green-500">$</span>
+                  </li>
+                </LoadingLink>
+              ) : (
+                <LoadingLink href="/affiliateDashboard">
+                  <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
+                    Affiliate Dashboard
+                  </li>
+                </LoadingLink>
+              )}
+            </>
+          )}
 
-                {!user && (
-                       <Link href={"/MarketPlace/create-seller-profile"}>
-                       <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                       Become a Seller  <span className='text-green-500'>$</span>
-                       </li>
-                     </Link>
-                 )} 
 
-            {platform?.closeStoreCreation && user && user.userType === "USER" && (
+
+
+           
+
+          {(!user || (user.userType === "USER" && !platform?.closeStoreCreation)) && (
+            <LoadingLink href="/MarketPlace/create-seller-profile">
+              <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
+                Become a Seller <span className="text-green-500">$</span>
+              </li>
+            </LoadingLink>
+          )}
+
+          {user?.userType === "USER" && platform?.closeStoreCreation && (
             <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-            Become a Seller : Soon Available !
-          </li>
-            )} 
+              Become a Seller : Soon Available!
+            </li>
+          )}
 
-          {!platform?.closeStoreCreation && user && user.userType === "USER" && (
-                        <Link href={"/MarketPlace/create-seller-profile"}>
-                        <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                        Become a Seller  <span className='text-green-500'>$</span>
-                        </li>
-                      </Link>
-            )} 
             
             {user && user.userType === "SELLER" && (
               <LoadingLink href={"/sellerDashboard"}>

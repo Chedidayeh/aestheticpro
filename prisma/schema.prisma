@@ -79,7 +79,7 @@ model User {
   userType        UserType @default(USER)
 
   orders          Order[]
-  preOrder        PreOrderPreview[]
+  preOrder        PreOrderDraft[]
 
 
   clientDesigns     ClientDesign[]
@@ -124,6 +124,7 @@ model Platform {
 
   closeStoreCreation Boolean     @default(false)
   closeCreation      Boolean      @default(false)
+  closeAffiliateProgram  Boolean  @default(false)
 
   maxProductSellerProfit     Int     @default(20)
   ExtraDesignForProductPrice Int     @default(5)
@@ -507,7 +508,7 @@ model OrderItem {
 }
 
 
-model PreOrderPreview {
+model PreOrderDraft {
     id                    String  @id @default(cuid())
 
     userId                String 

@@ -7,6 +7,7 @@ import NavBar from "@/components/affiliateDashboard/NavBar";
 import BanUser from "@/components/BanUser";
 import { getUnreadAffiliateNotifications, getUser } from "@/actions/actions";
 import { getAffiliateIdByUserId } from "./products/actions";
+import Redirecting from "@/components/Redirecting";
 
 export const dynamic = 'force-dynamic';
 
@@ -17,8 +18,13 @@ export const metadata: Metadata = {
 
 const Layout = async ({ children }: { children: ReactNode }) => {
    const user = await getUser()
-   const affiliateId = await getAffiliateIdByUserId(user!.id)
-   const notifications = await getUnreadAffiliateNotifications(affiliateId)
+   const affiliateId = await getAffiliateIdByUserId(user ? user.id : "")
+   const notifications = await getUnreadAffiliateNotifications(affiliateId ? affiliateId : "")
+
+   if(!user || !user.isAffiliate) {
+    return <Redirecting/>
+  }
+
     return (
          <div className="grid min-h-screen w-full xl:grid-cols-[230px_1fr]"> {/* Updated grid columns */}
          <BanUser user={user!} />

@@ -97,6 +97,9 @@ const CreateProductView = ({categories , platform , store ,  collections}: Produ
   const { toast } = useToast()
   const router = useRouter();
 
+  const [openSheet, setOpenSheet] = useState(false)
+  
+
 
   const [selectedCollection, setSelectedCollection] = useState(collections[0]);
 
@@ -243,6 +246,9 @@ const CreateProductView = ({categories , platform , store ,  collections}: Produ
       });
       return; // Prevent further execution
     }
+
+    setOpenSheet(false)
+
   
     // Border for front design
     setfrontborderTop(category.frontBorders[0].value);
@@ -1010,7 +1016,7 @@ const handleFileChange = (file : File) => {
                 <div className="grid grid-cols-1  lg:grid-cols-2 gap-6 md:grid-cols-1">
 
                           {/* first card */}
-                     <Card x-chunk="dashboard-05-chunk-3" className={cn(' lg:rounded-2xl shadow-lg')}>
+                     <Card x-chunk="dashboard-05-chunk-3" className={cn(' lg:rounded-2xl shadow-lg max-h-max')}>
                         <CardHeader className="py-2">
                         </CardHeader>
                         <CardContent className="items-center space-y-6 grid" >                          
@@ -1018,7 +1024,7 @@ const handleFileChange = (file : File) => {
 
                             {/* category selection */}
                              <div className="ml-5">
-                             <Sheet>
+                             <Sheet open={openSheet} onOpenChange={setOpenSheet}>
                             <SheetTrigger asChild>
                               <Button variant="secondary">Select</Button>
                             </SheetTrigger>
@@ -1028,11 +1034,15 @@ const handleFileChange = (file : File) => {
                                 <SheetDescription>
                                 </SheetDescription>
                               </SheetHeader>
-                              <ScrollArea className="w-full h-96">
-                              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-1 bg-gray-900/5">
+                                <ScrollArea className="w-full h-[450px]">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 bg-gray-600/5 p-6 rounded-xl">
                                 {categories.map((category, index) => (
                                   <Card onClick={() => handleCatClick(index, category)} 
-                                    key={index} className={cn("border w-full", selectedCat === index && "border-primary")}>
+                                    key={index}         className={cn(
+                                              "border cursor-pointer w-full min-w-[160px]",
+                                              selectedCat === index && "border-primary"
+                                            )}
+                                    >
                                     <CardContent className="flex flex-col items-center justify-center p-2">
                                       <NextImage
                                         width={900} 
@@ -1420,11 +1430,13 @@ const handleFileChange = (file : File) => {
                       </CardFooter>
                       </Card>
 
+<div className='space-y-2'>
+
 
 
                         {/* Front Category Card */}
                       {addFrontDesign && selectedCat!=null  &&(
-                      <Card x-chunk="dashboard-05-chunk-3" className={cn(' lg:rounded-2xl shadow-lg')}>
+                      <Card x-chunk="dashboard-05-chunk-3" className={cn(' lg:rounded-2xl shadow-lg max-h-max')}>
                   <CardHeader className="px-7 flex flex-col items-center justify-center">
                               <div className="text-center">
                               <h1 className='text-3xl font-extrabold'>Front Design</h1>
@@ -1558,7 +1570,7 @@ const handleFileChange = (file : File) => {
                         {/* Back Category Card */}
                       {addBackDesign !== false && selectedCat !== null  && ( 
 
-                          <Card x-chunk="dashboard-05-chunk-3" className={cn(' lg:rounded-2xl shadow-lg')}>
+                          <Card x-chunk="dashboard-05-chunk-3" className={cn(' lg:rounded-2xl shadow-lg max-h-max')}>
                         <CardHeader className="px-7 flex flex-col items-center justify-center">
                               {selectedCat !== null && (
                                 <>
@@ -1694,6 +1706,8 @@ const handleFileChange = (file : File) => {
                           </Card>
 
                       )}
+
+</div>
 
 
 

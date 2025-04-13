@@ -68,7 +68,7 @@ interface SellersDesignsData extends SellerDesign {
 
 interface DesignConfiguratorProps {
   SellersDesignsData: SellersDesignsData[];
-  selectedCategory : fetchedCat
+  selectedCategory : fetchedCat | null
   categories : fetchedCat[];
   platform : Platform
   user : User
@@ -84,8 +84,9 @@ interface fetchedCat extends Category {
 const DesignConfigurator: React.FC<DesignConfiguratorProps> = ({ SellersDesignsData , selectedCategory , categories, platform , user  }) => {
 
   const { toast } = useToast()
+  const [openSheet, setOpenSheet] = useState(false)
   const router = useRouter();
-  const [selectedP, setSelectedProduct] = useState(selectedCategory )
+  const [selectedP, setSelectedProduct] = useState(selectedCategory ?? categories[0] )
 
       // Define the types for the options state
       const [options, setOptions] = useState<{
@@ -192,6 +193,8 @@ const DesignConfigurator: React.FC<DesignConfiguratorProps> = ({ SellersDesignsD
       });
       return; // Exit early if the category is disabled
     }
+
+    setOpenSheet(false)
   
     // Border for front design
     setfrontborderTop(category.frontBorders[0].value);
@@ -632,20 +635,7 @@ const handleSortChange = (event: string) => {
                     setIsClicked(true)
                     setIsBorderHidden(true);
                     setisBackBorderHidden(true);
-                    
-                    const user = await getUser();
-                    const checkPreOrder = await getUserPreOrderByUserId(user!.id);
-                    if (checkPreOrder) {
-                      setOpenDialog(false)
-                      showToast(
-                        'You already made a preOrder!',
-                        'You either confirm or delete that preOrder to make a new one!',
-                        'destructive'
-                      );
-                      return;
-                    }
-                 
-
+                  
                 
                     // Handle different design conditions
                     if (addFrontDesign && !addBackDesign) {
@@ -657,6 +647,7 @@ const handleSortChange = (event: string) => {
                     }
                   } catch (error) {
                     console.error(error);
+                    setOpenDialog(false)
                     showToast('Error!', 'Please try again later!', 'destructive');
             
                   }
@@ -830,7 +821,7 @@ const handleSortChange = (event: string) => {
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:grid-cols-1">
 
                           {/* first card */}
-                     <Card x-chunk="dashboard-05-chunk-3" className={cn(' lg:rounded-2xl shadow-lg')}>
+                     <Card x-chunk="dashboard-05-chunk-3" className={cn(' lg:rounded-2xl shadow-lg max-h-max')}>
                         <CardHeader className="py-2">
                         </CardHeader>
                         <CardContent className="items-center space-y-6 grid" >                          
@@ -839,8 +830,8 @@ const handleSortChange = (event: string) => {
                                 {/* category selection */}
                                 <h3>Change Category :</h3>
                              <div className="ml-5">
-                                <Sheet>
-                              <SheetTrigger asChild>
+                             <Sheet open={openSheet} onOpenChange={setOpenSheet}>
+                             <SheetTrigger asChild>
                                 <Button variant="secondary">Select</Button>
                               </SheetTrigger>
                               <SheetContent side="bottom" >
@@ -849,30 +840,42 @@ const handleSortChange = (event: string) => {
                                   <SheetDescription>
                                   </SheetDescription>
                                 </SheetHeader>
+                                <ScrollArea className="w-full h-[450px]">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 bg-gray-600/5 p-6 rounded-xl">
+        {categories.map((category, index) => (
+      <Card
+        onClick={() => handleCatClick(index, category)}
+        key={index}
+        className={cn(
+          "border cursor-pointer w-full min-w-[160px]",
+          selectedCat === index && "border-primary"
+        )}
+      >
+        <CardContent className="flex flex-col items-center justify-center p-2">
+          <NextImage
+            width={900}
+            height={900}
+            src={category.value!}
+            alt={category.label}
+            className="mb-2"
+            style={{
+              width: "100%",
+              height: "auto",
+              objectFit: "cover",
+            }}
+            onContextMenu={(e) => e.preventDefault()}
+            draggable={false}
+          />
+          <div className="flex flex-wrap justify-center gap-2 text-center">
+            <Badge variant="secondary">{category.label}</Badge>
+            <Badge variant="secondary">{category.price.toFixed(2)} TND</Badge>
+          </div>
+        </CardContent>
+      </Card>
+    ))}
+  </div>
+</ScrollArea>
 
-                                <div className="grid grid-cols-6 gap-1  bg-gray-900/5">
-                                    {categories.map((category, index) => (
-                                      <Card onClick={() => handleCatClick (index , category )} 
-                                      key={index} className={cn("border w-48", selectedCat === index && "border-primary")}>
-                                        <CardContent className="flex flex-col items-center justify-center p-2">
-                                          <NextImage
-                                            width={900}
-                                            height={900}
-                                            src={category.value!} 
-                                            alt={category.label} 
-                                            className="mb-2" 
-                                            style={{ width: '100%', height: 'auto', objectFit: 'cover' }} 
-                                            onContextMenu={(e) => e.preventDefault()}
-                                            draggable={false}
-                                          />
-                                          <div className="flex flex-wrap justify-center gap-2">
-                                            <Badge variant="secondary">{category.label}</Badge>
-                                            <Badge variant="secondary">{category.price.toFixed(2)} TND</Badge>
-                                          </div>
-                                        </CardContent>
-                                      </Card>
-                                    ))}
-                                  </div>
 
                                 <SheetFooter>
                                   <SheetClose asChild>
@@ -1218,10 +1221,6 @@ const handleSortChange = (event: string) => {
 
                                 </Popover>
 
-                                <Link href="/MarketPlace/create-client-product/preview">
-                            <Button variant="link">See Order Preview</Button>
-                            </Link>
-
                                 </div>
 
                                 </>
@@ -1240,7 +1239,7 @@ const handleSortChange = (event: string) => {
 
                     {(addFrontDesign || addBackDesign) && (
 
-                    <Card x-chunk="dashboard-05-chunk-3" className={cn(' lg:rounded-2xl shadow-lg')}>
+                    <Card x-chunk="dashboard-05-chunk-3" className={cn(' lg:rounded-2xl shadow-lg max-h-max')}>
                     <CardHeader className="px-7 flex flex-col items-center justify-center">
 
                     <RadioGroup

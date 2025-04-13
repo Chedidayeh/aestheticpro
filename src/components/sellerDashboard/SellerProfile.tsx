@@ -1,7 +1,7 @@
 
 "use client"
 import NextImage from "next/image"
-import { UserRoundPlus, UserRoundX } from "lucide-react"
+import { UserRoundPlus, UserRoundX, UserX } from "lucide-react"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -85,7 +85,7 @@ const SellerProfile = ({ user } : {user : User})=>{
 
             <DropdownMenuItem>
         <Button onClick={()=>SignOutUser()} size={"sm"}  variant={"ghost"} className="flex justify-between items-center w-full">
-        Sign out                 <UserRoundX size={20} />
+        Sign out                 <UserX size={20} />
         </Button>
         </DropdownMenuItem>
           </>

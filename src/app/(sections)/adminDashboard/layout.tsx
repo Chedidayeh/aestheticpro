@@ -6,6 +6,7 @@ import NavBar from "@/components/adminDashboard/NavBar";
 
 import type { Metadata } from "next";
 import { getSideBarTotalCounts, getUser } from "@/actions/actions";
+import Redirecting from "@/components/Redirecting";
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
@@ -16,6 +17,10 @@ export const metadata: Metadata = {
 const Layout = async ({ children }: { children: ReactNode }) => {
   const totalCounts = await getSideBarTotalCounts();
   const user = await getUser()
+  
+  if(!user || user.userType !== "ADMIN"){
+    return <Redirecting/>
+  }
 
     return (
 

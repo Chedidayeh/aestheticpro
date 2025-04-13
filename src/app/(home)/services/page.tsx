@@ -6,12 +6,13 @@ import { Button } from '@/components/ui/button'
 import RedirectToCreateAffiliateAccount from '@/components/RedirectToCreateAffiliateAccount'
 import RedirectToCreateSellerProfile from '@/components/RedirectToCreateSellerProfile'
 import ProductListing from '@/components/MarketPlace/ProductListing'
-import { fetchTrendingProducts, getUser } from '@/actions/actions'
+import { fetchTrendingProducts, getPlatformForTheWebsite, getUser } from '@/actions/actions'
 import LoadingLink from '@/components/LoadingLink'
 
 
 const Page = async () => {
   const user = await getUser();
+  const platform = await getPlatformForTheWebsite()
 
   const trendingProducts = await fetchTrendingProducts()
 
@@ -36,7 +37,7 @@ const Page = async () => {
 
     <div className="mt-6">
       <LoadingLink href="/MarketPlace">
-        <Button className="px-4 py-3 text-sm font-semibold bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition">
+        <Button size={"sm"} className="px-4 py-3 text-sm font-semibold bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition">
           Start Shopping &rarr;
         </Button>
       </LoadingLink>
@@ -92,7 +93,7 @@ const Page = async () => {
     </p>
     <div className=''>
       <LoadingLink href="/MarketPlace">
-        <Button className="text-red-500" variant='link'>
+        <Button  className="text-red-500" variant='link'>
           Start Shopping Now &rarr;
         </Button>
       </LoadingLink>
@@ -118,7 +119,9 @@ const Page = async () => {
   </p>
 
   <div className="mt-6">
-      <RedirectToCreateSellerProfile />
+      <RedirectToCreateSellerProfile className='px-4 py-3 text-sm font-semibold bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 transition' href='/MarketPlace/create-seller-profile' >
+        Get Started &rarr;
+      </RedirectToCreateSellerProfile>
   </div>
 
   </div>
@@ -192,7 +195,11 @@ const Page = async () => {
 
 
 {/* Affiliate program section */}
-{/* <div className='py-10 mt-2 mx-auto flex flex-col w-[80%] rounded-2xl bg-center  border-2
+
+{!platform?.closeAffiliateProgram && (
+
+<>
+<div className='py-10 mt-2 mx-auto flex flex-col w-[80%] rounded-2xl bg-center  border-2
     bg-[url("/bgBanner.png")]'>
 
   <div className="text-center flex flex-col items-center">
@@ -208,7 +215,9 @@ const Page = async () => {
     </p>
 
     <div className="mt-6">
-    <RedirectToCreateAffiliateAccount />
+      <RedirectToCreateAffiliateAccount className='px-4 py-3 text-sm font-semibold bg-purple-600 text-white rounded-md shadow-md hover:bg-purple-700 transition' href='/createAffiliateAccount' >
+        Join Now &rarr;
+      </RedirectToCreateAffiliateAccount>
     </div>
   </div>
 
@@ -264,7 +273,10 @@ const Page = async () => {
       </LoadingLink>
     </div>
   </div>
-</section> */}
+</section>
+
+</>
+)}
 
     </>
   )

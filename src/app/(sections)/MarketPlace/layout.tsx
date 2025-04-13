@@ -30,19 +30,26 @@ const Layout = async ({ children }: { children: ReactNode }) => {
 
   return (
 
-          <div>
-            <TopBar platform={platform!} />
-            <HomeNavBar 
-            user={user!} 
-            platform={platform!} 
-            cartProductList={cartProductList}  
-            orders={orders} 
-            favListProducts={favListProducts}  
-            bestSellingProducts={bestSellingProducts ?? 0} />
-            <SearchBar/>
-            {children}
-            <Footer user={user!} platform={platform!} />
-           </div>
+      <div className="min-h-screen flex flex-col">
+        <TopBar platform={platform!} />
+        <HomeNavBar 
+          user={user!} 
+          platform={platform!} 
+          cartProductList={cartProductList}  
+          orders={orders} 
+          favListProducts={favListProducts}  
+          bestSellingProducts={bestSellingProducts ?? 0} 
+        />
+        <SearchBar />
+        
+        {/* Main content grows to fill available space */}
+        <main className="flex-grow">
+          {children}
+        </main>
+
+        <Footer user={user!} platform={platform!} />
+      </div>
+
 
   );
 }

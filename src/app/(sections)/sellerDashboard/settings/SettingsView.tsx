@@ -277,7 +277,7 @@ export default function SettingsView({store} : {store : Store}) {
             if (path) {
                 const user = await getUser();
                 const store = await getStoreByUserId(user!.id);
-                const res = await updateStoreLogo(store.id, path); // Update the logo path in the database
+                const res = await updateStoreLogo(store!.id, path); // Update the logo path in the database
 
                 if (res) {
                     toast({

@@ -149,11 +149,6 @@ const removeItem = async (cartProductId : string) =>{
   try {
     const result = await removeProductFromCart(cartProductId,user.id)
         if(result){
-        toast({
-          title: 'Product removed from cart !',
-          description: '',
-          variant: 'default',
-        });
         router.refresh()
         return
         }

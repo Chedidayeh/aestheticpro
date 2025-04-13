@@ -23,6 +23,7 @@ import BanUser from '@/components/BanUser';
 import CommissionsTable from '@/components/affiliateDashboard/CommissionsTable';
 import { Component } from '@/components/affiliateDashboard/AffiliateChart';
 import LoadingLink from "@/components/LoadingLink";
+import Redirecting from "@/components/Redirecting";
 
 
 
@@ -40,7 +41,9 @@ const Page =  async () => {
   const commissions = await getAllCommissionsByAffiliateId(affiliate!.id)
   const notifications = await getUnreadAffiliateNotifications(affiliate!.id)
 
-  if(!user) return
+  if(!user || !user.isAffiliate) {
+    <Redirecting/>
+   }
 
   return (
     <>

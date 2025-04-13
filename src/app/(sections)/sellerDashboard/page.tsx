@@ -34,6 +34,7 @@ import {
 import { Component } from '@/components/sellerDashboard/Chart';
 import { StoresTableStats } from '@/components/sellerDashboard/StoresTableStats';
 import LoadingLink from '@/components/LoadingLink';
+import Redirecting from '@/components/RedirectingToHomePage';
 
 
 
@@ -43,11 +44,8 @@ const Page =  async () => {
 
 
   const user = await getUser()
-  // if (user?.userType !== "SELLER") {
-  //   redirect("/")
-  // }
-  if(!user) return
   const store = await getStoreByUserId(user!.id!)
+  if (!store) return <Redirecting/>
   const notifications = await getUnreadNotificationsForStore(store.id)
   const followersCount = await getStoreFollowersCount(store!.id);
   const productsViewsCount = await getStoreProductsViewsCount(store!.id);
@@ -72,7 +70,7 @@ const Page =  async () => {
           </div>
       </div>
          {notifications.length > 0 && (
-         <Link href={"/sellerDashboard/notifications"}><Button variant={"link"}>You Have {notifications.length} unread notifications</Button></Link>
+         <LoadingLink href={"/sellerDashboard/notifications"}><Button variant={"link"}>You Have {notifications.length} unread notifications</Button></LoadingLink>
          )}
 
       <div className="flex flex-col items-center my-8">

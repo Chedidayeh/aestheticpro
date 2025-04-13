@@ -1,40 +1,48 @@
-
+import { OctagonAlert } from 'lucide-react';
+import { getUserPreOrders } from '../select-category/actions';
 import { getUserPreOrder } from './actions';
 import OrderPreview from './OrderPreview';
 import { getPlatformForTheWebsite, getUser } from '@/actions/actions';
 import ErrorState from '@/components/ErrorState';
-interface PageProps {
-    params: {
-      preOrderId: string
-    }
-  }
-const Page = async ({ params }: PageProps) => {
+import {
+    AlertDialog,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+  } from "@/components/ui/alert-dialog";
+import LoadingLink from '@/components/LoadingLink';
+import { Button } from '@/components/ui/button';
+import Redirecting from '@/components/Redirecting';
+type PageProps = {
+  searchParams: {
+    preOrderId?: string;
+  };
+};
 
+const Page = async ({ searchParams }: PageProps) => {
   try {
+
+    const user = await getUser();
+
+
+    if(!user){
+      return <Redirecting/>
+    }
+
+
+    const preOrderId = searchParams?.preOrderId || "";
+
+    const preOrder = await getUserPreOrder(preOrderId);
+    const platform = await getPlatformForTheWebsite();
+    const preOrders = await getUserPreOrders(user?.id!);
     
-
-
-    const { preOrderId } = params
-
-    const user = await getUser()
-
-    
-
-    const preOrder = await getUserPreOrder(preOrderId , user?.id!);
-
-    const platform  = await getPlatformForTheWebsite()
-
-
-
-    return  <OrderPreview preOrder={preOrder!} user={user!} platform={platform!} />
-
+    return <OrderPreview preOrder={preOrder} user={user!} platform={platform!} preOrders={preOrders} />;
   } catch (error) {
-    console.error(error)
-    return <ErrorState/>
-
-    
+    console.error(error);
+    return <ErrorState />;
   }
-
 };
 
 export default Page;

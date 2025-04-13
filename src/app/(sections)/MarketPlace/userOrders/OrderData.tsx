@@ -344,7 +344,7 @@ const OrderData = ({ordersData}: DesignViewProps) => {
           {/* order details */}
           {selectedOrder && (
             <>
-            <Card key={selectedOrder.id} className="overflow-hidden mb-4" >
+            <Card key={selectedOrder.id} className="overflow-hidden mb-4 max-h-max" >
               <CardHeader className="flex flex-row items-start bg-muted/50">
                 <div className="grid gap-0.5">
                   <CardTitle className="group hidden items-center gap-2 text-lg sm:flex">

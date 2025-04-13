@@ -13,7 +13,7 @@ export default async function Page() {
     noStore()
     const user = await getUser()
     const affiliateId = await getAffiliateIdByUserId(user!.id)
-    const notifications = await getAffiliateNotification(affiliateId)
+    const notifications = await getAffiliateNotification(affiliateId ? affiliateId : "")
 
   return (
     <>
