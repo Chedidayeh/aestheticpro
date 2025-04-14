@@ -36,14 +36,17 @@ const Page =  async () => {
 
 
   const user = await getUser()
-  const affiliate = await getAffiliateLinksAndCommissions(user!.id)
-  const affiliateStats  = await getAffiliateStats(user!.id)
-  const commissions = await getAllCommissionsByAffiliateId(affiliate!.id)
-  const notifications = await getUnreadAffiliateNotifications(affiliate!.id)
 
   if(!user || !user.isAffiliate) {
     <Redirecting/>
    }
+   
+  const affiliate = await getAffiliateLinksAndCommissions(user ? user.id : "")
+  const affiliateStats  = await getAffiliateStats(user!.id)
+  const commissions = await getAllCommissionsByAffiliateId(affiliate!.id)
+  const notifications = await getUnreadAffiliateNotifications(affiliate!.id)
+
+
 
   return (
     <>

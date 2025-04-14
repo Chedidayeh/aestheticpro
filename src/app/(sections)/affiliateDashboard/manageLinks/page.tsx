@@ -10,7 +10,7 @@ export default async function Page() {
     
     noStore()
     const user = await getUser()
-    const Links = await getAffiliateLinksForUser(user!.id)
+    const Links = await getAffiliateLinksForUser(user ? user.id : "")
     const platform = await getPlatformForTheWebsite()
 
   return (

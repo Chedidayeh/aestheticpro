@@ -12,15 +12,12 @@ const Page = async () => {
     const user = await getUser()
     
 
-    const preOrders = await getUserPreOrders(user?.id!);
+    const preOrders = await getUserPreOrders(user ? user.id : "");
 
 
     const categories = await getAllCategories()
 
-     
-
-    
-  
+       
 
   return (
 

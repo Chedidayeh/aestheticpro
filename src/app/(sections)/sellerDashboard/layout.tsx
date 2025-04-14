@@ -18,11 +18,14 @@ export const metadata: Metadata = {
 
 const Layout = async ({ children }: { children: ReactNode }) => {
    const user = await getUser()
-   const store = await getStoreByUserId(user ?user.id : "")
-   const notifications = await getUnreadNotificationsForStore(store ? store.id : "")
+
    if(!user || user.userType !== "SELLER"){
       return <Redirecting/>
    }
+   
+   const store = await getStoreByUserId(user ?user.id : "")
+   const notifications = await getUnreadNotificationsForStore(store ? store.id : "")
+
     return (
          <div className="grid min-h-screen w-full xl:grid-cols-[230px_1fr]">
          <BanUser user={user!} />
