@@ -2,16 +2,11 @@ import type { Metadata } from "next";
 import { Recursive } from "next/font/google";
 import "../globals.css";
 import Footer from "@/components/Footer";
-import { Toaster } from "@/components/ui/toaster";
-import Providers from "@/components/Providers";
-import { StoreProvider } from "@/store/StoreProvider";
-import { ThemeProvider } from "@/components/theme-provider";
 import { ReactNode } from "react";
 import HomeNavBar from "@/components/HomeNavBar";
 import TopBar from "@/components/TopBar";
 import { fetchCartProductCount, getPlatformForTheWebsite, getUser, getUserOrders } from "@/actions/actions";
 import { countBestSellingProducts, getUserFavoriteListProductsCount } from "../(sections)/MarketPlace/BestSelling/actions";
-import Redirecting from "@/components/Redirecting";
 
 const recursive = Recursive({ subsets: ["latin-ext"] });
 
@@ -43,6 +38,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
     orders={orders} 
     favListProducts={favListProducts}  
     bestSellingProducts={bestSellingProducts ?? 0} />
+
         <main className="flex-grow">
           {children}
         </main>    

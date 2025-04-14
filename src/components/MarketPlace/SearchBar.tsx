@@ -78,7 +78,7 @@ const SearchBar = () => {
   }, []);
 
   return (
-    <nav className='sticky  h-14 inset-x-0 top-0 w-full  backdrop-blur-lg transition-all'>
+    <nav className='h-14 inset-x-0 top-0 w-full  backdrop-blur-lg transition-all'>
       <MaxWidthWrapper>
         <>
           <AlertDialog open={isPending}>

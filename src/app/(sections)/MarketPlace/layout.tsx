@@ -4,7 +4,6 @@ import Footer from "@/components/Footer";
 import { ReactNode } from "react";
 import TopBar from "@/components/TopBar";
 import { Metadata } from "next";
-import Navbar from "@/components/HomeNavBar";
 import { fetchCartProductCount, getPlatformForTheWebsite, getUser, getUserOrders } from "@/actions/actions";
 import { countBestSellingProducts, getUserFavoriteListProductsCount } from "./BestSelling/actions";
 import HomeNavBar from "@/components/HomeNavBar";
@@ -32,14 +31,13 @@ const Layout = async ({ children }: { children: ReactNode }) => {
 
       <div className="min-h-screen flex flex-col">
         <TopBar platform={platform!} />
-        <HomeNavBar 
-          user={user!} 
-          platform={platform!} 
-          cartProductList={cartProductList}  
-          orders={orders} 
-          favListProducts={favListProducts}  
-          bestSellingProducts={bestSellingProducts ?? 0} 
-        />
+    <HomeNavBar 
+    user={user!} 
+    platform={platform!} 
+    cartProductList={cartProductList}  
+    orders={orders} 
+    favListProducts={favListProducts}  
+    bestSellingProducts={bestSellingProducts ?? 0} />
         <SearchBar />
         
         {/* Main content grows to fill available space */}

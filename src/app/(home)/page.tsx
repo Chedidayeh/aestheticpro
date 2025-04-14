@@ -36,9 +36,9 @@ export default async function Page() {
     <>
 
 
-    <div className='pt-8 mx-auto text-center flex  flex-col w-full items-center'>
-      <p className='text-md max-w-prose  text-muted-foreground'>
-       Powered by Tunisian's most talented designers ✨
+    <div className='pt-4 mx-auto text-center flex  flex-col w-full items-center'>
+      <p className='text-sm max-w-prose  text-muted-foreground'>
+       AestheticPro. Powered by Tunisian's most talented designers ✨
       </p>
     </div>
 

@@ -1,37 +1,16 @@
 import NextImage from 'next/image'
-import { DialogClose } from '@/components/ui/dialog'
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import MaxWidthWrapper from './MaxWidthWrapper'
-import { buttonVariants } from './ui/button'
-import { AppWindow, CircleDollarSign, Handshake, Heart, Home, LayoutPanelLeft, Menu, Shirt, ShoppingBasket, ShoppingCart, Store as St, UserRoundX } from 'lucide-react'
-import { Button } from "@/components/ui/button"
-import { fetchCartProductCount, getAllProductsCategories, getUser, getUserOrders } from '@/actions/actions'
+import { Button, buttonVariants } from './ui/button'
+import { Building2, CircleDollarSign, Handshake, Heart, Home, Mail, Menu, ShoppingBasket, ShoppingCart, Store as St } from 'lucide-react'
 import UserProfile from './UserProfile'
 import { ModeToggle } from './ModeToggle'
-import { db } from '@/db'
-import { getUserFavoriteList } from '@/app/(sections)/MarketPlace/favList/actions'
-import { countBestSellingProducts } from '@/app/(sections)/MarketPlace/BestSelling/actions'
 import LoadingLink from './LoadingLink'
 import ErrorState from './ErrorState'
-import { cn } from "@/lib/utils"
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu"
 import React from 'react'
-import Link from 'next/link'
-import { FavList, Order, OrderItem, Platform, Product, Store, User } from '@prisma/client'
+import { Order, OrderItem, Platform, User } from '@prisma/client'
+import { Separator } from './ui/separator'
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
+import { FaFacebook, FaInstagram } from 'react-icons/fa'
 
 
 
@@ -54,12 +33,16 @@ const Navbar = (
   return (
     <nav className='sticky z-[50] h-14 inset-x-0 top-0 w-full  backdrop-blur-lg transition-all'>
       <MaxWidthWrapper>
-        <div className='flex h-14 items-center justify-between'>
+        <div className='lg:flex hidden h-14 items-center justify-between'>
+          
+          
           {/* Logo */}
+          
+          
           <LoadingLink href="/">
           <div
             style={{ width: '40px', height: '40px' }}
-            className="hidden xl:block h-full xl:right-0 sm:items-center"
+            className="h-full xl:right-0 sm:items-center"
           >
             <NextImage
               src="/aestheticpro.png"
@@ -72,91 +55,8 @@ const Navbar = (
           </LoadingLink>
 
 
-
-
-          {/* Hamburger Icon for Small Devices */}
-          <Sheet>
-            <SheetTrigger className="flex xl:hidden">
-            <Button variant="outline" size="icon" className="shrink-0">
-            <Menu className="h-5 w-5" />
-          </Button>            
-          </SheetTrigger>
-            <SheetContent side="top" className='w-full'>
-              {/* Middle Section for small devices */}
-              <div className='flex justify-center items-center flex-col space-y-4 mt-16'>
-                <DialogClose>
-                <LoadingLink href="/" className={buttonVariants({
-                  size: 'sm',
-                  variant: 'outline',
-                  className: "hover:text-blue-500"
-                })}>
-                  <Home size={15} className='mr-1' />
-                  Home
-                </LoadingLink>
-                </DialogClose>
-
-                <DialogClose>
-                <LoadingLink href="/MarketPlace" className={buttonVariants({
-              size: 'sm',
-              variant: 'outline',
-              className: "hover:text-yellow-500"
-            })}>
-              <St size={15} className='mr-1' />
-              MarketPlace ✨
-            </LoadingLink>
-                </DialogClose>
-
-                {bestSellingProducts > 0 && (
-                <DialogClose>
-                <LoadingLink href="/MarketPlace/BestSelling" className={buttonVariants({
-              size: 'sm',
-              variant: 'outline',
-              className: "hover:text-green-500"
-            })}>
-              <CircleDollarSign size={15} className='mr-1' />
-              Best Selling
-            </LoadingLink>
-                </DialogClose>
-              )}
-
-          {/* <DialogClose>
-                <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button size="sm" variant="outline" className="hover:text-purple-500">
-                    <Shirt size={15} className="mr-1" />
-                    Categories
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-40 mt-1 ml-4 flex flex-col">
-                {categories && categories.length > 0 ? (
-                    categories.map((category) => (
-                      <LoadingLink key={String(category)}
-                        href={`/MarketPlace/category/${category}`} className={buttonVariants({
-                        size: 'sm',
-                        variant: 'ghost',
-                        })}>{category}
-                        </LoadingLink>
-                    ))
-                  ) : (
-                    <DropdownMenuItem disabled>No data for now!</DropdownMenuItem>
-                  )}
-                </DropdownMenuContent>
-              </DropdownMenu>
-
-                </DialogClose>    */}
-                
-                <DialogClose>
-                  <Button variant={"outline"} size={"sm"} >                 
-                    <ModeToggle/>
-                  </Button>
-                  </DialogClose>            
-                
-              </div>
-            </SheetContent>
-          </Sheet>
-
           {/* Middle Section */}
-          <div className='hidden xl:flex h-full left-0 items-center space-x-8'>
+          <div className='flex h-full left-0 items-center lg:space-x-4 xl:space-x-8'>
 
 
           <LoadingLink href="/" className={buttonVariants({
@@ -175,7 +75,7 @@ const Navbar = (
               className: "hover:text-yellow-500"
             })}>
               <St size={15} className='mr-1' />
-              MarketPlace ✨
+              MarketPlace
             </LoadingLink>
 
             {/* {bestSellingProducts! > 0 && (
@@ -267,18 +167,42 @@ const Navbar = (
           </div>
 
                     {/* Right Section */}
-            <div className='hidden xl:flex items-center space-x-1'>       
+            <div className='flex items-center space-x-1'>       
                  {/* User Profile */}
             <UserProfile user={user!} platform={platform!} />
             <ModeToggle/>
           </div>
 
-          {/* Logo visible only in small and medium devices */}
 
+
+        </div>
+
+
+        {/* mobile */}
+
+        <div className='flex lg:hidden h-14 items-center justify-between'>
+          
+          {/* side bar */}
+          <div className="flex justify-start items-start">
+          <Sheet>
+            <SheetTrigger >
+            <Button variant="outline" size="icon" className="shrink-0">
+            <Menu className="h-5 w-5" />
+          </Button>            
+          </SheetTrigger>
+            <SheetContent side="left" className='w-[70%] h-full'>
+
+              
+
+              <div className='flex items-center gap-6'>
+
+                {/* logo */}
+
+              <LoadingLink href="/">
           <div
-            style={{ width: '35px', height: '35px' }}
-            className="block xl:hidden h-full"
-            >
+            style={{ width: '50px', height: '50px' }}
+            className="h-full xl:right-0 sm:items-center"
+          >
             <NextImage
               src="/aestheticpro.png"
               width={1000}
@@ -287,11 +211,181 @@ const Navbar = (
               draggable={false}
             />
           </div>
+          </LoadingLink>
+
+          {/* text */}
+          <div className='text-sm  font-semibold'>
+          <LoadingLink href="/">
+            <p>Aesthetic Pro</p>
+            <p>Platform ✨</p>
+            </LoadingLink>
+          </div>
+
+              </div>
 
 
 
-          {/* User Profile for small devices */}
-          <div className='flex xl:hidden items-center space-x-2'>
+
+
+
+
+
+              
+ 
+
+              <Separator className='w-full my-4'/>
+
+              <div className='flex flex-col space-y-2'>
+
+
+              <LoadingLink href="/">
+              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+                <Home size={15} className="mr-1 group-hover:text-blue-500" />
+                <span className="group-hover:text-blue-500">Home</span>
+              </div>
+            </LoadingLink>
+
+            <LoadingLink href="/MarketPlace">
+              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+                <St size={15} className="mr-1 group-hover:text-yellow-500" />
+                <span className="group-hover:text-yellow-500">MarketPlace</span>
+              </div>
+            </LoadingLink>
+
+
+            <LoadingLink href="/services">
+              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+                <Handshake size={15} className="mr-1 group-hover:text-purple-500" />
+                <span className="group-hover:text-purple-500">Services</span>
+              </div>
+            </LoadingLink>
+
+
+            {bestSellingProducts > 0 && (
+
+
+            
+            <LoadingLink href="/MarketPlace/BestSelling">
+              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+                <CircleDollarSign size={15} className="mr-1 group-hover:text-green-500" />
+                <span className="group-hover:text-green-500">Best Selling</span>
+              </div>
+            </LoadingLink>
+
+            )}
+
+              </div>
+
+
+              <Separator className='w-full my-4'/>
+
+
+              <div className='flex flex-col space-y-2'>
+
+
+              <LoadingLink href="/MarketPlace/favList">
+              <div className="group text-sm relative border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+                <Heart size={15} className="mr-1 group-hover:text-red-500" />
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">
+                              {favListProducts > 9 ? '9+' : favListProducts ?? 0}
+                              </span>
+                <span className="group-hover:text-red-500">Fav List</span>
+              </div>
+              </LoadingLink>
+
+              <LoadingLink href="/MarketPlace/cart">
+              <div className="group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+                <ShoppingCart size={15} className="mr-1 group-hover:text-blue-500" />
+                <span className="absolute -top-1 -right-1 bg-blue-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">                
+                  {cartProductList > 9 ? '9+' : cartProductList ?? 0}
+                </span>
+                <span className="group-hover:text-blue-500">Cart</span>
+              </div>
+              </LoadingLink>
+
+
+              <LoadingLink href="/MarketPlace/userOrders">
+              <div className="group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+                <ShoppingBasket size={15} className="mr-1 group-hover:text-green-500" />
+                <span className="absolute -top-1 -right-1 bg-green-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">
+                  {orders?.length > 9 ? '9+' : orders?.length ?? 0}
+                </span>
+                <span className="group-hover:text-green-500">Your Orders</span>
+              </div>
+              </LoadingLink>
+
+
+              </div>
+
+
+              <Separator className='w-full my-4'/>
+
+
+              <div className='flex flex-col space-y-2'>
+
+
+          <LoadingLink href="/about">
+          <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+            <Building2 size={15} className="mr-1 group-hover:text-blue-500" />
+            <span className="group-hover:text-blue-500">About Us</span>
+          </div>
+          </LoadingLink>
+
+          <LoadingLink href="/contact">
+          <div className="group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+            <Mail size={15} className="mr-1 group-hover:text-rose-500" />
+            <span className="group-hover:text-rose-500">Contact</span>
+          </div>
+          </LoadingLink>
+
+          </div>
+
+
+
+          <Separator className='w-full my-4'/>
+
+ 
+
+
+            {/* bottom section */}
+          {/* <div className="flex items-end justify-end ">
+            <div className='flex items-center justify-center gap-2'>
+            <p className='text-sm font-medium'>
+            Toggle Mode :
+            </p>
+            <div className='border max-w-max rounded-lg'>
+            <ModeToggle/>
+            </div>
+            </div>
+            </div> */}
+
+
+
+
+
+            <div className='flex justify-center items-center '>
+          <div className="text-muted-foreground text-sm font-semibold flex flex-row items-center justify-center gap-2">
+          Social Media:
+          <div className="flex gap-3 mb-1">
+          <LoadingLink href={"https://www.facebook.com/profile.php?id=61564936846426"} className='border-1 rounded-full bg-white'>
+          <FaFacebook className="text-2xl cursor-pointer hover:text-blue-600 text-blue-600" />
+          </LoadingLink>
+          <LoadingLink href={"https://www.instagram.com/aestheticpro.tn/"}  className='border-1 rounded-lg bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600'>
+          <FaInstagram className="text-2xl cursor-pointer text-white" />
+          </LoadingLink>
+          </div>
+          </div>
+          </div>
+          
+            </SheetContent>
+          </Sheet>
+          </div>
+
+
+          {/* links */}
+          <div className='flex items-center space-x-2'>
+
+                      
           <LoadingLink href="/MarketPlace/favList" className={buttonVariants({
               size: 'sm',
               variant: 'ghost',
@@ -322,10 +416,17 @@ const Navbar = (
               {orders?.length > 9 ? '9+' : orders?.length ?? 0}
                 </span>
             </LoadingLink>
+          </div>
+
+
+          {/* User Profile for small devices */}
+          <div className='flex items-center space-x-1'>
             <UserProfile user={user!} platform={platform!} />
+            <ModeToggle/>
           </div>
 
         </div>
+        
       </MaxWidthWrapper>
     </nav>
   )
