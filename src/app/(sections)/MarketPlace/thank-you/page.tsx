@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 import NextImage from 'next/image'
-import { getOrder } from '@/actions/actions'
+import {getUser } from '@/actions/actions'
 import LoadingLink from '@/components/LoadingLink'
 import ThankYouPage from './ThankYou'
 import ErrorState from '@/components/ErrorState'
+import { getOrder } from './actions'
 
 interface PageProps {
   searchParams: {
@@ -19,15 +20,15 @@ const Page = async ({
     
 
   const {orderId} = searchParams
+  const user = await getUser()
     
-  const order = await getOrder(orderId!)
+  const order = await getOrder(orderId! , user ? user.id : "")
   
 
 
   return (
 
     <>
-
     <ThankYouPage order={order} />
     </>
   )

@@ -26,20 +26,13 @@ export default async function Page() {
     
 
   const user = await getUser()
-    const platform = await getPlatformForTheWebsite()
-    const limit = platform!.productsLimitPerPage;
-  const page = 1; // Initial page
-  const priceRanges = await fetchPriceRanges(user?.id ?? "")
-  const { products, totalCount }  = await getFollowedStoreProductsFirst(user!.id , page ,limit);
-  const categories = await getAllProductsCategories()
-  const collections = await getAllProductCollectionNames()
 
   if(!user) {
     return (
       <AlertDialog open={true} >
       <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
       <AlertDialogHeader className="flex flex-col items-center">
-          <div className="text-red-500 mb-2">
+      <div className="text-gray-500 mb-2">
               <OctagonAlert className=''/>
           </div>
           <AlertDialogTitle className="text-xl font-bold text-center">
@@ -48,15 +41,33 @@ export default async function Page() {
           <AlertDialogDescription>
               Log In to view this page !
             </AlertDialogDescription>
-            <LoadingLink  href="/auth/sign-in" ><Button size={"sm"} variant="default">
-            Log In
+
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+        <LoadingLink href="/">
+        <Button size={"sm"} variant={"outline"} className="">
+        &larr; Return Home
+          </Button>
+          </LoadingLink>
+          <LoadingLink  href="/auth/sign-in" ><Button size={"sm"} variant="default">
+            Log In &rarr;
               </Button>
               </LoadingLink>
-          </AlertDialogHeader>
+        </AlertDialogFooter>
       </AlertDialogContent>
   </AlertDialog>
     )
   }
+
+  const platform = await getPlatformForTheWebsite()
+  const limit = platform!.productsLimitPerPage;
+  const page = 1; // Initial page
+  const priceRanges = await fetchPriceRanges(user?.id ?? "")
+  const { products, totalCount }  = await getFollowedStoreProductsFirst(user!.id , page ,limit);
+  const categories = await getAllProductsCategories()
+  const collections = await getAllProductCollectionNames()
+
+
   
   return (
     <>

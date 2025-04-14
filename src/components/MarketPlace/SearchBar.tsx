@@ -64,21 +64,26 @@ const SearchBar = () => {
     }
   };
 
+
+useEffect(() => {
   const handleClickOutside = (event: MouseEvent) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-      setData([]);
+      setData([]); // Clear dropdown
     }
   };
 
-  useEffect(() => {
+  if (data.length > 0 && searchQuery !== "") {
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  }
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, [data, searchQuery]);
+
 
   return (
-    <nav className='h-14 inset-x-0 top-0 w-full  backdrop-blur-lg transition-all'>
+    <nav className='h-14 inset-x-0 z-[40] top-0 w-full  backdrop-blur-lg transition-all'>
       <MaxWidthWrapper>
         <>
           <AlertDialog open={isPending}>
@@ -102,13 +107,13 @@ const SearchBar = () => {
           <div className='flex gap-2 items-center justify-center mt-2'>
             <Input
               type="search"
-              className="w-[500px] border-2 border-blue-500"
+              className="w-[500px] rounded-xl border-2 border-blue-500"
               placeholder="Search for products..."
               value={searchQuery}
               onChange={handleChange}
               onKeyPress={handleKeyPress}
             />
-            <Button disabled={searchQuery === ""} onClick={handleSearch} className="bg-blue-600 text-white px-4 py-2 rounded">
+            <Button disabled={searchQuery === ""} onClick={handleSearch} className="bg-blue-600 text-white px-4 py-2 rounded-xl">
               Search
               <Search size={14} className='ml-1' />
             </Button>
@@ -126,7 +131,7 @@ const SearchBar = () => {
 
           {searchQuery !== '' && data.length > 0 && (
             <div ref={dropdownRef} className="flex items-center justify-center">
-              <ul className="bg-gray-50 border text-gray-800 w-[100%] md:w-[80%] lg:w-[58%] xl:w-[55%] border-gray-300 mt-2 rounded-2xl shadow-lg">
+            <ul className="bg-gray-50 border text-gray-800 w-[100%] md:w-[80%] lg:w-[58%] xl:w-[55%] border-gray-300 mt-2 rounded-xl shadow-lg">
                 {data.map((option, index) => (
                   <li
                     key={index}

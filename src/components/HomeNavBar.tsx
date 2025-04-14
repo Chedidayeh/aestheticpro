@@ -239,26 +239,21 @@ const Navbar = (
 
 
               <LoadingLink href="/">
-              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
                 <Home size={15} className="mr-1 group-hover:text-blue-500" />
                 <span className="group-hover:text-blue-500">Home</span>
               </div>
             </LoadingLink>
 
             <LoadingLink href="/MarketPlace">
-              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
                 <St size={15} className="mr-1 group-hover:text-yellow-500" />
                 <span className="group-hover:text-yellow-500">MarketPlace</span>
               </div>
             </LoadingLink>
 
 
-            <LoadingLink href="/services">
-              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
-                <Handshake size={15} className="mr-1 group-hover:text-purple-500" />
-                <span className="group-hover:text-purple-500">Services</span>
-              </div>
-            </LoadingLink>
+   
 
 
             {bestSellingProducts > 0 && (
@@ -266,13 +261,22 @@ const Navbar = (
 
             
             <LoadingLink href="/MarketPlace/BestSelling">
-              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
                 <CircleDollarSign size={15} className="mr-1 group-hover:text-green-500" />
                 <span className="group-hover:text-green-500">Best Selling</span>
               </div>
             </LoadingLink>
 
             )}
+
+
+
+            <LoadingLink href="/services">
+              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
+                <Handshake size={15} className="mr-1 group-hover:text-purple-500" />
+                <span className="group-hover:text-purple-500">Services</span>
+              </div>
+            </LoadingLink>
 
               </div>
 
@@ -284,7 +288,7 @@ const Navbar = (
 
 
               <LoadingLink href="/MarketPlace/favList">
-              <div className="group text-sm relative border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+              <div className="group text-sm relative border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
                 <Heart size={15} className="mr-1 group-hover:text-red-500" />
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">
                               {favListProducts > 9 ? '9+' : favListProducts ?? 0}
@@ -294,7 +298,7 @@ const Navbar = (
               </LoadingLink>
 
               <LoadingLink href="/MarketPlace/cart">
-              <div className="group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+              <div className="group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
                 <ShoppingCart size={15} className="mr-1 group-hover:text-blue-500" />
                 <span className="absolute -top-1 -right-1 bg-blue-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">                
                   {cartProductList > 9 ? '9+' : cartProductList ?? 0}
@@ -305,7 +309,7 @@ const Navbar = (
 
 
               <LoadingLink href="/MarketPlace/userOrders">
-              <div className="group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+              <div className="group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
                 <ShoppingBasket size={15} className="mr-1 group-hover:text-green-500" />
                 <span className="absolute -top-1 -right-1 bg-green-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">
                   {orders?.length > 9 ? '9+' : orders?.length ?? 0}
@@ -325,14 +329,14 @@ const Navbar = (
 
 
           <LoadingLink href="/about">
-          <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+          <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
             <Building2 size={15} className="mr-1 group-hover:text-blue-500" />
             <span className="group-hover:text-blue-500">About Us</span>
           </div>
           </LoadingLink>
 
           <LoadingLink href="/contact">
-          <div className="group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-600/50">
+          <div className="group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
             <Mail size={15} className="mr-1 group-hover:text-rose-500" />
             <span className="group-hover:text-rose-500">Contact</span>
           </div>

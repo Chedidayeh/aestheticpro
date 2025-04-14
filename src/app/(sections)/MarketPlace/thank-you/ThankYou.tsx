@@ -3,7 +3,6 @@
 'use client'
 
 import NextImage from 'next/image'
-import { getOrder } from '@/actions/actions'
 import LoadingLink from '@/components/LoadingLink'
 import { Order } from '@prisma/client'
 import { useEffect, useState } from 'react'

@@ -1,12 +1,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable @next/next/no-img-element */
 /* eslint-disable react/no-unescaped-entities */
-import {
-  Avatar,
-  AvatarImage,
-} from "@/components/ui/avatar"
-import { redirect, useRouter } from 'next/navigation'
-import { Loader, MousePointerClick, OctagonAlert, RocketIcon } from 'lucide-react'
+import { OctagonAlert } from 'lucide-react'
 import {
   AlertDialog,
   AlertDialogContent,
@@ -19,9 +14,8 @@ import React from "react"
 import { getPlatformForTheWebsite, getUser } from "@/actions/actions"
 import CreateStoreView from "./createStoreView"
 import LoadingLink from "@/components/LoadingLink";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import RedirectToCreateSellerProfile from "@/components/RedirectToCreateSellerProfile";
-import Link from "next/link";
 
 
 
@@ -46,9 +40,14 @@ const Page = async () => {
         </AlertDialogDescription>
       </AlertDialogHeader>
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center gap-2">
+      <LoadingLink href="/">
+        <Button size={"sm"} variant={"outline"} className="">
+        &larr; Return Home
+          </Button>
+          </LoadingLink>
         <RedirectToCreateSellerProfile className="text-white" href="/auth/sign-in">
-          login
+          login &rarr;
         </RedirectToCreateSellerProfile>
       </div>
     </AlertDialogContent>
@@ -73,9 +72,14 @@ const Page = async () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <Link className="text-right" href="/sellerDashboard">
+        <LoadingLink href="/">
+        <Button size={"sm"} variant={"outline"} className="">
+        &larr; Return Home
+          </Button>
+          </LoadingLink>
+          <LoadingLink className="text-right" href="/sellerDashboard">
             <Button className='bg-blue-500 hover:bg-blue-500 text-white' size={"sm"} variant="default">Go to dashboard &rarr;</Button>
-          </Link>
+          </LoadingLink>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
@@ -98,9 +102,9 @@ const Page = async () => {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <Link className="text-right" href="/">
-                  <Button className='bg-red-500 hover:bg-red-500 text-white' size={"sm"} variant="default">Return &rarr;</Button>
-                </Link>
+                <LoadingLink className="text-right" href="/">
+                  <Button className='bg-red-500 hover:bg-red-500 text-white' size={"sm"} variant="default">&larr; Return</Button>
+                </LoadingLink>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>

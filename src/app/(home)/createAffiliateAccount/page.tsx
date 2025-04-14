@@ -44,9 +44,14 @@ const Page = async () => {
         </AlertDialogDescription>
       </AlertDialogHeader>
 
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center gap-2">
+        <LoadingLink href="/">
+        <Button size={"sm"} variant={"outline"} className="">
+        &larr; Return Home
+          </Button>
+          </LoadingLink>
         <RedirectToCreateAffiliateAccount className="text-white" href="/auth/sign-in">
-          login
+          login &rarr;
         </RedirectToCreateAffiliateAccount>
       </div>
     </AlertDialogContent>
@@ -70,6 +75,11 @@ const Page = async () => {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
+        <LoadingLink href="/">
+        <Button size={"sm"} variant={"outline"} className="">
+        &larr; Return Home
+          </Button>
+          </LoadingLink>
           <Link className="text-right" href="/affiliateDashboard">
             <Button className='bg-blue-500 hover:bg-blue-500 text-white' size={"sm"} variant="default">Go to dashboard &rarr;</Button>
           </Link>
@@ -96,7 +106,7 @@ const Page = async () => {
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <Link className="text-right" href="/">
-                  <Button className='bg-red-500 hover:bg-red-500 text-white' size={"sm"} variant="default">Return &rarr;</Button>
+                  <Button className='bg-red-500 hover:bg-red-500 text-white' size={"sm"} variant="default">&larr; Return </Button>
                 </Link>
               </AlertDialogFooter>
             </AlertDialogContent>

@@ -2,7 +2,7 @@
 
 import { auth } from "@/auth";
 import { db } from "@/db"
-import { Order, OrderItem, Product, SellerDesign, Store, UserType } from "@prisma/client";
+import { Order, OrderItem, Product, SellerDesign, Store } from "@prisma/client";
 
 
 export async function getReportData() {
@@ -608,24 +608,7 @@ export async function getAllOrder(){
       }
     }
 
-  // get order by orderId 
-  export async function getOrder(orderId: string): Promise<Order | null> {
-    try {
-      const order = await db.order.findUnique({
-        where: {
-          id: orderId,
-        },
-        include: {
-          user: true, // Include the user relation
-          orderItems: true // Include the orderItems relation
-        },
-      });
-        return order
-        } catch (error) {
-          console.log(error)
-          return null
-        }
-      }
+
 
 
 // return the products of the given ids
