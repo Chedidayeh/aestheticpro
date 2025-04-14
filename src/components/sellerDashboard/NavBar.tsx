@@ -303,6 +303,9 @@ const NavBar = ({user , notifications , storeName} : {user : User , notification
       </div>
 
 
+      <div className='flex items-center space-x-2'>       
+      <ModeToggle/>
+
 
       <DropdownMenu>
   <DropdownMenuTrigger asChild>
@@ -348,11 +351,10 @@ const NavBar = ({user , notifications , storeName} : {user : User , notification
   </DropdownMenuContent>
 </DropdownMenu>
 
-      <ModeToggle/>
-
-      {/* user Image */}
 
     <SellerProfile user={user!}/>
+
+    </div>
 
     </header>
   );

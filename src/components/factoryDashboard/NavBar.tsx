@@ -29,6 +29,8 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+     
+     
       <Sheet>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 md:hidden">
@@ -117,11 +119,18 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
 
         </SheetContent>
       </Sheet>
+
+
       <div className="w-full flex-1">
 
-      </div>
+</div>
+
+<div className='flex items-center space-x-2'>       
+
       <ModeToggle/>
       <Profile user={user!}/>
+
+      </div>
     </header>
   );
 };

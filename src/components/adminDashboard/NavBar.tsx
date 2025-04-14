@@ -303,13 +303,21 @@ interface Count {
 
         </SheetContent>
       </Sheet>
+      
       <div className="w-full flex-1">
 
       </div>
 
+
+      <div className='flex items-center space-x-2'>       
+
       <ModeToggle/>
 
       <AdminProfile user={user!}/>
+
+      </div>
+
+
 
     </header>
   );

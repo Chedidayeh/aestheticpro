@@ -420,9 +420,9 @@ const Navbar = (
 
 
           {/* User Profile for small devices */}
-          <div className='flex items-center space-x-1'>
+          <div className='flex items-center space-x-2'>
+          <ModeToggle/>
             <UserProfile user={user!} platform={platform!} />
-            <ModeToggle/>
           </div>
 
         </div>

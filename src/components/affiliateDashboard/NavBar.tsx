@@ -243,6 +243,11 @@ import LoadingLink from "../LoadingLink"
       <div className="w-full flex-1">
 
       </div>
+
+      <div className='flex items-center space-x-2'>       
+
+      <ModeToggle/>
+
       <DropdownMenu>
   <DropdownMenuTrigger asChild>
     <Button variant="secondary" size="icon" className="rounded-full">
@@ -283,11 +288,16 @@ import LoadingLink from "../LoadingLink"
   </DropdownMenuContent>
 </DropdownMenu>
 
-      <ModeToggle/>
 
       {/* user Image */}
 
+
+
     <Profile user={user!}/>
+
+    </div>
+
+
 
     </header>
   );

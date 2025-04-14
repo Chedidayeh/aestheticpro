@@ -106,7 +106,7 @@ const CommissionsTable: React.FC<CommissionsTableProps> = ({ commissions, affili
             <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center mt-2">
         <Input
               type="search"
-              className='w-[400px]'
+              className='md:w-[400px] w-full'
               placeholder="Search by Commission Id , Link Id or Product title..."
               onChange={handleSearchChange}
               value={searchTerm}
