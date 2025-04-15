@@ -32,7 +32,6 @@ export default async function Page() {
     
     const count = await getTotalCounts()
     const platform = await getPlatformForTheWebsite()
-    const chartData = await getStoreStats();
 
   return (
     <>
@@ -118,7 +117,7 @@ export default async function Page() {
     <div className='flex flex-col space-y-5'>
     <Component />
     <ProductsViewsChart/>
-    <StoresTableStats chartData= {chartData} />
+    <StoresTableStats />
 
     </div>
 

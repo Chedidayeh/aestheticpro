@@ -283,7 +283,7 @@ const [open, setOpen] = useState<boolean>(false);
       </div>
   </CardHeader>
   <CardContent>
-    {SellerDesignsData.length === 0 && (
+    {SellerDesignsData.length === 0 ? (
       <>
       <div className="flex mt-2 items-center justify-center flex-col text-muted-foreground">
         <h1 className="text-center text-3xl font-bold">
@@ -294,19 +294,18 @@ const [open, setOpen] = useState<boolean>(false);
 
       </div>
       </>
-    )}
-
-    {filteredDesigns.length === 0 && SellerDesignsData.length != 0 ? (
+    ) : (
       <>
+          {filteredDesigns.length === 0 ? (
       <div className="flex mt-2 items-center justify-center flex-col text-muted-foreground">
         <h1 className="text-center text-3xl font-bold">
           <CircleAlert />
         </h1>
         <p className="text-center text-sm mt-2">No designs found by that name !</p>
       </div>
-      </>
+      
     ) : (
-      <>
+    
         <ScrollArea className="h-[984px] w-full ">
         <div className='relative mt-5 grid grid-cols-1 mb-20 pb-20 p-2'>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 xl:grid-cols-4 md:grid-cols-3">
@@ -497,8 +496,12 @@ const [open, setOpen] = useState<boolean>(false);
           </div>
         </div>
         </ScrollArea>
+    
+    )}
       </>
     )}
+
+
   </CardContent>
   <CardFooter className='relative flex flex-col items-center justify-center' />
 </Card>

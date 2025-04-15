@@ -1,3 +1,5 @@
+'use client'
+
 import NextImage from 'next/image'
 import MaxWidthWrapper from './MaxWidthWrapper'
 import { Button, buttonVariants } from './ui/button'
@@ -11,6 +13,7 @@ import { Order, OrderItem, Platform, User } from '@prisma/client'
 import { Separator } from './ui/separator'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { FaFacebook, FaInstagram } from 'react-icons/fa'
+import Link from 'next/link'
 
 
 
@@ -26,7 +29,15 @@ const Navbar = (
 
   try {
     
-
+    const handleFacebookIconClick = () => {
+      const url = "https://www.facebook.com/profile.php?id=61564936846426"
+      window.open(url!, '_blank', 'noopener,noreferrer');
+    };
+  
+    const handleInstagramIconClick = () => {
+      const url = "https://www.instagram.com/aestheticpro.tn/"
+      window.open(url!, '_blank', 'noopener,noreferrer');
+    };
 
 
 
@@ -368,17 +379,17 @@ const Navbar = (
 
 
             <div className='flex justify-center items-center '>
-          <div className="text-muted-foreground text-sm font-semibold flex flex-row items-center justify-center gap-2">
-          Social Media:
-          <div className="flex gap-3 mb-1">
-          <LoadingLink href={"https://www.facebook.com/profile.php?id=61564936846426"} className='border-1 rounded-full bg-white'>
-          <FaFacebook className="text-2xl cursor-pointer hover:text-blue-600 text-blue-600" />
-          </LoadingLink>
-          <LoadingLink href={"https://www.instagram.com/aestheticpro.tn/"}  className='border-1 rounded-lg bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600'>
-          <FaInstagram className="text-2xl cursor-pointer text-white" />
-          </LoadingLink>
-          </div>
-          </div>
+            <div className="text-muted-foreground text-sm font-semibold flex flex-col sm:flex-row items-center justify-center gap-2">
+              Social Media:
+              <div className="flex gap-3 mb-1">
+              <div onClick={handleFacebookIconClick} className='border-1 rounded-full bg-white'>
+              <FaFacebook className="text-2xl cursor-pointer hover:text-blue-600 text-blue-600" />
+              </div>
+              <div  onClick={handleInstagramIconClick} className='border-1 rounded-lg bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600'>
+              <FaInstagram className="text-2xl cursor-pointer text-white" />
+              </div>
+              </div>
+            </div>
           </div>
           
             </SheetContent>

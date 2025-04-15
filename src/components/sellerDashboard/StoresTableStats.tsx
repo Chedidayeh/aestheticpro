@@ -1,6 +1,6 @@
 "use client";
 import NextImage from 'next/image';
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "../ui/button";
 import {
   Card,
@@ -18,6 +18,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ScrollArea } from '../ui/scroll-area';
+import { getStoreStats } from '@/actions/actions';
+import { Loader, Star } from 'lucide-react';
+import { Badge } from '../ui/badge';
 
 interface ChartData {
   storeId : string
@@ -50,28 +53,51 @@ const chartConfig = {
 } satisfies Record<string, { label: string; color: string }>;
 
 // Accept storeId as a prop
-export function StoresTableStats({ storeId , chartData }: { storeId: string , chartData : ChartData[] }) {
+export function StoresTableStats({ storeId }: { storeId: string }) {
+
 
 
   const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig>(
     "totalRevenue"
   );
+  const [chartData, setChartData] = React.useState<ChartData[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const sortedChartData = React.useMemo(
-    () =>
-      [...chartData]
-        .sort((a, b) => b[activeChart] - a[activeChart]) // Sort descending
-        .slice(0, 10) // Take only the top 10
-        .map((item, index) => ({ ...item, rank: index + 1 })), // Add rank
-    [activeChart, chartData]
-  );
+  const fetchData = async (metric: keyof typeof chartConfig) => {
+    setIsLoading(true);
+    const data = await getStoreStats(metric);
+    setChartData(data);
+    setIsLoading(false);
+  };
+
+  React.useEffect(() => {
+    fetchData(activeChart);
+  }, [activeChart]);
+
+
+
+
+
+
+  const sortedChartData = React.useMemo(() => {
+    if (!Array.isArray(chartData) || !chartData.length) return [];
   
-  // Find the rank of the storeId based on the activeChart
+    return [...chartData]
+      .sort((a, b) => b[activeChart] - a[activeChart]) // Sort descending
+      .slice(0, 10) // Take only the top 10
+      .map((item, index) => ({ ...item, rank: index + 1 })); // Add rank
+  }, [activeChart, chartData]);
+  
+  
   const storeRank = React.useMemo(() => {
+    if (!Array.isArray(chartData) || !chartData.length) return 0;
+  
     const sortedData = [...chartData].sort((a, b) => b[activeChart] - a[activeChart]);
     return sortedData.findIndex((item) => item.storeId === storeId) + 1;
   }, [activeChart, chartData, storeId]);
   
+  if (!Array.isArray(chartData) || !chartData.length) return ;
+
 
   return (
     <Card className="w-full">
@@ -86,6 +112,7 @@ export function StoresTableStats({ storeId , chartData }: { storeId: string , ch
       </CardHeader>
 
       <CardContent>
+        
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-4">
           {Object.keys(chartConfig).map((key) => (
             <Button
@@ -99,6 +126,9 @@ export function StoresTableStats({ storeId , chartData }: { storeId: string , ch
             </Button>
           ))}
         </div>
+
+        {!isLoading ? (
+
 
         <div className="flex flex-col gap-5 w-full">
 
@@ -135,9 +165,19 @@ export function StoresTableStats({ storeId , chartData }: { storeId: string , ch
               height={300}
             />
           </TableCell>
-          <TableCell >{item.rank}</TableCell>
+          <TableCell >
+          <Badge variant={"outline"} className="text-white bg-blue-500 hover:bg-blue-400 ">
+            <p>#</p>
+             {item.rank}
+            </Badge>
+          </TableCell>
           <TableCell >{item.store}</TableCell>
-          <TableCell >{item.level}</TableCell>
+          <TableCell >            
+            <Badge variant={"outline"} className="text-white bg-yellow-400 hover:bg-yellow-300 ">
+            <Star className="mr-1 mb-1/2 w-4 h-4 text-white"/>
+             {item.level}
+            </Badge>
+            </TableCell>
           <TableCell >
             {item[activeChart]} {activeChart === "totalRevenue" ? "TND" : ""}
           </TableCell>
@@ -149,6 +189,17 @@ export function StoresTableStats({ storeId , chartData }: { storeId: string , ch
 
   </section>
   </div>
+
+) : (
+  <div className="flex items-center justify-center h-[540px]">
+    <div className='flex flex-col items-center justify-start'>
+    <p className='text-sm text-muted-foreground'>Fetching Data...</p>
+    <Loader className="text-blue-700 h-6 w-6 animate-spin mt-3" />  
+    </div>
+  </div>
+)}
+
+  
 
 
       </CardContent>

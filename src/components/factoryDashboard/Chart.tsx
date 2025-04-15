@@ -1,7 +1,7 @@
 "use client";
 
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, Loader } from "lucide-react"
  
 import { cn } from "@/lib/utils"
 import { Button } from "../ui/button";
@@ -73,18 +73,19 @@ export function Component() {
     "totalOrders"
   );
 
-  const totalActiveMetric = React.useMemo(
-    () =>
-      chartData.reduce(
-        (acc, curr) => acc + (curr[activeChart] as number),
-        0
-      ),
-    [chartData, activeChart]
-  );
+  const totalActiveMetric = React.useMemo(() => {
+    if (!Array.isArray(chartData) || !chartData.length) return 0;
+  
+    return chartData.reduce(
+      (acc, curr) => acc + (curr[activeChart] as number),
+      0
+    );
+  }, [chartData, activeChart]);
+  
+
 
   return (
     <>
-    <LoadingState isOpen={isLoading} />
     <Card className="col-span-4">
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
@@ -132,6 +133,8 @@ export function Component() {
         </div>
       </CardHeader>
       <CardContent className="px-4 sm:p-6">
+      {!isLoading ? (
+
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
@@ -186,6 +189,18 @@ export function Component() {
             />
           </LineChart>
         </ChartContainer>
+
+               
+      ) : (
+        <div className="flex items-center justify-center h-[240px]">
+          <div className='flex flex-col items-center justify-start'>
+          <p className='text-sm text-muted-foreground'>Fetching Data...</p>
+          <Loader className="text-blue-700 h-6 w-6 animate-spin mt-3" />  
+          </div>
+        </div>
+              )}
+
+
       </CardContent>
     </Card>
 

@@ -50,7 +50,6 @@ const Page =  async () => {
   const followersCount = await getStoreFollowersCount(store!.id);
   const productsViewsCount = await getStoreProductsViewsCount(store!.id);
   const level = await getLevelByNumber(store.level)
-  const chartData = await getStoreStats();
 
   return (
     <>
@@ -160,7 +159,7 @@ const Page =  async () => {
     <Component storeId={store.id}/>
     <OrderedProducts/>
     <OrderedDesigns/>
-    <StoresTableStats storeId={store.id} chartData={chartData} />
+    <StoresTableStats storeId={store.id} />
 
     </div>
 

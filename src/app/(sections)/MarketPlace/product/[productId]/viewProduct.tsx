@@ -152,10 +152,10 @@ const redirectToCart = () => {
         localStorage.setItem("viewSessionId", newSessionId);
   
         // Track the product view with the new sessionId
-        await trackProductView(product.id, newSessionId , user?.id);
+        await trackProductView(product, newSessionId , user?.id);
       } else {
         // Track the product view with the existing sessionId
-        await trackProductView(product.id, sessionId ,user?.id);
+        await trackProductView(product, sessionId ,user?.id);
       }
     };
   

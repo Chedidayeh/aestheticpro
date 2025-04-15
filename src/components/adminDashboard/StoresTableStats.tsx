@@ -18,6 +18,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { ScrollArea } from '../ui/scroll-area';
+import { getAdminStoreStats } from '@/actions/actions';
+import { Loader, Star } from 'lucide-react';
+import { Badge } from '../ui/badge';
 
 interface ChartData {
   storeId : string
@@ -60,22 +63,34 @@ const chartConfig = {
 } satisfies Record<string, { label: string; color: string }>;
 
 // Accept storeId as a prop
-export function StoresTableStats({chartData} : {chartData : ChartData[]}) {
+export function StoresTableStats() {
 
   const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig>(
     "totalRevenue"
   );
+  const [chartData, setChartData] = React.useState<ChartData[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const sortedChartData = React.useMemo(
-    () =>
-      [...chartData]
-        .sort((a, b) => b[activeChart] - a[activeChart]) // Sort descending
-        .slice(0, 10) // Take only the top 10
-        .map((item, index) => ({ ...item, rank: index + 1 })), // Add rank
-    [activeChart, chartData]
-  );
+  const fetchData = async (metric: keyof typeof chartConfig) => {
+    setIsLoading(true);
+    const data = await getAdminStoreStats(metric);
+    setChartData(data);
+    setIsLoading(false);
+  };
 
-  // Calculate total values for each metric
+  React.useEffect(() => {
+    fetchData(activeChart);
+  }, [activeChart]);
+
+  const sortedChartData = React.useMemo(() => {
+    if (!Array.isArray(chartData) || !chartData.length) return [];
+  
+    return [...chartData]
+      .sort((a, b) => b[activeChart] - a[activeChart]) // Sort descending
+      .map((item, index) => ({ ...item, rank: index + 1 })); // Add rank
+  }, [activeChart, chartData]);
+  
+
   const totalValues = React.useMemo(() => {
     const totals = {
       totalRevenue: 0,
@@ -85,7 +100,9 @@ export function StoresTableStats({chartData} : {chartData : ChartData[]}) {
       totalFollowers: 0,
       totalViews: 0,
     };
-
+  
+    if (!Array.isArray(chartData) || !chartData.length) return totals;
+  
     chartData.forEach((item) => {
       totals.totalRevenue += item.totalRevenue;
       totals.totalSales += item.totalSales;
@@ -94,9 +111,13 @@ export function StoresTableStats({chartData} : {chartData : ChartData[]}) {
       totals.totalFollowers += item.totalFollowers;
       totals.totalViews += item.totalViews;
     });
-
+  
     return totals;
   }, [chartData]);
+  
+
+  if (!Array.isArray(chartData) || !chartData.length) return ;
+
 
   return (
     <Card className="w-full">
@@ -122,9 +143,12 @@ export function StoresTableStats({chartData} : {chartData : ChartData[]}) {
           ))}
         </div>
 
+        {!isLoading ? (
+
+
         <div className="flex flex-col gap-5 w-full">
 
-<section className="grid w-full gap-4 gap-x-8 transition-all ">
+      <section className="grid w-full gap-4 gap-x-8 transition-all ">
 
 
         <Table className="min-w-full">
@@ -158,9 +182,19 @@ export function StoresTableStats({chartData} : {chartData : ChartData[]}) {
                     height={300}
                   />
                 </TableCell>
-                <TableCell className="">{item.rank}</TableCell>
-                <TableCell className="">{item.store}</TableCell>
-                <TableCell className="">{item.level}</TableCell>
+                <TableCell >
+          <Badge variant={"outline"} className="text-white bg-blue-500 hover:bg-blue-400 ">
+            <p>#</p>
+             {item.rank}
+            </Badge>
+          </TableCell>
+          <TableCell >{item.store}</TableCell>
+          <TableCell >            
+            <Badge variant={"outline"} className="text-white bg-yellow-400 hover:bg-yellow-300 ">
+            <Star className="mr-1 mb-1/2 w-4 h-4 text-white"/>
+             {item.level}
+            </Badge>
+            </TableCell>
                 <TableCell className="">{item[activeChart]} {activeChart==="totalRevenue" ? "TND" : ""}</TableCell>
               </TableRow>
             ))}
@@ -182,6 +216,16 @@ export function StoresTableStats({chartData} : {chartData : ChartData[]}) {
 
         </section>
         </div>
+
+
+      ) : (
+        <div className="flex items-center justify-center h-[540px]">
+          <div className='flex flex-col items-center justify-start'>
+          <p className='text-sm text-muted-foreground'>Fetching Data...</p>
+          <Loader className="text-blue-700 h-6 w-6 animate-spin mt-3" />  
+          </div>
+        </div>
+      )}
 
       </CardContent>
     </Card>

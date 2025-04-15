@@ -46,6 +46,7 @@ import ImageSlider from "@/components/MarketPlace/ImageSlider";
 import LoadingState from "@/components/LoadingState";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import LoadingLink from '@/components/LoadingLink';
+import { cn } from '@/lib/utils';
 interface ProductViewProps {
   sellerProductsData: Product[];
   totalProductViews:number
@@ -306,7 +307,7 @@ const ProductView = ({
       </p>
   </CardHeader>
   <CardContent>
-    {sellerProductsData.length == 0 && (
+    {sellerProductsData.length == 0 ? (
       <>
       <div className="flex mt-2 items-center justify-center flex-col text-muted-foreground">
         <h1 className="text-center text-3xl font-bold">
@@ -317,21 +318,17 @@ const ProductView = ({
 
       </div>
       </>
-    )}
-
-    {filteredProduct.length === 0 && sellerProductsData.length !== 0 ? (
+    ) : (
       <>
+          {filteredProduct.length === 0 ? (
       <div className="flex mt-2 items-center justify-center flex-col text-muted-foreground">
         <h1 className="text-center text-3xl font-bold">
           <CircleAlert />
         </h1>
         <p className="text-center text-sm mt-2">No products found by that title !</p>
       </div>
-
-      </>
     ) : (
-      <>
-        <ScrollArea className="h-[984px] w-full ">
+        <ScrollArea className='w-full h-[984px]'>
         <div className="relative mt-5 grid grid-cols-1">
            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3  gap-2">
             {/* Product Cards */}
@@ -438,8 +435,13 @@ const ProductView = ({
           </div>
         </div>
         </ScrollArea>
+    )}
       </>
     )}
+
+
+
+
   </CardContent>
 </Card>
 

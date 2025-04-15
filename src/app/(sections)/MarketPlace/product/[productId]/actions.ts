@@ -1,6 +1,7 @@
 'use server'
 
 import { db } from "@/db";
+import { Product } from "@prisma/client";
 
 
 
@@ -105,7 +106,7 @@ export async function getSizes(categoryLabel: string) {
 
 // Server Action: Track product views
 export async function trackProductView(
-  productId: string, 
+  product: Product, 
   sessionId: string, 
   userId?: string
 ) {
@@ -116,7 +117,7 @@ export async function trackProductView(
       // Check for an existing view with the given userId
       existingView = await db.productViews.findFirst({
         where: {
-          productId,
+          productId : product.id,
           userId,
         },
       });
@@ -126,7 +127,7 @@ export async function trackProductView(
       // If no existing view is found for userId, check for sessionId
       existingView = await db.productViews.findFirst({
         where: {
-          productId,
+          productId : product.id,
           sessionId,
         },
       });
@@ -144,7 +145,7 @@ export async function trackProductView(
     if (!existingView || !isSameDay) {
       await db.productViews.create({
         data: {
-          productId,
+          productId : product.id,
           sessionId,
           userId: userId || null, // Store userId if available, otherwise null
         },
@@ -152,9 +153,14 @@ export async function trackProductView(
 
       // Optionally, increment the product view count
       await db.product.update({
-        where: { id: productId },
+        where: { id: product.id },
         data: { totalViews: { increment: 1 } },
       });
+
+      await db.store.update({
+        where : {id : product.storeId },
+        data : { totalViews : { increment : 1 } }
+      })
     }
   } catch (error) {
     console.error("Error tracking product view:", error);

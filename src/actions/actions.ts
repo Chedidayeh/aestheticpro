@@ -2,7 +2,7 @@
 
 import { auth } from "@/auth";
 import { db } from "@/db"
-import { Order, OrderItem, Product, SellerDesign, Store } from "@prisma/client";
+import { Order, OrderItem, Prisma, Product, SellerDesign, Store } from "@prisma/client";
 
 
 export async function getReportData() {
@@ -1977,30 +1977,91 @@ export async function getOrderChartData(month: number, year: number) {
 }
 
 
-export async function getStoreStats() {
-  // Fetch stores and related data
+// store chart function
+
+
+type Metric = "totalRevenue" | "totalSales" | "totalFollowers" | "totalViews";
+export async function getStoreStats(metric: Metric) {
+  // Build dynamic orderBy clause for sorting
+  const orderByClause: Prisma.StoreOrderByWithRelationInput = 
+    metric === "totalRevenue" ? { revenue: "desc" }
+    : metric === "totalSales" ? { totalSales: "desc" }
+    : metric === "totalFollowers" ? { followers: { _count: "desc" } }
+    : metric === "totalViews" ? { totalViews: "desc" }
+    : { revenue: "desc" }; // Default to ordering by revenue
+
+  // Fetch only top 10 stores based on the selected metric
   const stores = await db.store.findMany({
+    orderBy: orderByClause,
+    take: 10, // Fetch only top 10 records
     select: {
-      products: {
-        where : {isProductAccepted : true}
-      },
-      designs: {
-        where : {isDesignForSale : true , isDesignAccepted : true}
-      },
+      id: true,
+      storeName: true,
+      logoUrl: true,
+      level: true,
+      revenue: true,
+      totalSales: true,
       followers: true,
-      storeName : true,
-      revenue : true,
-      totalSales : true,
-      logoUrl : true,
-      id:true,
-      level : true
+      totalViews  : true,
     },
   });
 
   const chartData = stores.map((store) => {
     // Calculate totalViews for the store's accepted products
-    const storeTotalViews = store.products.reduce((sum, product) => sum + (product.totalViews || 0), 0);
 
+    return {
+      storeId: store.id,
+      store: store.storeName,
+      totalRevenue: store.revenue,
+      totalSales: store.totalSales,
+      totalFollowers: store.followers.length,
+      totalViews: store.totalViews,
+      logo: store.logoUrl,
+      level: store.level,
+    };
+  });
+
+  return chartData;
+}
+
+
+// admin chart function
+
+type AdminMetric = "totalRevenue" | "totalSales" | "totalProducts" | "totalDesigns" | "totalFollowers" | "totalViews";
+export async function getAdminStoreStats(metric: AdminMetric) {
+  // Build dynamic orderBy clause for sorting
+  const orderByClause: Prisma.StoreOrderByWithRelationInput = 
+    metric === "totalRevenue" ? { revenue: "desc" }
+    : metric === "totalSales" ? { totalSales: "desc" }
+    : metric === "totalFollowers" ? { followers: { _count: "desc" } }
+    : metric === "totalViews" ? { totalViews: "desc" }
+    : metric === "totalProducts" ? { products: { _count: "desc" } }
+    : metric === "totalDesigns" ? { designs: { _count: "desc"}}
+    : { revenue: "desc" }; // Default to ordering by revenue
+
+  // Fetch only top 10 stores based on the selected metric
+  const stores = await db.store.findMany({
+    orderBy: orderByClause,
+    take: 10, // Fetch only top 10 records
+    select: {
+      id: true,
+      storeName: true,
+      logoUrl: true,
+      level: true,
+      revenue: true,
+      totalSales: true,
+      followers: true,
+      totalViews  : true,
+      products: {
+        where: { isProductAccepted: true },
+      },
+      designs: {
+        where: { isDesignForSale: true, isDesignAccepted: true },
+      },
+    },
+  });
+
+  const chartData = stores.map((store) => {
     return {
       storeId: store.id,
       store: store.storeName,
@@ -2009,14 +2070,16 @@ export async function getStoreStats() {
       totalProducts: store.products.length,
       totalDesigns: store.designs.length,
       totalFollowers: store.followers.length,
-      totalViews: storeTotalViews,
-      logo : store.logoUrl,
-      level : store.level
+      totalViews: store.totalViews,
+      logo: store.logoUrl,
+      level: store.level,
     };
   });
 
   return chartData;
 }
+
+
 
 
 

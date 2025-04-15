@@ -4,7 +4,7 @@ import * as React from "react"
 import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts"
 
 import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
+import { CalendarIcon, Loader } from "lucide-react"
  
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -74,11 +74,15 @@ export function ProductsViewsChart() {
 
   const [activeChart] = React.useState<keyof typeof chartConfig>("views");
 
-  const totalViews = React.useMemo(
-    () => chartData.reduce((acc, curr) => acc + curr.views, 0),
-    [chartData]
-  );
+  const totalViews = React.useMemo(() => {
+    if (!Array.isArray(chartData) || !chartData.length) return 0;
+  
+    return chartData.reduce((acc, curr) => acc + curr.views, 0);
+  }, [chartData]);
 
+  if (!Array.isArray(chartData) || !chartData.length) return ;
+
+  
   return (
     <>
     
@@ -89,7 +93,7 @@ export function ProductsViewsChart() {
           <CardDescription>
             Showing total products views per month
           </CardDescription>
-          <Popover >
+          <Popover  >
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
@@ -135,6 +139,9 @@ export function ProductsViewsChart() {
         </div>
       </CardHeader>
       <CardContent className="px-1 sm:p-2 m-4">
+
+      {!isLoading ? (
+
         <ChartContainer
           config={chartConfig}
           className="aspect-auto h-[250px] w-full"
@@ -187,6 +194,15 @@ export function ProductsViewsChart() {
             />
           </LineChart>
         </ChartContainer>
+
+      ) : (
+  <div className="flex items-center justify-center h-[240px]">
+    <div className='flex flex-col items-center justify-start'>
+    <p className='text-sm text-muted-foreground'>Fetching Data...</p>
+    <Loader className="text-blue-700 h-6 w-6 animate-spin mt-3" />  
+    </div>
+  </div>
+        )}
       </CardContent>
     </Card>
 
