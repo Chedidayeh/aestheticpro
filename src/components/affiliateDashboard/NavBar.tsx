@@ -1,5 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client'
+import NextImage from 'next/image';
+
 import {
   Bell,
   Home,
@@ -52,8 +54,43 @@ import LoadingLink from "../LoadingLink"
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col w-[60%] sm:w-[35%]">
+
+
+                  <div className='flex items-center justify-center gap-2'>
+          
+          {/* logo */}
+          
+          <LoadingLink href="/">
+          <div
+          style={{ width: '50px', height: '50px' }}
+          className="h-full xl:right-0 sm:items-center"
+          >
+          <NextImage
+          src="/aestheticpro.png"
+          width={1000}
+          height={1000}
+          alt="logo"
+          draggable={false}
+          />
+          </div>
+          </LoadingLink>
+          
+          {/* text */}
+          <div className='text-sm  font-semibold'>
+          <LoadingLink href="/">
+          <p>Aesthetic Pro</p>
+          <p>Platform ✨</p>
+          </LoadingLink>
+          </div>
+          
+          </div>
+          
+          
+                        <Separator className='w-full my-2'/>
+
+
         <ScrollArea className="h-full w-full">
-          <nav className="grid gap-2 text-lg font-medium mt-6">
+          <nav className="grid gap-2 text-lg font-medium">
 
 
 
@@ -65,7 +102,7 @@ import LoadingLink from "../LoadingLink"
               className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
             }),
             {
-              "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard",
+              "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard",
             }
           )}
             >
@@ -83,7 +120,7 @@ import LoadingLink from "../LoadingLink"
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/products",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/products",
               }
             )}
             >
@@ -101,7 +138,7 @@ import LoadingLink from "../LoadingLink"
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/manageLinks",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/manageLinks",
               }
             )}
             >
@@ -121,7 +158,7 @@ import LoadingLink from "../LoadingLink"
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/orders",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/orders",
               }
             )}
             >
@@ -139,7 +176,7 @@ import LoadingLink from "../LoadingLink"
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/wallet",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/wallet",
               }
             )}
             >
@@ -157,7 +194,7 @@ import LoadingLink from "../LoadingLink"
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/requests",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/requests",
               }
             )}
             >
@@ -175,7 +212,7 @@ import LoadingLink from "../LoadingLink"
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/notifications",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/notifications",
               }
             )}
             >
@@ -203,7 +240,7 @@ import LoadingLink from "../LoadingLink"
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/settings",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/settings",
               }
             )}
             >
@@ -221,7 +258,7 @@ import LoadingLink from "../LoadingLink"
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace",
               }
             )}
 

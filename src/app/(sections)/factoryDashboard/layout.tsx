@@ -21,7 +21,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
       return <Redirecting/>
    }
     return (
-         <div className="grid min-h-screen w-full md:grid-cols-[210px_1fr]"> {/* Updated grid columns */}
+         <div className="grid min-h-screen w-full md:grid-cols-[230px_1fr]"> {/* Updated grid columns */}
         <SideBar totalCounts={totalCounts} />
            <div className="flex flex-col">
         <NavBar user={user!} totalCounts={totalCounts} />

@@ -521,12 +521,12 @@ const ProductView = ({
 
             </div>
 
-            <AlertDialogFooter>
+            <AlertDialogFooter className='flex items-center justify-center'>
               <AlertDialogCancel className='w-20' onClick={()=>{                      
               setnewTitle("")
               setSelectedCollection("")
               setIsEditOpen(false)}}>Cancel</AlertDialogCancel>
-              <AlertDialogAction className='w-20'
+              <AlertDialogAction className='w-20 text-white'
                 disabled={newTitle === "" || selectedCollection === undefined}
                 onClick={() => handleSave(selectedProduct.id)}
               >

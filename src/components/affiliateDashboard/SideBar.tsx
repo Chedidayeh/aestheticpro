@@ -33,14 +33,34 @@ const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) =>
     <div className="hidden w-[230px] border-r bg-muted/40 xl:block">
       <div className="flex h-full max-h-screen flex-col gap-2">
       <div className="flex h-14  items-center justify-center border-b px-4 lg:h-[60px] lg:px-6">
-        <div style={{ width: '50px', height: '50px' }} className='h-full animate-pulse'>
-          <NextImage
-              src={"/aestheticpro.png"}
-              width={1000}
-              height={1000}
-              alt="logo"
-          />
-      </div>
+      <div className='flex items-center gap-2'>
+
+{/* logo */}
+
+<LoadingLink href="/">
+<div
+style={{ width: '50px', height: '50px' }}
+className="h-full xl:right-0 sm:items-center"
+>
+<NextImage
+src="/aestheticpro.png"
+width={1000}
+height={1000}
+alt="logo"
+draggable={false}
+/>
+</div>
+</LoadingLink>
+
+{/* text */}
+<div className='text-sm  font-semibold'>
+<LoadingLink href="/">
+<p>Aesthetic Pro</p>
+<p>Platform ✨</p>
+</LoadingLink>
+</div>
+
+</div>
         </div>
         <div className="flex-1 mt-4">
           <nav className="grid items-start space-y-2 px-2 text-sm font-medium lg:px-4">
@@ -53,7 +73,7 @@ const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) =>
               className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
             }),
             {
-              "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard",
+              "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard",
             }
           )}
             >
@@ -71,7 +91,7 @@ const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) =>
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/products",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/products",
               }
             )}
             >
@@ -89,7 +109,7 @@ const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) =>
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/manageLinks",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/manageLinks",
               }
             )}
             >
@@ -109,7 +129,7 @@ const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) =>
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/orders",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/orders",
               }
             )}
             >
@@ -127,7 +147,7 @@ const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) =>
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/wallet",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/wallet",
               }
             )}
             >
@@ -145,7 +165,7 @@ const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) =>
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/requests",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/requests",
               }
             )}
             >
@@ -163,7 +183,7 @@ const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) =>
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/notifications",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/notifications",
               }
             )}
             >
@@ -191,7 +211,7 @@ const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) =>
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/settings",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/settings",
               }
             )}
             >
@@ -209,7 +229,7 @@ const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) =>
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace",
               }
             )}
 

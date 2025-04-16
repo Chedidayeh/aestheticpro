@@ -15,7 +15,7 @@ import { OctagonAlert } from "lucide-react";
 import {  getPlatformForTheWebsite, getUser } from "@/actions/actions";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { fetchDesignById, fetchProductsByCategory, getCategory, getProductReviews, getSizes } from "./actions";
+import { fetchDesignById, fetchProductsByCategory, getCategory, getProductReviews, getSizes, trackProductView } from "./actions";
 import NotFound from "@/app/(home)/[...not-found]/page";
 import ErrorState from "@/components/ErrorState";
 import LoadingLink from "@/components/LoadingLink";
@@ -83,6 +83,9 @@ const Page = async ({ params }: PageProps) => {
         const platform  = await getPlatformForTheWebsite()
 
         const productReviews = await getProductReviews(product.id)
+
+        await trackProductView(product);
+        
 
 
         return (

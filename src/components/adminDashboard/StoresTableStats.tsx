@@ -219,8 +219,8 @@ export function StoresTableStats() {
 
 
       ) : (
-        <div className="flex items-center justify-center h-[540px]">
-          <div className='flex flex-col items-center justify-start'>
+<div className="flex items-center justify-center h-[340px] md:h-[540px]">          
+  <div className='flex flex-col items-center justify-start'>
           <p className='text-sm text-muted-foreground'>Fetching Data...</p>
           <Loader className="text-blue-700 h-6 w-6 animate-spin mt-3" />  
           </div>

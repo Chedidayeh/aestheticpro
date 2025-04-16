@@ -148,7 +148,7 @@ const Page =  async () => {
               <Eye className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{productsViewsCount} views</div>
+              <div className="text-2xl font-bold">{store.totalViews} views</div>
             </CardContent>
           </Card>
 

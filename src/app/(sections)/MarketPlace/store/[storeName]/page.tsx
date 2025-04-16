@@ -27,6 +27,7 @@ import {
   getStoreFollowersCount,
   getStoreProducts,
   getStoreProductsCount,
+  trackStoreView,
 } from "./actions";
 import NotFound from "@/app/(home)/[...not-found]/page";
 import ErrorState from "@/components/ErrorState";
@@ -54,6 +55,8 @@ export default async function Page({ params }: PageProps) {
         return <NotFound />;
 
   } else {
+
+      await trackStoreView(store.id)
 
       const storeProductsCount = await getStoreProductsCount(store.id!);
       const { products, totalCount } = await getStoreProducts(

@@ -13,7 +13,21 @@ export async function getStoreByStoreName(storeName:string) {
 }
 
 
+export async function trackStoreView(
+  storeId: string,
+) {
+  try {
 
+      // Increment store's total views
+      await db.store.update({
+        where: { id: storeId },
+        data: { totalViews: { increment: 1 } },
+      });
+    
+  } catch (error) {
+    console.error("Error tracking product view:", error);
+  }
+}
 
 
   export async function getStoreProductsCount(storeId:string) {

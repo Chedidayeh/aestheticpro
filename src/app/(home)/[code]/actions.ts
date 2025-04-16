@@ -19,7 +19,6 @@ export async function getAffiliateLinkByCode(code: string) {
   }
 
 
-
   export async function createAffiliateClick(affiliateLink: AffiliateLink, user : User ,isSessionId : boolean) {
     try {
 
@@ -95,4 +94,3 @@ export async function getAffiliateLinkByCode(code: string) {
       throw new Error('Failed to create affiliate click event.');
     }
   }
-  

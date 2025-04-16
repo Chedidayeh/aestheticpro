@@ -439,7 +439,7 @@ const [open, setOpen] = useState<boolean>(false);
                                 </div>
                               </div>
                             </div>
-                            <AlertDialogFooter>
+            <AlertDialogFooter className='gap-2'>
                             {newPrice <= platform.maxDesignSellerProfit && newPrice >= platform.platformDesignProfit + 1 && (
                               <div className='flex'>
                                 <Label className='mr-10'>
@@ -453,7 +453,7 @@ const [open, setOpen] = useState<boolean>(false);
                             setNewName("")
                             setNewPrice(0) }}>
                               Cancel</AlertDialogCancel>
-                              <AlertDialogAction
+                              <AlertDialogAction className='text-white'
                                 disabled={newName === "" ||  isUpdatePending || newPrice > platform.maxDesignSellerProfit || newPrice < platform.platformDesignProfit || !newPrice}
                                 onClick={() => update_Design({ designId: design.id, newName, newPrice })}
                               >

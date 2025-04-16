@@ -143,24 +143,24 @@ const redirectToCart = () => {
 
   // New useEffect for sessionId and tracking product views
 
-  useEffect(() => {
-    const trackView = async () => {
-      const sessionId = localStorage.getItem("viewSessionId");
+  // useEffect(() => {
+  //   const trackView = async () => {
+  //     const sessionId = localStorage.getItem("viewSessionId");
   
-      if (!sessionId) {
-        const newSessionId = crypto.randomUUID();
-        localStorage.setItem("viewSessionId", newSessionId);
+  //     if (!sessionId) {
+  //       const newSessionId = crypto.randomUUID();
+  //       localStorage.setItem("viewSessionId", newSessionId);
   
-        // Track the product view with the new sessionId
-        await trackProductView(product, newSessionId , user?.id);
-      } else {
-        // Track the product view with the existing sessionId
-        await trackProductView(product, sessionId ,user?.id);
-      }
-    };
+  //       // Track the product view with the new sessionId
+  //       await trackProductView(product, newSessionId , user?.id);
+  //     } else {
+  //       // Track the product view with the existing sessionId
+  //       await trackProductView(product, sessionId ,user?.id);
+  //     }
+  //   };
   
-    trackView();
-  }, [product.id, user?.id]);
+  //   trackView();
+  // }, [product.id, user?.id]);
   
 
 

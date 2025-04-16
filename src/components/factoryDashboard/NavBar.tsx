@@ -1,4 +1,6 @@
 'use client'
+import NextImage from 'next/image';
+
 import {
   Home,
   LayoutDashboard,
@@ -39,8 +41,41 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col w-[60%] sm:w-[35%]">
+        
+                <div className='flex items-center justify-center gap-2'>
+        
+        {/* logo */}
+        
+        <LoadingLink href="/">
+        <div
+        style={{ width: '50px', height: '50px' }}
+        className="h-full xl:right-0 sm:items-center"
+        >
+        <NextImage
+        src="/aestheticpro.png"
+        width={1000}
+        height={1000}
+        alt="logo"
+        draggable={false}
+        />
+        </div>
+        </LoadingLink>
+        
+        {/* text */}
+        <div className='text-sm  font-semibold'>
+        <LoadingLink href="/">
+        <p>Aesthetic Pro</p>
+        <p>Platform ✨</p>
+        </LoadingLink>
+        </div>
+        
+        </div>
+        
+        
+                      <Separator className='w-full my-2'/>
+        
         <ScrollArea className="h-full w-full">
-        <nav className="grid gap-2 text-lg font-medium mt-6">
+        <nav className="grid gap-2 text-lg font-medium">
 
 
 
@@ -52,7 +87,7 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
              className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
            }),
            {
-             "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/factoryDashboard",
+             "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/factoryDashboard",
            }
          )}
             >
@@ -70,7 +105,7 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
                          className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
                        }),
                        {
-                         "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/factoryDashboard/orders",
+                         "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/factoryDashboard/orders",
                        }
                      )}
             >
@@ -103,7 +138,7 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
                          className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
                        }),
                        {
-                         "gap-2 rounded-lg bg-gray-100 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace",
+                         "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace",
                        }
                      )}      
             >
