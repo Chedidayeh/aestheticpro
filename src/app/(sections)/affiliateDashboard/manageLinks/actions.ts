@@ -14,7 +14,12 @@ export async function getAffiliateLinksForUser(userId: string) {
         include: {
           product: true,    // Include product data if needed
           affiliate: true,  // Include affiliate data if needed
-          commission : true
+          commission : true,
+          affiliateClicks : {
+            include : {
+              user : true
+            }
+          }
         },
       });
   

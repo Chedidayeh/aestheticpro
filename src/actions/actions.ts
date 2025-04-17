@@ -1859,41 +1859,24 @@ export async function getAffiliateChartData(affiliateId: string , month: number,
   const dailyData: {
     [key: string]: {
       linkClicks: number;
-      linkDetails: { title: string; views: number }[];
     };
   } = {};
 
   affiliateClicksPerDay.forEach((click) => {
     const date = click.clickedAt.toISOString().split("T")[0]; // Extract "YYYY-MM-DD" from Date
     if (!dailyData[date]) {
-      dailyData[date] = { linkClicks: 0, linkDetails: [] };
+      dailyData[date] = { linkClicks: 0 };
     }
 
     // Increment total clicks
     dailyData[date].linkClicks += click._count.affiliateLinkId;
 
-    // Update link-level views
-    const productTitle = productTitles[click.affiliateLinkId];
-    const product = dailyData[date].linkDetails.find((p) => p.title === productTitle);
-    if (product) {
-      product.views += click._count.affiliateLinkId;
-    } else {
-      dailyData[date].linkDetails.push({
-        title: productTitle,
-        views: click._count.affiliateLinkId,
-      });
-    }
-      // Limit linkDetails to the top 4 most-viewed links
-      dailyData[date].linkDetails = dailyData[date].linkDetails
-      .sort((a, b) => b.views - a.views) // Sort by views descending
-      .slice(0, 3); // Take the top 4
   });
 
   // Generate chart data for all dates in the range
   const chartData = allDates.map((date) => ({
     date,
     linkClicks: dailyData[date]?.linkClicks || 0,
-    linkDetails: dailyData[date]?.linkDetails || [],
   }));
 
   // Return the chart data

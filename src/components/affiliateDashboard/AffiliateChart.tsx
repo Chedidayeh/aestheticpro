@@ -42,7 +42,6 @@ const chartConfig = {
 interface ChartData {
   date: string;
   linkClicks: number;
-  linkDetails: { title: string; views: number }[];
 }
 
 

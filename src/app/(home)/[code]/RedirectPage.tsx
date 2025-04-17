@@ -11,6 +11,7 @@ import { useDispatch } from 'react-redux';
 import { saveRedirectUrl } from '@/store/actions/action';
 import LoadingLink from '@/components/LoadingLink';
 import { buttonVariants } from '@/components/ui/button';
+import { useToast } from '@/components/ui/use-toast';
 
 
 interface PageProps {
@@ -20,31 +21,55 @@ interface PageProps {
 
 const RedirectPage = ({  affiliateLink , user }: PageProps) => {
   const router = useRouter();
+  const { toast } = useToast()
   const pathname = usePathname();
   const dispatch = useDispatch();
 
   useEffect(() => {
-
     const handleAffiliateClick = async () => {
       try {
         if(!user) { 
           dispatch(saveRedirectUrl(pathname));
         } else {
           if (user.affiliateOrderSessionId) {
-            await createAffiliateClick(affiliateLink ,user , true);
-            router.push(affiliateLink.originalLink); // Redirect immediately
+            const res = await createAffiliateClick(affiliateLink ,user , true);
+            if (res) {
+              router.push(affiliateLink.originalLink); // Redirect immediately
+            }else {
+              toast({
+                title: 'Unexpected error.',
+                description: 'Something went wrong. Please try again later.',
+                variant: 'destructive',
+              });
+              router.push('/');
+            }
           } else {
-            await createAffiliateClick(affiliateLink ,user , false);
-            router.push(affiliateLink.originalLink); // Redirect immediately
+            const res = await createAffiliateClick(affiliateLink ,user , false);
+            if (res) {
+              router.push(affiliateLink.originalLink); // Redirect immediately
+            }else {
+              toast({
+                title: 'Unexpected error.',
+                description: 'Something went wrong. Please try again later.',
+                variant: 'destructive',
+              });
+              router.push('/');
+            }
           }
         }
       } catch (error) {
         console.error('Error during affiliate click handling:', error);
+        toast({
+          title: 'Unexpected error.',
+          description: 'Something went wrong. Please try again later.',
+          variant: 'destructive',
+        });
+        router.push('/');
       }
     };
 
     handleAffiliateClick();
-  }, [affiliateLink, router, dispatch, user, pathname]);
+  }, [affiliateLink, router, dispatch, user, pathname, toast]);
 
 
   return (

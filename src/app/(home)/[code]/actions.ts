@@ -18,79 +18,72 @@ export async function getAffiliateLinkByCode(code: string) {
     }
   }
 
-
-  export async function createAffiliateClick(affiliateLink: AffiliateLink, user : User ,isSessionId : boolean) {
+  
+  export async function createAffiliateClick(affiliateLink: AffiliateLink, user: User, isSessionId: boolean) {
     try {
-
-      // if the user already have a sessionId for the affiliate order
-      if(isSessionId) {
-
-              // Check for existing click based on sessionId
-      let existingClick = await db.affiliateClick.findFirst({
-        where: {
-          affiliateLinkId: affiliateLink.id, // The affiliate link ID
-          sessionId: user.affiliateOrderSessionId, // Use sessionId only for checking
-        },
-      });
-  
-      // Create a new click record if it doesn't exist
-      if (!existingClick) {
-        await db.affiliateLink.update({
-          where: { id : affiliateLink.id },
-          data: {
-            totalViews: {
-              increment: 1, // Increment totalViews by 1
-            },
+      if (isSessionId) {
+        const existingClick = await db.affiliateClick.findFirst({
+          where: {
+            affiliateLinkId: affiliateLink.id,
+            sessionId: user.affiliateOrderSessionId!,
           },
         });
-
-        existingClick = await db.affiliateClick.create({
-          data: {
-            affiliateLinkId: affiliateLink.id, // The affiliate link ID
-            sessionId: user.affiliateOrderSessionId, // Use sessionId only for creating
-          },
-        });
-      }
   
-      return existingClick; // Return the existing or newly created click event
-
-
+        if (!existingClick) {
+          const [_, newClick] = await db.$transaction([
+            db.affiliateLink.update({
+              where: { id: affiliateLink.id },
+              data: {
+                totalViews: {
+                  increment: 1,
+                },
+              },
+            }),
+            db.affiliateClick.create({
+              data: {
+                affiliateLinkId: affiliateLink.id,
+                sessionId: user.affiliateOrderSessionId!,
+                userId: user.id,
+              },
+            }),
+          ]);
+  
+          return newClick;
+        }
+  
+        return existingClick;
       } else {
-
         const newSessionId = crypto.randomUUID();
-        
-        await db.user.update({
-          where: { id : user.id },
-          data: {
-            affiliateOrderSessionId: newSessionId
-          }
-        })
-
-        await db.affiliateLink.update({
-          where: { id : affiliateLink.id },
-          data: {
-            totalViews: {
-              increment: 1, // Increment totalViews by 1
+  
+        const [_, __, click] = await db.$transaction([
+          db.user.update({
+            where: { id: user.id },
+            data: {
+              affiliateOrderSessionId: newSessionId,
             },
-          },
-        });
-
-        const click = await db.affiliateClick.create({
-          data: {
-            affiliateLinkId: affiliateLink.id, // The affiliate link ID
-            sessionId: newSessionId, // Use sessionId only for creating
-          },
-        });
-
-        return click
-
+          }),
+          db.affiliateLink.update({
+            where: { id: affiliateLink.id },
+            data: {
+              totalViews: {
+                increment: 1,
+              },
+            },
+          }),
+          db.affiliateClick.create({
+            data: {
+              affiliateLinkId: affiliateLink.id,
+              sessionId: newSessionId,
+              userId: user.id,
+            },
+          }),
+        ]);
+  
+        return click;
       }
-
-
-      
-
     } catch (error) {
-      console.error('Error creating affiliate click:', error);
-      throw new Error('Failed to create affiliate click event.');
+      console.error("Error creating affiliate click:", error);
+      return null;
     }
   }
+  

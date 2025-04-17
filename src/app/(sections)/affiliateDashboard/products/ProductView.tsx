@@ -837,7 +837,7 @@ const ProductView = ({ initialProducts,totalCount,initialPage, limit, user , aff
             <AlertDialogFooter>
               <AlertDialogAction
               onClick={()=>setOpenWindow(false)}
-                className='bg-blue-500 hover:bg-blue-300'
+                className='bg-blue-500 text-white hover:bg-blue-300'
               >
                 Done
               </AlertDialogAction>

@@ -89,10 +89,10 @@ interface FormattedCartProduct {
             if (affiliateClick.affiliateLinkId) {
               const affiliateLink = await tx.affiliateLink.findUnique({
                 where: { id: affiliateClick.affiliateLinkId },
-                select: { product: true , id:true },
+                select: { product: true , id:true , affiliate : true  },
               });
 
-              if(affiliateLink) {
+              if(affiliateLink && userId !== affiliateLink.affiliate.userId) {
 
               const productMatch = cartProducts.find(
                 (product) => product.productId === affiliateLink.product.id

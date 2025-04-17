@@ -8,7 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { CircleAlert, Copy } from "lucide-react";
+import { CircleAlert, Copy, Eye } from "lucide-react";
 
 import {
   Card,
@@ -18,7 +18,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-import {  Affiliate, AffiliateLink, Commission, Platform, Product } from "@prisma/client";
+import {  Affiliate, AffiliateClick, AffiliateLink, Commission, Platform, Product, User } from "@prisma/client";
 import { ChangeEvent, useEffect, useState } from "react";
 
 import {
@@ -35,10 +35,15 @@ import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 
+interface ExtraAffiliateClick extends AffiliateClick {
+  user : User
+}
+
 interface ExtraAffiliateLink extends AffiliateLink {
   product : Product
   affiliate : Affiliate
   commission : Commission []
+  affiliateClicks : ExtraAffiliateClick[]
 }
 
 
@@ -54,6 +59,8 @@ const ManageLinks = ({ Links , platform }: ViewProps) => {
   const [filteredLinks, setFilteredLinks] = useState<ExtraAffiliateLink[]>(Links);
   const [searchTerm, setSearchTerm] = useState<string>(''); // Search input state
   const [sortOption, setSortOption] = useState<string>(''); // Sort option state
+  // selected link
+  const [selectedLink, setSelectedLink] = useState<ExtraAffiliateLink | null>(null)
 
   // Handle the search input change
   const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -156,6 +163,10 @@ const ManageLinks = ({ Links , platform }: ViewProps) => {
           <p className="text-muted-foreground text-sm">
         <span className="text-blue-600 font-medium">Note :</span> Your profit depends on the order quantity !
           </p>
+          
+          <p className="text-muted-foreground text-sm">
+          <span className="text-blue-600 font-medium">Guide:</span> Use the eye icon action to view individual link clicks!
+          </p>
 
         </CardHeader>
         <CardContent>
@@ -190,16 +201,27 @@ const ManageLinks = ({ Links , platform }: ViewProps) => {
                             <TableCell>{link.totalSales} sales</TableCell>
                             <TableCell className="">
                             <TooltipProvider>
-                  <>
+                  <div className="flex gap-2">
                     <Tooltip>
                       <TooltipTrigger asChild>
                        <Copy onClick={()=>copyToClipboard(link.link)} className="hover:text-green-500 cursor-pointer"/>
                       </TooltipTrigger>
-                      <TooltipContent className="bg-green-500">
+                      <TooltipContent className="bg-green-500 text-white">
                         <p>Copy Link</p>
                       </TooltipContent>
                     </Tooltip>
-                  </>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                      <Eye
+                        onClick={() => setSelectedLink(selectedLink === link ? null : link)}
+                        className="hover:text-purple-500 cursor-pointer"
+                      />
+                      </TooltipTrigger>
+                      <TooltipContent className="bg-purple-500 text-white">
+                        <p>View Clicks</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </div>
               </TooltipProvider>
                             </TableCell>
                         </TableRow>
@@ -228,6 +250,73 @@ const ManageLinks = ({ Links , platform }: ViewProps) => {
 
       </section>
       </div>
+
+      {selectedLink && (
+
+      <div className="flex mt-2 flex-col gap-5 w-full">
+  
+  <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-1 xl:grid-cols-1">
+
+
+      <Card>
+        <CardHeader className="bg-muted/50 rounded-t-lg">
+          <CardTitle className="flex items-center gap-2">Clicks on link : <p className="text-xs text-muted-foreground">{selectedLink.id} </p></CardTitle>
+          <CardDescription className="flex items-center gap-2">Product : <p className="text-xs text-muted-foreground">{selectedLink.product.title}</p></CardDescription>
+          <CardDescription>Total : {selectedLink.affiliateClicks.length}</CardDescription>
+        </CardHeader>
+        <CardContent>
+
+          {selectedLink.affiliateClicks.length > 0 ? (
+
+
+        <Table>
+        <ScrollArea
+          className={`${
+            selectedLink.affiliateClicks.length < 10 ? "max-h-max" : "h-[384px]"
+          } w-full border rounded-lg mt-4`}
+        >                     <TableHeader>
+                    <TableRow>
+                        <TableHead>Affiliate Click Id</TableHead>
+                        <TableHead className="">User Name</TableHead>
+                        <TableHead className="">User Email</TableHead>
+                        <TableHead className="">Clicked At</TableHead>
+                    </TableRow>
+                </TableHeader>
+                <TableBody>
+                    {selectedLink.affiliateClicks.map((click) => (
+                        <TableRow key={click.id}>
+                            <TableCell>{click.id}</TableCell>
+                            <TableCell className="">{click.user.name}</TableCell>
+                            <TableCell className="">{click.user.email}</TableCell>
+                            <TableCell className="">{new Date(click.clickedAt).toLocaleString()}</TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+                </ScrollArea>
+            </Table>
+            
+          ) : (
+            <>
+            <Separator className="w-full my-4"/>
+            <div className="flex items-center justify-center flex-col text-muted-foreground">
+            <h1 className="text-center text-3xl font-bold">
+              <CircleAlert />
+            </h1>
+            <p className="text-center text-sm mt-2">No records of any clicks for that link !</p>
+            <p className="text-center text-xs mt-2">New clicks will appear here.</p>
+
+          </div>
+
+          </>
+          )}
+
+        </CardContent>
+      </Card>
+
+      </section>
+      </div>
+
+)}
 
     </>
   );

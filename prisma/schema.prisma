@@ -112,6 +112,8 @@ model User {
   updatedAt       DateTime? @updatedAt
 
 
+
+  affiliateClicks AffiliateClick[]
 }
 
 model Platform {
@@ -592,15 +594,18 @@ model AffiliateLink {
   totalViews    Int            @default(0)
   createdAt     DateTime       @default(now())
 
-  AffiliateClick AffiliateClick[]
+  affiliateClicks AffiliateClick[]
 }
 
 model AffiliateClick {
   id              String      @id @default(cuid())
   affiliateLinkId String      // The ID of the affiliate link
   affiliateLink   AffiliateLink @relation(fields: [affiliateLinkId], references: [id], onDelete: Cascade)
+
+  sessionId       String
   
-  sessionId       String?     // If the user is not logged in, track by session or cookie
+  userId        String      
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)  
   clickedAt       DateTime    @default(now())
 }
 
