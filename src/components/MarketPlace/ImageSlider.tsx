@@ -39,7 +39,7 @@ const ImageSlider = ({ urls }: ImageSliderProps) => {
 
   return (
     <div className='group relative bg-zinc-100 h-[120%]  overflow-hidden rounded-xl'>
-      <div className='absolute z-10 inset-0  transition'>
+      <div className='absolute z-10 inset-0  transition pointer-events-none'>
         <button
           onClick={(e) => {
             e.preventDefault()
@@ -47,7 +47,7 @@ const ImageSlider = ({ urls }: ImageSliderProps) => {
           }}
           className={cn(
             activeStyles,
-            'right-3 transition',
+            'right-3 transition pointer-events-auto ',
             {
               [inactiveStyles]: slideConfig.isEnd,
               'hover:bg-primary-300 text-primary-800 opacity-100':
@@ -62,7 +62,7 @@ const ImageSlider = ({ urls }: ImageSliderProps) => {
             e.preventDefault()
             swiper?.slidePrev()
           }}
-          className={cn(activeStyles, 'left-3 transition', {
+          className={cn(activeStyles, 'left-3 transition pointer-events-auto', {
             [inactiveStyles]: slideConfig.isBeginning,
             'hover:bg-primary-300 text-primary-800 opacity-100':
               !slideConfig.isBeginning,

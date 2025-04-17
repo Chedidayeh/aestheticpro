@@ -74,7 +74,7 @@ const CategoryView: React.FC<CategoryViewProps> = ({ categories , preOrders  }) 
         setIsLoginModalOpen(true)
         toast({
           title: 'No logged in user found !',
-          description: 'You need to log In first !',
+          description: 'You need to Sign In first !',
           variant: 'destructive',
         });
         return

@@ -100,7 +100,7 @@ const RedirectPage = ({  affiliateLink , user }: PageProps) => {
       <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
         <AlertDialogHeader>
             <AlertDialogTitle className="text-xl text-center font-bold tracking-tight">
-              Log in to continue
+              Sign In to continue
             </AlertDialogTitle>
             <AlertDialogDescription className="text-sm text-center py-2">
               Please login and{" "}

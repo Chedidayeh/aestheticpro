@@ -41,19 +41,26 @@ import LoadingLink from "../LoadingLink"
   const NavBar = ({user , notifications} : {user : User ,notifications : AffiliateNotification[]}) => {
 
   const pathname = usePathname();
+    // open
+    const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+      // Close sheet whenever route/path changes
+      setOpen(false);
+    }, [pathname]);
 
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
 
 
-      <Sheet>
+        <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 xl:hidden">
             <Menu className="h-5 w-5" />
             <span className="sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
-        <SheetContent side="left" className="flex flex-col w-[60%] sm:w-[35%]">
+        <SheetContent side="left" className="flex flex-col w-full">
 
 
                   <div className='flex items-center justify-center gap-2'>

@@ -56,7 +56,7 @@ const Reviews = (props: ProductReelProps) => {
       setIsLoginModalOpen(true);
       toast({
         title: 'No logged-in user found!',
-        description: 'Please log in to leave a review.',
+        description: 'Please Sign In to leave a review.',
         variant: 'destructive',
       });
       return;

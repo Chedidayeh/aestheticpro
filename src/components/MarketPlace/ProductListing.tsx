@@ -117,8 +117,7 @@ const ProductListing = ({
       setOpen(true)
       if (!user) {
         toast({
-          title: 'No logged in user found!',
-          description: 'Try to login first!',
+          title: 'Try to Sign In to save the product!',
           variant: 'destructive',
         })
         setOpen(false)

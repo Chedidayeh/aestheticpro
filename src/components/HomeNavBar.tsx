@@ -8,12 +8,13 @@ import UserProfile from './UserProfile'
 import { ModeToggle } from './ModeToggle'
 import LoadingLink from './LoadingLink'
 import ErrorState from './ErrorState'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Order, OrderItem, Platform, User } from '@prisma/client'
 import { Separator } from './ui/separator'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 import { FaFacebook, FaInstagram } from 'react-icons/fa'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 
 
@@ -27,7 +28,7 @@ const Navbar = (
   {user , platform , cartProductList , orders , favListProducts , bestSellingProducts} : 
   {user : User , platform : Platform , cartProductList : number , orders : extraOrder[] , favListProducts: number , bestSellingProducts : number}) => {
 
-  try {
+
     
     const handleFacebookIconClick = () => {
       const url = "https://www.facebook.com/profile.php?id=61564936846426"
@@ -39,11 +40,24 @@ const Navbar = (
       window.open(url!, '_blank', 'noopener,noreferrer');
     };
 
+      const pathname = usePathname();
+
+            // open
+            const [open, setOpen] = useState(false);
+        
+            useEffect(() => {
+              // Close sheet whenever route/path changes
+              setOpen(false);
+            }, [pathname]);
+    
+
 
 
   return (
     <nav className='sticky z-[50] h-14 inset-x-0 top-0 w-full  backdrop-blur-lg transition-all'>
       <MaxWidthWrapper>
+
+        {/* xl secreen */}
         <div className='lg:flex hidden h-14 items-center justify-between'>
           
           
@@ -195,7 +209,7 @@ const Navbar = (
           
           {/* side bar */}
           <div className="flex justify-start items-start">
-          <Sheet>
+        <Sheet open={open} onOpenChange={setOpen}>
             <SheetTrigger >
             <Button variant="outline" size="icon" className="shrink-0">
             <Menu className="h-5 w-5" />
@@ -250,18 +264,52 @@ const Navbar = (
 
 
               <LoadingLink href="/">
-              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
-                <Home size={15} className="mr-1 group-hover:text-blue-500" />
-                <span className="group-hover:text-blue-500">Home</span>
-              </div>
-            </LoadingLink>
+      <div
+        className={`group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer 
+          ${pathname === '/' 
+            ? 'text-blue-600 bg-slate-200 dark:bg-slate-600/50' 
+            : 'bg-slate-100 dark:bg-slate-600/30 hover:bg-slate-200 dark:hover:bg-slate-600/50'}
+        `}
+      >
+        <Home
+          size={15}
+          className={`mr-1 ${
+            pathname === '/' ? 'text-blue-600' : 'group-hover:text-blue-500'
+          }`}
+        />
+        <span
+          className={`${
+            pathname === '/' ? 'text-blue-600' : 'group-hover:text-blue-500'
+          }`}
+        >
+          Home
+        </span>
+      </div>
+    </LoadingLink>
 
-            <LoadingLink href="/MarketPlace">
-              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
-                <St size={15} className="mr-1 group-hover:text-yellow-500" />
-                <span className="group-hover:text-yellow-500">MarketPlace</span>
-              </div>
-            </LoadingLink>
+    <LoadingLink href="/MarketPlace">
+      <div
+        className={`group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer
+          ${pathname === '/MarketPlace' 
+            ? 'text-yellow-500 bg-slate-200 dark:bg-slate-600/50' 
+            : 'bg-slate-100 dark:bg-slate-600/30 hover:bg-slate-200 dark:hover:bg-slate-600/50'}
+        `}
+      >
+        <St
+          size={15}
+          className={`mr-1 ${
+            pathname === '/MarketPlace' ? 'text-yellow-500' : 'group-hover:text-yellow-500'
+          }`}
+        />
+        <span
+          className={`${
+            pathname === '/MarketPlace' ? 'text-yellow-500' : 'group-hover:text-yellow-500'
+          }`}
+        >
+          MarketPlace
+        </span>
+      </div>
+    </LoadingLink>
 
 
    
@@ -271,23 +319,57 @@ const Navbar = (
 
 
             
-            <LoadingLink href="/MarketPlace/BestSelling">
-              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
-                <CircleDollarSign size={15} className="mr-1 group-hover:text-green-500" />
-                <span className="group-hover:text-green-500">Best Selling</span>
-              </div>
-            </LoadingLink>
+<LoadingLink href="/MarketPlace/BestSelling">
+      <div
+        className={`group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer
+          ${pathname === '/MarketPlace/BestSelling' 
+            ? 'text-green-500 bg-slate-200 dark:bg-slate-600/50' 
+            : 'bg-slate-100 dark:bg-slate-600/30 hover:bg-slate-200 dark:hover:bg-slate-600/50'}
+        `}
+      >
+        <CircleDollarSign
+          size={15}
+          className={`mr-1 ${
+            pathname === '/MarketPlace/BestSelling' ? 'text-green-500' : 'group-hover:text-green-500'
+          }`}
+        />
+        <span
+          className={`${
+            pathname === '/MarketPlace/BestSelling' ? 'text-green-500' : 'group-hover:text-green-500'
+          }`}
+        >
+          Best Selling
+        </span>
+      </div>
+    </LoadingLink>
 
             )}
 
 
 
-            <LoadingLink href="/services">
-              <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
-                <Handshake size={15} className="mr-1 group-hover:text-purple-500" />
-                <span className="group-hover:text-purple-500">Services</span>
-              </div>
-            </LoadingLink>
+<LoadingLink href="/services">
+      <div
+        className={`group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer
+          ${pathname === '/services'
+            ? 'text-purple-500 bg-slate-200 dark:bg-slate-600/50'
+            : 'bg-slate-100 dark:bg-slate-600/30 hover:bg-slate-200 dark:hover:bg-slate-600/50'}
+        `}
+      >
+        <Handshake
+          size={15}
+          className={`mr-1 ${
+            pathname === '/services' ? 'text-purple-500' : 'group-hover:text-purple-500'
+          }`}
+        />
+        <span
+          className={`${
+            pathname === '/services' ? 'text-purple-500' : 'group-hover:text-purple-500'
+          }`}
+        >
+          Services
+        </span>
+      </div>
+    </LoadingLink>
 
               </div>
 
@@ -299,35 +381,50 @@ const Navbar = (
 
 
               <LoadingLink href="/MarketPlace/favList">
-              <div className="group text-sm relative border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
-                <Heart size={15} className="mr-1 group-hover:text-red-500" />
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">
-                              {favListProducts > 9 ? '9+' : favListProducts ?? 0}
-                              </span>
-                <span className="group-hover:text-red-500">Fav List</span>
-              </div>
-              </LoadingLink>
-
-              <LoadingLink href="/MarketPlace/cart">
-              <div className="group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
-                <ShoppingCart size={15} className="mr-1 group-hover:text-blue-500" />
-                <span className="absolute -top-1 -right-1 bg-blue-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">                
-                  {cartProductList > 9 ? '9+' : cartProductList ?? 0}
-                </span>
-                <span className="group-hover:text-blue-500">Cart</span>
-              </div>
-              </LoadingLink>
+  <div className={`group text-sm relative border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer
+    ${pathname === '/MarketPlace/favList'
+      ? 'text-red-500 bg-slate-200 dark:bg-slate-600/50'
+      : 'bg-slate-100 dark:bg-slate-600/30 hover:bg-slate-200 dark:hover:bg-slate-600/50'}
+  `}>
+    <Heart size={15} className={`mr-1 ${pathname === '/MarketPlace/favList' ? 'text-red-500' : 'group-hover:text-red-500'}`} />
+    <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">
+      {favListProducts > 9 ? '9+' : favListProducts ?? 0}
+    </span>
+    <span className={`${pathname === '/MarketPlace/favList' ? 'text-red-500' : 'group-hover:text-red-500'}`}>Fav List</span>
+  </div>
+</LoadingLink>
 
 
-              <LoadingLink href="/MarketPlace/userOrders">
-              <div className="group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
-                <ShoppingBasket size={15} className="mr-1 group-hover:text-green-500" />
-                <span className="absolute -top-1 -right-1 bg-green-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">
-                  {orders?.length > 9 ? '9+' : orders?.length ?? 0}
-                </span>
-                <span className="group-hover:text-green-500">Your Orders</span>
-              </div>
-              </LoadingLink>
+<LoadingLink href="/MarketPlace/cart">
+  <div className={`group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer
+    ${pathname === '/MarketPlace/cart'
+      ? 'text-blue-500 bg-slate-200 dark:bg-slate-600/50'
+      : 'bg-slate-100 dark:bg-slate-600/30 hover:bg-slate-200 dark:hover:bg-slate-600/50'}
+  `}>
+    <ShoppingCart size={15} className={`mr-1 ${pathname === '/MarketPlace/cart' ? 'text-blue-500' : 'group-hover:text-blue-500'}`} />
+    <span className="absolute -top-1 -right-1 bg-blue-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">                
+      {cartProductList > 9 ? '9+' : cartProductList ?? 0}
+    </span>
+    <span className={`${pathname === '/MarketPlace/cart' ? 'text-blue-500' : 'group-hover:text-blue-500'}`}>Cart</span>
+  </div>
+</LoadingLink>
+
+
+
+<LoadingLink href="/MarketPlace/userOrders">
+  <div className={`group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer
+    ${pathname === '/MarketPlace/userOrders'
+      ? 'text-green-500 bg-slate-200 dark:bg-slate-600/50'
+      : 'bg-slate-100 dark:bg-slate-600/30 hover:bg-slate-200 dark:hover:bg-slate-600/50'}
+  `}>
+    <ShoppingBasket size={15} className={`mr-1 ${pathname === '/MarketPlace/userOrders' ? 'text-green-500' : 'group-hover:text-green-500'}`} />
+    <span className="absolute -top-1 -right-1 bg-green-500 text-white rounded-full text-xs w-5 h-4 flex items-center justify-center">
+      {orders?.length > 9 ? '9+' : orders?.length ?? 0}
+    </span>
+    <span className={`${pathname === '/MarketPlace/userOrders' ? 'text-green-500' : 'group-hover:text-green-500'}`}>Your Orders</span>
+  </div>
+</LoadingLink>
+
 
 
               </div>
@@ -339,19 +436,29 @@ const Navbar = (
               <div className='flex flex-col space-y-2'>
 
 
-          <LoadingLink href="/about">
-          <div className="group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
-            <Building2 size={15} className="mr-1 group-hover:text-blue-500" />
-            <span className="group-hover:text-blue-500">About Us</span>
-          </div>
-          </LoadingLink>
+              <LoadingLink href="/about">
+  <div className={`group text-sm border w-full rounded-xl flex items-center justify-center p-2 cursor-pointer
+    ${pathname === '/about'
+      ? 'text-blue-500 bg-slate-200 dark:bg-slate-600/50'
+      : 'bg-slate-100 dark:bg-slate-600/30 hover:bg-slate-200 dark:hover:bg-slate-600/50'}
+  `}>
+    <Building2 size={15} className={`mr-1 ${pathname === '/about' ? 'text-blue-500' : 'group-hover:text-blue-500'}`} />
+    <span className={`${pathname === '/about' ? 'text-blue-500' : 'group-hover:text-blue-500'}`}>About Us</span>
+  </div>
+</LoadingLink>
 
-          <LoadingLink href="/contact">
-          <div className="group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer hover:bg-slate-200 bg-slate-100 dark:bg-slate-600/30 dark:hover:bg-slate-600/50">
-            <Mail size={15} className="mr-1 group-hover:text-rose-500" />
-            <span className="group-hover:text-rose-500">Contact</span>
-          </div>
-          </LoadingLink>
+
+<LoadingLink href="/contact">
+  <div className={`group text-sm border relative w-full rounded-xl flex items-center justify-center p-2 cursor-pointer
+    ${pathname === '/contact'
+      ? 'text-rose-500 bg-slate-200 dark:bg-slate-600/50'
+      : 'bg-slate-100 dark:bg-slate-600/30 hover:bg-slate-200 dark:hover:bg-slate-600/50'}
+  `}>
+    <Mail size={15} className={`mr-1 ${pathname === '/contact' ? 'text-rose-500' : 'group-hover:text-rose-500'}`} />
+    <span className={`${pathname === '/contact' ? 'text-rose-500' : 'group-hover:text-rose-500'}`}>Contact</span>
+  </div>
+</LoadingLink>
+
 
           </div>
 
@@ -436,8 +543,8 @@ const Navbar = (
 
           {/* User Profile for small devices */}
           <div className='flex items-center space-x-2'>
-          <ModeToggle/>
             <UserProfile user={user!} platform={platform!} />
+            <ModeToggle/>
           </div>
 
         </div>
@@ -445,11 +552,6 @@ const Navbar = (
       </MaxWidthWrapper>
     </nav>
   )
-} catch (error) {
-  console.log(error)
-  return <ErrorState/>
-    
-}
 }
 
 export default Navbar

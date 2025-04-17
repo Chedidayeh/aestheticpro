@@ -66,175 +66,166 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
 
     return (
         <>
-                
-                <DropdownMenu>
-      <DropdownMenuTrigger className="rounded-full">
-        {user ? (
-                  <div className=" w-10 h-10 rounded-full cursor-pointer overflow-hidden border-2 border-gray-200" style={{ width: 40, height: 40 }}>
-                  <NextImage 
-                   src={user?.image ? user.image : "/clientImage.png"}
-                   alt="userImage"
-                    width={200}
-                    height={200}
-                    className="rounded-full object-fill"
-                  />
-                </div>
-        ) : (
-          <div className="border rounded-full hover:text-blue-600 p-1 border-muted-foreground hover:border-blue-600">
-          <U /> 
-          </div>
-        )}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className=" w-56 mt-2 mr-2">
-        {user && (
-      <div className="flex justify-center items-center">
-        <div className="relative w-[100px] h-[100px] rounded-full bg-gray-100 border-2 border-gray-500 overflow-hidden">
-          <NextImage
-            src={user?.image ? user.image : "/clientImage.png"}
-            alt="clientImage"
-            width={500}
-            height={500}
-            className="rounded-full object-fill"
-          />
-        </div>
-      </div>
-              )}
-        <DropdownMenuLabel>
-          {user ? (
-          <p>My Account</p>
-          ):(
-            <p>No Account</p>
-          )}
-          </DropdownMenuLabel>
+
+        <LoadingState isOpen={open}/> 
+
         {user ? (
           <>
-            <p className="text-xs ml-2 text-muted-foreground">{user.email}</p>
-            <DropdownMenuSeparator />
-            {user.userType === "SELLER" && (
-              <>
-            <DropdownMenuItem>
-            <LoadingLink 
-            href="/sellerDashboard"
-            className={cn(
-              buttonVariants({
-                variant: 'ghost',
-                size :"sm",
-                className: 'flex justify-between items-center w-full'
-              })
-            )}
-            >
-              Seller Dashboard ✨
-            </LoadingLink>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
 
-            </>
-            )}
-             {user.userType === "ADMIN" && (
-              <>
-            <DropdownMenuItem>
-            <LoadingLink 
-            href="/adminDashboard"
-            className={cn(
-              buttonVariants({
-                variant: 'ghost',
-                size :"sm",
-                className: 'flex justify-between items-center w-full'
-              })
-            )}
-            >
-              Admin Dashboard ✨
-            </LoadingLink>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
+      <DropdownMenu>
+            <DropdownMenuTrigger className="rounded-full">
+                        <div className=" w-10 h-10 rounded-full cursor-pointer overflow-hidden border-2 border-gray-200" style={{ width: 40, height: 40 }}>
+                        <NextImage 
+                        src={user?.image ? user.image : "/clientImage.png"}
+                        alt="userImage"
+                          width={200}
+                          height={200}
+                          className="rounded-full object-fill"
+                        />
+                      </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className=" w-56 mt-2 mr-2">
+            <div className="flex justify-center items-center">
+              <div className="relative w-[100px] h-[100px] rounded-full bg-gray-100 border-2 border-gray-500 overflow-hidden">
+                <NextImage
+                  src={user?.image ? user.image : "/clientImage.png"}
+                  alt="clientImage"
+                  width={500}
+                  height={500}
+                  className="rounded-full object-fill"
+                />
+              </div>
+            </div>
+              <DropdownMenuLabel>
+                <p>My Account</p>
+                </DropdownMenuLabel>
+                
+                  <p className="text-xs ml-2 text-muted-foreground">{user.email}</p>
+                  <DropdownMenuSeparator />
+                  {user.userType === "SELLER" && (
+                    <>
+                  <DropdownMenuItem>
+                  <LoadingLink 
+                  href="/sellerDashboard"
+                  className={cn(
+                    buttonVariants({
+                      variant: 'ghost',
+                      size :"sm",
+                      className: 'flex justify-between items-center w-full'
+                    })
+                  )}
+                  >
+                    Seller Dashboard ✨
+                  </LoadingLink>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
 
-            </>
-            )}
-            {user.userType === "FACTORY" && (
-              <>
-            <DropdownMenuItem>
-              <LoadingLink 
-            href="/factoryDashboard"
-            className={cn(
-              buttonVariants({
-                variant: 'ghost',
-                size :"sm",
-                className: 'flex justify-between items-center w-full'
-              })
-            )}
-            >
-              Factory Dashboard ✨
-            </LoadingLink>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
+                  </>
+                  )}
+                  {user.userType === "ADMIN" && (
+                    <>
+                  <DropdownMenuItem>
+                  <LoadingLink 
+                  href="/adminDashboard"
+                  className={cn(
+                    buttonVariants({
+                      variant: 'ghost',
+                      size :"sm",
+                      className: 'flex justify-between items-center w-full'
+                    })
+                  )}
+                  >
+                    Admin Dashboard ✨
+                  </LoadingLink>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
 
-            </>
-            )}
-            {user.isAffiliate && (
-              <>
-            <DropdownMenuItem>
-              <LoadingLink 
-            href="/affiliateDashboard"
-            className={cn(
-              buttonVariants({
-                variant: 'ghost',
-                size :"sm",
-                className: 'flex justify-between items-center w-full'
-              })
-            )}
-            >
-              Affiliate Dashboard ✨
-            </LoadingLink>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
+                  </>
+                  )}
+                  {user.userType === "FACTORY" && (
+                    <>
+                  <DropdownMenuItem>
+                    <LoadingLink 
+                  href="/factoryDashboard"
+                  className={cn(
+                    buttonVariants({
+                      variant: 'ghost',
+                      size :"sm",
+                      className: 'flex justify-between items-center w-full'
+                    })
+                  )}
+                  >
+                    Factory Dashboard ✨
+                  </LoadingLink>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
 
-            </>
-            )}
+                  </>
+                  )}
+                  {user.isAffiliate && (
+                    <>
+                  <DropdownMenuItem>
+                    <LoadingLink 
+                  href="/affiliateDashboard"
+                  className={cn(
+                    buttonVariants({
+                      variant: 'ghost',
+                      size :"sm",
+                      className: 'flex justify-between items-center w-full'
+                    })
+                  )}
+                  >
+                    Affiliate Dashboard ✨
+                  </LoadingLink>
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+
+                  </>
+                  )}
 
 
-        <DropdownMenuItem>
-        <Button onClick={()=>SignOutUser()} size={"sm"}  variant={"ghost"} className="flex justify-between items-center w-full">
-        Sign out                 <UserX size={20} />
-        </Button>
-        </DropdownMenuItem>
-
-
-            {user.userType === "ADMIN" && !platform && (
-        <>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <Button onClick={create} size={"sm"}  variant={"ghost"} className="flex justify-between items-center w-full">
-                <span> Create Platform</span>
+              <DropdownMenuItem>
+                
+              <Button onClick={()=>SignOutUser()} size={"sm"}  variant={"ghost"} className="flex justify-between items-center w-full">
+              Sign out                 
+              <UserX size={20} />
               </Button>
-            </DropdownMenuItem>
-            </> 
-          )}
+              </DropdownMenuItem>
+
+
+                  {user.userType === "ADMIN" && !platform && (
+              <>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <Button onClick={create} size={"sm"}  variant={"ghost"} className="flex justify-between items-center w-full">
+                      <span> Create Platform</span>
+                    </Button>
+                  </DropdownMenuItem>
+                  </> 
+                )}
+            </DropdownMenuContent>
+          </DropdownMenu>
+  
           </>
+
         ) : (
-          <>        
-          <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-            <DropdownMenuItem>
-            <LoadingLink 
+          <>
+          <LoadingLink 
             href="/auth/sign-in"
             className={cn(
               buttonVariants({
-                variant: 'ghost',
+                variant: 'secondary',
                 size :"sm",
-                className: 'flex justify-between items-center w-full'
+                className : "hover:text-blue-500 border border-muted-foreground"
               })
-            )}
-            >
+            )}>
             Sign In
-            <UserPlus size={20} />
+            <UserPlus size={14} className="ml-1" />
             </LoadingLink>
-            </DropdownMenuItem>            
-            </DropdownMenuGroup>
           </>
         )}
-      </DropdownMenuContent>
-    </DropdownMenu>
-    <LoadingState isOpen={open} />
+                
+
 
         </>
 

@@ -39,7 +39,7 @@ export default async function Page() {
               No User found ! 
           </AlertDialogTitle>
           <AlertDialogDescription>
-              Log In to view this page !
+          Sign In to view this page !
             </AlertDialogDescription>
 
           </AlertDialogHeader>
@@ -50,7 +50,7 @@ export default async function Page() {
           </Button>
           </LoadingLink>
           <LoadingLink  href="/auth/sign-in" ><Button size={"sm"} variant="default">
-            Log In &rarr;
+          Sign In &rarr;
               </Button>
               </LoadingLink>
         </AlertDialogFooter>

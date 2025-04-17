@@ -9,16 +9,13 @@ import {  useState, useTransition } from "react"
 import {useForm} from "react-hook-form"
 import {zodResolver} from "@hookform/resolvers/zod"
 import * as z from "zod"
-import { DEFAULT_LOGIN_REDIRECT } from "@/routes"
 import { GoogleLogin } from "./actions"
 import { useRouter } from "next/navigation"
-import { checkGoogleLoggedInUser, getUserByEmail } from "@/userData/user"
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "@/store/reducers/reducers"
 import { saveRedirectUrl } from "@/store/actions/action"
 import {
   Card,
-  CardContent,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
