@@ -96,17 +96,17 @@ interface Count {
                       <Separator className='w-full my-2'/>
         
         <ScrollArea className="h-full w-full">
-          <nav className="grid gap-2 text-lg font-medium">
+          <nav className="grid gap-3 text-lg font-medium">
 
           <LoadingLink
           href="/adminDashboard"
           className={cn(
             buttonVariants({
               variant: 'ghost',
-              className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
+              className: 'justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
             }),
             {
-              "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard",
+              "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard",
             }
           )}
         >
@@ -120,9 +120,9 @@ interface Count {
         <LoadingLink
           className={cn(buttonVariants({
             variant: 'ghost',
-            className: "justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
+            className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
           }), {
-            " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/users"
+            " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/users"
           })}
           href="/adminDashboard/users"
         >
@@ -136,9 +136,9 @@ interface Count {
             href="/adminDashboard/stores"
             className={cn(buttonVariants({
               variant: 'ghost',
-              className: "justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
+              className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/stores"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/stores"
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
@@ -151,9 +151,9 @@ interface Count {
             href="/adminDashboard/requests"
             className={cn(buttonVariants({
               variant: 'ghost',
-              className: "justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
+              className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/requests"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/requests"
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
@@ -173,9 +173,9 @@ interface Count {
             href="/adminDashboard/products"
             className={cn(buttonVariants({
               variant: 'ghost',
-              className: "justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
+              className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/products"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/products"
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
@@ -195,9 +195,9 @@ interface Count {
             href="/adminDashboard/designs"
             className={cn(buttonVariants({
               variant: 'ghost',
-              className: "justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
+              className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/designs"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/designs"
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
@@ -217,9 +217,9 @@ interface Count {
             href="/adminDashboard/orders"
             className={cn(buttonVariants({
               variant: 'ghost',
-              className: "justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
+              className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/orders"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/orders"
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
@@ -239,9 +239,9 @@ interface Count {
             href="/adminDashboard/returns"
             className={cn(buttonVariants({
               variant: 'ghost',
-              className: "justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
+              className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/returns"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/returns"
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
@@ -262,9 +262,9 @@ interface Count {
             href="/adminDashboard/stock"
             className={cn(buttonVariants({
               variant: 'ghost',
-              className: "justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
+              className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/stock"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/stock"
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
@@ -277,9 +277,9 @@ interface Count {
             href="/adminDashboard/category"
             className={cn(buttonVariants({
               variant: 'ghost',
-              className: "justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
+              className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/category"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/category"
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
@@ -295,9 +295,9 @@ interface Count {
             href="/adminDashboard/notifications"
             className={cn(buttonVariants({
               variant: 'ghost',
-              className: "justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
+              className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/notifications"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/notifications"
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
@@ -315,9 +315,9 @@ interface Count {
             href="/adminDashboard/settings"
             className={cn(buttonVariants({
               variant: 'ghost',
-              className: "justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
+              className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/settings"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/settings"
             })}
 
             >
@@ -331,9 +331,9 @@ interface Count {
             href="/MarketPlace"
             className={cn(buttonVariants({
               variant: 'ghost',
-              className: "justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
+              className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace"
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
