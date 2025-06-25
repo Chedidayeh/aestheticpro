@@ -24,7 +24,8 @@ const AddToCartButton = ({
   color,
   quantity,
   index,
-  platform
+  platform,
+  stock
 }: {
   user :  User
   product: Product
@@ -33,6 +34,7 @@ const AddToCartButton = ({
   quantity : number
   index : number
   platform: Platform
+  stock : number
 }) => {
   const { toast } = useToast()
   const router = useRouter()
@@ -56,6 +58,27 @@ const AddToCartButton = ({
 
 
   const saveToCartProducts = async () =>{
+
+    if (stock === 0) {
+      toast({
+        title: "Out of Stock",
+        description: "Sorry, this product is currently unavailable. Please check back soon!",
+        variant: "destructive",
+        duration: 2000,
+      });
+      return;
+    }
+    
+    if (stock < quantity) {
+      toast({
+        title: "Insufficient Stock",
+        description: `Requested quantity exceeds available stock. Current stock: ${stock}`,
+        variant: "destructive",
+        duration: 2000,
+      });
+      return;
+    }
+    
 
     if(size === "") {
       toast({

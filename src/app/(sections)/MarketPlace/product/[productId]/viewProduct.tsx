@@ -473,6 +473,7 @@ const redirectToCart = () => {
                 quantity={quantity}
                 index={selectedColorIndex}
                 platform={platform} 
+                stock={category.stock}
                  />
               </div>
               <div className="flex justify-center items-center my-4">

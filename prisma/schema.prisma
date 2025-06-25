@@ -671,13 +671,13 @@ model Category {
   label           String
   quality         String[]
   value           String
+  stock           Int @default(0)
   price           Float
   discount        Float?         
   colors          Color[]
   sizes           Size[]
   frontBorders    FrontBorder[]
   backBorders     BackBorder[]  
-
   disableCategory  Boolean      @default(false)
     
 }

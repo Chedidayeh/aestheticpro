@@ -41,7 +41,7 @@ import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { useToast } from "@/components/ui/use-toast"
-import { apply, changePrice, deleteCategoryAndAssociated, disableCategoryProducts, enableCategoryProducts, resetPricesByCategory } from "./actions"
+import { apply, changePrice, changeStock, deleteCategoryAndAssociated, disableCategoryProducts, enableCategoryProducts, resetPricesByCategory } from "./actions"
 import LoadingState from "@/components/LoadingState"
 import { Label } from "@/components/ui/label"
 import { Input } from "@/components/ui/input"
@@ -60,18 +60,45 @@ interface CatProps {
 const CategoryView: React.FC<CatProps> = ({ categories }) => {
   const router = useRouter();
   const { toast } = useToast()
+  const [isEditStockOpen, setisEditStockOpen] = useState(false);
   const [isEditOpen, setisEditOpen] = useState(false);
   const [isDeleteOpen, setisDeleteOpen] = useState(false);
   const [isDiscountOpen, setisDiscountOpen] = useState(false);
   const [discountValue, setDiscountValue] = useState(0); // State for managing the discount percentage
   const [newPrice, setnewPrice] = useState(0); // State for managing the discount percentage
+  const [newStock, setNewStock] = useState(0); // State for managing the discount percentage
 
   const [ catId , setCatId] = useState("")
   const [open, setOpen] = useState<boolean>(false);
 
 
 
-    // fucntion : applyDiscount
+
+    const editStock = async () => {
+
+      try {
+        setOpen(true)
+        await changeStock(catId , newStock)
+        toast({
+          title: "Stock was changed",
+          variant: "default",
+        });
+        setOpen(false)
+
+
+
+      
+    } catch (error) {
+      console.log(error)
+      toast({
+        title: "operation failed",
+        variant: "destructive",
+      }); 
+      setOpen(false)
+
+        }
+
+      }
     const editCat = async () => {
 
       try {
@@ -304,6 +331,40 @@ const enableCategory = async (category: Category) => {
       </AlertDialogContent>
     </AlertDialog>
 
+    <AlertDialog open={isEditStockOpen}>
+      <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
+      <AlertDialogHeader>
+          <AlertDialogTitle>Modify Category Stock</AlertDialogTitle>
+        </AlertDialogHeader>
+        <div className="grid gap-4 py-4">
+
+          <div className="grid items-center grid-cols-4 gap-4">
+            <Label htmlFor="newPrice">New Stock:</Label>
+            <div className="col-span-3">
+              <Input 
+                id="newPrice" 
+                type="number" 
+                required 
+                value={newStock} // Controlled input value
+                onChange={(e) => setNewStock(parseInt(e.target.value))} // Handle input change
+              />
+
+            </div>
+          </div>
+        </div>
+        <AlertDialogFooter>
+          <AlertDialogCancel onClick={()=>setisEditStockOpen(false)}>Cancel</AlertDialogCancel>
+          <AlertDialogAction 
+          onClick={()=>{
+            setisEditStockOpen(false)
+            editStock(); // Pass the discount value to applyDiscount function
+          }}>        
+          Confirm
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+
 <AlertDialog open={isDiscountOpen}>
 <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
 <AlertDialogHeader>
@@ -455,6 +516,10 @@ const enableCategory = async (category: Category) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => {
+                setCatId(category.id);
+                setisEditStockOpen(true);
+              }}>Set Stock</DropdownMenuItem>
               <DropdownMenuItem onClick={() => {
                 setCatId(category.id);
                 setisEditOpen(true);

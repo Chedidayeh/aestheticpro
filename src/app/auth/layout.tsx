@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: "Authentication",
-  description: "Tunisian Platfrom",
+  description: "Tunisian Platform",
 };
 
 const Layout = async ({ children }: { children: ReactNode }) => {

@@ -71,6 +71,41 @@ export async function getAllCategoriesWithDetails() {
     
   }
 
+  export async function changeStock(catId: string,newStock:number) {
+
+    try {
+
+      return await db.$transaction(async (prisma) => {
+        // Step 1: Find the category by its id
+        const category = await prisma.category.findUnique({
+          where: { id: catId },
+        });
+    
+        if (!category) {
+          throw new Error(`Category with id ${catId} not found`);
+        }
+    
+        // Step 2: Update the category's stock
+        await prisma.category.update({
+          where: { id: catId },
+          data: { stock: newStock },
+        });
+    
+
+    
+      },{
+        maxWait: 10000, // Wait for a connection for up to 10 seconds
+        timeout: 20000, // Allow the transaction to run for up to 20 seconds
+      });
+    }
+      
+    catch (error) {
+      console.error(error)
+      
+    }
+    
+  }
+
 
   export async function deleteCategoryAndAssociated(categoryId: string) {
     try {

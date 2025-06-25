@@ -13,7 +13,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
    title: "Affiliate Dashboard",
-   description: "Tunisian Platfrom",
+   description: "Tunisian Platform",
  };
 
 const Layout = async ({ children }: { children: ReactNode }) => {

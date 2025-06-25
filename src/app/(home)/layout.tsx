@@ -11,8 +11,8 @@ export const dynamic = 'force-dynamic';
 
 
 export const metadata: Metadata = {
-  title: "AestheticPro Platfrom",
-  description: "Tunisian Platfrom",
+  title: "AestheticPro Platform",
+  description: "Tunisian Platform",
 };
 
 type LayoutProps = {

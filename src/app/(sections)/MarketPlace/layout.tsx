@@ -10,7 +10,7 @@ import HomeNavBar from "@/components/HomeNavBar";
 
 export const metadata: Metadata = {
   title: "MarketPlace",
-  description: "Tunisian Platfrom",
+  description: "Tunisian Platform",
 };
 
 export const dynamic = 'force-dynamic';
