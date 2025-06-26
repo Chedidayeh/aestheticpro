@@ -18,7 +18,7 @@ import { Skeleton } from '../ui/skeleton'
 import { Product, Store, User } from '@prisma/client'
 import { Badge } from "../ui/badge"
 import { Label } from "@radix-ui/react-label"
-import { Heart, Loader } from "lucide-react"
+import { Heart, Loader, Loader2 } from "lucide-react"
 import { useToast } from "../ui/use-toast"
 import { addProductToFavList, checkProductInFavList, removeProductFromFavList } from "@/actions/actions"
 import { useRouter } from "next/navigation"
@@ -45,7 +45,7 @@ const ProductListing = ({
   const [isFavSaved, setIsFavSaved] = useState(false)
   const { toast } = useToast()
   const router  = useRouter()
-  const [open, setOpen] = useState<boolean>(false);
+  const [isSavingFav, setSavingFav] = useState<boolean>(false);
 
 
  // Using useInView to detect when the product is in the viewport
@@ -114,13 +114,13 @@ const ProductListing = ({
 
   const saveToFavList = useCallback(async () => {
     try {
-      setOpen(true)
+      setSavingFav(true)
       if (!user) {
         toast({
           title: 'Try to Sign In to save the product!',
           variant: 'destructive',
         })
-        setOpen(false)
+        setSavingFav(false)
         return
       }
 
@@ -133,7 +133,7 @@ const ProductListing = ({
             title: 'Product added to fav list!',
             variant: 'default',
           })
-          setOpen(false)
+          setSavingFav(false)
           router.refresh()
         }
       } else {
@@ -144,7 +144,7 @@ const ProductListing = ({
             title: 'Product removed from fav list!',
             variant: 'default',
           })
-          setOpen(false)
+          setSavingFav(false)
           router.refresh()
 
         }
@@ -156,7 +156,7 @@ const ProductListing = ({
         description: 'Please try again later.',
         variant: 'destructive',
       })
-      setOpen(false)
+      setSavingFav(false)
     }
   }, [user, isFavSaved, toast, product.id, router])
 
@@ -256,12 +256,18 @@ const ProductListing = ({
 
         <div className="flex mt-1 ml-3 items-center justify-between">
     <div>
-        <Label className="text-xs lg:text-sm">{product.title}</Label>
+        <Label className="text-sm lg:text-lg">{product.title}</Label>
         <p className="text-xs lg:text-sm text-muted-foreground">{product.category}</p>
     </div>
         {/* add to fav list icon */}
     <div onClick={saveToFavList} className="relative group rounded-full p-1  text-gray-600 cursor-pointer ">
+        {isSavingFav ? (
+          <>
+          <Loader2 className="animate-spin" />
+          </>
+        ) : (
         <Heart className={`w-5 h-5 lg:w-6 lg:h-6  ${isFavSaved ? 'text-red-600 fill-current' : 'text-gray-600 hover:text-red-600'}`} />
+        )}
         {/* <span className="absolute bottom-4 right-[2%] transform -translate-x-1/2 w-max px-1 py-1 text-xs bg-black text-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
         {isFavSaved ? 'Saved!' : 'Save in fav list'}
         </span> */}
@@ -274,33 +280,17 @@ const ProductListing = ({
         <div className="ml-2">
         <div className="flex space-x-4">
           {product.isDiscountEnabled && (
-          <div className="font-bold rounded-xl text-gray-400 lg:text-sm text-xs line-through">
+          <div className="font-bold rounded-xl  text-gray-400 line-through">
             {(product.oldPrice ?? product.price  ).toFixed(2)} TND
           </div>
              )}
-        <div className={`font-bold rounded-xl text-blue-600 lg:text-sm text-xs ${product.isDiscountEnabled ? 'animate-wiggle' : ''}`}>
+        <div className={`font-bold rounded-xl lg:text-xl  ${product.isDiscountEnabled ? 'animate-wiggle' : ''}`}>
         {(product.price).toFixed(2)} TND
           </div>
         </div>
         </div>
       </div>    
         </div>
-        
-    <AlertDialog open={open} >
-        <AlertDialogTrigger>
-        </AlertDialogTrigger>
-        <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
-        <AlertDialogHeader className="flex flex-col items-center">
-            <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
-              Loading!
-            </AlertDialogTitle>
-            <AlertDialogDescription className="flex flex-col items-center">
-              This will take a moment.
-             <Loader className="text-blue-700 h-[30%] w-[30%] animate-spin mt-3" />
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-        </AlertDialogContent>
-      </AlertDialog>  
     </Card>
 
              

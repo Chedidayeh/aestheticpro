@@ -9,7 +9,7 @@ import { ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { SessionProvider } from "next-auth/react";
-const recursive = Recursive({ subsets: ["latin-ext"] });
+const recursive = Recursive({ subsets: ["vietnamese"] });
 export const dynamic = 'force-dynamic';
 
 
