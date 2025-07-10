@@ -20,6 +20,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
    const user = await getUser()
 
    if(!user || user.userType !== "SELLER"){
+      // redirect("/")
       return <Redirecting/>
    }
    

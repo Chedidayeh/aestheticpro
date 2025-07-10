@@ -90,9 +90,9 @@ export default auth (async (req) => {
             return Response.redirect(new URL("/auth/sign-in", nextUrl));
         }
         const session = await a()
-        if (session?.user.role !== "SELLER") {
-            return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
-        }
+        // if (session?.user.role !== "SELLER") {
+        //     return Response.redirect(new URL(DEFAULT_LOGIN_REDIRECT, nextUrl));
+        // }
         return
     }
 

@@ -22,7 +22,7 @@ import React from "react"
 import { User } from "@prisma/client"
 import { storage } from "@/firebase/firebaseConfig"
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage"
-import { useSession } from "next-auth/react"
+import { useSession  } from "next-auth/react"
 
 const arabicInfos = [
   "جودة التصاميم: لضمان أفضل جودة للمنتجات، يجب أن تكون التصاميم المقدمة عالية الدقة. يساهم هذا في الحفاظ على وضوح التفاصيل وضمان طباعة مثالية على المنتجات",
@@ -95,20 +95,17 @@ const CreateStoreView = ({user} : {user : User}) => {
           try {
             const updatedUser = await addStore(storeName, logoPath , phoneNumber)
             if (updatedUser) {
-              const updatedSession = await update({
-                ...session,
-                user: {
-                  ...session!.user,
-                  role: updatedUser.userType,
-                },
-              });
-
-              console.log("session",updatedSession?.user)
+              // const updatedSession = await update({
+              //   ...session,
+              //   user: {
+              //     ...session!.user,
+              //     role: updatedUser.userType,
+              //   },
+              // });
               setIsCreating(false)
               setIsRedirecting(true)
               toast({
                 title: 'Your Store is successfully created!',
-                description: 'Redirecting you... !',
                 variant: 'default',
                 duration: 8000,
               });
@@ -116,8 +113,8 @@ const CreateStoreView = ({user} : {user : User}) => {
         }else {
               return
             }
-          } catch (error) {
-            console.log(error)
+          } catch (e) {
+            console.error('Session update error:', e);
             toast({
               title: 'Something went wrong here !',
               description: 'There was an error on our end. Please try again.',
