@@ -2,6 +2,7 @@
 
 import { getUser } from "@/actions/actions"
 import { db } from "@/db"
+import { revalidatePath } from "next/cache"
 
 
 export const fetchName = async (name: string) => {
@@ -60,6 +61,9 @@ export const fetchName = async (name: string) => {
             },
           });
         }
+        
+
+        // revalidatePath("/MarketPlace/create-seller-profile")
   
         return updatedUser;
       },{

@@ -6,7 +6,7 @@ import {
   Avatar,
   AvatarImage,
 } from "@/components/ui/avatar"
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { Loader, MousePointerClick, RocketIcon } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Confetti from 'react-dom-confetti'
@@ -78,7 +78,7 @@ const CreateStoreView = ({user} : {user : User}) => {
       if(storeName.length > 20) {
         toast({
           title: 'Your Store Name is too long !',
-          description: 'Please choose another store name.',
+          description: 'Please choose a shorter name.',
           variant: 'destructive',
         });
         setIsClicked(false)
@@ -95,13 +95,15 @@ const CreateStoreView = ({user} : {user : User}) => {
           try {
             const updatedUser = await addStore(storeName, logoPath , phoneNumber)
             if (updatedUser) {
-               await update({
+              const updatedSession = await update({
                 ...session,
                 user: {
                   ...session!.user,
                   role: updatedUser.userType,
                 },
               });
+
+              console.log("session",updatedSession?.user)
               setIsCreating(false)
               setIsRedirecting(true)
               toast({
@@ -110,10 +112,7 @@ const CreateStoreView = ({user} : {user : User}) => {
                 variant: 'default',
                 duration: 8000,
               });
-            // Delay redirection
-            setTimeout(() => {
-              router.push("/sellerDashboard");
-            }, 3000);             
+              router.push("/sellerDashboard")       
         }else {
               return
             }
@@ -409,7 +408,7 @@ const CreateStoreView = ({user} : {user : User}) => {
     <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
     <AlertDialogHeader className="flex flex-col items-center">
       <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
-          Redirecting You !
+        Loading Dashboard !
         </AlertDialogTitle>
                      <AlertDialogDescription className="text-center">
             Please wait while we redirect you !
