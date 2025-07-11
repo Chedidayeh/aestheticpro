@@ -605,27 +605,28 @@ const t = useTranslations('MarketPlaceOrderPreview');
         </div>
       </div>
 
-      <div className="flex justify-center">
-
-      <Button
+      <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 w-full">
+        <Button
+                size={"sm"}
           onClick={()=>{
             setIsDelete(true)
             handleDelete(draft.id)
           }}
           variant="outline"
-          className="flex ml-3 px-1 bg-red-500 hover:bg-red-400 text-white hover:text-white sm:px-6"
+          className="flex w-full sm:w-auto px-3 sm:px-4 lg:px-6 bg-red-500 hover:bg-red-400 text-white hover:text-white text-sm sm:text-base py-2 sm:py-3"
         >
-          <span className="ml-1">{t('delete_this_draft')}</span>
-          <X className="h-4 w-4 mt-0.5 inline ml-2" />
+          <span className="mr-1 sm:mr-2">{t('delete_this_draft')}</span>
+          <X className="h-3 w-3 sm:h-4 sm:w-4 mt-0.5 inline" />
         </Button>
 
         <Button
+        size={"sm"}
           onClick={handleOrder}
           disabled={!isCheckoutEnabled || isDelete}
           loadingText="Loading..."
-          className="px-4 sm:px-6 lg:px-8 ml-8 text-white"
+          className="w-full sm:w-auto px-3 sm:px-4 lg:px-8 text-white text-sm sm:text-base py-2 sm:py-3"
         >
-          {t('confirm_order')} <ArrowRight className="h-4 w-4 mt-0.5 ml-1.5 inline" />
+          {t('confirm_order')} <ArrowRight className="h-3 w-3 sm:h-4 sm:w-4 mt-0.5 ml-1 sm:ml-1.5 inline" />
         </Button>
       </div>
     </div>
