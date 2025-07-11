@@ -15,10 +15,12 @@ import {
 } from "@/components/ui/alert-dialog"
 import { Loader } from 'lucide-react';
 import { getUser } from '@/actions/actions';
+import { useTranslations } from 'next-intl';
 
 
 const BanUser= ({user}:{user : User}) => {
   const router = useRouter();
+  const t = useTranslations('CommonComponents');
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -44,10 +46,10 @@ const BanUser= ({user}:{user : User}) => {
       <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
       <AlertDialogHeader className="flex flex-col items-center">
       <AlertDialogTitle className="font-bold text-center">
-      <Label className='text-red-500 text-xl'>You've been banned !</Label>
+      <Label className='text-red-500 text-xl'>{t('bannedTitle')}</Label>
       </AlertDialogTitle>
       <AlertDialogDescription className="flex flex-col items-center">
-      You'll be logged out from your account. Contact us if an error has occurred or if you need assistance.      
+        {t('bannedDescription')}
       </AlertDialogDescription>
     </AlertDialogHeader>
   </AlertDialogContent>

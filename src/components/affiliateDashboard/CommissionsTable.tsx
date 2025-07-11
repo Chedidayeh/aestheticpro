@@ -29,6 +29,7 @@ import { useToast } from '../ui/use-toast';
 import { Input } from '../ui/input';
 import { Separator } from '../ui/separator';
 import { CircleAlert } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 interface AffiliateCommission {
   commissionId: string;
@@ -52,6 +53,7 @@ interface CommissionsTableProps {
 
 const CommissionsTable: React.FC<CommissionsTableProps> = ({ commissions, affiliateStats }) => {
   const { toast } = useToast();
+  const t = useTranslations('AffiliateDashboardComponents');
   const [sortedCommissions, setSortedCommissions] = useState<AffiliateCommission[]>(commissions);
 
   const [searchTerm, setSearchTerm] = useState(''); // Search input state
@@ -88,7 +90,7 @@ const CommissionsTable: React.FC<CommissionsTableProps> = ({ commissions, affili
     }
 
     setSortedCommissions(sorted);
-    toast({ title: `Sorted by ${value === 'high-profit' ? 'High Profit' : 'Low Profit'}` });
+    toast({ title: t('sortedBy', {sort: value === 'high-profit' ? t('highProfit') : t('lowProfit')}) });
   };
 
   return (
@@ -100,27 +102,27 @@ const CommissionsTable: React.FC<CommissionsTableProps> = ({ commissions, affili
       <Card x-chunk="dashboard-05-chunk-3">
         <CardHeader className="flex flex-row items-center bg-muted/50 rounded-t-lg">
           <div className="grid gap-2">
-            <CardTitle>Commissions</CardTitle>
-            <CardDescription>Total: {commissions ? commissions.length : 0}</CardDescription>
-            <CardDescription>Total Commissions Profit: {commissions ? (affiliateStats.totalIncome.toFixed(2)) : 0.00} TND</CardDescription>
+            <CardTitle>{t('commissions')}</CardTitle>
+            <CardDescription>{t('totalCommissions', {count: commissions ? commissions.length : 0})}</CardDescription>
+            <CardDescription>{t('totalCommissionsProfit', {profit: commissions ? (affiliateStats.totalIncome.toFixed(2)) : 0.00})} {t('tnd')}</CardDescription>
             <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center mt-2">
         <Input
               type="search"
               className='md:w-[400px] w-full'
-              placeholder="Search by Commission Id , Link Id or Product title..."
+              placeholder={t('searchByCommissionIdLinkIdOrProductTitle')}
               onChange={handleSearchChange}
               value={searchTerm}
             /> 
             
           <Select onValueChange={handleSortChange}>
             <SelectTrigger className="md:w-[180px] w-full">
-              <SelectValue placeholder="Sort By" />
+              <SelectValue placeholder={t('sortBy')} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Sort Options</SelectLabel>
-                <SelectItem value="high-profit">High Profit</SelectItem>
-                <SelectItem value="low-profit">Low Profit</SelectItem>
+                <SelectLabel>{t('sortOptions')}</SelectLabel>
+                <SelectItem value="high-profit">{t('highProfit')}</SelectItem>
+                <SelectItem value="low-profit">{t('lowProfit')}</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>
@@ -140,11 +142,11 @@ const CommissionsTable: React.FC<CommissionsTableProps> = ({ commissions, affili
         >               
          <TableHeader>
                   <TableRow>
-                    <TableHead>Commission Id</TableHead>
-                    <TableHead>Affiliate Link Id</TableHead>
-                    <TableHead>Product Title</TableHead>
-                    <TableHead>Profit</TableHead>
-                    <TableHead>Created At</TableHead>
+                    <TableHead>{t('commissionId')}</TableHead>
+                    <TableHead>{t('affiliateLinkId')}</TableHead>
+                    <TableHead>{t('productTitle')}</TableHead>
+                    <TableHead>{t('profit')}</TableHead>
+                    <TableHead>{t('createdAt')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -153,7 +155,7 @@ const CommissionsTable: React.FC<CommissionsTableProps> = ({ commissions, affili
                       <TableCell>{commission.commissionId}</TableCell>
                       <TableCell>{commission.affiliateLinkId}</TableCell>
                       <TableCell>{commission.productTitle}</TableCell>
-                      <TableCell>{commission.profit.toFixed(2)} TND</TableCell>
+                      <TableCell>{commission.profit.toFixed(2)} {t('tnd')}</TableCell>
                       <TableCell>
                       {new Date(commission.createdAt).toLocaleString()}
                     </TableCell>
@@ -169,8 +171,8 @@ const CommissionsTable: React.FC<CommissionsTableProps> = ({ commissions, affili
   <h1 className="text-center text-3xl font-bold">
     <CircleAlert />
   </h1>
-  <p className="text-center text-sm mt-2">No records of any Commissions made for now !</p>
-  <p className="text-center text-xs mt-2">New Commissions will appear here.</p>
+  <p className="text-center text-sm mt-2">{t('noCommissions')}</p>
+  <p className="text-center text-xs mt-2">{t('newCommissionsWillAppearHere')}</p>
 
 </div>
 

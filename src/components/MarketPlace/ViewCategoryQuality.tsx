@@ -22,12 +22,14 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { Category } from "@prisma/client";
 import { Eye } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 
 const ViewCategoryQuality = ( {category} : { category: Category } ) => {
 
 
     const [isOpen, setisOpen] = useState(false);
+    const t = useTranslations('MarketPlaceComponents');
 
 
     return (
@@ -62,19 +64,19 @@ const ViewCategoryQuality = ( {category} : { category: Category } ) => {
                ) : (
                 <div className="flex items-center justify-center cursor-pointer">
                 <Badge variant="secondary">
-                No images available for now
+                {t('noImagesAvailableForNow')}
 
                 </Badge>
                 </div>
                )}
         <AlertDialogFooter>
-        <AlertDialogCancel onClick={()=>setisOpen(false)}>Close</AlertDialogCancel>
+        <AlertDialogCancel onClick={()=>setisOpen(false)}>{t('close')}</AlertDialogCancel>
           </AlertDialogFooter>
           </AlertDialogContent>
     </AlertDialog>
 
       <Button onClick={() => setisOpen(true)} size={"sm"} variant="outline">
-      View {category.label} Quality <Eye size={"16"} className='ml-1'/>
+      {t('viewCategoryQuality', {label: category.label})} <Eye size={"16"} className='ml-1'/>
       </Button>
       </>
 

@@ -4,7 +4,7 @@ import {
   Bell,
   Home,
   LayoutDashboard,
-  Link,
+  Link2,
   Receipt,
   Settings,
   Shirt,
@@ -20,14 +20,15 @@ import { Separator } from "../ui/separator"
 import {  getUnreadAffiliateNotifications, getUser } from "@/actions/actions"
 import { useEffect, useState } from "react"
 import { AffiliateNotification } from "@prisma/client"
-import { getAffiliateIdByUserId } from '@/app/(sections)/affiliateDashboard/products/actions'
-import LoadingLink from '../LoadingLink'
+import Link from 'next/link'
+import { useTranslations } from 'next-intl';
 
 
 
 const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) => {
 
   const pathname = usePathname();
+  const t = useTranslations('AffiliateDashboardComponents');
 
   return (
     <div className="hidden w-[230px] border-r bg-muted/40 xl:block">
@@ -37,7 +38,7 @@ const SideBar = ({notifications} : {notifications : AffiliateNotification[]}) =>
 
 {/* logo */}
 
-<LoadingLink href="/">
+<Link href="/">
 <div
 style={{ width: '50px', height: '50px' }}
 className="h-full xl:right-0 sm:items-center"
@@ -50,14 +51,14 @@ alt="logo"
 draggable={false}
 />
 </div>
-</LoadingLink>
+</Link>
 
 {/* text */}
 <div className='text-sm  font-semibold'>
-<LoadingLink href="/">
-<p>Aesthetic Pro</p>
-<p>Platform ✨</p>
-</LoadingLink>
+<Link href="/">
+<p>{t('brandName')}</p>
+<p>{t('brandPlatform')}</p>
+</Link>
 </div>
 
 </div>
@@ -65,7 +66,7 @@ draggable={false}
         <div className="flex-1 mt-4">
           <nav className="grid items-start space-y-2 px-2 text-sm font-medium lg:px-4">
          
-          <LoadingLink
+          <Link
           href="/affiliateDashboard"
           className={cn(
             buttonVariants({
@@ -73,17 +74,17 @@ draggable={false}
               className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
             }),
             {
-              "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard",
+              "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard"),
             }
           )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <LayoutDashboard className="h-4 w-4" />
               </div>
-              Dashboard
-            </LoadingLink>
+              {t('dashboard')}
+            </Link>
 
-            <LoadingLink
+            <Link
             href="/affiliateDashboard/products"
             className={cn(
               buttonVariants({
@@ -91,17 +92,17 @@ draggable={false}
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/products",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/products"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Shirt className="h-4 w-4" />
               </div>
-              Products
-            </LoadingLink>
+              {t('products')}
+            </Link>
 
-            <LoadingLink 
+            <Link 
             href="/affiliateDashboard/manageLinks"
             className={cn(
               buttonVariants({
@@ -109,19 +110,19 @@ draggable={false}
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/manageLinks",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/manageLinks"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
-                <Link className="h-4 w-4" />
+                <Link2 className="h-4 w-4" />
               </div>
-              Manage Links
-            </LoadingLink>
+              {t('manageLinks')}
+            </Link>
 
   
 
-            <LoadingLink
+            <Link
             href="/affiliateDashboard/orders"
             className={cn(
               buttonVariants({
@@ -129,17 +130,17 @@ draggable={false}
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/orders",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/orders"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <ShoppingBasket  className="h-4 w-4" />
               </div>
-              Orders
-            </LoadingLink>
+              {t('orders')}
+            </Link>
             
-            <LoadingLink
+            <Link
             href="/affiliateDashboard/wallet"
             className={cn(
               buttonVariants({
@@ -147,17 +148,17 @@ draggable={false}
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/wallet",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/wallet"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Wallet className="h-4 w-4" />
               </div>
-              Wallet
-            </LoadingLink>
+              {t('wallet')}
+            </Link>
             
-            <LoadingLink
+            <Link
             href="/affiliateDashboard/requests"
             className={cn(
               buttonVariants({
@@ -165,17 +166,17 @@ draggable={false}
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/requests",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/requests"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Receipt className="h-4 w-4" />
               </div>
-              Requested Payments
-            </LoadingLink>
+              {t('requestedPayments')}
+            </Link>
 
-            <LoadingLink
+            <Link
             href="/affiliateDashboard/notifications"
             className={cn(
               buttonVariants({
@@ -183,14 +184,14 @@ draggable={false}
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/notifications",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/notifications"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Bell className="h-4 w-4" />
               </div>
-              Notifications
+              {t('notifications')}
               {notifications && notifications?.length > 0 && (
               <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                 {
@@ -198,12 +199,12 @@ draggable={false}
                   }
               </Badge>
                )}
-            </LoadingLink>
+            </Link>
 
 
             <Separator className="my-3" />
 
-            <LoadingLink
+            <Link
             href="/affiliateDashboard/settings"
             className={cn(
               buttonVariants({
@@ -211,17 +212,17 @@ draggable={false}
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/settings",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/settings"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Settings className="h-4 w-4" />
               </div>
-              Settings
-            </LoadingLink>
+              {t('settings')}
+            </Link>
 
-            <LoadingLink
+            <Link
             href="/MarketPlace"
             className={cn(
               buttonVariants({
@@ -229,7 +230,7 @@ draggable={false}
                 className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/MarketPlace"),
               }
             )}
 
@@ -237,8 +238,8 @@ draggable={false}
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Home className="h-4 w-4" />
               </div>
-              MarketPlace
-            </LoadingLink>
+              {t('marketplace')}
+            </Link>
           </nav>
         </div>
       </div>

@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { AlertDialog, AlertDialogContent, AlertDialogDescription, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
 import MaxWidthWrapper from "../MaxWidthWrapper";
 import { searchProducts } from "@/actions/actions";
+import { useTranslations } from 'next-intl';
 
 const SearchBar = () => {
   const router = useRouter();
@@ -16,6 +17,7 @@ const SearchBar = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [data, setData] = useState<string[]>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const t = useTranslations('MarketPlaceComponents');
 
   const handleSearch = () => {
     setIsPending(true);
@@ -91,12 +93,12 @@ useEffect(() => {
             <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
             <AlertDialogHeader className="flex  justify-center items-center">
               <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
-              Searching for products!
-                </AlertDialogTitle>
-                <AlertDialogDescription className="flex flex-col items-center">
-                  This will take a moment.
-                </AlertDialogDescription>
-                <div className="text-blue-700 mb-2 text-center">
+                {t('searchingForProducts')}
+              </AlertDialogTitle>
+              <AlertDialogDescription className="flex flex-col items-center">
+                {t('thisWillTakeAMoment')}
+              </AlertDialogDescription>
+              <div className="text-blue-700 mb-2 text-center">
                         <Loader className="animate-spin" />
                       </div>  
               </AlertDialogHeader>
@@ -108,13 +110,13 @@ useEffect(() => {
             <Input
               type="search"
               className="w-[500px] rounded-xl border-2 border-blue-500"
-              placeholder="Search for products..."
+              placeholder={t('searchForProducts')}
               value={searchQuery}
               onChange={handleChange}
               onKeyPress={handleKeyPress}
             />
             <Button disabled={searchQuery === ""} onClick={handleSearch} className="bg-blue-600 text-white px-4 py-2 rounded-xl">
-              Search
+              {t('search')}
               <Search size={14} className='ml-1' />
             </Button>
           </div>
@@ -124,6 +126,7 @@ useEffect(() => {
               <ul className="bg-gray-50 text-gray-800 border w-[100%] md:w-[80%] lg:w-[58%] xl:w-[55%] h-[10%] border-gray-300 mt-2 rounded-md shadow-lg">
                 <li className="px-4 py-2 justify-center items-center flex text-blue-500">
                   <Loader className="animate-spin" />
+                  <span className="ml-2">{t('searching')}...</span>
                 </li>
               </ul>
             </div>

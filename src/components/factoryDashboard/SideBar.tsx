@@ -13,7 +13,8 @@ import { usePathname, useRouter } from "next/navigation"
 import { Separator } from "../ui/separator"
 import { getFactoryDashboardCounts } from "@/actions/actions"
 import { useEffect, useState } from "react"
-import LoadingLink from '../LoadingLink'
+import Link from 'next/link'
+import { useTranslations } from 'next-intl';
 
 
 interface Count {
@@ -25,6 +26,7 @@ const SideBar = ({totalCounts} : {totalCounts : Count}) => {
     const pathname = usePathname();
     const router = useRouter()
     const [count, setCount] = useState<Count>(); // Initialize count state
+    const t = useTranslations('FactoryDashboardComponents');
 
 
     useEffect(() => {
@@ -48,7 +50,7 @@ const SideBar = ({totalCounts} : {totalCounts : Count}) => {
 
           {/* logo */}
 
-          <LoadingLink href="/">
+          <Link href="/">
           <div
           style={{ width: '50px', height: '50px' }}
           className="h-full xl:right-0 sm:items-center"
@@ -61,14 +63,14 @@ const SideBar = ({totalCounts} : {totalCounts : Count}) => {
           draggable={false}
           />
           </div>
-          </LoadingLink>
+          </Link>
 
           {/* text */}
           <div className='text-sm  font-semibold'>
-          <LoadingLink href="/">
-          <p>Aesthetic Pro</p>
-          <p>Platform ✨</p>
-          </LoadingLink>
+          <Link href="/">
+          <p>{t('brandName')}</p>
+          <p>{t('brandPlatform')}</p>
+          </Link>
           </div>
 
           </div>
@@ -76,7 +78,7 @@ const SideBar = ({totalCounts} : {totalCounts : Count}) => {
         <div className="flex-1 mt-4">
           <nav className="grid items-start space-y-2 px-2 text-sm font-medium lg:px-4">
          
-          <LoadingLink
+          <Link
           href="/factoryDashboard"
           className={cn(
            buttonVariants({
@@ -84,17 +86,17 @@ const SideBar = ({totalCounts} : {totalCounts : Count}) => {
              className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
            }),
            {
-             "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/factoryDashboard",
+             "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/factoryDashboard"),
            }
          )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <LayoutDashboard className="h-4 w-4" />
               </div>
-              Dashboard
-            </LoadingLink>
+              {t('dashboard')}
+            </Link>
 
-            <LoadingLink
+            <Link
                       href="/factoryDashboard/orders"
                       className={cn(
                        buttonVariants({
@@ -102,7 +104,7 @@ const SideBar = ({totalCounts} : {totalCounts : Count}) => {
                          className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
                        }),
                        {
-                         "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/factoryDashboard/orders",
+                         "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/factoryDashboard/orders"),
                        }
                      )}
             >
@@ -110,7 +112,7 @@ const SideBar = ({totalCounts} : {totalCounts : Count}) => {
                 <ShoppingBasket  className="h-4 w-4" />
               </div>
               
-              Manage Orders
+              {t('manageOrders')}
               {(count?.notPrintedOrders ?? 0) > 0 && (
                 <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {
@@ -118,7 +120,7 @@ const SideBar = ({totalCounts} : {totalCounts : Count}) => {
                     }
                 </Badge>
                 )}
-            </LoadingLink>
+            </Link>
 
 
 
@@ -127,7 +129,7 @@ const SideBar = ({totalCounts} : {totalCounts : Count}) => {
 
 
 
-            <LoadingLink
+            <Link
                       href="/MarketPlace"
                       className={cn(
                        buttonVariants({
@@ -135,15 +137,15 @@ const SideBar = ({totalCounts} : {totalCounts : Count}) => {
                          className: 'justify-start gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
                        }),
                        {
-                         "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace",
+                         "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-200 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/MarketPlace"),
                        }
                      )}      
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Home className="h-4 w-4" />
               </div>
-              MarketPlace
-            </LoadingLink>
+              {t('marketplace')}
+            </Link>
           </nav>
         </div>
       </div>

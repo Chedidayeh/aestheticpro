@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/chart"
 import { getProductViewsChartData } from "@/actions/actions"
 import LoadingState from "../LoadingState"
+import { useTranslations } from 'next-intl';
 
 const chartConfig = {
   totalViews: {
@@ -49,7 +50,7 @@ interface ChartData {
 
 
 export function Component({storeId} : {storeId : string}) {
-
+  const t = useTranslations('SellerDashboardComponents');
   const [date, setDate] = React.useState<Date>(new Date()); // Default to today's date
   const [chartData, setChartData] = React.useState<ChartData[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -92,9 +93,9 @@ export function Component({storeId} : {storeId : string}) {
     <Card className="col-span-4" x-chunk="dashboard-01-chunk-4">
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Your Products Stats</CardTitle>
+          <CardTitle>{t('yourProductsStats')}</CardTitle>
           <CardDescription>
-            Showing total products views per month
+            {t('showingTotalProductsViewsPerMonth')}
           </CardDescription>
           <Popover >
       <PopoverTrigger asChild>
@@ -106,7 +107,7 @@ export function Component({storeId} : {storeId : string}) {
           )}
         >
           <CalendarIcon />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {date ? format(date, "PPP") : <span>{t('pickADate')}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
@@ -130,12 +131,12 @@ export function Component({storeId} : {storeId : string}) {
             className="flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 rounded-t-lg sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
           >
             <span className="text-xs text-muted-foreground">
-              total
+              {t('total')}
             </span>
             <span className="text-lg font-bold leading-none sm:text-3xl">
             <div className="flex items-center gap-2">
               <span>{totalViews.toLocaleString()}</span>
-              <p className="text-xs">Views/PerMonth</p>
+              <p className="text-xs">{t('viewsPerMonth')}</p>
             </div>
             </span>
           </div>
@@ -226,7 +227,7 @@ export function Component({storeId} : {storeId : string}) {
         ) : (
   <div className="flex items-center justify-center h-[240px]">
     <div className='flex flex-col items-center justify-start'>
-    <p className='text-sm text-muted-foreground'>Fetching Data...</p>
+    <p className='text-sm text-muted-foreground'>{t('fetchingData')}</p>
     <Loader className="text-blue-700 h-6 w-6 animate-spin mt-3" />  
     </div>
   </div>

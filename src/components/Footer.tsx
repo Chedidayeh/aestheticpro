@@ -6,11 +6,12 @@ import NextImage from 'next/image'
 import MaxWidthWrapper from './MaxWidthWrapper'
 import { FaFacebook, FaInstagram } from 'react-icons/fa'
 import { getPlatformForTheWebsite, getUser } from '@/actions/actions'
-import LoadingLink from './LoadingLink'
 import Link from 'next/link'
 import { Platform, User } from '@prisma/client'
+import { useTranslations } from 'next-intl';
 
 const Footer = ({user , platform} : {user : User , platform : Platform}) => {
+  const t = useTranslations('CommonComponents');
 
 
   const handleFacebookIconClick = () => {
@@ -32,29 +33,29 @@ const Footer = ({user , platform} : {user : User , platform : Platform}) => {
 
         <div className="p-5 text-center sm:text-start">
           <ul>
-            <p className="font-bold text-xl pb-4">Services</p>
+            <p className="font-bold text-xl pb-4">{t('services')}</p>
 
 
             {platform.closeAffiliateProgram ? (
-            <LoadingLink href="/MarketPlace">
+            <Link href="/MarketPlace">
               <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                Start Shopping
+                {t('startShopping')}
               </li>
-            </LoadingLink>
+            </Link>
           ) : (
             <>
               {!user || user?.isAffiliate === false ? (
-                <LoadingLink href="/createAffiliateAccount">
+                <Link href="/createAffiliateAccount">
                   <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                    Affiliate Marketing <span className="text-green-500">$</span>
+                    {t('affiliateMarketing')} <span className="text-green-500">$</span>
                   </li>
-                </LoadingLink>
+                </Link>
               ) : (
-                <LoadingLink href="/affiliateDashboard">
+                <Link href="/affiliateDashboard">
                   <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                    Affiliate Dashboard
+                    {t('affiliateDashboard')}
                   </li>
-                </LoadingLink>
+                </Link>
               )}
             </>
           )}
@@ -65,60 +66,60 @@ const Footer = ({user , platform} : {user : User , platform : Platform}) => {
            
 
           {(!user || (user.userType === "USER" && !platform?.closeStoreCreation)) && (
-            <LoadingLink href="/MarketPlace/create-seller-profile">
+            <Link href="/MarketPlace/create-seller-profile">
               <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                Become a Seller <span className="text-green-500">$</span>
+                {t('becomeSeller')} <span className="text-green-500">$</span>
               </li>
-            </LoadingLink>
+            </Link>
           )}
 
           {user?.userType === "USER" && platform?.closeStoreCreation && (
             <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-              Become a Seller : Soon Available!
+              {t('becomeSellerSoon')}
             </li>
           )}
 
             
             {user && user.userType === "SELLER" && (
-              <LoadingLink href={"/sellerDashboard"}>
+              <Link href={"/sellerDashboard"}>
               <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-              Seller Dashboard
+              {t('sellerDashboard')}
             </li>
-            </LoadingLink>
+            </Link>
             )}
 
             {user && user.userType === "ADMIN" && (
-              <LoadingLink href={"/adminDashboard"}>
+              <Link href={"/adminDashboard"}>
               <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-              Admin Dashboard
+              {t('adminDashboard')}
             </li>
-            </LoadingLink>
+            </Link>
             )}
 
             {user && user.userType === "FACTORY" && (
-              <LoadingLink href={"/factoryDashboard"}>
+              <Link href={"/factoryDashboard"}>
               <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-              Factory Dashboard
+              {t('factoryDashboard')}
             </li>
-            </LoadingLink>
+            </Link>
             )}
 
           </ul>
         </div>
         <div className="p-5 text-center sm:text-start">
           <ul>
-            <p className="font-bold text-xl pb-4">Platform</p>
-            <LoadingLink href={"/about"}>
+            <p className="font-bold text-xl pb-4">{t('platform')}</p>
+            <Link href={"/about"}>
               <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                About Us
+                {t('aboutUs')}
               </li>
-            </LoadingLink>
+            </Link>
 
-            <LoadingLink href={"/contact"}>
+            <Link href={"/contact"}>
             <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                Contact
+                {t('contact')}
                 </li>
-          </LoadingLink>  
+          </Link>  
 
 
 
@@ -126,17 +127,17 @@ const Footer = ({user , platform} : {user : User , platform : Platform}) => {
         </div>
         <div className="p-5 text-center sm:text-start">
           <ul>
-            <p className="font-bold text-xl pb-4">Policy</p>
-            <LoadingLink href='/sellingPolicy'>
+            <p className="font-bold text-xl pb-4">{t('policy')}</p>
+            <Link href='/sellingPolicy'>
             <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-              Selling Policy
+              {t('sellingPolicy')}
               </li>
-            </LoadingLink>
-            <LoadingLink href={"/buyingPolicy"}>
+            </Link>
+            <Link href={"/buyingPolicy"}>
               <li className="text-muted-foreground text-sm pb-2 font-semibold hover:text-blue-600 cursor-pointer">
-                Buying Policy
+                {t('buyingPolicy')}
               </li>
-            </LoadingLink>
+            </Link>
 
           </ul>
         </div>
@@ -147,19 +148,19 @@ const Footer = ({user , platform} : {user : User , platform : Platform}) => {
       <div className='flex flex-col sm:flex-row sm:justify-between justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4'>
         <div className='text-center sm:text-left'>
           <p className='text-sm font-semibold text-muted-foreground mt-1 mx-4'>
-            &copy; {new Date().getFullYear()}. All rights reserved. AestheticPro.tn
+            &copy; {new Date().getFullYear()}. {t('allRightsReserved')}
           </p>
         </div>
 
         <div className='flex items-center justify-center'>
           <div className='flex flex-col sm:flex-row gap-4 sm:space-x-8'>
 
-          <LoadingLink href='/privacyPolicy' className="text-muted-foreground text-sm mt-1 font-semibold hover:text-blue-600 cursor-pointer">
-              Privacy Policy
-            </LoadingLink>
+          <Link href='/privacyPolicy' className="text-muted-foreground text-sm mt-1 font-semibold hover:text-blue-600 cursor-pointer">
+              {t('privacyPolicy')}
+            </Link>
   
             <div className="text-muted-foreground text-sm font-semibold flex flex-col sm:flex-row items-center justify-center gap-2">
-              Social Media:
+              {t('socialMedia')}
               <div className="flex gap-3 mb-1">
               <div onClick={handleFacebookIconClick} className='border-1 rounded-full bg-white'>
               <FaFacebook className="text-2xl cursor-pointer hover:text-blue-600 text-blue-600" />

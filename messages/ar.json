@@ -1,0 +1,13 @@
+{
+    "HomePage": {
+      "title": "Hello world!",
+      "about": "Go to the about page"
+    },
+    "SellerProductsPage": {
+      "accepted": "مقبول",
+      "private": "خاص",
+      "refused": "مرفوض",
+      "under_review": "قيد المراجعة",
+      "download_product": "تحميل المنتج"
+    }
+  }

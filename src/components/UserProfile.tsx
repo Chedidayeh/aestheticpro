@@ -19,28 +19,31 @@ import LoadingState from "./LoadingState"
 import { useState } from "react"
 import { useToast } from "./ui/use-toast"
 import { useRouter } from "next/navigation"
-import LoadingLink from "./LoadingLink"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
+import { ModeToggle } from "./ModeToggle"
+import { useTranslations } from 'next-intl';
 
 const UserProfile = ({ user , platform } : {user : User , platform : Platform | null})=>{
 
   const [open, setOpen] = useState<boolean>(false);
   const { toast } = useToast()
   const router = useRouter()
+  const t = useTranslations('CommonComponents');
 
   const create = async () => {
     try {
       setOpen(true);
       await createPlatform(user.id);
       toast({
-        title: 'Platform Was Successfully Created',
+        title: t('platformCreatedTitle'),
         variant: 'default',
       });
     } catch (error) {
       console.error('Error creating platform:', error);
       toast({
-        title: 'Error Creating Platform',
-        description: 'An error occurred while creating the platform. Please try again later.',
+        title: t('errorCreatingPlatformTitle'),
+        description: t('errorCreatingPlatformDescription'),
         variant: 'destructive',
       });
     } finally {
@@ -55,8 +58,8 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
     } catch (error) {
       console.error('Error signing out:', error);
       toast({
-        title: 'Error Signing Out',
-        description: 'An error occurred while signing out. Please try again later.',
+        title: t('errorSigningOutTitle'),
+        description: t('errorSigningOutDescription'),
         variant: 'destructive',
       });
       setOpen(false);
@@ -97,7 +100,7 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
               </div>
             </div>
               <DropdownMenuLabel>
-                <p>My Account</p>
+                <p>{t('myAccount')}</p>
                 </DropdownMenuLabel>
                 
                   <p className="text-xs ml-2 text-muted-foreground">{user.email}</p>
@@ -105,7 +108,7 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                   {user.userType === "SELLER" && (
                     <>
                   <DropdownMenuItem>
-                  <LoadingLink 
+                  <Link 
                   href="/sellerDashboard"
                   className={cn(
                     buttonVariants({
@@ -115,8 +118,8 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                     })
                   )}
                   >
-                    Seller Dashboard ✨
-                  </LoadingLink>
+                    {t('sellerDashboard')} ✨
+                  </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
 
@@ -125,7 +128,7 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                   {user.userType === "ADMIN" && (
                     <>
                   <DropdownMenuItem>
-                  <LoadingLink 
+                  <Link 
                   href="/adminDashboard"
                   className={cn(
                     buttonVariants({
@@ -135,8 +138,8 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                     })
                   )}
                   >
-                    Admin Dashboard ✨
-                  </LoadingLink>
+                    {t('adminDashboard')} ✨
+                  </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
 
@@ -145,7 +148,7 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                   {user.userType === "FACTORY" && (
                     <>
                   <DropdownMenuItem>
-                    <LoadingLink 
+                    <Link 
                   href="/factoryDashboard"
                   className={cn(
                     buttonVariants({
@@ -155,8 +158,8 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                     })
                   )}
                   >
-                    Factory Dashboard ✨
-                  </LoadingLink>
+                    {t('factoryDashboard')} ✨
+                  </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
 
@@ -165,7 +168,7 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                   {user.isAffiliate && (
                     <>
                   <DropdownMenuItem>
-                    <LoadingLink 
+                    <Link 
                   href="/affiliateDashboard"
                   className={cn(
                     buttonVariants({
@@ -175,8 +178,8 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                     })
                   )}
                   >
-                    Affiliate Dashboard ✨
-                  </LoadingLink>
+                    {t('affiliateDashboard')} ✨
+                  </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
 
@@ -187,8 +190,8 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
               <DropdownMenuItem>
                 
               <Button onClick={()=>SignOutUser()} size={"sm"}  variant={"ghost"} className="flex justify-between items-center w-full">
-              Sign out                 
-              <UserX size={20} />
+              {t('signOut')}                 
+              <UserX size={16} />
               </Button>
               </DropdownMenuItem>
 
@@ -198,7 +201,7 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>
                     <Button onClick={create} size={"sm"}  variant={"ghost"} className="flex justify-between items-center w-full">
-                      <span> Create Platform</span>
+                      <span>{t('createPlatform')}</span>
                     </Button>
                   </DropdownMenuItem>
                   </> 
@@ -210,7 +213,7 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
 
         ) : (
           <>
-          <LoadingLink 
+          <Link 
             href="/auth/sign-in"
             className={cn(
               buttonVariants({
@@ -219,9 +222,9 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                 className : "hover:text-blue-500 border border-muted-foreground"
               })
             )}>
-            Sign In
+            {t('signIn')}
             <UserPlus size={14} className="ml-1" />
-            </LoadingLink>
+            </Link>
           </>
         )}
                 

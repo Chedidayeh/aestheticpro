@@ -7,7 +7,6 @@ import { usePathname } from 'next/navigation';
 import type { Dispatch, SetStateAction } from 'react';
 import { Button, buttonVariants } from './ui/button';
 import { saveRedirectUrl } from '@/store/actions/action';
-import LoadingLink from './LoadingLink';
 import {
   AlertDialog,
   AlertDialogContent,
@@ -15,6 +14,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 const LoginModal = ({
   isOpen,
   setIsOpen,
@@ -25,6 +26,7 @@ const LoginModal = ({
 
   const pathname = usePathname();
   const dispatch = useDispatch();
+  const t = useTranslations('CommonComponents');
 
   useEffect(() => {
     if (isOpen) {
@@ -38,30 +40,27 @@ const LoginModal = ({
 <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
 <AlertDialogHeader>
       <AlertDialogTitle className="text-xl text-center font-bold tracking-tight">
-      Sign In to continue
+        {t('signInToContinue')}
       </AlertDialogTitle>
       <AlertDialogDescription className="text-sm text-center py-2">
-        Please login and{" "}
-        <span className="font-medium text-blue-500">
-          you'll be redirected to this page!
-        </span>
+        {t('pleaseLoginRedirect')}
       </AlertDialogDescription>
     </AlertDialogHeader>
 
     <div className="grid grid-cols-2 gap-2">
     <Button onClick={() => setIsOpen(false)} variant={"secondary"}>
-        Cancel
+        {t('cancel')}
       </Button>
 
-      <LoadingLink
+      <Link
         className={buttonVariants({
           variant: "default",
           className: "text-white",
         })}
         href="/auth/sign-in"
       >
-        Login
-      </LoadingLink>
+        {t('login')}
+      </Link>
 
 
     </div>

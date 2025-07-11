@@ -19,7 +19,8 @@ import { getFactoryDashboardCounts, getUser } from "@/actions/actions"
 import { ModeToggle } from "../ModeToggle"
 import Profile from "./Profile"
 import { User } from "@prisma/client"
-import LoadingLink from "../LoadingLink"
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 interface Count {
   notPrintedOrders: number;
@@ -28,6 +29,7 @@ interface Count {
 const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
 
   const pathname = usePathname();
+  const t = useTranslations('FactoryDashboardComponents');
       // open
       const [open, setOpen] = useState(false);
   
@@ -44,7 +46,7 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 md:hidden">
             <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle navigation menu</span>
+            <span className="sr-only">{t('toggleNavigationMenu')}</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col w-full">
@@ -53,7 +55,7 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
         
         {/* logo */}
         
-        <LoadingLink href="/">
+        <Link href="/">
         <div
         style={{ width: '50px', height: '50px' }}
         className="h-full xl:right-0 sm:items-center"
@@ -66,14 +68,14 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
         draggable={false}
         />
         </div>
-        </LoadingLink>
+        </Link>
         
         {/* text */}
         <div className='text-sm  font-semibold'>
-        <LoadingLink href="/">
-        <p>Aesthetic Pro</p>
-        <p>Platform ✨</p>
-        </LoadingLink>
+        <Link href="/">
+        <p>{t('brandName')}</p>
+        <p>{t('brandPlatform')}</p>
+        </Link>
         </div>
         
         </div>
@@ -86,7 +88,7 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
 
 
 
-          <LoadingLink
+          <Link
           href="/factoryDashboard"
           className={cn(
            buttonVariants({
@@ -94,17 +96,17 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
              className: 'justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
            }),
            {
-             "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/factoryDashboard",
+             "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/factoryDashboard"),
            }
          )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <LayoutDashboard className="h-4 w-4" />
               </div>
-              Dashboard
-            </LoadingLink>
+              {t('dashboard')}
+            </Link>
 
-            <LoadingLink
+            <Link
                       href="/factoryDashboard/orders"
                       className={cn(
                        buttonVariants({
@@ -112,15 +114,14 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
                          className: 'justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
                        }),
                        {
-                         "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/factoryDashboard/orders",
+                         "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/factoryDashboard/orders"),
                        }
                      )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <ShoppingBasket  className="h-4 w-4" />
               </div>
-              
-              Manage Orders
+              {t('manageOrders')}
               {(totalCounts?.notPrintedOrders ?? 0) > 0 && (
                 <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {
@@ -128,7 +129,7 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
                     }
                 </Badge>
                 )}
-            </LoadingLink>
+            </Link>
 
 
 
@@ -137,7 +138,7 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
 
 
 
-            <LoadingLink
+            <Link
                       href="/MarketPlace"
                       className={cn(
                        buttonVariants({
@@ -145,15 +146,15 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
                          className: 'justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
                        }),
                        {
-                         "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace",
+                         "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/MarketPlace"),
                        }
                      )}      
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Home className="h-4 w-4" />
               </div>
-              MarketPlace
-            </LoadingLink>
+              {t('marketplace')}
+            </Link>
 
           </nav>
 

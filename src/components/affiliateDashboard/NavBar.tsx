@@ -6,7 +6,7 @@ import {
   Bell,
   Home,
   LayoutDashboard,
-  Link,
+  Link2,
   Menu,
   Receipt,
   Settings,
@@ -34,13 +34,14 @@ import { getUnreadAffiliateNotifications, getUser } from "@/actions/actions"
 import { AffiliateNotification, User } from "@prisma/client"
 import { ModeToggle } from "../ModeToggle"
 import React from "react"
-import { getAffiliateIdByUserId } from "@/app/(sections)/affiliateDashboard/products/actions"
 import Profile from "./Profile"
-import LoadingLink from "../LoadingLink"
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
   const NavBar = ({user , notifications} : {user : User ,notifications : AffiliateNotification[]}) => {
 
   const pathname = usePathname();
+  const t = useTranslations('AffiliateDashboardComponents');
     // open
     const [open, setOpen] = useState(false);
 
@@ -57,7 +58,7 @@ import LoadingLink from "../LoadingLink"
         <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 xl:hidden">
             <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle navigation menu</span>
+            <span className="sr-only">{t('toggleNavigationMenu')}</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col w-full">
@@ -67,7 +68,7 @@ import LoadingLink from "../LoadingLink"
           
           {/* logo */}
           
-          <LoadingLink href="/">
+          <Link href="/">
           <div
           style={{ width: '50px', height: '50px' }}
           className="h-full xl:right-0 sm:items-center"
@@ -80,14 +81,14 @@ import LoadingLink from "../LoadingLink"
           draggable={false}
           />
           </div>
-          </LoadingLink>
+          </Link>
           
           {/* text */}
           <div className='text-sm  font-semibold'>
-          <LoadingLink href="/">
-          <p>Aesthetic Pro</p>
-          <p>Platform ✨</p>
-          </LoadingLink>
+          <Link href="/">
+          <p>{t('brandName')}</p>
+          <p>{t('brandPlatform')}</p>
+          </Link>
           </div>
           
           </div>
@@ -101,7 +102,7 @@ import LoadingLink from "../LoadingLink"
 
 
 
-          <LoadingLink
+          <Link
           href="/affiliateDashboard"
           className={cn(
             buttonVariants({
@@ -109,17 +110,17 @@ import LoadingLink from "../LoadingLink"
               className: 'jjustify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
             }),
             {
-              "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard",
+              "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard"),
             }
           )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <LayoutDashboard className="h-4 w-4" />
               </div>
-              Dashboard
-            </LoadingLink>
+              {t('dashboard')}
+            </Link>
 
-            <LoadingLink
+            <Link
             href="/affiliateDashboard/products"
             className={cn(
               buttonVariants({
@@ -127,17 +128,17 @@ import LoadingLink from "../LoadingLink"
                 className: 'jjustify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/products",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/products"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Shirt className="h-4 w-4" />
               </div>
-              Products
-            </LoadingLink>
+              {t('products')}
+            </Link>
 
-            <LoadingLink 
+            <Link 
             href="/affiliateDashboard/manageLinks"
             className={cn(
               buttonVariants({
@@ -145,19 +146,19 @@ import LoadingLink from "../LoadingLink"
                 className: 'jjustify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/manageLinks",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/manageLinks"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
-                <Link className="h-4 w-4" />
+                <Link2 className="h-4 w-4" />
               </div>
-              Manage Links
-            </LoadingLink>
+              {t('manageLinks')}
+            </Link>
 
   
 
-            <LoadingLink
+            <Link
             href="/affiliateDashboard/orders"
             className={cn(
               buttonVariants({
@@ -165,17 +166,17 @@ import LoadingLink from "../LoadingLink"
                 className: 'jjustify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/orders",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/orders"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <ShoppingBasket  className="h-4 w-4" />
               </div>
-              Orders
-            </LoadingLink>
+              {t('orders')}
+            </Link>
             
-            <LoadingLink
+            <Link
             href="/affiliateDashboard/wallet"
             className={cn(
               buttonVariants({
@@ -183,17 +184,17 @@ import LoadingLink from "../LoadingLink"
                 className: 'jjustify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/wallet",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/wallet"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Wallet className="h-4 w-4" />
               </div>
-              Wallet
-            </LoadingLink>
+              {t('wallet')}
+            </Link>
             
-            <LoadingLink
+            <Link
             href="/affiliateDashboard/requests"
             className={cn(
               buttonVariants({
@@ -201,17 +202,17 @@ import LoadingLink from "../LoadingLink"
                 className: 'jjustify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/requests",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/requests"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Receipt className="h-4 w-4" />
               </div>
-              Requested Payments
-            </LoadingLink>
+              {t('requestedPayments')}
+            </Link>
 
-            <LoadingLink
+            <Link
             href="/affiliateDashboard/notifications"
             className={cn(
               buttonVariants({
@@ -219,14 +220,14 @@ import LoadingLink from "../LoadingLink"
                 className: 'jjustify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/notifications",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/notifications"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Bell className="h-4 w-4" />
               </div>
-              Notifications
+              {t('notifications')}
               {notifications && notifications?.length > 0 && (
               <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                 {
@@ -234,12 +235,12 @@ import LoadingLink from "../LoadingLink"
                   }
               </Badge>
                )}
-            </LoadingLink>
+            </Link>
 
 
             <Separator className="my-3" />
 
-            <LoadingLink
+            <Link
             href="/affiliateDashboard/settings"
             className={cn(
               buttonVariants({
@@ -247,17 +248,17 @@ import LoadingLink from "../LoadingLink"
                 className: 'jjustify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/affiliateDashboard/settings",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/affiliateDashboard/settings"),
               }
             )}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Settings className="h-4 w-4" />
               </div>
-              Settings
-            </LoadingLink>
+              {t('settings')}
+            </Link>
 
-            <LoadingLink
+            <Link
             href="/MarketPlace"
             className={cn(
               buttonVariants({
@@ -265,7 +266,7 @@ import LoadingLink from "../LoadingLink"
                 className: 'jjustify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
               }),
               {
-                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace",
+                "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/MarketPlace"),
               }
             )}
 
@@ -273,8 +274,8 @@ import LoadingLink from "../LoadingLink"
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Home className="h-4 w-4" />
               </div>
-              MarketPlace
-            </LoadingLink>
+              {t('marketplace')}
+            </Link>
 
           </nav>
 
@@ -298,15 +299,15 @@ import LoadingLink from "../LoadingLink"
     <Bell
         className={`h-5 w-5 ${notifications.length > 0 ? 'animate-bounce text-yellow-500' : ''}`}
       />
-      <span className="sr-only">Notifications</span>
+      <span className="sr-only">{t('notifications')}</span>
     </Button>
   </DropdownMenuTrigger>
   <DropdownMenuContent align="end">
   <DropdownMenuLabel className="flex justify-between items-center">
-  <span>My Notifications</span>
-  <LoadingLink href={"/affiliateDashboard/notifications"}>
-    <Button size={"sm"} variant={"link"}>View all</Button>
-  </LoadingLink>
+  <span>{t('myNotifications')}</span>
+  <Link href={"/affiliateDashboard/notifications"}>
+    <Button size={"sm"} variant={"link"}>{t('viewAll')}</Button>
+  </Link>
 </DropdownMenuLabel>
 
     <DropdownMenuSeparator />
@@ -327,7 +328,7 @@ import LoadingLink from "../LoadingLink"
         </React.Fragment>
       ))
     ) : (
-      <DropdownMenuItem>You don't have any new notifications for now !</DropdownMenuItem>
+      <DropdownMenuItem>{t('noNewNotifications')}</DropdownMenuItem>
     )}
   </DropdownMenuContent>
 </DropdownMenu>

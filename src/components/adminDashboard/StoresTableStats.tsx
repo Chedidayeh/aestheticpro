@@ -21,6 +21,7 @@ import { ScrollArea } from '../ui/scroll-area';
 import { getAdminStoreStats } from '@/actions/actions';
 import { Loader, Star } from 'lucide-react';
 import { Badge } from '../ui/badge';
+import { useTranslations } from 'next-intl';
 
 interface ChartData {
   storeId : string
@@ -37,27 +38,27 @@ interface ChartData {
 
 const chartConfig = {
   totalRevenue: {
-    label: "Total Revenue",
+    label: 'Total Revenue',
     color: "hsl(var(--chart-1))",
   },
   totalSales: {
-    label: "Total Sales",
+    label: 'Total Sales',
     color: "hsl(var(--chart-2))",
   },
   totalProducts: {
-    label: "Total Products",
+    label: 'Total Products',
     color: "hsl(var(--chart-3))",
   },
   totalDesigns: {
-    label: "Total Designs",
+    label: 'Total Designs',
     color: "hsl(var(--chart-5))",
   },
   totalFollowers: {
-    label: "Total Followers",
+    label: 'Total Followers',
     color: "hsl(var(--chart-1))",
   },
   totalViews: {
-    label: "Total Views",
+    label: 'Total Views',
     color: "hsl(var(--chart-2))",
   },
 } satisfies Record<string, { label: string; color: string }>;
@@ -65,6 +66,7 @@ const chartConfig = {
 // Accept storeId as a prop
 export function StoresTableStats() {
 
+  const t = useTranslations('AdminDashboardComponents');
   const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig>(
     "totalRevenue"
   );
@@ -122,9 +124,9 @@ export function StoresTableStats() {
   return (
     <Card className="w-full">
       <CardHeader className="bg-muted/50 rounded-t-lg">
-        <CardTitle className="text-lg">Store Stats</CardTitle>
+        <CardTitle className="text-lg">{t('storeStats')}</CardTitle>
         <CardDescription>
-            <p>Total stores is : {chartData.length} </p>
+            <p>{t('totalStoresIs', {count: chartData.length})}</p>
         </CardDescription>
       </CardHeader>
 
@@ -159,10 +161,10 @@ export function StoresTableStats() {
         >    
           <TableHeader>
             <TableRow>
-             <TableHead className=" text-left">Logo</TableHead>
-              <TableHead className=" text-left">Rank</TableHead>
-              <TableHead className=" text-left">Store</TableHead>
-              <TableHead className=" text-left">Level</TableHead>
+             <TableHead className=" text-left">{t('logo')}</TableHead>
+              <TableHead className=" text-left">{t('rank')}</TableHead>
+              <TableHead className=" text-left">{t('store')}</TableHead>
+              <TableHead className=" text-left">{t('level')}</TableHead>
 
               <TableHead className=" text-left">
                 {chartConfig[activeChart].label}
@@ -195,7 +197,7 @@ export function StoresTableStats() {
              {item.level}
             </Badge>
             </TableCell>
-                <TableCell className="">{item[activeChart]} {activeChart==="totalRevenue" ? "TND" : ""}</TableCell>
+                <TableCell className="">{item[activeChart]} {activeChart==="totalRevenue" ? t('tnd') : ""}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -206,7 +208,7 @@ export function StoresTableStats() {
                {chartConfig[activeChart].label}:
               </TableCell>
               <TableCell className="">
-                {totalValues[activeChart]} {activeChart === "totalRevenue" ? "TND" : ""}
+                {totalValues[activeChart]} {activeChart === "totalRevenue" ? t('tnd') : ""}
               </TableCell>
             </TableRow>
           </tfoot>
@@ -221,7 +223,7 @@ export function StoresTableStats() {
       ) : (
 <div className="flex items-center justify-center h-[340px] md:h-[540px]">          
   <div className='flex flex-col items-center justify-start'>
-          <p className='text-sm text-muted-foreground'>Fetching Data...</p>
+          <p className='text-sm text-muted-foreground'>{t('fetchingData')}</p>
           <Loader className="text-blue-700 h-6 w-6 animate-spin mt-3" />  
           </div>
         </div>

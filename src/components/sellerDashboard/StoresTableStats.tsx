@@ -21,6 +21,7 @@ import { ScrollArea } from '../ui/scroll-area';
 import { getStoreStats } from '@/actions/actions';
 import { Loader, Star } from 'lucide-react';
 import { Badge } from '../ui/badge';
+import { useTranslations } from 'next-intl';
 
 interface ChartData {
   storeId : string
@@ -54,7 +55,7 @@ const chartConfig = {
 
 // Accept storeId as a prop
 export function StoresTableStats({ storeId }: { storeId: string }) {
-
+  const t = useTranslations('SellerDashboardComponents');
 
 
   const [activeChart, setActiveChart] = React.useState<keyof typeof chartConfig>(
@@ -102,12 +103,12 @@ export function StoresTableStats({ storeId }: { storeId: string }) {
   return (
     <Card className="w-full">
       <CardHeader className='bg-muted/50 mb-2 rounded-t-lg'>
-        <CardTitle className="text-lg">Store Stats</CardTitle>
+        <CardTitle className="text-lg">{t('storeStats')}</CardTitle>
         <CardDescription>
-            <p>Total stores is : {chartData.length} </p>
+            <p>{t('totalStoresIs', {count: chartData.length})}</p>
           {storeRank > 0
-            ? `The rank of your store is #${storeRank}`
-            : "Store not found"}
+            ? t('storeRank', {rank: storeRank})
+            : t('storeNotFound')}
         </CardDescription>
       </CardHeader>
 
@@ -143,10 +144,10 @@ export function StoresTableStats({ storeId }: { storeId: string }) {
         >
     <TableHeader>
       <TableRow>
-        <TableHead className="px-4 py-2 text-left">Logo</TableHead>
-        <TableHead className=" text-left">Rank</TableHead>
-        <TableHead className=" text-left">Store</TableHead>
-        <TableHead className=" text-left">Level</TableHead>
+        <TableHead className="px-4 py-2 text-left">{t('logo')}</TableHead>
+        <TableHead className=" text-left">{t('rank')}</TableHead>
+        <TableHead className=" text-left">{t('store')}</TableHead>
+        <TableHead className=" text-left">{t('level')}</TableHead>
         <TableHead className=" text-left">
           {chartConfig[activeChart].label}
         </TableHead>
@@ -179,7 +180,7 @@ export function StoresTableStats({ storeId }: { storeId: string }) {
             </Badge>
             </TableCell>
           <TableCell >
-            {item[activeChart]} {activeChart === "totalRevenue" ? "TND" : ""}
+            {item[activeChart]} {activeChart === "totalRevenue" ? t('tnd') : ""}
           </TableCell>
         </TableRow>
       ))}
@@ -193,7 +194,7 @@ export function StoresTableStats({ storeId }: { storeId: string }) {
 ) : (
   <div className="flex items-center justify-center h-[340px] md:h-[540px]">
     <div className='flex flex-col items-center justify-start'>
-    <p className='text-sm text-muted-foreground'>Fetching Data...</p>
+    <p className='text-sm text-muted-foreground'>{t('fetchingData')}</p>
     <Loader className="text-blue-700 h-6 w-6 animate-spin mt-3" />  
     </div>
   </div>

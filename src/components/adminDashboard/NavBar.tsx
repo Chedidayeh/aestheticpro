@@ -29,7 +29,8 @@ import { getSideBarTotalCounts, getUser } from "@/actions/actions"
 import { ModeToggle } from "../ModeToggle"
 import { User } from "@prisma/client"
 import AdminProfile from "./AdminProfile"
-import LoadingLink from "../LoadingLink"
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 interface Count {
   printedOrdersCount: number;
@@ -42,6 +43,7 @@ interface Count {
 
   const NavBar = ({totalCounts , user} : {totalCounts : Count , user : User}) => {
   const pathname = usePathname();
+  const t = useTranslations('AdminDashboardComponents');
 
   // open
   const [open, setOpen] = useState(false);
@@ -57,7 +59,7 @@ interface Count {
     <SheetTrigger asChild>
           <Button variant="outline" size="icon" className="shrink-0 xl:hidden">
             <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle navigation menu</span>
+            <span className="sr-only">{t('toggleNavigationMenu')}</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="left" className="flex flex-col w-full">
@@ -67,7 +69,7 @@ interface Count {
         
         {/* logo */}
         
-        <LoadingLink href="/">
+        <Link href="/">
         <div
         style={{ width: '50px', height: '50px' }}
         className="h-full xl:right-0 sm:items-center"
@@ -80,14 +82,14 @@ interface Count {
         draggable={false}
         />
         </div>
-        </LoadingLink>
+        </Link>
         
         {/* text */}
         <div className='text-sm  font-semibold'>
-        <LoadingLink href="/">
-        <p>Aesthetic Pro</p>
-        <p>Platform ✨</p>
-        </LoadingLink>
+        <Link href="/">
+        <p>{t('brandName')}</p>
+        <p>{t('brandPlatform')}</p>
+        </Link>
         </div>
         
         </div>
@@ -98,7 +100,7 @@ interface Count {
         <ScrollArea className="h-full w-full">
           <nav className="grid gap-3 text-lg font-medium">
 
-          <LoadingLink
+          <Link
           href="/adminDashboard"
           className={cn(
             buttonVariants({
@@ -106,60 +108,60 @@ interface Count {
               className: 'justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50',
             }),
             {
-              "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard",
+              "gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/adminDashboard"),
             }
           )}
         >
           <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
             <LayoutDashboard className="h-4 w-4" />
           </div>
-          Dashboard
-        </LoadingLink>
+          {t('dashboard')}
+        </Link>
 
 
-        <LoadingLink
+        <Link
           className={cn(buttonVariants({
             variant: 'ghost',
             className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
           }), {
-            " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/users"
+            " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/adminDashboard/users")
           })}
           href="/adminDashboard/users"
         >
           <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
             <U className="h-4 w-4" />
           </div>
-          Manage Users
-        </LoadingLink>
+          {t('manageUsers')}
+        </Link>
 
-            <LoadingLink
+            <Link
             href="/adminDashboard/stores"
             className={cn(buttonVariants({
               variant: 'ghost',
               className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/stores"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/adminDashboard/stores")
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Store className="h-4 w-4" />
               </div>
-              Manage Stores
-            </LoadingLink>
+              {t('manageStores')}
+            </Link>
 
-            <LoadingLink
+            <Link
             href="/adminDashboard/requests"
             className={cn(buttonVariants({
               variant: 'ghost',
               className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/requests"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/adminDashboard/requests")
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <HandCoins className="h-4 w-4" />
               </div>
-              Manage Requests
+              {t('manageRequests')}
               {(totalCounts.storeRequestsCount > 0 || totalCounts.affiliateRequestsCount > 0) && (
                 <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {
@@ -167,21 +169,21 @@ interface Count {
                     }
                 </Badge>
                 )}
-            </LoadingLink>
+            </Link>
 
-            <LoadingLink
+            <Link
             href="/adminDashboard/products"
             className={cn(buttonVariants({
               variant: 'ghost',
               className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/products"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/adminDashboard/products")
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Shirt className="h-4 w-4" />
               </div>
-              Manage Products
+              {t('manageProducts')}
               {(totalCounts?.awaitingActionProductCount ?? 0) > 0 && (
               <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                 {
@@ -189,21 +191,21 @@ interface Count {
                   }
               </Badge>
                )}
-            </LoadingLink>
+            </Link>
 
-            <LoadingLink
+            <Link
             href="/adminDashboard/designs"
             className={cn(buttonVariants({
               variant: 'ghost',
               className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/designs"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/adminDashboard/designs")
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Palette className="h-4 w-4" />
               </div>
-              Manage Designs
+              {t('manageDesigns')}
               {(totalCounts?.awaitingActionDesignCount ?? 0) > 0 && (
               <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                 {
@@ -211,21 +213,21 @@ interface Count {
                   }
               </Badge>
                )}
-            </LoadingLink>
+            </Link>
             
-            <LoadingLink
+            <Link
             href="/adminDashboard/orders"
             className={cn(buttonVariants({
               variant: 'ghost',
               className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/orders"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/adminDashboard/orders")
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <ShoppingBasket  className="h-4 w-4" />
               </div>
-              Manage Orders
+              {t('manageOrders')}
               {(totalCounts?.printedOrdersCount ?? 0) > 0 && (
                 <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {
@@ -233,22 +235,22 @@ interface Count {
                     }
                 </Badge>
                 )}
-            </LoadingLink>
+            </Link>
 
-            <LoadingLink
+            <Link
             href="/adminDashboard/returns"
             className={cn(buttonVariants({
               variant: 'ghost',
               className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/returns"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/adminDashboard/returns")
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <RotateCcw  className="h-4 w-4" />
               </div>
               
-              Manage Returns
+              {t('manageReturns')}
               {(totalCounts?.returnedOrders ?? 0) > 0 && (
                 <Badge className="ml-auto text-white flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
                   {
@@ -256,91 +258,91 @@ interface Count {
                     }
                 </Badge>
                 )}
-            </LoadingLink>
+            </Link>
             
-            <LoadingLink
+            <Link
             href="/adminDashboard/stock"
             className={cn(buttonVariants({
               variant: 'ghost',
               className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/stock"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/adminDashboard/stock")
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Layers3 className="h-4 w-4" />
               </div>
-              Manage Stock
-            </LoadingLink>
+              {t('manageStock')}
+            </Link>
 
-            <LoadingLink
+            <Link
             href="/adminDashboard/category"
             className={cn(buttonVariants({
               variant: 'ghost',
               className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/category"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/adminDashboard/category")
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <LayoutGrid className="h-4 w-4" />
               </div>
-              Manage Categories
-            </LoadingLink>
+              {t('manageCategories')}
+            </Link>
 
             
  
 
-            <LoadingLink
+            <Link
             href="/adminDashboard/notifications"
             className={cn(buttonVariants({
               variant: 'ghost',
               className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/notifications"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/adminDashboard/notifications")
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Bell className="h-4 w-4" />
               </div>
-              Send Notification
-            </LoadingLink>
+              {t('sendNotification')}
+            </Link>
 
             <Separator className="my-3" />
 
  
 
 
-            <LoadingLink
+            <Link
             href="/adminDashboard/settings"
             className={cn(buttonVariants({
               variant: 'ghost',
               className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/adminDashboard/settings"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/adminDashboard/settings")
             })}
 
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Settings className="h-4 w-4" />
               </div>
-              Settings
-            </LoadingLink>
+              {t('settings')}
+            </Link>
 
-            <LoadingLink
+            <Link
             href="/MarketPlace"
             className={cn(buttonVariants({
               variant: 'ghost',
               className: "justify-start border bg-slate-50 dark:bg-slate-600/50 gap-2 rounded-lg px-3 py-2 text-zinc-900 transition-all hover:text-blue-600 dark:text-zinc-400 dark:hover:text-gray-50"
             }), {
-              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname === "/MarketPlace"
+              " gap-2 rounded-lg bg-slate-200 px-3 py-2 text-blue-600 transition-all hover:text-blue-600 dark:bg-blue-100 dark:text-blue-600 dark:hover:text-blue-600": pathname.endsWith("/MarketPlace")
             })}
             >
               <div className="border rounded-lg dark:bg-black dark:border-gray-800 border-gray-400 p-1 bg-white">
                 <Home className="h-4 w-4" />
               </div>
-              MarketPlace
-            </LoadingLink>
+              {t('marketplace')}
+            </Link>
 
           </nav>
 

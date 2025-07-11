@@ -14,13 +14,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import {  User } from "@prisma/client"
 import { useRouter } from "next/navigation"
-import LoadingLink from "../LoadingLink"
 import { cn } from "@/lib/utils"
 import LoadingState from "../LoadingState"
 import { useState } from "react"
 import { useToast } from "../ui/use-toast"
-
-
+import { useTranslations } from 'next-intl';
 
 
 const AdminProfile = ({ user } : {user : User})=>{
@@ -28,6 +26,7 @@ const AdminProfile = ({ user } : {user : User})=>{
   const router = useRouter()
   const [open, setOpen] = useState<boolean>(false);
   const { toast } = useToast()
+  const t = useTranslations('AdminDashboardComponents');
 
   const SignOutUser = () => {
     try {
@@ -36,8 +35,8 @@ const AdminProfile = ({ user } : {user : User})=>{
     } catch (error) {
       console.error('Error signing out:', error);
       toast({
-        title: 'Error Signing Out',
-        description: 'An error occurred while signing out. Please try again later.',
+        title: t('errorSigningOutTitle'),
+        description: t('errorSigningOutDescription'),
         variant: 'destructive',
       });
       setOpen(false);
@@ -73,9 +72,9 @@ const AdminProfile = ({ user } : {user : User})=>{
       </div>
         <DropdownMenuLabel className="flex justify-center items-center">
           {user ? (
-          <p>My Account</p>
+          <p>{t('myAccount')}</p>
           ):(
-            <p>No Account</p>
+            <p>{t('noAccount')}</p>
           )}
           </DropdownMenuLabel>
         {user && (
@@ -85,7 +84,7 @@ const AdminProfile = ({ user } : {user : User})=>{
 
             <DropdownMenuItem>
         <Button onClick={()=>SignOutUser()} size={"sm"}  variant={"ghost"} className="flex justify-between items-center w-full">
-        Sign out                 <UserRoundX size={20} />
+        {t('signOut')}                 <UserRoundX size={20} />
         </Button>
         </DropdownMenuItem>
           </>

@@ -17,6 +17,7 @@ import {
 import { Loader } from 'lucide-react'
 import LoginModal from '../LoginModal'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl';
 const AddToCartButton = ({
   user,
   product,
@@ -38,6 +39,7 @@ const AddToCartButton = ({
 }) => {
   const { toast } = useToast()
   const router = useRouter()
+  const t = useTranslations('MarketPlaceComponents');
 
     const [isSuccess, setIsSuccess] = useState<boolean>(false)
 
@@ -61,8 +63,8 @@ const AddToCartButton = ({
 
     if (stock === 0) {
       toast({
-        title: "Out of Stock",
-        description: "Sorry, this product is currently unavailable. Please check back soon!",
+        title: t('outOfStock'),
+        description: t('outOfStockDescription'),
         variant: "destructive",
         duration: 2000,
       });
@@ -71,8 +73,8 @@ const AddToCartButton = ({
     
     if (stock < quantity) {
       toast({
-        title: "Insufficient Stock",
-        description: `Requested quantity exceeds available stock. Current stock: ${stock}`,
+        title: t('insufficientStock'),
+        description: t('insufficientStockDescription', {stock}),
         variant: "destructive",
         duration: 2000,
       });
@@ -82,8 +84,8 @@ const AddToCartButton = ({
 
     if(size === "") {
       toast({
-        title: "Select a size !",
-        description: "Please select a size to continue",
+        title: t('selectASize'),
+        description: t('selectASizeDescription'),
         variant : "destructive",
         duration: 2000,
       })
@@ -92,8 +94,8 @@ const AddToCartButton = ({
 
     if(color === "") {
       toast({
-        title: "Select a color !",
-        description: "Please select a color to continue",
+        title: t('selectAColor'),
+        description: t('selectAColorDescription'),
         variant : "destructive",
         duration: 2000,
       })
@@ -103,8 +105,8 @@ const AddToCartButton = ({
     if (!user) {
       setIsLoginModalOpen(true)
       toast({
-        title: 'No logged in user found !',
-        description: 'Try to login first!',
+        title: t('noLoggedInUser'),
+        description: t('tryToLoginFirst'),
         variant: 'destructive',
       });
       return;
@@ -119,7 +121,7 @@ const AddToCartButton = ({
         setOpenDialog(false)
         setIsSuccess(true)
       toast({
-        title: 'Product added to cart !',
+        title: t('productAddedToCart'),
         description: '',
         variant: 'default',
         duration: 5000,
@@ -131,8 +133,8 @@ const AddToCartButton = ({
       if(!result) {
         setOpenDialog(false)
         toast({
-          title: 'You already added this product to your cart !',
-          description: 'try to change the color or the size or other detail to continue',
+          title: t('alreadyAddedToCart'),
+          description: t('changeDetailsToContinue'),
           variant: 'destructive',
           duration: 5000,
         });
@@ -145,8 +147,8 @@ const AddToCartButton = ({
       setOpenDialog(false)
       console.error('Error saving product to cart:', error);
       toast({
-        title: 'Error saving product to cart!',
-        description: 'Please try again later.',
+        title: t('errorSavingProductToCart'),
+        description: t('pleaseTryAgainLater'),
         variant: 'destructive',
       });
       return
@@ -186,10 +188,10 @@ const AddToCartButton = ({
                             <AlertDialogHeader className="flex flex-col items-center">
                               <div></div>
                               <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
-                              Adding to cart!
+                                {t('addingToCart')}
                               </AlertDialogTitle>
                               <AlertDialogDescription className="flex flex-col items-center">
-                                This will take a moment.
+                                {t('thisWillTakeAMoment')}
                               <Loader className="text-blue-700 h-[30%] w-[30%] animate-spin mt-3" />
                               </AlertDialogDescription>
                             </AlertDialogHeader>
@@ -202,7 +204,7 @@ const AddToCartButton = ({
       size='lg'
       variant={'default'}
       className='w-[60%] animate-wiggle text-white'>
-      {isSuccess ? 'Added !' : 'Add to cart'}
+      {isSuccess ? t('added') : t('addToCart')}
     </Button>
     
     <LoginModal isOpen={isLoginModalOpen} setIsOpen={setIsLoginModalOpen} />

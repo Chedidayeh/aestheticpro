@@ -9,9 +9,10 @@ import {
   } from "@/components/ui/alert-dialog";
   import { Link, OctagonAlert } from 'lucide-react';
   import { Button } from '@/components/ui/button';
-import LoadingLink from './LoadingLink';
+  import { useTranslations } from 'next-intl';
 
 const ErrorState = () =>{
+  const t = useTranslations('CommonComponents');
 
     return (
       <AlertDialog open={true}>
@@ -21,17 +22,16 @@ const ErrorState = () =>{
             <OctagonAlert/>
           </div>
           <AlertDialogTitle className="text-xl font-semibold text-center text-red-500">
-            Something went wrong!
+            {t('errorTitle')}
           </AlertDialogTitle>
           <AlertDialogDescription>
-            We encountered an error while loading the data. Please try
-            again later.
+            {t('errorDescription')}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <LoadingLink className="text-right" href="/">
-            <Button className='bg-red-500 hover:bg-red-500 text-white' size={"sm"} variant="default">Return &rarr;</Button>
-          </LoadingLink>
+          <Link className="text-right" href="/">
+            <Button className='bg-red-500 hover:bg-red-500 text-white' size={"sm"} variant="default">{t('return')}</Button>
+          </Link>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

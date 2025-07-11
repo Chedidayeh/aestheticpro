@@ -30,10 +30,11 @@ import {
 } from "@/components/ui/chart";
 import { getOrderChartData } from "@/actions/actions";
 import LoadingState from "../LoadingState";
+import { useTranslations } from 'next-intl';
 
 const chartConfig = {
   totalOrders: {
-    label: "Total Orders",
+    label: 'total orders',
     color: "hsl(var(--chart-1))",
   },
 } satisfies ChartConfig;
@@ -46,6 +47,7 @@ interface ChartData {
 
 export function Component() {
 
+  const t = useTranslations('FactoryDashboardComponents');
   const [date, setDate] = React.useState<Date>(new Date()); // Default to today's date
   const [chartData, setChartData] = React.useState<ChartData[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -89,9 +91,9 @@ export function Component() {
     <Card className="col-span-4">
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Orders Stats</CardTitle>
+          <CardTitle>{t('ordersStats')}</CardTitle>
           <CardDescription>
-            Showing order statistics for the selected month
+            {t('showingOrderStatisticsForSelectedMonth')}
           </CardDescription>
           <Popover >
       <PopoverTrigger asChild>
@@ -103,7 +105,7 @@ export function Component() {
           )}
         >
           <CalendarIcon />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {date ? format(date, "PPP") : <span>{t('pickADate')}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
@@ -194,7 +196,7 @@ export function Component() {
       ) : (
         <div className="flex items-center justify-center h-[240px]">
           <div className='flex flex-col items-center justify-start'>
-          <p className='text-sm text-muted-foreground'>Fetching Data...</p>
+          <p className='text-sm text-muted-foreground'>{t('fetchingData')}</p>
           <Loader className="text-blue-700 h-6 w-6 animate-spin mt-3" />  
           </div>
         </div>

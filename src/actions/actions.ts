@@ -3,6 +3,7 @@
 import { auth } from "@/auth";
 import { db } from "@/db"
 import { Order, OrderItem, Prisma, Product, SellerDesign, Store } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 
 export async function getReportData() {
@@ -21,7 +22,7 @@ export async function getReportData() {
           select: {
             id: true,
             storeName: true,
-            userPhoneNumber : true,
+            userPhoneNumber: true,
             revenue: true,  // Store's revenue (profit)
           },
         },
@@ -66,28 +67,28 @@ export async function getReportData() {
 }
 
 
-export async function createPlatform(userId:string) {
+export async function createPlatform(userId: string) {
 
   await db.platform.create({
-    data:{
-      userId : userId
+    data: {
+      userId: userId
     }
   })
 }
 
-  // get the auth user
+// get the auth user
 export async function getUser() {
   try {
-      const session = await auth()
-      if(!session) return null
-      const user = await db.user.findUnique({
-        where:{ id : session.user.id}
-      })
-      return user
+    const session = await auth()
+    if (!session) return null
+    const user = await db.user.findUnique({
+      where: { id: session.user.id }
+    })
+    return user
   } catch (error) {
-    console.log(error)    
+    console.log(error)
   }
-  
+
 }
 
 
@@ -125,7 +126,7 @@ export async function getAllCategories() {
 export async function getAllProductsCategories() {
   try {
     const categories = await db.product.findMany({
-      where : {isProductAccepted : true , disableCategory : false , privateProduct : false},
+      where: { isProductAccepted: true, disableCategory: false, privateProduct: false },
       select: {
         category: true,
       },
@@ -147,10 +148,10 @@ export async function getAllProductCollectionNames(): Promise<string[]> {
       where: {
         isProductAccepted: true,
         privateProduct: false,
-        disableCategory : false,
+        disableCategory: false,
       },
       include: {
-        collection : true
+        collection: true
       }
     });
 
@@ -173,7 +174,7 @@ export async function getAllProductCollectionNames(): Promise<string[]> {
 
 
 // get categorie by id
-export async function getCategorieById(catId : string) {
+export async function getCategorieById(catId: string) {
   try {
     const categorie = await db.category.findUnique({
       where: { id: catId },
@@ -192,7 +193,7 @@ export async function getCategorieById(catId : string) {
 
 
 // get seller Store by userId
-export async function getStoreByUserId(userId : string) {
+export async function getStoreByUserId(userId: string) {
   try {
     const store = await db.store.findUnique({
       where: {
@@ -212,7 +213,7 @@ export async function getStoreByUserId(userId : string) {
   }
 }
 
-export async function getStore(userId : string) {
+export async function getStore(userId: string) {
   try {
     const store = await db.store.findUnique({
       where: {
@@ -283,7 +284,7 @@ async function checkDesignInStore(orderItemId: string, storeId: string) {
 
     // Check if the design's store ID matches the provided store ID
     if ((orderItem.frontsellerDesign && orderItem.frontsellerDesign.storeId === storeId) ||
-        (orderItem.backsellerDesign && orderItem.backsellerDesign.storeId === storeId)) {
+      (orderItem.backsellerDesign && orderItem.backsellerDesign.storeId === storeId)) {
       return true;
     } else {
       return false;
@@ -309,7 +310,7 @@ export async function getDesignsOrdersForStore(storeId: string, userId: string) 
 
   // Fetch the store based on storeId and userId
   const store = await db.store.findUnique({
-    where: {  id: storeId, userId: userId  },
+    where: { id: storeId, userId: userId },
     include: {
       designs: true,
     },
@@ -452,26 +453,34 @@ export async function getOrderedDesignsByStoreId(storeId: string): Promise<Order
         storeId: storeId,
         isDesignForSale: true,
         OR: [
-          { frontOrders: { some: {
-            order: {
-              status: {
-                not: 'CANCELED'
-              },
-              type: {
-                not: 'CANCELED'
+          {
+            frontOrders: {
+              some: {
+                order: {
+                  status: {
+                    not: 'CANCELED'
+                  },
+                  type: {
+                    not: 'CANCELED'
+                  }
+                }
               }
             }
-          } } },
-          { backOrders: { some: {
-            order: {
-              status: {
-                not: 'CANCELED'
-              },
-              type: {
-                not: 'CANCELED'
+          },
+          {
+            backOrders: {
+              some: {
+                order: {
+                  status: {
+                    not: 'CANCELED'
+                  },
+                  type: {
+                    not: 'CANCELED'
+                  }
+                }
               }
             }
-          } } } 
+          }
         ]
       },
       include: {
@@ -504,8 +513,8 @@ export async function getOrderedDesignsByStoreId(storeId: string): Promise<Order
         return total + orderItem.quantity; // Accumulate quantity from each order item
       }, 0);
 
-       // Calculate total ordered quantity for the product
-       const totalBackOrderedQuantity = validBackOrders.reduce((total, orderItem) => {
+      // Calculate total ordered quantity for the product
+      const totalBackOrderedQuantity = validBackOrders.reduce((total, orderItem) => {
         return total + orderItem.quantity; // Accumulate quantity from each order item
       }, 0);
 
@@ -564,7 +573,7 @@ export async function getOrderedProductsByStoreId(storeId: string): Promise<Orde
     // Calculate the order count for each product
     const productsWithOrderCount = orderedProducts.map(product => {
       // Filter orders to exclude those with CANCELED status or type
-      const validOrders = product.order.filter(orderItem => 
+      const validOrders = product.order.filter(orderItem =>
         orderItem.order.status !== 'CANCELED' && orderItem.order.type !== 'CANCELED'
       );
 
@@ -578,7 +587,7 @@ export async function getOrderedProductsByStoreId(storeId: string): Promise<Orde
         orderCount: validOrders.length,
         totalOrderedQuantity: totalOrderedQuantity
       };
-      });
+    });
 
     return productsWithOrderCount;
   } catch (error) {
@@ -589,30 +598,30 @@ export async function getOrderedProductsByStoreId(storeId: string): Promise<Orde
 
 
 // get all orders 
-export async function getAllOrder(){
+export async function getAllOrder() {
   try {
     const order = await db.order.findMany({
       include: {
         user: true, // Include the user relation
         orderItems: true // Include the orderItems relation
       },
-      take:20,
-      orderBy : {
-        createdAt : "desc"
+      take: 20,
+      orderBy: {
+        createdAt: "desc"
       }
     });
-      return order
-      } catch (error) {
-        console.log(error)
-        return null
-      }
-    }
+    return order
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
 
 
 
 
 // return the products of the given ids
-export async function getProductsByIds(productIds : string[]) {
+export async function getProductsByIds(productIds: string[]) {
   try {
     // Fetch products where the id is in the list of productIds
     const products = await db.product.findMany({
@@ -621,8 +630,8 @@ export async function getProductsByIds(productIds : string[]) {
           in: productIds
         }
       },
-      include : {
-        store : true
+      include: {
+        store: true
       }
     });
 
@@ -637,10 +646,11 @@ export async function getProductsByIds(productIds : string[]) {
 export async function getAllProductsLength() {
   try {
     const count = await db.product.count({
-      where: { isProductAccepted: true, privateProduct: false , disableCategory : false,
- },
+      where: {
+        isProductAccepted: true, privateProduct: false, disableCategory: false,
+      },
     });
-    return count ;
+    return count;
   } catch (error) {
     console.error(error);
     return 0
@@ -659,7 +669,7 @@ export async function fetchProducts(
   priceRange?: [number, number]
 ) {
   const offset = Math.max((page - 1) * limit, 0); // Ensure non-negative offset
-  
+
   // Map supported sort options to Prisma `orderBy` format
   const sortOptions: Record<string, object> = {
     high: { price: 'desc' }, // Sort by highest price
@@ -674,7 +684,7 @@ export async function fetchProducts(
   const where: any = {
     isProductAccepted: true,
     privateProduct: false,
-    disableCategory : false,
+    disableCategory: false,
     ...(filterByCategory && { category: filterByCategory }), // Filter by category
     ...(filterByCollection && { collectionName: filterByCollection }), // Filter by collection
     ...(priceRange && priceRange[0] !== 0 && priceRange[1] !== 0 && { price: { gte: priceRange[0], lte: priceRange[1] } }), // Filter by price range, avoid invalid range [0, 0]
@@ -704,7 +714,7 @@ export async function fetchPriceRanges(): Promise<[number, number][]> {
     where: {
       isProductAccepted: true,
       privateProduct: false,
-      disableCategory:false,
+      disableCategory: false,
     },
     select: {
       price: true, // Only fetch the price field
@@ -752,12 +762,12 @@ export async function fetchTrendingProducts() {
   try {
     const trendingProducts = await db.product.findMany({
       where: {
-        isProductAccepted : true,
-         privateProduct : false,
-         disableCategory : false
+        isProductAccepted: true,
+        privateProduct: false,
+        disableCategory: false
       },
-      include : {
-        store : true
+      include: {
+        store: true
       },
       orderBy: {
         totalViews: 'desc',
@@ -777,28 +787,30 @@ export const getFollowedStoreProductsFirst = async (
 ) => {
 
   const followedStores = await db.storeFollow.findMany({
-      where: { userId },
-      select: { storeId: true },
-    });
+    where: { userId },
+    select: { storeId: true },
+  });
 
   const storeIds = followedStores.map((follow) => follow.storeId);
 
-  
+
   // Fetch new products from followed stores first
   const followedStoreProducts = await db.product.findMany({
-    where:{storeId: { in: storeIds },
-    isProductAccepted: true,disableCategory : false,
-    privateProduct: false,},
-    include : {
-      store : true
+    where: {
+      storeId: { in: storeIds },
+      isProductAccepted: true, disableCategory: false,
+      privateProduct: false,
     },
-    orderBy : {
-      totalViews : 'desc'
+    include: {
+      store: true
     },
-    take : 4
+    orderBy: {
+      totalViews: 'desc'
+    },
+    take: 4
   });
-  
-  return  followedStoreProducts 
+
+  return followedStoreProducts
 
 };
 
@@ -807,163 +819,163 @@ export const getFollowedStoreProductsFirst = async (
 
 
 
-  export async function fetchBestSellingProducts() {
-    try {  
-      // Batch update topSales in a single query
-      await db.product.updateMany({
-        where: {
-          isProductAccepted: true,
-          privateProduct: false,
-          disableCategory : false,
-          totalSales: { gt: 9 },
-          topSales : false,
-        },
-        data: { topSales: true },
-      });
-  
-      // Fetch updated best-selling products with pagination
-      const bestSellingProducts = await db.product.findMany({
-        where: { topSales: true, isProductAccepted: true, privateProduct: false , disableCategory : false },
-        include: {
-          store: true
-        },
-        orderBy: {
-          totalSales: 'desc',
-        },
-        take: 4,
-      });
-  
-  
-      return bestSellingProducts;
-    } catch (error) {
-      console.error('Error fetching products:', error);
-      return []
-    }
+export async function fetchBestSellingProducts() {
+  try {
+    // Batch update topSales in a single query
+    await db.product.updateMany({
+      where: {
+        isProductAccepted: true,
+        privateProduct: false,
+        disableCategory: false,
+        totalSales: { gt: 9 },
+        topSales: false,
+      },
+      data: { topSales: true },
+    });
+
+    // Fetch updated best-selling products with pagination
+    const bestSellingProducts = await db.product.findMany({
+      where: { topSales: true, isProductAccepted: true, privateProduct: false, disableCategory: false },
+      include: {
+        store: true
+      },
+      orderBy: {
+        totalSales: 'desc',
+      },
+      take: 4,
+    });
+
+
+    return bestSellingProducts;
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return []
   }
+}
 
 
-  // fetch products group by collection
-  interface Productswithstore extends Product {
-    store : Store
-  } 
-  export async function getProductsGroupedByCollection() {
-    try {
-      // Fetch collections and their top 4 products
-      const collections = await db.product.findMany({
-        where: { isProductAccepted: true, privateProduct: false , disableCategory : false },
-        select: {
-          collectionName: true,
-        },
-        distinct: ['collectionName'], // Select distinct collection names
-      });
-  
-      // Initialize the result object to store the final groups
-      const groupedByCollection: Record<string, Productswithstore[]> = {}; // Use Product type here
-  
-      // For each collection, fetch the top 4 products
-      for (const collection of collections) {
-        const products = await db.product.findMany({
-          where: { 
-            collectionName: collection.collectionName, 
-            isProductAccepted: true, 
-            privateProduct: false,
-            disableCategory : false,
+// fetch products group by collection
+interface Productswithstore extends Product {
+  store: Store
+}
+export async function getProductsGroupedByCollection() {
+  try {
+    // Fetch collections and their top 4 products
+    const collections = await db.product.findMany({
+      where: { isProductAccepted: true, privateProduct: false, disableCategory: false },
+      select: {
+        collectionName: true,
+      },
+      distinct: ['collectionName'], // Select distinct collection names
+    });
 
-          },
-          orderBy: { totalViews: 'desc' },
-          take: 4, // Limit to 4 products per collection
-          include: { store: true }, // Include store data if needed
-        });
-  
-        // Store the products in the result object
-        groupedByCollection[collection.collectionName] = products;
-      }
-  
-      return groupedByCollection;
-    } catch (error) {
-      console.error('Error fetching products:', error);
-    }
-  }
+    // Initialize the result object to store the final groups
+    const groupedByCollection: Record<string, Productswithstore[]> = {}; // Use Product type here
 
-
-  // for the new released products
- export async function fetchNewProducts() {
-    try {
+    // For each collection, fetch the top 4 products
+    for (const collection of collections) {
       const products = await db.product.findMany({
-        where : {isProductAccepted : true , NewProduct : true , privateProduct : false , disableCategory : false },
-        orderBy: {
-          createdAt: 'desc'
-        },
-        include : {
-          store : true
-        },
-        take : 4
-      });
-
-      const oneWeekInMillis = 7 * 24 * 60 * 60 * 1000; // One week in milliseconds
-      const currentDate = new Date();
-
-      const count = await db.product.count({
         where: {
-          NewProduct: true,
+          collectionName: collection.collectionName,
           isProductAccepted: true,
           privateProduct: false,
-          disableCategory : false,
-          createdAt: {
-            lt: new Date(currentDate.getTime() - oneWeekInMillis), // Filter by created date older than one week
-          },
+          disableCategory: false,
+
         },
+        orderBy: { totalViews: 'desc' },
+        take: 4, // Limit to 4 products per collection
+        include: { store: true }, // Include store data if needed
       });
 
-      if(count> 0) {
-        await updateNewProductStatus()
-      }
-
-      
-
-  
-      return products;
-    } catch (error) {
-      console.error('Error fetching products:', error);
+      // Store the products in the result object
+      groupedByCollection[collection.collectionName] = products;
     }
-  }
 
-  // helper function : Manage new added products : 
-  export async function updateNewProductStatus(): Promise<void> {
+    return groupedByCollection;
+  } catch (error) {
+    console.error('Error fetching products:', error);
+  }
+}
+
+
+// for the new released products
+export async function fetchNewProducts() {
+  try {
+    const products = await db.product.findMany({
+      where: { isProductAccepted: true, NewProduct: true, privateProduct: false, disableCategory: false },
+      orderBy: {
+        createdAt: 'desc'
+      },
+      include: {
+        store: true
+      },
+      take: 4
+    });
+
     const oneWeekInMillis = 7 * 24 * 60 * 60 * 1000; // One week in milliseconds
     const currentDate = new Date();
-  
-    // Update all products that are marked as NewProduct and older than a week in one query
-    await db.product.updateMany({
+
+    const count = await db.product.count({
       where: {
         NewProduct: true,
         isProductAccepted: true,
         privateProduct: false,
-        disableCategory : false,
+        disableCategory: false,
         createdAt: {
           lt: new Date(currentDate.getTime() - oneWeekInMillis), // Filter by created date older than one week
         },
       },
-      data: {
-        NewProduct: false, // Set NewProduct to false for all matching products
-      },
     });
+
+    if (count > 0) {
+      await updateNewProductStatus()
+    }
+
+
+
+
+    return products;
+  } catch (error) {
+    console.error('Error fetching products:', error);
   }
-  
+}
+
+// helper function : Manage new added products : 
+export async function updateNewProductStatus(): Promise<void> {
+  const oneWeekInMillis = 7 * 24 * 60 * 60 * 1000; // One week in milliseconds
+  const currentDate = new Date();
+
+  // Update all products that are marked as NewProduct and older than a week in one query
+  await db.product.updateMany({
+    where: {
+      NewProduct: true,
+      isProductAccepted: true,
+      privateProduct: false,
+      disableCategory: false,
+      createdAt: {
+        lt: new Date(currentDate.getTime() - oneWeekInMillis), // Filter by created date older than one week
+      },
+    },
+    data: {
+      NewProduct: false, // Set NewProduct to false for all matching products
+    },
+  });
+}
+
 
 
 // fetch Discount Products Deals
 export async function fetchDiscountProductsDeals() {
   try {
     const products = await db.product.findMany({
-      where : {isProductAccepted : true  , privateProduct : false, isDiscountEnabled : true , disableCategory : false},
+      where: { isProductAccepted: true, privateProduct: false, isDiscountEnabled: true, disableCategory: false },
       orderBy: {
         totalViews: 'desc'
       },
-      include : {
-        store : true
+      include: {
+        store: true
       },
-      take : 4
+      take: 4
     });
 
 
@@ -1007,7 +1019,7 @@ export async function fetchDiscountProductsDeals() {
 
 
 
-        // fav list functions
+// fav list functions
 
 // check if a product exists in a user fav list
 export async function checkProductInFavList(productId: string, userId: string) {
@@ -1038,63 +1050,62 @@ export async function checkProductInFavList(productId: string, userId: string) {
 }
 
 
-  // add product to a user fav list :
-  export async function addProductToFavList(productId: string, userId: string): Promise<boolean | null> {
-    try {
-        const result = await db.$transaction(async (tx) => {
-            // Upsert favorite list in one step
-            const favList = await tx.favList.upsert({
-                where: { userId },
-                create: { userId },
-                update: {}, // No updates needed for existing records
-            });
-
-            if (!favList) {
-                throw new Error("Failed to create or fetch favList");
-            }
-
-            // Add product to the user's favorite list
-            return await tx.favList.update({
-                where: { id: favList.id },
-                data: {
-                    products: {
-                        connect: { id: productId }, // Connect product directly
-                    },
-                },
-            });
-        });
-
-        return !!result;
-    } catch (error) {
-        console.error("Error adding product to favList:", error);
-        return null;
-    }
-}
-
-  
-
-
-  // remove product from user's fav list
-  export async function removeProductFromFavList(productId: string, userId: string): Promise<boolean| null> {
-    try {
-      // Directly attempt to disconnect the product from the user's favorite list
-      const result = await db.favList.update({
+// add product to a user fav list :
+export async function addProductToFavList(productId: string, userId: string): Promise<boolean | null> {
+  try {
+    const result = await db.$transaction(async (tx) => {
+      // Upsert favorite list in one step
+      const favList = await tx.favList.upsert({
         where: { userId },
+        create: { userId },
+        update: {}, // No updates needed for existing records
+      });
+
+      if (!favList) {
+        throw new Error("Failed to create or fetch favList");
+      }
+
+      // Add product to the user's favorite list
+      return await tx.favList.update({
+        where: { id: favList.id },
         data: {
           products: {
-            disconnect: { id: productId },
+            connect: { id: productId }, // Connect product directly
           },
         },
       });
-  
-      // If no error is thrown, assume success
-      return !!result;
-    } catch (error) {
-      console.error("Error removing product from favList:", error);
-      return null
-    }
+    });
+
+    return !!result;
+  } catch (error) {
+    console.error("Error adding product to favList:", error);
+    return null;
   }
-  
+}
+
+
+
+
+// remove product from user's fav list
+export async function removeProductFromFavList(productId: string, userId: string): Promise<boolean | null> {
+  try {
+    // Directly attempt to disconnect the product from the user's favorite list
+    const result = await db.favList.update({
+      where: { userId },
+      data: {
+        products: {
+          disconnect: { id: productId },
+        },
+      },
+    });
+
+    // If no error is thrown, assume success
+    return !!result;
+  } catch (error) {
+    console.error("Error removing product from favList:", error);
+    return null
+  }
+}
 
 
 
@@ -1105,10 +1116,11 @@ export async function checkProductInFavList(productId: string, userId: string) {
 
 
 
-        // cart functions
+
+// cart functions
 
 // check if a product exists in a user cart :
-export async function checkProductInCart(productId: string , userId: string): Promise<boolean> {
+export async function checkProductInCart(productId: string, userId: string): Promise<boolean> {
   try {
     // Find the user's cart and include selectedProducts
     const userCart = await db.cart.findUnique({
@@ -1134,15 +1146,15 @@ export async function checkProductInCart(productId: string , userId: string): Pr
 
 
 // add product to a user cart : 
-export async function addProductToCart( 
-  productId: string ,
+export async function addProductToCart(
+  productId: string,
   userId: string,
-  price:number,
-  category:string,
-  size : string,
-  color : string,
-  quantity : number,
-  productImgs : string[]
+  price: number,
+  category: string,
+  size: string,
+  color: string,
+  quantity: number,
+  productImgs: string[]
 
 
 ): Promise<boolean | null> {
@@ -1162,16 +1174,16 @@ export async function addProductToCart(
     }
 
     const user = await db.user.findUnique({
-      where: { id: userId } , 
-      include : {
-        cart : {
-          include : {
-            selectedProducts : true
+      where: { id: userId },
+      include: {
+        cart: {
+          include: {
+            selectedProducts: true
           }
         }
       }
     })
-    
+
 
     // Check if product with productId already exists in the cart
     const existingCartProduct = user?.cart?.selectedProducts.find(
@@ -1182,7 +1194,7 @@ export async function addProductToCart(
       )
     );
 
-    if(existingCartProduct) return false
+    if (existingCartProduct) return false
 
 
     // Add product to the cart
@@ -1190,14 +1202,16 @@ export async function addProductToCart(
       data: {
         productId: productId,
         cartId: userCart.id,
-        price:price,
-        quantity:quantity,
-        color:color,
-        size:size,
-        category:category,
+        price: price,
+        quantity: quantity,
+        color: color,
+        size: size,
+        category: category,
         productImg: productImgs,
       },
     });
+
+    revalidatePath("/MarketPlace/cart")
 
     return true; // Successfully added product to cart
   } catch (error) {
@@ -1216,8 +1230,8 @@ export async function fetchCartProductCount(userId: string) {
       where: { id: userId },
       include: {
         cart: {
-          include : {
-            selectedProducts : true
+          include: {
+            selectedProducts: true
           }
         },
       },
@@ -1269,15 +1283,15 @@ export async function getUserOrders(userId: string) {
 
 
 //return unreded notififcations for a store
-export async function getUnreadNotificationsForStore(storeId : string) {
+export async function getUnreadNotificationsForStore(storeId: string) {
   try {
     const unreadNotifications = await db.notification.findMany({
       where: {
         storeId: storeId,
         isViewed: false,
       },
-      orderBy : {
-        createdAt : 'desc'
+      orderBy: {
+        createdAt: 'desc'
       }
     });
 
@@ -1293,29 +1307,29 @@ export async function getUnreadNotificationsForStore(storeId : string) {
 //get the platform model
 export async function getPlatformForTheWebsite() {
   try {
-    
 
-  const platform = await db.platform.findFirst({
-  })
-  return platform
 
-} catch (error) {
-  console.log(error)
-    
-}
+    const platform = await db.platform.findFirst({
+    })
+    return platform
+
+  } catch (error) {
+    console.log(error)
+
+  }
 
 }
 
 // get the count infos for the admin dashboard :
 export async function getTotalCounts() {
 
-  
-  
+
+
   const [
-    userCount, 
-    productCount, 
-    storeCount, 
-    sellerDesignCount , 
+    userCount,
+    productCount,
+    storeCount,
+    sellerDesignCount,
     awaitingActionProductCount,
     awaitingActionDesignCount,
   ] = await Promise.all([
@@ -1323,13 +1337,13 @@ export async function getTotalCounts() {
     db.product.count(),
     db.store.count(),
     db.sellerDesign.count({
-      where: {isDesignForSale : true}
+      where: { isDesignForSale: true }
     }),
     db.product.count({
-      where : {isProductAccepted : false , isProductRefused : false}
+      where: { isProductAccepted: false, isProductRefused: false }
     }),
     db.sellerDesign.count({
-      where : {isDesignAccepted : false , isDesignRefused : false , isDesignForSale : true} 
+      where: { isDesignAccepted: false, isDesignRefused: false, isDesignForSale: true }
     })
 
   ])
@@ -1354,29 +1368,29 @@ export async function getSideBarTotalCounts() {
     returnedOrders,
   ] = await Promise.all([
     db.order.count({
-      where : {printed : true , type : "CONFIRMED" , status: "PROCESSING"}
+      where: { printed: true, type: "CONFIRMED", status: "PROCESSING" }
     }),
 
 
     db.product.count({
-      where : {isProductAccepted : false , isProductRefused : false}
+      where: { isProductAccepted: false, isProductRefused: false }
     }),
 
 
     db.sellerDesign.count({
-      where : {isDesignAccepted : false , isDesignRefused : false , isDesignForSale : true} 
+      where: { isDesignAccepted: false, isDesignRefused: false, isDesignForSale: true }
     }),
 
     db.paymentRequest.count({
-      where : { status : "PENDING"}
+      where: { status: "PENDING" }
     }),
 
     db.affiliatePaymentRequest.count({
-      where : { status : "PENDING"}
+      where: { status: "PENDING" }
     }),
 
     db.order.count({
-      where : {printed : true , type : "CONFIRMED" , status : "CANCELED" , isPaid : false}
+      where: { printed: true, type: "CONFIRMED", status: "CANCELED", isPaid: false }
     }),
 
   ])
@@ -1396,12 +1410,12 @@ export async function getSideBarTotalCounts() {
 
 // get the count for factory dashboard
 export async function getFactoryDashboardCounts() {
-  const [confirmedOrdersCount, deliveredOrdersCount, canceledOrdersCount , totalOrdersCount , notPrintedOrders] = await Promise.all([
-    db.order.count({where : { type : "CONFIRMED" }}),
-    db.order.count({where : { status : "DELIVERED"}}),
-    db.order.count({where : { status : "CANCELED"}}),
+  const [confirmedOrdersCount, deliveredOrdersCount, canceledOrdersCount, totalOrdersCount, notPrintedOrders] = await Promise.all([
+    db.order.count({ where: { type: "CONFIRMED" } }),
+    db.order.count({ where: { status: "DELIVERED" } }),
+    db.order.count({ where: { status: "CANCELED" } }),
     db.order.count(),
-    db.order.count({where : { type : "CONFIRMED" , printed:false }}),
+    db.order.count({ where: { type: "CONFIRMED", printed: false } }),
 
   ]);
 
@@ -1429,50 +1443,50 @@ export async function getFactoryDashboardCounts() {
 // Return a list of strings containing categories, tags, and titles and collection that start with the same characters as the given query
 export async function searchProducts(query: string) {
   try {
-      const decodedQuery = decodeURIComponent(query).toLowerCase(); // Decode the URI-encoded query string and convert to lowercase
+    const decodedQuery = decodeURIComponent(query).toLowerCase(); // Decode the URI-encoded query string and convert to lowercase
 
-      // Fetch all products from the database
-      const products = await db.product.findMany({
-        where : {isProductAccepted : true , privateProduct : false , disableCategory : false},
-          select: {
-              category: true,
-              title: true,
-              tags: true,
-              store : true,
-              collection : true
-          },
-          take:8
-      });
+    // Fetch all products from the database
+    const products = await db.product.findMany({
+      where: { isProductAccepted: true, privateProduct: false, disableCategory: false },
+      select: {
+        category: true,
+        title: true,
+        tags: true,
+        store: true,
+        collection: true
+      },
+      take: 8
+    });
 
-      // Filter products where category, title, or tags start with the query (case insensitive)
-      const results: string[] = [];
+    // Filter products where category, title, or tags start with the query (case insensitive)
+    const results: string[] = [];
 
-      products.forEach((product) => {
-          if (product.category.toLowerCase().startsWith(decodedQuery) || product.category.toLowerCase().includes(decodedQuery) ) {
-              results.push(product.category);
-          }
-          if (product.title.toLowerCase().startsWith(decodedQuery) || product.title.toLowerCase().includes(decodedQuery) ) {
-              results.push(product.title);
-          }
-          if (product.tags.some(tag => tag.toLowerCase().startsWith(decodedQuery)) || product.tags.some(tag => tag.toLowerCase().includes(decodedQuery))) {
-              // results.push(...product.tags.filter(tag => tag.toLowerCase().startsWith(decodedQuery)));
-              results.push(product.title);
-          }
-          if (product.store.storeName.toLowerCase().startsWith(decodedQuery) || product.store.storeName.toLowerCase().includes(decodedQuery) ) {
-            results.push(product.store.storeName);
-        }
-        if (product.collection?.name.toLowerCase().startsWith(decodedQuery) || product.collection?.name.toLowerCase().includes(decodedQuery) ) {
-          results.push(product.collection?.name);
+    products.forEach((product) => {
+      if (product.category.toLowerCase().startsWith(decodedQuery) || product.category.toLowerCase().includes(decodedQuery)) {
+        results.push(product.category);
       }
-      });
+      if (product.title.toLowerCase().startsWith(decodedQuery) || product.title.toLowerCase().includes(decodedQuery)) {
+        results.push(product.title);
+      }
+      if (product.tags.some(tag => tag.toLowerCase().startsWith(decodedQuery)) || product.tags.some(tag => tag.toLowerCase().includes(decodedQuery))) {
+        // results.push(...product.tags.filter(tag => tag.toLowerCase().startsWith(decodedQuery)));
+        results.push(product.title);
+      }
+      if (product.store.storeName.toLowerCase().startsWith(decodedQuery) || product.store.storeName.toLowerCase().includes(decodedQuery)) {
+        results.push(product.store.storeName);
+      }
+      if (product.collection?.name.toLowerCase().startsWith(decodedQuery) || product.collection?.name.toLowerCase().includes(decodedQuery)) {
+        results.push(product.collection?.name);
+      }
+    });
 
-      // Deduplicate and return results
-      const uniqueResults = [...new Set(results)]; // Remove duplicates
+    // Deduplicate and return results
+    const uniqueResults = [...new Set(results)]; // Remove duplicates
 
-      return uniqueResults;
+    return uniqueResults;
   } catch (error) {
-      console.error('Error searching products:', error);
-      return []
+    console.error('Error searching products:', error);
+    return []
 
   }
 }
@@ -1499,15 +1513,16 @@ export async function getAffiliateLinksAndCommissions(userId: string) {
             commission: true, // Include related commissions for each affiliate link
           },
         },
-        affiliatePaymentRequest : true
+        affiliatePaymentRequest: true
       },
     });
 
     return affiliate
   }
-catch (error) {
-  console.error('Error fetching affiliate links and commissions:', error);
-}}
+  catch (error) {
+    console.error('Error fetching affiliate links and commissions:', error);
+  }
+}
 
 export async function getAffiliatePaymentRequest(userId: string) {
   try {
@@ -1516,15 +1531,16 @@ export async function getAffiliatePaymentRequest(userId: string) {
         userId: userId, // Fetch the affiliate account by userId
       },
       include: {
-        affiliatePaymentRequest : true
+        affiliatePaymentRequest: true
       },
     });
 
     return affiliate
   }
-catch (error) {
-  console.error('Error fetching affiliate links and commissions:', error);
-}}
+  catch (error) {
+    console.error('Error fetching affiliate links and commissions:', error);
+  }
+}
 
 export async function getAffiliateStats(userId: string) {
   try {
@@ -1605,7 +1621,7 @@ export async function getAllCommissionsByAffiliateId(affiliateId: string) {
 }
 
 // 
-export async function getUnreadAffiliateNotifications(affiliateId : string) {
+export async function getUnreadAffiliateNotifications(affiliateId: string) {
   try {
     const unreadNotifications = await db.affiliateNotification.findMany({
       where: {
@@ -1623,7 +1639,7 @@ export async function getUnreadAffiliateNotifications(affiliateId : string) {
 
 
 // create notis : 
-export async function createAffiliateNotification(affiliateId : string, content : string, sender : string) {
+export async function createAffiliateNotification(affiliateId: string, content: string, sender: string) {
   try {
     const notification = await db.affiliateNotification.create({
       data: {
@@ -1643,7 +1659,7 @@ export async function createAffiliateNotification(affiliateId : string, content 
 // chart : 
 
 // for seller dashboard
-export async function getProductViewsChartData(storeId: string , month: number, year: number) {
+export async function getProductViewsChartData(storeId: string, month: number, year: number) {
   // Calculate the start and end dates for the given month
   const startDate = new Date(year, month - 1, 1);
   const endDate = new Date(year, month, 0); // Last day of the month
@@ -1718,8 +1734,8 @@ export async function getProductViewsChartData(storeId: string , month: number, 
         views: view._count.productId,
       });
     }
-      // Limit linkDetails to the top 4 most-viewed links
-      dailyData[date].productDetails = dailyData[date].productDetails
+    // Limit linkDetails to the top 4 most-viewed links
+    dailyData[date].productDetails = dailyData[date].productDetails
       .sort((a, b) => b.views - a.views) // Sort by views descending
       .slice(0, 4); // Take the top 4
 
@@ -1737,7 +1753,7 @@ export async function getProductViewsChartData(storeId: string , month: number, 
 }
 
 // for admin dashboard
-export async function getViewsChartData( month: number, year: number) {
+export async function getViewsChartData(month: number, year: number) {
   // Calculate the start and end dates for the given month
   const startDate = new Date(year, month - 1, 1);
   const endDate = new Date(year, month, 0); // Last day of the month
@@ -1811,7 +1827,7 @@ export async function getViewsChartData( month: number, year: number) {
 
 
 
-export async function getAffiliateChartData(affiliateId: string , month: number, year: number) {
+export async function getAffiliateChartData(affiliateId: string, month: number, year: number) {
   // Calculate the start and end dates for the given month
   const startDate = new Date(year, month - 1, 1);
   const endDate = new Date(year, month, 0); // Last day of the month
@@ -1966,12 +1982,12 @@ export async function getOrderChartData(month: number, year: number) {
 type Metric = "totalRevenue" | "totalSales" | "totalFollowers" | "totalViews";
 export async function getStoreStats(metric: Metric) {
   // Build dynamic orderBy clause for sorting
-  const orderByClause: Prisma.StoreOrderByWithRelationInput = 
+  const orderByClause: Prisma.StoreOrderByWithRelationInput =
     metric === "totalRevenue" ? { revenue: "desc" }
-    : metric === "totalSales" ? { totalSales: "desc" }
-    : metric === "totalFollowers" ? { followers: { _count: "desc" } }
-    : metric === "totalViews" ? { totalViews: "desc" }
-    : { revenue: "desc" }; // Default to ordering by revenue
+      : metric === "totalSales" ? { totalSales: "desc" }
+        : metric === "totalFollowers" ? { followers: { _count: "desc" } }
+          : metric === "totalViews" ? { totalViews: "desc" }
+            : { revenue: "desc" }; // Default to ordering by revenue
 
   // Fetch only top 10 stores based on the selected metric
   const stores = await db.store.findMany({
@@ -1985,7 +2001,7 @@ export async function getStoreStats(metric: Metric) {
       revenue: true,
       totalSales: true,
       followers: true,
-      totalViews  : true,
+      totalViews: true,
     },
   });
 
@@ -2013,14 +2029,14 @@ export async function getStoreStats(metric: Metric) {
 type AdminMetric = "totalRevenue" | "totalSales" | "totalProducts" | "totalDesigns" | "totalFollowers" | "totalViews";
 export async function getAdminStoreStats(metric: AdminMetric) {
   // Build dynamic orderBy clause for sorting
-  const orderByClause: Prisma.StoreOrderByWithRelationInput = 
+  const orderByClause: Prisma.StoreOrderByWithRelationInput =
     metric === "totalRevenue" ? { revenue: "desc" }
-    : metric === "totalSales" ? { totalSales: "desc" }
-    : metric === "totalFollowers" ? { followers: { _count: "desc" } }
-    : metric === "totalViews" ? { totalViews: "desc" }
-    : metric === "totalProducts" ? { products: { _count: "desc" } }
-    : metric === "totalDesigns" ? { designs: { _count: "desc"}}
-    : { revenue: "desc" }; // Default to ordering by revenue
+      : metric === "totalSales" ? { totalSales: "desc" }
+        : metric === "totalFollowers" ? { followers: { _count: "desc" } }
+          : metric === "totalViews" ? { totalViews: "desc" }
+            : metric === "totalProducts" ? { products: { _count: "desc" } }
+              : metric === "totalDesigns" ? { designs: { _count: "desc" } }
+                : { revenue: "desc" }; // Default to ordering by revenue
 
   // Fetch only top 10 stores based on the selected metric
   const stores = await db.store.findMany({
@@ -2034,7 +2050,7 @@ export async function getAdminStoreStats(metric: AdminMetric) {
       revenue: true,
       totalSales: true,
       followers: true,
-      totalViews  : true,
+      totalViews: true,
       products: {
         where: { isProductAccepted: true },
       },
@@ -2086,7 +2102,7 @@ export async function getAdminStoreStats(metric: AdminMetric) {
 
 
 
-  
+
 
 
 

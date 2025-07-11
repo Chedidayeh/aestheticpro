@@ -8,35 +8,32 @@ import {
   Headset,
   Truck,
 } from 'lucide-react'
-import LoadingLink from './LoadingLink';
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 const PerkSection = () => {
+  const t = useTranslations('CommonComponents');
   const perks = [
     {
-      name: 'Sell Your Designs',
+      name: t('sellYourDesigns'),
       Icon: HandCoins,
-      description:
-        'Launch your own brand by selling custom designs on our platform. Reach a wider audience and turn your creativity into profit.',
+      description: t('sellYourDesignsDesc'),
     },
     // {
-    //   name: 'Affiliate Program',
+    //   name: t('affiliateProgram'),
     //   Icon: DollarSign,
-    //   description:
-    //     'Join our affiliate program to earn commissions by promoting our products. Share your unique link and get rewarded for every sale.',
+    //   description: t('affiliateProgramDesc'),
     // },
     {
-      name: 'Fast Printing & Delivery',
+      name: t('fastPrintingDelivery'),
       Icon: Truck,
-      description:
-        'We take care of printing and shipping process.',
+      description: t('fastPrintingDeliveryDesc'),
     },
     {
-      name: 'Excellent Customer Support',
+      name: t('excellentCustomerSupport'),
       Icon: Headset,
-      description:
-        'Our dedicated customer support team is here to help you with any questions or issues, ensuring a smooth and satisfying experience.',
+      description: t('excellentCustomerSupportDesc'),
     },
-
   ];
 
   return (
@@ -44,7 +41,7 @@ const PerkSection = () => {
       <section className='border rounded-2xl w-[80%] border-gray-200'>
         <MaxWidthWrapper className='py-4'>
           <div className='items-center flex justify-center my-2'>
-          <h2 className='text-2xl font-bold'>Our Services</h2>
+          <h2 className='text-2xl font-bold'>{t('ourServices')}</h2>
           </div>
           <div className='grid grid-cols-1 gap-y-12 sm:grid-cols-1 sm:gap-x-6 lg:grid-cols-3 lg:gap-x-8 lg:gap-y-0'>
             {perks.map((perk) => (
@@ -73,11 +70,11 @@ const PerkSection = () => {
             
           </div>
           <div className='my-2 flex items-center justify-center'>
-        <LoadingLink href="/services">
+        <Link href="/services">
           <Button className="" variant='link'>
-            Learn More about our services &rarr;
+            {t('learnMoreAboutServices')}
           </Button>
-        </LoadingLink>
+        </Link>
          </div>
         </MaxWidthWrapper>
       </section>

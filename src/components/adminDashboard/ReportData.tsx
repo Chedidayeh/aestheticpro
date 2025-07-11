@@ -4,10 +4,12 @@ import React from 'react'
 import { Button } from '../ui/button'
 import LoadingState from '../LoadingState'
 import { getReportData } from '@/actions/actions'
+import { useTranslations } from 'next-intl';
 
 const ReportData = () => {
   // open state
   const [open, setOpen] = React.useState(false)
+  const t = useTranslations('AdminDashboardComponents');
 
 
   const downloadReport = async () => {
@@ -67,7 +69,7 @@ const ReportData = () => {
     <>
     <div className="flex items-end justify-end">
       <Button onClick={downloadReport} size={"sm"} className="text-white" variant={"default"}>
-      Download report
+      {t('downloadReport')}
       </Button>
     </div>
     <LoadingState isOpen={open}  />

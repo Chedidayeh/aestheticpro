@@ -1,8 +1,9 @@
 'use client'
 
-import LoadingLink from '../LoadingLink'
+import Link from 'next/link'
 import ProductListing from './ProductListing'
 import { Product, Store, User } from '@prisma/client'
+import { useTranslations } from 'next-intl';
 
 interface Productswithstore extends Product {
   store : Store
@@ -18,6 +19,7 @@ interface ProductReelProps {
 
 const ProductReel = (props: ProductReelProps) => {
   const { user,title, subtitle, href , products } = props
+  const t = useTranslations('MarketPlaceComponents');
 
   return (
     <section className='py-4'>
@@ -37,12 +39,12 @@ const ProductReel = (props: ProductReelProps) => {
 
         {href ? (
           <div className="text-center">
-          <LoadingLink
+          <Link
             href={href}
             className=' text-sm font-medium text-blue-600 hover:text-blue-500'>
-            Shop the collection{' '}
+            {t('shopTheCollection')}{' '}
             <span aria-hidden='true'>&rarr;</span>
-          </LoadingLink>
+          </Link>
           </div>
         ) : null}
       </div>
@@ -52,10 +54,10 @@ const ProductReel = (props: ProductReelProps) => {
             {products?.length === 0 ? (
               <div className='flex h-full flex-col items-center justify-center space-y-1'>
                 <h3 className='font-semibold text-2xl'>
-                  this section is empty for now !
+                  {t('sectionEmpty')}
                 </h3>
                 <p className='text-muted-foreground text-center'>
-                  Whoops! Nothing to show here yet.
+                  {t('nothingToShowYet')}
                 </p>
               </div>
             ) : (

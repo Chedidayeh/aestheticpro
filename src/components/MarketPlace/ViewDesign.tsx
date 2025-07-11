@@ -20,6 +20,7 @@ import { Badge } from "../ui/badge";
 import { Button } from "../ui/button";
 import { SellerDesign } from "@prisma/client";
 import { Eye, Sun, Moon } from "lucide-react";
+import { useTranslations } from 'next-intl';
 
 const ViewDesign = ({
   frontDesign,
@@ -30,6 +31,7 @@ const ViewDesign = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDarkBg, setIsDarkBg] = useState(true); // Toggle background color
+  const t = useTranslations('MarketPlaceComponents');
 
   // Collect all available designs into an array
   const designs = [frontDesign, backDesign].filter(Boolean) as SellerDesign[];
@@ -79,13 +81,13 @@ const ViewDesign = ({
             </Carousel>
           ) : (
             <div className="flex items-center justify-center cursor-pointer">
-              <Badge variant="secondary">No designs available</Badge>
+              <Badge variant="secondary">{t('noDesignsAvailable')}</Badge>
             </div>
           )}
 
           <AlertDialogFooter>
             <AlertDialogCancel onClick={() => setIsOpen(false)}>
-              Close
+              {t('close')}
             </AlertDialogCancel>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -93,7 +95,7 @@ const ViewDesign = ({
 
       {/* Button to open modal */}
       <Button onClick={() => setIsOpen(true)} size="sm" variant="outline">
-        View Product Design <Eye size="16" className="ml-1" />
+        {t('viewProductDesign')} <Eye size="16" className="ml-1" />
       </Button>
     </>
   );

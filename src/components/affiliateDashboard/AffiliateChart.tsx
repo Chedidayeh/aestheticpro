@@ -28,10 +28,11 @@ import {
 } from "@/components/ui/chart"
 import { getAffiliateChartData } from "@/actions/actions"
 import LoadingState from "../LoadingState"
+import { useTranslations } from 'next-intl';
 
 const chartConfig = {
   totalViews: {
-    label: "Links Views",
+    label: "links views",
   },
   linkClicks: {
     label: "clicks",
@@ -47,6 +48,7 @@ interface ChartData {
 
 export function Component({affiliateId} : {affiliateId : string}) {
 
+  const t = useTranslations('AffiliateDashboardComponents');
   const [date, setDate] = React.useState<Date>(new Date()); // Default to today's date
   const [chartData, setChartData] = React.useState<ChartData[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -90,9 +92,9 @@ export function Component({affiliateId} : {affiliateId : string}) {
     <Card className="col-span-4" x-chunk="dashboard-01-chunk-4">
       <CardHeader className="flex flex-col items-stretch space-y-0 border-b p-0 sm:flex-row">
         <div className="flex flex-1 flex-col justify-center gap-1 px-6 py-5 sm:py-6">
-          <CardTitle>Your Links Stats</CardTitle>
+          <CardTitle>{t('yourLinksStats')}</CardTitle>
           <CardDescription>
-            Showing total links clicks per month
+            {t('showingTotalLinksClicksPerMonth')}
           </CardDescription>
           <Popover >
       <PopoverTrigger asChild>
@@ -104,7 +106,7 @@ export function Component({affiliateId} : {affiliateId : string}) {
           )}
         >
           <CalendarIcon />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {date ? format(date, "PPP") : <span>{t('pickADate')}</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="start">
@@ -128,12 +130,12 @@ export function Component({affiliateId} : {affiliateId : string}) {
             className="flex flex-1 flex-col justify-center gap-1 border-t px-6 py-4 text-left even:border-l data-[active=true]:bg-muted/50 sm:border-l sm:border-t-0 sm:px-8 sm:py-6"
           >
             <span className="text-xs text-muted-foreground">
-              total
+              {t('total')}
             </span>
             <span className="text-lg font-bold leading-none sm:text-3xl">
             <div className="flex items-center gap-2">
               <span>{totalViews.toLocaleString()}</span>
-              <p className="text-xs">Clicks/PerMonth</p>
+              <p className="text-xs">{t('clicksPerMonth')}</p>
             </div>
             </span>
           </div>
@@ -224,7 +226,7 @@ export function Component({affiliateId} : {affiliateId : string}) {
 ) : (
   <div className="flex items-center justify-center h-[240px]">
     <div className='flex flex-col items-center justify-start'>
-    <p className='text-sm text-muted-foreground'>Fetching Data...</p>
+    <p className='text-sm text-muted-foreground'>{t('fetchingData')}</p>
     <Loader className="text-blue-700 h-6 w-6 animate-spin mt-3" />  
     </div>
   </div>

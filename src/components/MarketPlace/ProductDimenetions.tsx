@@ -1,5 +1,6 @@
 'use client'
 
+import { useTranslations } from 'next-intl';
 
 
 interface ProductReelProps {
@@ -12,6 +13,7 @@ const FALLBACK_LIMIT = 4
 
 const ProductDimenetions = (props: ProductReelProps) => {
   const { title, subtitle } = props
+  const t = useTranslations('MarketPlaceComponents');
 
   return (
     <section className='py-12'>
@@ -33,8 +35,7 @@ const ProductDimenetions = (props: ProductReelProps) => {
       <div className='relative'>
   <div className='mt-6 flex items-center w-full'>
   <div className='flex items-center justify-center'>
-
-      Dimentions Image
+  {t('dimensionsImage')}
 
     </div>
   </div>

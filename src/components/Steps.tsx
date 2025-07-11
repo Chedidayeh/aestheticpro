@@ -5,26 +5,33 @@
 import NextImage from 'next/image'
 import { cn } from '@/lib/utils'
 import { usePathname } from 'next/navigation'
-
-const STEPS = [
-  {
-    name: 'Step 1: Choose a category',
-    description: 'Select a category for your Product',
-    url: '/select-category',
-  },
-  {
-    name: 'Step 2: Add your design or choose an existing one',
-    description: 'Customize your design',
-    url: '/upload',
-  },
-  {
-    name: 'Step 3: Confirm Order',
-    description: 'Make the Product yours',
-    url: '/preview',
-  },
-]
+import { useTranslations } from 'next-intl';
+import Link from 'next/link';
 
 const Steps = () => {
+  const t = useTranslations('CommonComponents');
+  const STEPS = [
+    {
+      name: t('step1Name'),
+      description: t('step1Desc'),
+      url: '/select-category',
+      href : '/MarketPlace/create-client-product/select-category'
+    },
+    {
+      name: t('step2Name'),
+      description: t('step2Desc'),
+      url: '/upload',
+      href : '/MarketPlace/create-client-product/upload'
+
+    },
+    {
+      name: t('step3Name'),
+      description: t('step3Desc'),
+      url: '/preview',
+      href : '/MarketPlace/create-client-product/preview'
+
+    },
+  ];
   const pathname = usePathname()
 
   return (
@@ -35,7 +42,8 @@ const Steps = () => {
           pathname.endsWith(step.url)
         )
         return (
-          <li key={step.name} className='relative overflow-hidden lg:flex-1'>
+          <li key={step.name} className='relative cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-600/50 overflow-hidden lg:flex-1'>
+                      <Link href={step.href} >
             <div>
               <span
                 className={cn(
@@ -85,6 +93,8 @@ const Steps = () => {
                 </div>
               ) : null}
             </div>
+            </Link>
+
           </li>
         )
       })}

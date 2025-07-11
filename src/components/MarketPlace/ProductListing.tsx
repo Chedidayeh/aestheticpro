@@ -24,8 +24,8 @@ import { addProductToFavList, checkProductInFavList, removeProductFromFavList } 
 import { useRouter } from "next/navigation"
 import clsx from "clsx"
 import { useInView } from "react-intersection-observer"
-import LoadingLink from "../LoadingLink"
 import LoadingState from "../LoadingState"
+import { useTranslations } from 'next-intl';
 
 interface Productswithstore extends Product {
   store : Store
@@ -46,6 +46,7 @@ const ProductListing = ({
   const { toast } = useToast()
   const router  = useRouter()
   const [isSavingFav, setSavingFav] = useState<boolean>(false);
+  const t = useTranslations('MarketPlaceComponents');
 
 
  // Using useInView to detect when the product is in the viewport
@@ -117,7 +118,7 @@ const ProductListing = ({
       setSavingFav(true)
       if (!user) {
         toast({
-          title: 'Try to Sign In to save the product!',
+          title: t('signInToSaveProduct'),
           variant: 'destructive',
         })
         setSavingFav(false)
@@ -130,7 +131,7 @@ const ProductListing = ({
         if (result) {
           setIsFavSaved(true)
           toast({
-            title: 'Product added to fav list!',
+            title: t('productAddedToFavList'),
             variant: 'default',
           })
           setSavingFav(false)
@@ -141,7 +142,7 @@ const ProductListing = ({
         if (result) {
           setIsFavSaved(false)
           toast({
-            title: 'Product removed from fav list!',
+            title: t('productRemovedFromFavList'),
             variant: 'default',
           })
           setSavingFav(false)
@@ -152,8 +153,8 @@ const ProductListing = ({
     } catch (error) {
       console.error('Error saving product to Fav list:', error)
       toast({
-        title: 'Error saving product to Fav list!',
-        description: 'Please try again later.',
+        title: t('errorSavingProductToFavList'),
+        description: t('pleaseTryAgainLater'),
         variant: 'destructive',
       })
       setSavingFav(false)
@@ -178,22 +179,22 @@ const ProductListing = ({
       <div className="mb-1 mt-0 flex flex-wrap items-center">
   <div className="flex-grow md:mb-0"> {/* Allows items to wrap */}
     <Badge variant="secondary" className="bg-slate-200 text-black hover:bg-slate-200">
-      <LoadingLink
+      <Link
         href={`/MarketPlace/store/${product.store.storeName}`}
         className="animate-pulse font-bold group text-xs  hover:text-blue-500 cursor-pointer relative block"
       >
         {product.store.storeName}
         <span className="absolute font-normal bottom-5 left-1/2 transform -translate-x-1/2 w-max px-2 py-1 text-xs bg-black text-white rounded-md opacity-0 group-hover:opacity-100 transition-opacity">
-          View store
+          {t('viewStore')}
         </span>
-      </LoadingLink>
+      </Link>
     </Badge>
   </div>
   
 </div>
 
 
-        <LoadingLink
+        <Link
         className={cn(
           'invisible  cursor-pointer group/main',
           {
@@ -226,7 +227,7 @@ const ProductListing = ({
       {product.NewProduct && (
   <div className="absolute top-0 right-0 m-1 text-xs lg:text-sm">
         <Badge variant="secondary" className="bg-blue-700 hover:bg-blue-700  text-white">
-        New
+        {t('new')}
       </Badge>
   </div>
         )}
@@ -234,7 +235,7 @@ const ProductListing = ({
           {product.topSales && (
   <div className="absolute top-0 left-0 m-1 text-xs lg:text-sm">
         <Badge variant="secondary" className="bg-emerald-700 hover:bg-emerald-700 text-white">
-          Best Sell
+          {t('bestSell')}
         </Badge>
   </div>
         )}
@@ -242,7 +243,7 @@ const ProductListing = ({
   {product.isDiscountEnabled && (
       <div className="absolute bottom-0 right-0 m-1 text-xs lg:text-sm">
     <Badge variant="secondary" className="bg-red-700 hover:bg-red-700 text-white">
-    {product.discount}% OFF
+    {product.discount}% {t('off')}
   </Badge>
   </div>
       )}
@@ -252,7 +253,7 @@ const ProductListing = ({
       )
       }
     </div>
-        </LoadingLink>
+        </Link>
 
         <div className="flex mt-1 ml-3 items-center justify-between">
     <div>
@@ -319,7 +320,6 @@ const ProductPlaceholder = () => {
     </div>
   )
 }
-
 
 
 export default ProductListing

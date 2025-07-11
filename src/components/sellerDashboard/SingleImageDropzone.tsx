@@ -5,6 +5,7 @@ import * as React from 'react';
 import { useDropzone, type DropzoneOptions } from 'react-dropzone';
 import { twMerge } from 'tailwind-merge';
 import NextImage from 'next/image'
+import { useTranslations } from 'next-intl';
 
 const variants = {
   base: 'relative rounded-md flex justify-center items-center flex-col cursor-pointer min-h-[150px] min-w-[200px] border border-dashed border-gray-400 dark:border-gray-300 transition-colors duration-200 ease-in-out',
@@ -27,26 +28,26 @@ type InputProps = {
   dropzoneOptions?: Omit<DropzoneOptions, 'disabled'>;
 };
 
-const ERROR_MESSAGES = {
-  fileTooLarge(maxSize: number) {
-    return `The file is too large. Max size is ${formatFileSize(maxSize)}.`;
-  },
-  fileInvalidType() {
-    return 'Invalid file type.';
-  },
-  tooManyFiles(maxFiles: number) {
-    return `You can only add ${maxFiles} file(s).`;
-  },
-  fileNotSupported() {
-    return 'The file is not supported.';
-  },
-};
-
 const SingleImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
   (
     { dropzoneOptions, width, height, value, className, disabled, onChange },
     ref,
   ) => {
+    const t = useTranslations('SellerDashboardComponents');
+    const ERROR_MESSAGES = {
+      fileTooLarge(maxSize: number) {
+        return t('fileTooLarge', { maxSize: formatFileSize(maxSize) });
+      },
+      fileInvalidType() {
+        return t('fileInvalidType');
+      },
+      tooManyFiles(maxFiles: number) {
+        return t('tooManyFiles', { maxFiles });
+      },
+      fileNotSupported() {
+        return t('fileNotSupported');
+      },
+    };
     const imageUrl = React.useMemo(() => {
       if (typeof value === 'string') {
         // in case a url is passed in, use it to display the image
@@ -146,9 +147,9 @@ const SingleImageDropzone = React.forwardRef<HTMLInputElement, InputProps>(
             // Upload Icon
             <div className="flex flex-col items-center justify-center text-xs text-gray-400">
               <UploadCloudIcon className="mb-2 h-7 w-7" />
-              <div className="text-gray-400">drag & drop to upload</div>
+              <div className="text-gray-400">{t('dragAndDropToUpload')}</div>
               <div className="mt-3">
-                <Button disabled={disabled}>select</Button>
+                <Button disabled={disabled}>{t('select')}</Button>
               </div>
             </div>
           )}
