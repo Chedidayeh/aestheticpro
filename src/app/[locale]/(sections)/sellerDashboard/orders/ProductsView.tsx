@@ -239,7 +239,7 @@ const ProductsView = ({
       {t('createNewOrder')}
   </Link>
 
-  <div className="flex items-center space-x-2">
+  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4">
 
   <Input
     type="search"

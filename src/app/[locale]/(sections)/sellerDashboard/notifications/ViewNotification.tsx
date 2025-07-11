@@ -41,6 +41,7 @@ import LoadingState from "@/components/LoadingState";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { useTranslations } from 'next-intl';
+import { cn } from "@/lib/utils";
 interface NotiViewProps {
   notifications: Notification[];
 }
@@ -134,7 +135,7 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
               <TableRow>
                 <TableHead>{t('sender')}</TableHead>
                 <TableHead>{t('received_at')}</TableHead>
-                <TableHead>{t('content')}</TableHead>
+                <TableHead className="hidden md:block">{t('content')}</TableHead>
                 <TableHead>{t('action')}</TableHead>
               </TableRow>
             </TableHeader>
@@ -146,7 +147,7 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
                 >                  
                 <TableCell className={notification.isViewed ? "" : " text-blue-500"}>{notification.sender}</TableCell>
                   <TableCell className={notification.isViewed ? "" : " text-blue-500"}>{new Date(notification.createdAt).toLocaleString()}</TableCell>
-                  <TableCell className={notification.isViewed ? "" : " text-blue-500"}>{notification.content}</TableCell>
+                  <TableCell className={cn("hidden md:block",notification.isViewed ? "" : " text-blue-500")}>{notification.content}</TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>

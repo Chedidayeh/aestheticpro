@@ -249,11 +249,11 @@ const DesignView = ({
               {t('create_new_design')}
             </Link>
 
-            <div className="flex items-center space-x-2 mt-4">
-
+            {/* Search and Sort Section */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4">
               <Input
                 type="search"
-                className="md:w-[30%] w-full"
+                className="w-full sm:w-[200px] md:w-[250px] lg:w-[300px]"
                 placeholder={t('search_placeholder')}
                 value={searchQuery}
                 onChange={handleSearchChange}
@@ -261,7 +261,7 @@ const DesignView = ({
 
               {/* Sorting select */}
               <Select value={sortOption} onValueChange={handleSortChange}>
-                <SelectTrigger className="w-[160px] ">
+                <SelectTrigger className="w-full sm:w-[160px]">
                   <SelectValue placeholder={t('sort_by')} />
                 </SelectTrigger>
                 <SelectContent>
@@ -309,7 +309,7 @@ const DesignView = ({
                 ) : (
 
                   <ScrollArea className="h-[984px] w-full ">
-                    <div className='relative mt-5 grid grid-cols-1 mb-20 pb-20 p-2'>
+                    <div className='relative mt-5 grid grid-cols-1 mb-20 pb-20 '>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 xl:grid-cols-4 md:grid-cols-3">
                         {/* designs Cards */}
                         {filteredDesigns.map((design, index) => (
@@ -318,23 +318,23 @@ const DesignView = ({
                             x-chunk="dashboard-05-chunk-3"
                             className={cn('lg:rounded-lg shadow-lg', isDarkMode ? 'bg-gray-900' : 'bg-gray-100', 'hover:transform hover:scale-105 transition duration-300')}
                           >
-                            <CardHeader className="px-7 relative flex items-center justify-center">
+                            <CardHeader className=" relative flex items-center justify-center">
                               <div className="absolute top-2 left-2 right-2 flex justify-between">
-                                <Badge className="bg-blue-700 text-white px-2 py-1 rounded">
+                                <Badge className="bg-blue-700 text-white  py-1 rounded">
                                   {design.name}
                                 </Badge>
                                 {design.isDesignAccepted && (
-                                  <Badge className="bg-green-700 text-white px-2 py-1 rounded">
+                                  <Badge className="bg-green-700 text-white  py-1 rounded">
                                     {t('accepted')}
                                   </Badge>
                                 )}
                                 {design.isDesignRefused && (
-                                  <Badge className="bg-red-500 text-white px-2 py-1 rounded">
+                                  <Badge className="bg-red-500 text-white  py-1 rounded">
                                     {t('refused')}
                                   </Badge>
                                 )}
                                 {!design.isDesignAccepted && !design.isDesignRefused && (
-                                  <Badge className="bg-gray-500 text-white px-2 py-1 rounded">
+                                  <Badge className="bg-gray-500 text-white  py-1 rounded">
                                     {t('under_review')}
                                   </Badge>
                                 )}
@@ -345,7 +345,7 @@ const DesignView = ({
                                       setIsDownloadOpen(true);
                                       downloadDesign(design.imageUrl);
                                     }}
-                                    className="bg-purple-500 hover:bg-purple-400  cursor-pointer px-2 py-1 text-white rounded">
+                                    className="bg-purple-500 hover:bg-purple-400  cursor-pointer  py-1 text-white rounded">
                                     {t('download_product')}
                                   </Badge>
                                 </div>
@@ -361,7 +361,7 @@ const DesignView = ({
                                 <div className="absolute top-14 left-0 z-10 text-center">
                                   <Badge variant="secondary" className="bg-gray-200">
                                     <CreditCard className="mr-2 h-4 w-4 text-red-800 opacity-70" />
-                                    <span className="text-xs text-gray-600">{t('sales', { count: design.totalSales })}</span>
+                                    <span className="text-xs text-gray-600">{t('sales_count', { count: design.totalSales })}</span>
                                   </Badge>
                                 </div>
 
@@ -391,24 +391,31 @@ const DesignView = ({
                                 <AlertDialogTrigger asChild>
                                   <SquarePen className=" cursor-pointer absolute bottom-2 left-3 mt-1 mr-1 text-gray-400 hover:text-blue-500 transform hover:scale-110 hover:rotate-6 transition duration-200" />
                                 </AlertDialogTrigger>
-                                <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
-                                  <AlertDialogHeader>
-                                    <AlertDialogTitle>{t('edit_your_design')}</AlertDialogTitle>
-                                    <AlertDialogDescription className='flex flex-col'>
-                                      <div>
-                                        {t('older_name')} <span className='text-blue-700 font-semibold ml-4'>{design.name}</span>
-                                      </div>
-                                      <div>
-                                        {t('older_price')} <span className='text-blue-700 font-semibold ml-6'>{design.price.toFixed(2)} TND</span>
-                                      </div>
-                                      <div>
-                                        {t('older_seller_profit')} <span className='text-blue-700 font-semibold ml-6'>{design.sellerProfit.toFixed(2)} TND</span>
+                                <AlertDialogContent className="rounded-xl max-w-[95%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[50%] xl:max-w-[40%]">
+                                  <AlertDialogHeader className="pb-1">
+                                    <AlertDialogTitle className="text-xl font-semibold">{t('edit_your_design')}</AlertDialogTitle>
+                                    <AlertDialogDescription className='space-y-1 mt-1'>
+                                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-4 bg-gray-50 rounded-lg">
+                                        <div className="space-y-1">
+                                          <span className="text-sm font-medium text-gray-600">{t('older_name')}</span>
+                                          <p className='text-gray-900 font-semibold truncate'>{design.name}</p>
+                                        </div>
+                                        <div className="space-y-1">
+                                          <span className="text-sm font-medium text-gray-600">{t('older_price')}</span>
+                                          <p className='text-gray-900 font-semibold'>{design.price.toFixed(2)} TND</p>
+                                        </div>
+                                        <div className="space-y-1">
+                                          <span className="text-sm font-medium text-gray-600">{t('older_seller_profit')}</span>
+                                          <p className='text-green-600 font-semibold'>+{design.sellerProfit.toFixed(2)} TND</p>
+                                        </div>
                                       </div>
                                     </AlertDialogDescription>
                                   </AlertDialogHeader>
-                                  <div className="grid gap-4 py-4">
-                                    <div className="grid grid-cols-4 items-center gap-4">
-                                      <Label htmlFor="DesignName" className="text-right">
+                                  
+                                  <div className="space-y-4 py-2">
+                                    {/* New Name Input */}
+                                    <div className="space-y-2">
+                                      <Label htmlFor="DesignName" className="text-sm font-medium">
                                         {t('new_name')}
                                       </Label>
                                       <Input
@@ -417,47 +424,54 @@ const DesignView = ({
                                         onChange={(e) => setNewName(e.target.value)}
                                         maxLength={37}
                                         placeholder={t('choose_new_name')}
-                                        className="col-span-3"
+                                        className="w-full"
                                       />
-                                      <Label htmlFor="DesignPrice" className="text-right">
+                                    </div>
+
+                                    {/* New Price Input */}
+                                    <div className="space-y-2">
+                                      <Label htmlFor="DesignPrice" className="text-sm font-medium">
                                         {t('new_price')}
                                       </Label>
-                                      <div className="col-span-3">
-                                        <Input
-                                          id="designPrice"
-                                          type="number"
-                                          placeholder={`Max ${platform.maxDesignSellerProfit} TND | Min ${platform.platformDesignProfit + 1} TND`}
-                                          onBlur={handleSellerProfitBlur}
-                                          min={3}
-                                          max={10}
-                                          className={`${inputClassName} text-black bg-gray-100 focus:ring-0 focus:border-green-500`}
-                                          onChange={(e) => setNewPrice(Number(e.target.value))}
-                                        />
-                                        {sellerProfitError && (
-                                          <p className="text-xs text-red-500 my-2">
-                                            {sellerProfitError}
-                                          </p>
-                                        )}
-                                      </div>
+                                      <Input
+                                        id="designPrice"
+                                        type="number"
+                                        placeholder={`Max ${platform.maxDesignSellerProfit} TND | Min ${platform.platformDesignProfit + 1} TND`}
+                                        onBlur={handleSellerProfitBlur}
+                                        min={3}
+                                        max={10}
+                                        className={`${inputClassName} focus:ring-0 focus:border-green-500 w-full`}
+                                        onChange={(e) => setNewPrice(Number(e.target.value))}
+                                      />
+                                      {sellerProfitError && (
+                                        <p className="text-xs text-red-500">
+                                          {sellerProfitError}
+                                        </p>
+                                      )}
                                     </div>
-                                  </div>
-                                  <AlertDialogFooter className='gap-2'>
+
+                                    {/* Profit Display */}
                                     {newPrice <= platform.maxDesignSellerProfit && newPrice >= platform.platformDesignProfit + 1 && (
-                                      <div className='flex'>
-                                        <Label className='mr-10'>
-                                          <span className="text-green-700 font-bold">
-                                            {t('your_new_profit', { profit: (newPrice - platform.platformDesignProfit).toFixed(2) })} TND
-                                          </span>
-                                        </Label>
+                                      <div className="p-3 border rounded-lg">
+                                        <p className="text-sm font-medium text-green-600">
+                                          {t('your_new_profit', { profit: (newPrice - platform.platformDesignProfit).toFixed(2) })} TND
+                                        </p>
                                       </div>
                                     )}
-                                    <AlertDialogCancel onClick={() => {
-                                      setNewName("")
-                                      setNewPrice(0)
-                                    }}>
+                                  </div>
+
+                                  <AlertDialogFooter className='flex flex-col sm:flex-row gap-2 sm:gap-0 sm:justify-end'>
+                                    <AlertDialogCancel 
+                                      className='w-full sm:w-auto order-2 sm:order-1'
+                                      onClick={() => {
+                                        setNewName("")
+                                        setNewPrice(0)
+                                      }}
+                                    >
                                       {t('cancel')}
                                     </AlertDialogCancel>
-                                    <AlertDialogAction className='text-white'
+                                    <AlertDialogAction 
+                                      className='w-full sm:w-auto order-1 sm:order-2 text-white'
                                       disabled={newName === "" || isUpdatePending || newPrice > platform.maxDesignSellerProfit || newPrice < platform.platformDesignProfit || !newPrice}
                                       onClick={() => update_Design({ designId: design.id, newName, newPrice })}
                                     >

@@ -106,65 +106,10 @@ export async function getSizes(categoryLabel: string) {
 
 // Server Action: Track product views
 
-export async function trackProductView(
-  product: Product,
-) {
-  try {
-
-      // Increment product's total views
-      await db.product.update({
-        where: { id: product.id },
-        data: { totalViews: { increment: 1 } },
-      });
-
-      // Increment store's total views
-      await db.store.update({
-        where: { id: product.storeId },
-        data: { totalViews: { increment: 1 } },
-      });
-    
-  } catch (error) {
-    console.error("Error tracking product view:", error);
-  }
-}
-
 // export async function trackProductView(
 //   product: Product,
-//   sessionId: string,
-//   userId?: string
 // ) {
 //   try {
-//     const today = new Date();
-//     today.setHours(0, 0, 0, 0); // Normalize to start of the day
-
-//     // Look for existing view today by userId or sessionId
-//     const existingView = await db.productViews.findFirst({
-//       where: {
-//         productId: product.id,
-//         OR: [
-//           { userId: userId ?? undefined },
-//           { sessionId }
-//         ],
-//       },
-//       orderBy: {
-//         viewedAt: 'desc', // Get the most recent view, if any
-//       },
-//     });
-
-//     const alreadyViewedToday = existingView?.viewedAt
-//       ? new Date(existingView.viewedAt).toDateString() === today.toDateString()
-//       : false;
-
-//     if (!alreadyViewedToday) {
-//       // Create new product view entry
-//       await db.productViews.create({
-//         data: {
-//           productId: product.id,
-//           sessionId,
-//           userId: userId ?? null,
-//           viewedAt: new Date(), // ensure this is stored
-//         },
-//       });
 
 //       // Increment product's total views
 //       await db.product.update({
@@ -177,11 +122,66 @@ export async function trackProductView(
 //         where: { id: product.storeId },
 //         data: { totalViews: { increment: 1 } },
 //       });
-//     }
+    
 //   } catch (error) {
 //     console.error("Error tracking product view:", error);
 //   }
 // }
+
+export async function trackProductView(
+  product: Product,
+  sessionId: string,
+  userId?: string
+) {
+  try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Normalize to start of the day
+
+    // Look for existing view today by userId or sessionId
+    const existingView = await db.productViews.findFirst({
+      where: {
+        productId: product.id,
+        OR: [
+          { userId: userId ?? undefined },
+          { sessionId }
+        ],
+      },
+      orderBy: {
+        viewedAt: 'desc', // Get the most recent view, if any
+      },
+    });
+
+    const alreadyViewedToday = existingView?.viewedAt
+      ? new Date(existingView.viewedAt).toDateString() === today.toDateString()
+      : false;
+
+    if (!alreadyViewedToday) {
+      // Create new product view entry
+      await db.productViews.create({
+        data: {
+          productId: product.id,
+          sessionId,
+          userId: userId ?? null,
+          viewedAt: new Date(), // ensure this is stored
+        },
+      });
+
+      // Increment product's total views
+      await db.product.update({
+        where: { id: product.id },
+        data: { totalViews: { increment: 1 } },
+      });
+
+      // Increment store's total views
+      await db.store.update({
+        where: { id: product.storeId },
+        data: { totalViews: { increment: 1 } },
+      });
+    }
+  } catch (error) {
+    console.error("Error tracking product view:", error);
+  }
+}
 
 
   // fetch products by category

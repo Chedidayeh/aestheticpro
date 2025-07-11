@@ -132,8 +132,8 @@ const DesignView: React.FC<DesignViewProps> = ({ orderedDesigns }) => {
   <CardHeader className="px-7 space-y-4 bg-muted/50 rounded-t-lg">
     <CardTitle>{t('designsDetails')}</CardTitle>
     <CardDescription>{t('totalOrders', { count: orderedDesigns.length })}</CardDescription>
-      <div className="flex items-center space-x-2">
-        <Input
+    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4">
+    <Input
           type="search"
           className="md:w-[30%] w-full"
           placeholder={t('searchById')}

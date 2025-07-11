@@ -274,17 +274,17 @@ const ProductView = ({
             {t('create_new_product')}
           </Link>
 
-          {/* Sorting select */}
-          <div className="flex items-center space-x-2 mt-4">
+          {/* Search and Sort Section */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4">
             <Input
               type="search"
-              className="md:w-[30%] w-full"
+              className="w-full sm:w-[200px] md:w-[250px] lg:w-[300px]"
               placeholder={t('search_placeholder')}
               value={searchQuery}
               onChange={handleSearchChange}
             />
             <Select value={sortOption} onValueChange={handleSortChange}>
-              <SelectTrigger className="w-[160px]">
+              <SelectTrigger className="w-full sm:w-[160px]">
                 <SelectValue placeholder={t('sort_by')} />
               </SelectTrigger>
               <SelectContent>
@@ -297,8 +297,6 @@ const ProductView = ({
                 </SelectGroup>
               </SelectContent>
             </Select>
-
-
           </div>
 
           <p className="text-muted-foreground text-sm mt-4">
@@ -344,55 +342,55 @@ const ProductView = ({
                           />
 
                           {/* Badges */}
-                          <div className="absolute top-2 right-2 px-2 py-1 z-10 rounded">
+                          <div className="absolute top-2 right-2 py-1 z-10 rounded">
                             {product.isProductAccepted && (
-                              <Badge className="bg-green-700 text-white px-2 py-1 rounded">
+                              <Badge className="bg-green-700 text-white  py-1 rounded">
                                 {t('accepted')} {product.privateProduct ? "| " + t('private') : ""}
                               </Badge>
                             )}
                             {product.isProductRefused && (
-                              <Badge className="bg-red-500 text-white px-2 py-1 rounded">
+                              <Badge className="bg-red-500 text-white  py-1 rounded">
                                 {t('refused')}
                               </Badge>
                             )}
                             {!product.isProductAccepted && !product.isProductRefused && (
-                              <Badge className="bg-gray-500 text-white px-2 py-1 rounded">
+                              <Badge className="bg-gray-500 text-white  py-1 rounded">
                                 {t('under_review')}
                               </Badge>
                             )}
                           </div>
 
-                          <div className="absolute top-10 right-2 px-2 py-1 z-10 rounded">
+                          <div className="absolute top-10 right-2  py-1 z-10 rounded">
                             <Badge
                               onClick={() => {
                                 setIsDownloadOpen(true);
                                 viewProduct(product);
                                 downloadMockup(productImgs);
                               }}
-                              className="bg-purple-500 hover:bg-purple-400 cursor-pointer text-white px-2 py-1 rounded">
+                              className="bg-purple-500 hover:bg-purple-400 cursor-pointer text-white  py-1 rounded">
                               {t('download_product')}
                             </Badge>
                           </div>
 
 
-                          <div className="absolute top-2 left-2 px-2 py-1 z-10 rounded">
+                          <div className="absolute top-2 left-2  py-1 z-10 rounded">
                             <Badge variant="secondary" className="bg-gray-200">
                               <CircleDollarSign className="mr-2 h-4 w-4 text-green-800 opacity-70" />
                               <span className="text-xs text-gray-600">{product.price.toFixed(2)} TND</span>
                             </Badge>
                           </div>
 
-                          <div className="absolute top-8 left-2 px-2 py-1 z-10 rounded">
+                          <div className="absolute top-8 left-2  py-1 z-10 rounded">
                             <Badge variant="secondary" className="bg-gray-200">
                               <Eye className="mr-2 h-4 w-4 text-blue-800 opacity-70" />
-                              <span className="text-xs text-gray-600">{t('views', { count: product.totalViews })}</span>
+                              <span className="text-xs text-gray-600">{t('views_count', { count: product.totalViews })}</span>
                             </Badge>
                           </div>
 
-                          <div className="absolute top-14  left-2 px-2 py-1 z-10 rounded">
+                          <div className="absolute top-14  left-2  py-1 z-10 rounded">
                             <Badge variant="secondary" className="bg-gray-200">
                               <CreditCard className="mr-2 h-4 w-4 text-red-800 opacity-70" />
-                              <span className="text-xs text-gray-600">{t('sales', { count: product.totalSales })}</span>
+                              <span className="text-xs text-gray-600">{t('sales_count', { count: product.totalSales })}</span>
                             </Badge>
                           </div>
 
@@ -454,54 +452,62 @@ const ProductView = ({
         <>
           {/* Edit product */}
           <AlertDialog open={isEditOpen}>
-            <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
-              <AlertDialogHeader>
-                <AlertDialogTitle>{t('edit_product')}</AlertDialogTitle>
-                <AlertDialogDescription className='flex flex-col'>
-                  <div>
-                    {t('title')}: <span className='text-gray-700 font-semibold'>{selectedProduct.title}</span>
-                  </div>
-                  <div>
-                    {t('collection')}: <span className='text-gray-700 font-semibold'>{selectedProduct.collectionName}</span>
-                  </div>
-                  <div>
-                    {t('product_base_price')}: <span className='text-gray-700 font-semibold'>{selectedProduct.basePrice.toFixed(2)} TND</span>
-                  </div>
-                  <div>
-                    {t('price')}: <span className='text-gray-700 font-semibold'>{selectedProduct.price.toFixed(2)} TND</span>
-                  </div>
-                  <div>
-                    {t('your_profit')}: <span className='text-gray-700 font-semibold'>{selectedProduct.sellerProfit.toFixed(2)} TND</span>
-                  </div>
-                  {selectedProduct.frontDesignId && selectedProduct.backDesignId && (
-                    <div>
-                      {t('extra_design_selected')}: <span className='text-gray-700 font-semibold'>+ 5 TND</span>
+            <AlertDialogContent className="rounded-xl max-w-[95%] sm:max-w-[80%] md:max-w-[60%] lg:max-w-[50%] xl:max-w-[40%]">
+              <AlertDialogHeader className="pb-1">
+                <AlertDialogTitle className="text-xl font-semibold">{t('edit_product')}</AlertDialogTitle>
+                <AlertDialogDescription className='space-y-1 mt-1'>
+                  <div className="grid grid-cols-2 gap-3 p-4 bg-gray-50 rounded-lg">
+                    <div className="space-y-1">
+                      <span className="text-sm font-medium text-gray-600">{t('title')}:</span>
+                      <p className='text-gray-900 font-semibold truncate'>{selectedProduct.title}</p>
                     </div>
-                  )}
-
+                    <div className="space-y-1">
+                      <span className="text-sm font-medium text-gray-600">{t('collection')}:</span>
+                      <p className='text-gray-900 font-semibold'>{selectedProduct.collectionName}</p>
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-sm font-medium text-gray-600">{t('product_base_price')}:</span>
+                      <p className='text-gray-900 font-semibold'>{selectedProduct.basePrice.toFixed(2)} TND</p>
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-sm font-medium text-gray-600">{t('price')}:</span>
+                      <p className='text-gray-900 font-semibold'>{selectedProduct.price.toFixed(2)} TND</p>
+                    </div>
+                    <div className="space-y-1">
+                      <span className="text-sm font-medium text-gray-600">{t('your_profit')}:</span>
+                      <p className='text-green-600 font-semibold'>+{selectedProduct.sellerProfit.toFixed(2)} TND</p>
+                    </div>
+                    {selectedProduct.frontDesignId && selectedProduct.backDesignId && (
+                      <div className="space-y-1">
+                        <span className="text-sm font-medium text-gray-600">{t('extra_design_selected')}:</span>
+                        <p className='text-blue-600 font-semibold'>+ 5 TND</p>
+                      </div>
+                    )}
+                  </div>
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <div className="grid gap-4 py-4">
-                {/* First Row: New Title */}
-                <div className="grid grid-cols-1 lg:grid-cols-4 items-center gap-4">
-                  <Label htmlFor="productTitle" className="text-left lg:col-span-1">{t('new_title')}</Label>
+              
+              <div className="space-y-2 py-1">
+                {/* New Title Input */}
+                <div className="space-y-2">
+                  <Label htmlFor="productTitle" className="text-sm font-medium">{t('new_title')}</Label>
                   <Input
                     id="productTitle"
                     defaultValue={selectedProduct.title}
                     onChange={(e) => setnewTitle(e.target.value)}
                     maxLength={30}
                     placeholder={t('choose_new_title')}
-                    className="col-span-1 lg:col-span-3"
+                    className="w-full"
                   />
                 </div>
 
-                {/* Second Row: Change Collection */}
-                <div className="grid grid-cols-1 lg:grid-cols-4 items-center gap-4">
-                  <Label htmlFor="selectedCollection" className="text-left lg:col-span-1">{t('change_collection')}</Label>
+                {/* Collection Select */}
+                <div className="space-y-2">
+                  <Label htmlFor="selectedCollection" className="text-sm font-medium">{t('change_collection')}</Label>
                   <Select
                     defaultValue={selectedProduct.collectionName!}
                     onValueChange={handleSelectChange}>
-                    <SelectTrigger className="w-full sm:w-[180px]">
+                    <SelectTrigger className="w-full">
                       <SelectValue placeholder={t('select_collection')} />
                     </SelectTrigger>
                     <SelectContent>
@@ -516,16 +522,21 @@ const ProductView = ({
                     </SelectContent>
                   </Select>
                 </div>
-
               </div>
 
-              <AlertDialogFooter className='flex items-center justify-center'>
-                <AlertDialogCancel className='w-20' onClick={() => {
-                  setnewTitle("")
-                  setSelectedCollection("")
-                  setIsEditOpen(false)
-                }}>{t('cancel')}</AlertDialogCancel>
-                <AlertDialogAction className='w-24 text-white'
+              <AlertDialogFooter className='flex flex-col sm:flex-row gap-2 sm:gap-0 sm:justify-end'>
+                <AlertDialogCancel 
+                  className='w-full sm:w-auto order-2 sm:order-1' 
+                  onClick={() => {
+                    setnewTitle("")
+                    setSelectedCollection("")
+                    setIsEditOpen(false)
+                  }}
+                >
+                  {t('cancel')}
+                </AlertDialogCancel>
+                <AlertDialogAction 
+                  className='w-full sm:w-auto order-1 sm:order-2 text-white'
                   disabled={newTitle === "" || selectedCollection === undefined}
                   onClick={() => handleSave(selectedProduct.id)}
                 >

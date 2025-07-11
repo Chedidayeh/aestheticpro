@@ -281,8 +281,6 @@ const CreateOrder = ({
                 
 
 
-
-
   return (
 
     <>
@@ -304,13 +302,13 @@ const CreateOrder = ({
   <Link href="/sellerDashboard/createProduct"
     className={buttonVariants({
       size: 'sm',
-      className: 'items-center w-36 gap-1 text-white',
+      className: 'items-center w-44 gap-1 text-white',
     })}
     >
       {t('create_new_product')}
   </Link>
 
-    <div className="flex items-center space-x-2 mt-4">
+  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mt-4">
 
       <Input
         type="search"
@@ -392,14 +390,14 @@ const CreateOrder = ({
                                     <Badge variant="secondary" className="absolute bg-gray-200 top-10 left-2 px-2 py-1 rounded">
                                   <div className="flex items-center">
                                         <CreditCard className="mr-2 h-4 w-4 text-green-800 opacity-70" />{" "}
-                                        <span className="text-xs text-gray-600">{product.totalSales} sales</span>
+                                        <span className="text-xs text-gray-600">{product.totalSales} {t('sales')}</span>
                                     </div>                                  
                                     </Badge>
 
                                     <Badge variant="secondary" className="absolute bg-gray-200 top-[70px] left-2 px-2 py-1 rounded">
                                   <div className="flex items-center">
                                   <Eye className="mr-2 h-4 w-4 text-blue-800 opacity-70" />
-                                  <span className="text-xs text-gray-600">{product.totalViews} views</span>
+                                  <span className="text-xs text-gray-600">{product.totalViews} {t('views')}</span>
                                     </div>                                  
                                     </Badge>
 
@@ -410,7 +408,7 @@ const CreateOrder = ({
                                         variant="default" 
                                         className="absolute bg-yellow-500 hover:bg-yellow-500 text-white top-2 right-2 px-2 py-1 rounded cursor-pointer">
                                         <div className="flex items-center">
-                                          Not Available
+                                          {t('not_available')}
                                         </div>                                  
                                       </Badge>
                                       </>
@@ -424,14 +422,14 @@ const CreateOrder = ({
                                         variant="default" 
                                         className="absolute text-white top-2 right-2 px-2 py-1 rounded cursor-pointer">
                                         <div className="flex items-center">
-                                          Select
+                                          {t('select')}
                                         </div>                                  
                                       </Badge>
                                     </SheetTrigger>
                                     <SheetContent side="bottom">
 
                                       <SheetHeader>
-                                        <SheetTitle>Select color</SheetTitle>
+                                        <SheetTitle>{t('select_color')}</SheetTitle>
                                         <SheetDescription>
                                         </SheetDescription>
                                       </SheetHeader>
@@ -528,10 +526,10 @@ const CreateOrder = ({
                              <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
                              <AlertDialogHeader className="flex flex-col items-center">
                             <AlertDialogTitle className="text-xl text-blue-700 font-bold text-center">
-                            Creating Your Order!
+                            {t('creating_order')}
                               </AlertDialogTitle>
                               <AlertDialogDescription className="flex flex-col items-center">
-                                This will take a moment.
+                                {t('creating_order_description')}
                                 {/* Replace Loader with your loader component */}
           <Loader className="text-blue-700 h-[30%] w-[30%] animate-spin mt-3" />
                               </AlertDialogDescription>
@@ -547,21 +545,39 @@ const CreateOrder = ({
                           </AlertDialogTrigger>
                           <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
                           <AlertDialogHeader>
-                              <AlertDialogTitle>Creating a client Order</AlertDialogTitle>
+                              <AlertDialogTitle>{t('creating_client_order')}</AlertDialogTitle>
                               <AlertDialogDescription>
-                                Please make sure to fill all the necessary details!
+                                {t('fill_necessary_details')}
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <div className="grid gap-4 py-4">
-                              <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="name" className="text-left">
-                                  Client Name:
+                            <div className="grid grid-cols-1 items-center gap-2 sm:gap-4">
+                              <Label htmlFor="username" className="text-left sm:col-span-1">
+                                {t('product_size')}:
+                              </Label>
+                              <Select value={selectedSize} onValueChange={handleSizeChange}>
+                                <SelectTrigger className="w-full sm:w-[180px]">
+                                  <SelectValue placeholder={t('select_size')} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectGroup>
+                                    <SelectLabel>{t('select_size')}</SelectLabel>
+                                    {selectedSizes!.map((size, index) => (
+                                      <SelectItem key={index} value={size}>{size}</SelectItem>
+                                    ))}
+                                  </SelectGroup>
+                                </SelectContent>
+                              </Select>
+                            </div>
+                              <div className="grid grid-cols-1 items-center gap-2 sm:gap-4">
+                                <Label htmlFor="name" className="text-left sm:col-span-1">
+                                  {t('client_name')}:
                                 </Label>
-                                <Input id="name" type="text" className="col-span-3 " value={name} onChange={handleNameChange} />
+                                <Input id="name" type="text" className="sm:col-span-3" value={name} onChange={handleNameChange} />
                               </div>
-                              <div className="grid grid-cols-4 gap-4">
-                                  <Label htmlFor="phoneNumber">Phone Number:</Label>
-                                  <div className="col-span-3">
+                              <div className="grid grid-cols-1 gap-2 sm:gap-4">
+                                  <Label htmlFor="phoneNumber" className="sm:col-span-1">{t('phone_number')}:</Label>
+                                  <div className="sm:col-span-3">
                                     <Input 
                                       id="phoneNumber" 
                                       type="number" 
@@ -569,7 +585,7 @@ const CreateOrder = ({
                                       onBlur={handlePhoneNumberBlur}
                                       placeholder="99 999 999" 
                                       onChange={handlePhoneNumberChange}
-                                      className={`${inputClassName} focus:ring-0  focus:border-green-500`}
+                                      className={`${inputClassName} focus:ring-0 focus:border-green-500`}
                                       required 
                                     />
                                     {phoneNumberError && (
@@ -579,45 +595,27 @@ const CreateOrder = ({
                                     )}
                                   </div>
                                 </div>
-                              <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="address" className="text-left">
-                                  Client Address:
+                              <div className="grid grid-cols-1 items-center gap-2 sm:gap-4">
+                                <Label htmlFor="address" className="text-left sm:col-span-1">
+                                  {t('client_address')}:
                                 </Label>
-                                <Input id="address" maxLength={20} type="text" className="col-span-3 " value={address} onChange={handleAddressChange} />
+                                <Input id="address" maxLength={20} type="text" className="sm:col-span-3" value={address} onChange={handleAddressChange} />
                               </div>
-                              <div className="grid grid-cols-4 items-center gap-4">
-                              <Label htmlFor="username" className="text-left">
-                                Product Size:
-                              </Label>
-                              <Select value={selectedSize} onValueChange={handleSizeChange}>
-                                <SelectTrigger className="w-[180px] ">
-                                  <SelectValue placeholder="Select a size" />
-                                </SelectTrigger>
-                                <SelectContent>
-                                  <SelectGroup>
-                                    <SelectLabel>Select a size</SelectLabel>
-                                    {selectedSizes!.map((size, index) => (
-                                      <SelectItem key={index} value={size}>{size}</SelectItem>
-                                    ))}
-                                  </SelectGroup>
-                                </SelectContent>
-                              </Select>
-                            </div>
-                              <div className="grid grid-cols-4 items-center gap-4">
-                                <Label htmlFor="quantity" className="text-left">
-                                  Product Quantity: <p className="text-xs text-muted-foreground">Max {platform.maxProductQuantity}</p>
+                              <div className="grid grid-cols-1 items-center gap-2 sm:gap-4">
+                                <Label htmlFor="quantity" className="text-left sm:col-span-1">
+                                  {t('product_quantity')}: <p className="text-xs text-muted-foreground">{t('max_quantity', {max: platform.maxProductQuantity})}</p>
                                 </Label>
-                                <Input id="quantity" type="number" min={1} max={platform.maxProductQuantity} value={quantity} onChange={handleQuantityChange} className="w-[180px] col-span-3 " />
+                                <Input id="quantity" type="number" min={1} max={platform.maxProductQuantity} value={quantity} onChange={handleQuantityChange} className="w-full sm:w-[180px] sm:col-span-3" />
                               </div>
                             </div>
                             <AlertDialogFooter>
                               <AlertDialogCancel onClick={()=>{
                                 setSelectedCat(null)
-                                setisDialogOpen(false)}}>Cancel</AlertDialogCancel>
+                                setisDialogOpen(false)}}>{t('cancel')}</AlertDialogCancel>
                               <AlertDialogAction className="text-white" disabled={!isValid} onClick={()=>{
                                 setisDialogOpen(false)
                                 createOrder()
-                                }}>Create</AlertDialogAction>
+                                }}>{t('create')}</AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>
                         </AlertDialog>
