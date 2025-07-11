@@ -544,7 +544,7 @@ const Navbar = (
           <div className='flex items-center space-x-2'>
           <Switcher />
           <ModeToggle />
-            <UserProfile user={user!} platform={platform!} />
+          <UserProfile user={user!} platform={platform!} />
           </div>
 
         </div>

@@ -37,7 +37,7 @@ export default async function Page() {
 
     <>
 
-    <div className='pt-4 mx-auto text-center flex  flex-col w-full items-center'>
+    <div className='pt-4 px-6 md:mx-auto text-center flex  flex-col w-full items-center'>
       <p className='text-sm max-w-prose  text-muted-foreground'>
       {t('title')} ✨
       </p>

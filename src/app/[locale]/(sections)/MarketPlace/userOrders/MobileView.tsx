@@ -111,76 +111,66 @@ const MobileView = ({ordersData}: ViewProps) => {
 
     {currentOrder && (
   <Card key={currentOrder.id} ref={ref} className="overflow-hidden mb-4" x-chunk="dashboard-05-chunk-4">
-    <CardHeader className=" bg-muted/50">
-      <div className="grid gap-0.5 ">
-        <CardTitle className="group flex items-center gap-2 text-sm">
-          {t('order_id')}: <p className="text-xs text-gray-600">{currentOrder.id}</p>
-        </CardTitle>
-        <CardDescription>
-        <span className="text-green-600 text-xs">{t('call_confirmation')}</span><br/>
-        {t('creation_date')}: <time dateTime={currentOrder.createdAt ? currentOrder.createdAt.toISOString() : undefined}>
-          {currentOrder.updatedAt ? new Date(currentOrder.updatedAt).toLocaleString() : ''}
-        </time></CardDescription>
-        <CardDescription className="flex my-4 gap-1"> 
-
-<Badge
-  variant="outline"
-  className={`h-8 gap-1 ${currentOrder.type  === "NOT_CONFIRMED" ? 'text-red-500' : currentOrder.type === 'CANCELED' ? 'text-red-500' : currentOrder.type === 'CONFIRMED' ? 'text-green-500' : ''}`}
-> 
-  {currentOrder.type === "CONFIRMED" ? (
-    <CircleCheck className="h-3.5 w-3.5" />
-  ) : (
-    <CircleX className="h-3.5 w-3.5" />
-  )}
-  
-  <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
-  {currentOrder.type}
-  </span>
-</Badge>
-
-  <Badge
-    variant="outline"
-    className={`h-8 gap-1 ${!currentOrder.printed ? 'text-red-500' :  'text-green-500'}`}
-  >
-    <Palette className="h-3.5 w-3.5" />
-    <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
-      {currentOrder.printed ? t('printed') : t('not_printed')}
-    </span>
-  </Badge>
-
-
-  <Badge
-    variant="outline"
-    className={`h-8 gap-1 ${currentOrder.status === 'CANCELED' ? 'text-red-500' : currentOrder.status === 'PROCESSING' ? 'text-blue-500' : currentOrder.status === 'DELIVERED' ? 'text-green-500' : ''}`}
-  >
-    <Truck className="h-3.5 w-3.5" />
-    <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
-      {currentOrder.status}
-    </span>
-  </Badge>
-
-
-</CardDescription>
+    <CardHeader className="bg-muted/50">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
+        <div className="grid gap-0.5 flex-1 min-w-0">
+          <CardTitle className="group flex flex-wrap items-center gap-2 text-sm sm:text-base">
+            {t('order_id')}: <p className="text-xs sm:text-sm text-gray-600 break-all">{currentOrder.id}</p>
+          </CardTitle>
+          <CardDescription className="text-xs sm:text-sm">
+            <span className="text-green-600 text-xs sm:text-sm">{t('call_confirmation')}</span><br/>
+            {t('creation_date')}: <time dateTime={currentOrder.createdAt ? currentOrder.createdAt.toISOString() : undefined}>
+              {currentOrder.updatedAt ? new Date(currentOrder.updatedAt).toLocaleString() : ''}
+            </time>
+          </CardDescription>
+        </div>
+        <CardDescription className="flex flex-col xs:flex-row gap-2 sm:gap-1 flex-shrink-0 w-full sm:w-auto my-2 sm:my-0">
+          <Badge
+            variant="outline"
+            className={`h-8 max-w-max bg-slate-200 dark:bg-slate-600/50 gap-1 ${currentOrder.type  === "NOT_CONFIRMED" ? 'text-red-500' : currentOrder.type === 'CANCELED' ? 'text-red-500' : currentOrder.type === 'CONFIRMED' ? 'text-green-500' : ''}`}
+          >
+            {currentOrder.type === "CONFIRMED" ? (
+              <CircleCheck className="h-3.5 w-3.5" />
+            ) : (
+              <CircleX className="h-3.5 w-3.5" />
+            )}
+            <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
+              {currentOrder.type}
+            </span>
+          </Badge>
+          <Badge
+            variant="outline"
+            className={`h-8 max-w-max bg-slate-200 dark:bg-slate-600/50 gap-1 ${!currentOrder.printed ? 'text-red-500' :  'text-green-500'}`}
+          >
+            <Palette className="h-3.5 w-3.5" />
+            <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
+              {currentOrder.printed ? t('printed') : t('not_printed')}
+            </span>
+          </Badge>
+          <Badge
+            variant="outline"
+            className={`h-8 max-w-max bg-slate-200 dark:bg-slate-600/50 gap-1 ${currentOrder.status === 'CANCELED' ? 'text-red-500' : currentOrder.status === 'PROCESSING' ? 'text-blue-500' : currentOrder.status === 'DELIVERED' ? 'text-green-500' : ''}`}
+          >
+            <Truck className="h-3.5 w-3.5" />
+            <span className="lg:sr-only xl:not-sr-only xl:whitespace-nowrap">
+              {currentOrder.status}
+            </span>
+          </Badge>
+        </CardDescription>
       </div>
-
       {currentOrder.status !== "CANCELED" && !currentOrder.printed && currentOrder.type !== "CONFIRMED"  && (
-    <>
-  <div className="flex items-end justify-end">
-  <Button
-    onClick={() => {
-      setisDeleteOpen(true);
-      setselectedOrderId(currentOrder.id);
-    }}
-    className="bg-red-500 text-white hover:bg-red-300"
-  >
-    {t('cancel_order')}
-  </Button>
-  </div>
-
-  </>
-    )}
-
-
+        <div className="flex w-full sm:w-auto items-end justify-end mt-2 sm:mt-0">
+          <Button
+            onClick={() => {
+              setisDeleteOpen(true);
+              setselectedOrderId(currentOrder.id);
+            }}
+            className="bg-red-500 text-white hover:bg-red-300 w-full sm:w-auto"
+          >
+            {t('cancel_order')}
+          </Button>
+        </div>
+      )}
     </CardHeader>
     
     <CardContent className="p-6 text-sm">

@@ -70,7 +70,6 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
     return (
         <>
 
-        <LoadingState isOpen={open}/> 
 
         {user ? (
           <>
@@ -228,6 +227,7 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
           </>
         )}
                 
+                <LoadingState isOpen={open}/> 
 
 
         </>
