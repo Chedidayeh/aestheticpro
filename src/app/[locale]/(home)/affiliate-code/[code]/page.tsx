@@ -1,9 +1,9 @@
 
 import ErrorState from "@/components/ErrorState";
-import NotFound from "../../../[locale]/[...not-found]/page";
 import {  getAffiliateLinkByCode } from "./actions";
 import RedirectPage from './RedirectPage';
 import { getUser } from "@/actions/actions";
+import NotFound from "../../[...not-found]/page";
 
 interface RedirectPageProps {
     params: { code: string };
