@@ -480,11 +480,6 @@ const Navbar = (
             </div> */}
 
 
-                <div className='mb-2 flex items-center justify-center gap-2'>
-                  <Switcher />
-                  <ModeToggle />
-                </div>
-
 
                 <div className='flex justify-center items-center '>
                   <div className="text-muted-foreground text-sm font-semibold flex flex-col sm:flex-row items-center justify-center gap-2">
@@ -509,7 +504,7 @@ const Navbar = (
 
 
           {/* links */}
-          <div className='flex items-center space-x-2'>
+          {/* <div className='flex items-center space-x-2'>
 
 
             <Link href="/MarketPlace/favList" className={buttonVariants({
@@ -542,11 +537,13 @@ const Navbar = (
                 {orders?.length > 9 ? '9+' : orders?.length ?? 0}
               </span>
             </Link>
-          </div>
+          </div> */}
 
 
           {/* User Profile for small devices */}
           <div className='flex items-center space-x-2'>
+          <Switcher />
+          <ModeToggle />
             <UserProfile user={user!} platform={platform!} />
           </div>
 
