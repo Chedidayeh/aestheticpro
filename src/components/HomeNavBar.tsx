@@ -480,7 +480,8 @@ const Navbar = (
             </div> */}
 
 
-                <div className='mb-2 flex items-center justify-center'>
+                <div className='mb-2 flex items-center justify-center gap-2'>
+                  <Switcher />
                   <ModeToggle />
                 </div>
 
@@ -547,7 +548,6 @@ const Navbar = (
           {/* User Profile for small devices */}
           <div className='flex items-center space-x-2'>
             <UserProfile user={user!} platform={platform!} />
-            <Switcher />
           </div>
 
         </div>

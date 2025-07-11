@@ -47,7 +47,7 @@ export function Switcher() {
   return (
     <DropdownMenu key={locale}> {/* <--- key forces remount on locale change */}
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="group border rounded-full">
+        <Button variant="ghost" size="icon" className="group border-muted-foreground dark:bg-slate-600/50 border rounded-full">
           <Globe className="h-[1.2rem] w-[1.2rem] text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
