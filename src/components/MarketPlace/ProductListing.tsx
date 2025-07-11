@@ -279,9 +279,9 @@ const ProductListing = ({
 
       <div className="mt-1 flex items-center justify-between">
         <div className="ml-2">
-        <div className="flex space-x-4">
+        <div className="flex items-center space-x-4">
           {product.isDiscountEnabled && (
-          <div className="font-bold rounded-xl  text-gray-400 line-through">
+          <div className="font-bold rounded-xl text-sm  text-gray-400 line-through">
             {(product.oldPrice ?? product.price  ).toFixed(2)} TND
           </div>
              )}

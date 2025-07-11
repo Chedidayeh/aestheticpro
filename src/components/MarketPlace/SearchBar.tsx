@@ -116,8 +116,8 @@ useEffect(() => {
               onKeyPress={handleKeyPress}
             />
             <Button disabled={searchQuery === ""} onClick={handleSearch} className="bg-blue-600 text-white px-4 py-2 rounded-xl">
-              {t('search')}
-              <Search size={14} className='ml-1' />
+              {/* {t('search')} */}
+              <Search size={18} className='' />
             </Button>
           </div>
 

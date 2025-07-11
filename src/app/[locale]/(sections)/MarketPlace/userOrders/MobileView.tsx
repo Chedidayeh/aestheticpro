@@ -302,7 +302,6 @@ const MobileView = ({ordersData}: ViewProps) => {
                                                </AlertDialogTitle>
                                                 <AlertDialogDescription>
                                                    {t('delete_order_desc')} 
-                                                   {t('delete_order_desc_2')}
                                                    </AlertDialogDescription>
                                                    </AlertDialogHeader>
                                                   <AlertDialogFooter>

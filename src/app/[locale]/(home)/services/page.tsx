@@ -22,7 +22,7 @@ const Page = async () => {
     <>
 
     {/* buying section */}
-<div className='py-10 mx-auto flex flex-col w-[80%] rounded-2xl bg-center border-2
+<div className='py-10 px-6 mx-auto flex flex-col w-[90%] rounded-2xl bg-center border-2
     bg-[url("/bgBanner.png")]'>
 
   <div className="text-center flex flex-col items-center">
@@ -49,7 +49,7 @@ const Page = async () => {
 </div>
 
 <section className='bg-muted/50 border-2 rounded-2xl border-slate-500 w-[90%] mx-auto my-8'>
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 px-10">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 px-6">
     <div className="flex flex-col justify-center">
       <h2 className="text-xl font-semibold mb-2">{t('why_shop_title')}</h2>
       <p className='my-1 text-md max-w-prose text-muted-foreground'>
@@ -105,7 +105,7 @@ const Page = async () => {
 
 
 {/* selling section */}
-<div className='py-10 mt-2 mx-auto  flex flex-col w-[80%] rounded-2xl  bg-center  border-2
+<div className='py-10 px-6 mt-2 mx-auto  flex flex-col w-[90%] rounded-2xl  bg-center  border-2
     bg-[url("/bgBanner.png")]'>
 
       <div className="text-center flex flex-col items-center">
@@ -132,7 +132,7 @@ const Page = async () => {
 
 
 <section className='bg-muted/50 border-2 rounded-2xl border-slate-500 w-[90%] mx-auto my-8'>
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 px-10">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 px-6">
     
     {/* Left Side - Text */}
     <div className="flex flex-col justify-center">
@@ -164,7 +164,7 @@ const Page = async () => {
 
     {/* Right Side - Image */}
     <div className="flex justify-center my-8">
-    <div className='px-2 lg:px-10'>
+    <div className='px-6 lg:px-10'>
               <div className='mt-2 flow-root sm:mt-24'>
                 <div className='-m-10 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-16 lg:rounded-2xl lg:p-4'>
                   <NextImage
@@ -181,7 +181,7 @@ const Page = async () => {
     </div>
   </div>
 
-  <div className='flex flex-col items-center justify-center mt-2'>
+  <div className='flex px-6 flex-col items-center justify-center mt-2'>
     <p className='mt-4 text-sm max-w-prose text-muted-foreground'>
       {t('selling_policy_question')}
     </p>
@@ -201,7 +201,7 @@ const Page = async () => {
 {!platform?.closeAffiliateProgram && (
 
 <>
-<div className='py-10 mt-2 mx-auto flex flex-col w-[80%] rounded-2xl bg-center  border-2
+<div className='py-10 px-6 mt-2 mx-auto flex flex-col w-[90%] rounded-2xl bg-center  border-2
     bg-[url("/bgBanner.png")]'>
 
   <div className="text-center flex flex-col items-center">
@@ -226,7 +226,7 @@ const Page = async () => {
 </div>
 
 <section className='bg-muted/50 border-2 rounded-2xl border-slate-500 w-[90%] mx-auto my-8'>
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 px-10">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-6 px-6">
     
     <div className="flex flex-col justify-center">
       <h2 className="text-xl font-semibold mb-2">{t('why_affiliate_title')}</h2>
@@ -245,7 +245,7 @@ const Page = async () => {
     </div>
 
     <div className="flex justify-center my-8">
-    <div className='px-2 lg:px-10'>
+    <div className='px-6 lg:px-10'>
               <div className='mt-2 flow-root sm:mt-16'>
                 <div className='-m-10 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-16 lg:rounded-2xl lg:p-4'>
                   <NextImage
