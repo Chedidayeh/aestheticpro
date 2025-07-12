@@ -610,7 +610,7 @@
     "total": "Total: {count}",
     "view_your_notifications": "Voir vos notifications.",
     "unread_marked_blue": "Les notifications non lues sont marquées en bleu",
-    "mark_all_as_read": "Marquer toutes les notifications comme lues",
+    "mark_all_as_read": "Marquer tous comme lues",
     "sender": "Expéditeur",
     "received_at": "Reçu à",
     "content": "Contenu",
@@ -1027,7 +1027,7 @@
     "total": "Total: {count}",
     "view_notifications": "Voir vos notifications.",
     "unread_marked_blue": "Les notifications non lues sont marquées en bleu.",
-    "mark_all_read": "Marquer toutes les notifications comme lues",
+    "mark_all_read": "Marquer tous comme lues",
     "sender": "Expéditeur",
     "received_at": "Reçu à",
     "content": "Contenu",
@@ -1220,7 +1220,7 @@
     "total_received_payments": "Total des paiements reçus",
     "tab_d17": "D17",
     "tab_flouci": "Flouci",
-    "tab_bank_deposit": "Dépôt bancaire",
+    "tab_bank_deposit": "Banque",
     "max_per_request": "Max 100 TND par demande!",
     "max_per_request_week": "Max 100 TND par semaine",
     "request_payment_button": "Demander un paiement",
@@ -1623,7 +1623,7 @@
     "total": "Total:",
     "d17": "D17",
     "flouci": "Flouci",
-    "bank_deposit": "Dépôt bancaire",
+    "bank_deposit": "Banque",
     "search_by_store_or_user": "Rechercher par nom de boutique ou nom d'utilisateur...",
     "search_by_user": "Rechercher par nom d'utilisateur...",
     "filter_by": "Filtrer par",
@@ -2168,7 +2168,7 @@
   "AffiliateWalletPaymentPage": {
     "d17Tab": "D17",
     "flouciTab": "Flouci",
-    "bankDepositTab": "Dépôt bancaire"
+    "bankDepositTab": "Banque"
   },
   "AffiliateSettingsPage": {
     "settingsTitle": "Paramètres",

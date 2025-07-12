@@ -108,19 +108,30 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
 
       <p className="text-sm text-muted-foreground mb-2">{t('breadcrumb')}</p>
       <h1 className="text-2xl font-semibold mb-8">{t('title')}</h1>
+
+      <div className="flex mt-4 flex-col gap-5 w-full">
+        <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-1 xl:grid-cols-1">
+
       <Card>
         <CardHeader className="bg-muted/50 rounded-t-lg">
-          <CardTitle>{t('notifications')}</CardTitle>
-          <CardDescription>{t('total', {count: notifications.length})}</CardDescription>
-          {notifications.length > 0 && (
-          <>
-          <CardDescription>{t('view_notifications')}</CardDescription>
-          <CardDescription>{t('unread_marked_blue')}</CardDescription>
-          <CardDescription><Button onClick={SetAllNotificationsRead} variant={"link"}>{t('mark_all_read')}</Button></CardDescription>
-          </>
-        )}
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 flex-wrap w-full">
+            <div>
+              <CardTitle>{t('notifications')}</CardTitle>
+              <CardDescription>{t('total', {count: notifications.length})}</CardDescription>
+              {notifications.length > 0 && (
+                <>
+                  <CardDescription>{t('view_notifications')}</CardDescription>
+                  <CardDescription>{t('unread_marked_blue')}</CardDescription>
+                </>
+              )}
+            </div>
+            {notifications.length > 0 && (
+              <Button onClick={SetAllNotificationsRead} className="w-full sm:w-auto mt-2 sm:mt-0" variant={"secondary"}>{t('mark_all_read')}</Button>
+            )}
+          </div>
         </CardHeader>
         <CardContent className="mt-2">
+
 
           {notifications.length > 0 ? (
 
@@ -186,8 +197,11 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
 
           </>
    )}
+   
         </CardContent>
       </Card>
+      </section>
+      </div>
 
       {selectedNotification && (
         <AlertDialog open={selectedNotification !== null} onOpenChange={() => setSelectedNotification(null)}>
