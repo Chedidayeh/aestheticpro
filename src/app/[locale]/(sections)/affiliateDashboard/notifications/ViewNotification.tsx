@@ -41,6 +41,7 @@ import LoadingState from "@/components/LoadingState";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
 import { useTranslations } from 'next-intl';
+import { cn } from "@/lib/utils";
 interface NotiViewProps {
   notifications: AffiliateNotification[];
 }
@@ -107,6 +108,9 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
 
       <p className="text-sm text-muted-foreground mb-2">{t('breadcrumb')}</p>
       <h1 className="text-2xl font-semibold mb-8">{t('title')}</h1>
+      <div className="flex mt-4 flex-col gap-5 w-full">
+        <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-1 xl:grid-cols-1">
+
       <Card>
         <CardHeader className="bg-muted/50 rounded-t-lg mb-2" >
           <CardTitle>{t('notifications')}</CardTitle>
@@ -115,7 +119,7 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
           <>
           <CardDescription>{t('view_your_notifications')}</CardDescription>
           <CardDescription>{t('unread_marked_blue')}</CardDescription>
-          <CardDescription><Button onClick={SetAllNotificationsRead} variant={"link"}>{t('mark_all_as_read')}</Button></CardDescription>
+          <Button onClick={SetAllNotificationsRead} className="w-full sm:w-auto mt-2 sm:mt-0" variant={"secondary"}>{t('mark_all_as_read')}</Button>
           </>
         )}
         </CardHeader>
@@ -134,7 +138,7 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
               <TableRow>
                 <TableHead>{t('sender')}</TableHead>
                 <TableHead>{t('received_at')}</TableHead>
-                <TableHead>{t('content')}</TableHead>
+                <TableHead className="hidden md:block">{t('content')}</TableHead>
                 <TableHead>{t('action')}</TableHead>
               </TableRow>
             </TableHeader>
@@ -146,7 +150,7 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
                 >                  
                 <TableCell className={notification.isViewed ? "" : " text-blue-500"}>{notification.sender}</TableCell>
                   <TableCell className={notification.isViewed ? "" : " text-blue-500"}>{new Date(notification.createdAt).toLocaleString()}</TableCell>
-                  <TableCell className={notification.isViewed ? "" : " text-blue-500"}>{notification.content}</TableCell>
+                  <TableCell className={cn("hidden md:block",notification.isViewed ? "" : " text-blue-500")}>{notification.content}</TableCell>
                   <TableCell>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
@@ -188,6 +192,8 @@ const ViewNotification = ({ notifications }: NotiViewProps) => {
         )}
         </CardContent>
       </Card>
+      </section>
+      </div>
 
       {selectedNotification && (
         <AlertDialog open={selectedNotification !== null} onOpenChange={() => setSelectedNotification(null)}>

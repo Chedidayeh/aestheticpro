@@ -235,7 +235,6 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
 
   const handleSearch = async () => {
     try {
-      setOpen(true);
       setCurrentPage(1);
       const { products, totalCount } = await fetchAllProducts(1, limit, sortBy, filterByCategory, filterByCollection, searchQuery);
       setProducts(products);
@@ -247,7 +246,6 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
         variant: "destructive",
       });
     } finally {
-      setOpen(false);
       ref.current!.scrollIntoView({
         behavior: 'smooth',
         block: 'start', // Try 'start' or 'center' depending on your needs
@@ -270,7 +268,6 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
 
   const handleSortChange = async (event: string) => {
     try {
-      setOpen(true);
       setCurrentPage(1); // Reset to first page on sort change
       setSortBy(event);
       const { products, totalCount } = await fetchAllProducts(1, limit, event, filterByCategory, filterByCollection, searchQuery);
@@ -283,7 +280,6 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
         variant: "destructive",
       });
     } finally {
-      setOpen(false);
       ref.current!.scrollIntoView({
         behavior: 'smooth',
         block: 'start', // Try 'start' or 'center' depending on your needs
@@ -295,7 +291,6 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
 
   const handleCategorySortChange = async (event: string) => {
     try {
-      setOpen(true);
       setCurrentPage(1); // Reset to first page on category change
       setFilterByCategory(event);
       const { products, totalCount } = await fetchAllProducts(1, limit, sortBy, event, filterByCollection, searchQuery);
@@ -308,7 +303,6 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
         variant: "destructive",
       });
     } finally {
-      setOpen(false);
       ref.current!.scrollIntoView({
         behavior: 'smooth',
         block: 'start', // Try 'start' or 'center' depending on your needs
@@ -320,7 +314,6 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
 
   const handleCollectionSortChange = async (event: string) => {
     try {
-      setOpen(true);
       setCurrentPage(1); // Reset to first page on collection change
       setFilterByCollection(event);
       const { products, totalCount } = await fetchAllProducts(1, limit, sortBy, filterByCategory, event, searchQuery);
@@ -333,7 +326,6 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
         variant: "destructive",
       });
     } finally {
-      setOpen(false);
       ref.current!.scrollIntoView({
         behavior: 'smooth',
         block: 'start', // Try 'start' or 'center' depending on your needs
@@ -345,7 +337,6 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
 
   const handlePageChange = async (page: number) => {
     try {
-      setOpen(true);
       if (page >= 1 && page <= totalPages) {
         const { products, totalCount } = await fetchAllProducts(page, limit, sortBy, filterByCategory, filterByCollection, searchQuery);
         setProducts(products);
@@ -359,7 +350,6 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
         variant: "destructive",
       });
     } finally {
-      setOpen(false);
       ref.current!.scrollIntoView({
         behavior: 'smooth',
         block: 'start', // Try 'start' or 'center' depending on your needs
@@ -577,7 +567,7 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
 
       <div className="flex mt-4 flex-col gap-5 w-full">
         <section className="grid w-full grid-cols-1 gap-4 gap-x-8 transition-all sm:grid-cols-1 xl:grid-cols-1">
-          <Card ref={ref} className="col-span-full my-4" x-chunk="dashboard-01-chunk-4">
+          <Card  className="col-span-full my-4" x-chunk="dashboard-01-chunk-4">
             <CardHeader className="px-4 sm:px-7 space-y-2 bg-muted/50 rounded-t-lg">
               <CardDescription>{t('total_products', { count: totalCount })}</CardDescription>
 
@@ -701,7 +691,7 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
 
             </CardHeader>
             <Separator className="w-full mb-4" />
-            <CardContent>
+            <CardContent ref={ref}>
               {totalCount === 0 && (
                 <>
                   <div className="flex items-center justify-center flex-col text-muted-foreground">
@@ -727,11 +717,12 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
                 </>
               ) : (
                 <>
-                  <div className="relative mt-5 grid grid-cols-1 mb-20 pb-20">
+                  <div  className="relative mt-5 grid grid-cols-1 mb-20 pb-20">
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-2">
                       {/* Product Cards */}
                       {products?.map((product, index) => (
                         <div
+                          
                           key={index}
                           className={`relative cursor-pointer border-2 rounded-xl overflow-hidden  ${selectedProduct?.id === product.id ? 'border-blue-500' : 'border-transparent'
                             }`}
