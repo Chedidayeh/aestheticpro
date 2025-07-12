@@ -856,14 +856,14 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
             <AlertDialogTitle className="text-xl font-bold text-center">
               {t('affiliate_link_title')}
             </AlertDialogTitle>
-            <AlertDialogDescription>
+            <AlertDialogDescription className="flex flex-col items-center w-full">
               {t('affiliate_link_description')}:
               <p className="text-xs mt-4">
                 {t('click_to_copy_link')}
               </p>
               <Badge
                 onClick={copyToClipboard}
-                className="my-6 text-white text-xs animate-pulse font-bold cursor-pointer transition-colors"
+                className="my-6 w-full sm:w-auto text-white text-xs animate-pulse font-bold cursor-pointer transition-colors text-center break-all"
                 aria-label="Click to copy affiliate link"
               >
                 {shortenedLink}
@@ -873,10 +873,10 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
               )}
             </AlertDialogDescription>
           </AlertDialogHeader>
-          <AlertDialogFooter>
+          <AlertDialogFooter className="flex flex-col sm:flex-row gap-2 w-full justify-center items-center">
             <AlertDialogAction
               onClick={() => setOpenWindow(false)}
-              className='bg-blue-500 text-white hover:bg-blue-300'
+              className='w-full sm:w-auto bg-blue-500 text-white hover:bg-blue-300'
             >
               {t('done')}
             </AlertDialogAction>
