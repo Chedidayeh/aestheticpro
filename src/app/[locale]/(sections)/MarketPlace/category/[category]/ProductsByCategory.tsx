@@ -356,7 +356,7 @@ const ProductsByCategory = ({ initialProducts,totalCount,initialPage, limit,pric
               lg:grid-cols-4 
               md:grid-cols-2 
               sm:grid-cols-2
-              grid-cols-2
+              grid-cols-1
               gap-y-4
               gap-2
               sm:gap-x-8  
