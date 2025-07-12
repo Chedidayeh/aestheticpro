@@ -130,54 +130,29 @@ export async function getSizes(categoryLabel: string) {
 
 export async function trackProductView(
   product: Product,
-  sessionId: string,
-  userId?: string
+  userId?: string,
 ) {
   try {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Normalize to start of the day
-
-    // Look for existing view today by userId or sessionId
-    const existingView = await db.productViews.findFirst({
-      where: {
+    // Always create a new product view entry
+    await db.productViews.create({
+      data: {
         productId: product.id,
-        OR: [
-          { userId: userId ?? undefined },
-          { sessionId }
-        ],
-      },
-      orderBy: {
-        viewedAt: 'desc', // Get the most recent view, if any
+        userId: userId,
+        viewedAt: new Date(),
       },
     });
 
-    const alreadyViewedToday = existingView?.viewedAt
-      ? new Date(existingView.viewedAt).toDateString() === today.toDateString()
-      : false;
+    // Increment product's total views
+    await db.product.update({
+      where: { id: product.id },
+      data: { totalViews: { increment: 1 } },
+    });
 
-    if (!alreadyViewedToday) {
-      // Create new product view entry
-      await db.productViews.create({
-        data: {
-          productId: product.id,
-          sessionId,
-          userId: userId ?? null,
-          viewedAt: new Date(), // ensure this is stored
-        },
-      });
-
-      // Increment product's total views
-      await db.product.update({
-        where: { id: product.id },
-        data: { totalViews: { increment: 1 } },
-      });
-
-      // Increment store's total views
-      await db.store.update({
-        where: { id: product.storeId },
-        data: { totalViews: { increment: 1 } },
-      });
-    }
+    // Increment store's total views
+    await db.store.update({
+      where: { id: product.storeId },
+      data: { totalViews: { increment: 1 } },
+    });
   } catch (error) {
     console.error("Error tracking product view:", error);
   }

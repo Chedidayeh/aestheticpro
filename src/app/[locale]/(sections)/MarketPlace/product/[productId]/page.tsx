@@ -86,7 +86,7 @@ const Page = async ({ params }: PageProps) => {
 
         const productReviews = await getProductReviews(product.id)
 
-        await trackProductView(product);
+        await trackProductView(product , user?.id);
         
 
 
