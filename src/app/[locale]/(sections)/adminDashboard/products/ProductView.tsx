@@ -336,7 +336,7 @@ const viewProductData = (product : ExtraProduct) => {
         <CardHeader className="bg-muted/50 space-y-2">
           <div className="grid gap-2">
             <CardTitle>{t('products')}</CardTitle>
-            <CardDescription>{t('total_products')}: {products.length}</CardDescription>
+            <CardDescription>{t('total_products')} {products.length}</CardDescription>
             
           </div>
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 mt-2">
@@ -528,16 +528,16 @@ const viewProductData = (product : ExtraProduct) => {
 <Card className="col-span-full mt-4" x-chunk="dashboard-01-chunk-4">
   <CardHeader className="flex flex-col md:flex-row bg-muted/50 items-center ">
     <div className="grid gap-2">
-      <CardTitle className="font-bold">{t('product_infos')}:</CardTitle>
+      <CardTitle className="font-bold">{t('product_infos')}</CardTitle>
       <CardDescription>
         <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mt-2">
           <div>
-            <p className="font-bold">{t('product_title')}:</p>
+            <p className="font-bold">{t('product_title')}</p>
             <p >{selectedProduct.title}</p>
           </div>
 
           <div>
-            <p className="font-bold">{t('product_views')}:</p>
+            <p className="font-bold">{t('product_views')}</p>
             <p >{selectedProduct.totalViews} {t('views')}</p>
           </div>
 
@@ -601,7 +601,7 @@ const viewProductData = (product : ExtraProduct) => {
   </CardHeader>
   <Separator className="w-full" />
   <CardContent className="p-4 md:p-6 lg:p-8 max-w-full">
-  <p className=" flex items-center justify-center font-bold my-4">{t('view_product')}:</p>
+  <p className=" flex items-center justify-center font-bold my-4">{t('view_product')}</p>
   <div className="flex items-center justify-center w-full p-4">
     <div className="w-80 xl:w-full max-w-lg"> {/* You can adjust max-w-lg as per your desired size */}
       <ImageSlider
@@ -629,7 +629,7 @@ const viewProductData = (product : ExtraProduct) => {
         <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
           <CardHeader className="bg-muted/50">
             <div className="grid gap-2">
-              <CardTitle className="font-bold">{t('all_products')}:</CardTitle>
+              <CardTitle className="font-bold">{t('all_products')}</CardTitle>
               <CardDescription>
               <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 mt-2">
                 
@@ -861,16 +861,16 @@ className='bg-purple-500 hover:bg-purple-300 text-white cursor-pointer'>
         </AlertDialogHeader>
         <div className="mt-4 space-y-2">
           <p>
-            <strong className="text-blue-600">{t('collection')}:</strong> {selectedDataProduct.collectionName}
+            <strong className="text-blue-600">{t('collection')}</strong> {selectedDataProduct.collectionName}
           </p>
           <p>
-            <strong className="text-blue-600">{t('title')}:</strong> {selectedDataProduct.title}
+            <strong className="text-blue-600">{t('title')}</strong> {selectedDataProduct.title}
           </p>
           <p>
-            <strong className="text-blue-600">{t('description')}:</strong> {selectedDataProduct.description}
+            <strong className="text-blue-600">{t('description')}</strong> {selectedDataProduct.description}
           </p>
           <p>
-            <strong className="text-blue-600">{t('tags')}:</strong> {selectedDataProduct.tags.join(", ")}
+            <strong className="text-blue-600">{t('tags')}</strong> {selectedDataProduct.tags.join(", ")}
           </p>
         </div>
         <AlertDialogFooter className="mt-6 flex justify-end">

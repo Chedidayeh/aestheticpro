@@ -245,7 +245,7 @@ interface OrderViewProps {
         <CardHeader className="bg-muted/50">
           <div className="grid gap-2">
             <CardTitle>{t('returned_orders')}</CardTitle>
-            <CardDescription>{t('total')}: {orders.length}</CardDescription>
+            <CardDescription>{t('total')} {orders.length}</CardDescription>
           </div>
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center mt-2">
   <Input
@@ -426,15 +426,15 @@ interface OrderViewProps {
       <Card className="xl:col-span-4" x-chunk="dashboard-01-chunk-4">
           <CardHeader className="flex flex-col md:flex-row items-center">
                  <div className="grid gap-2">
-             <CardTitle className="font-extrabold">{t('order_infos')}:</CardTitle>
+             <CardTitle className="font-extrabold">{t('order_infos')}</CardTitle>
              <CardDescription>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mt-2">
                           <div>
-                             <p className="font-bold">{t('order_id')}:</p>
+                             <p className="font-bold">{t('order_id')}</p>
                              <p>{selectedOrder?.id}</p>
                          </div>
                          <div>
-                             <p className="font-bold">{t('order_status')}:</p>
+                             <p className="font-bold">{t('order_status')}</p>
                              <p><Badge className={`${{
                                'PROCESSING': 'bg-blue-700',
                                'DELIVERED': 'bg-green-700',
@@ -445,50 +445,50 @@ interface OrderViewProps {
                          </Badge></p>
                          </div>
                          <div>
-                             <p className="font-bold">{t('order_type')}:</p>
+                             <p className="font-bold">{t('order_type')}</p>
                              <p><Badge className={`${selectedOrder.type === 'CONFIRMED' ? 'bg-green-700' : selectedOrder.type === 'NOT_CONFIRMED' ? 'bg-orange-400' : selectedOrder.type === 'CANCELED' ? 'bg-red-700' : 'bg-gray-700'} hover:bg-gray-700`}>
                              {selectedOrder.type}
                              </Badge>
                          </p>
                          </div>
                          <div>
-                             <p className="font-bold">{t('is_order_paid')}:</p>
+                             <p className="font-bold">{t('is_order_paid')}</p>
                              <p><Badge className={`${selectedOrder.isPaid ? 'bg-green-700' :  'bg-red-700'} hover:bg-gray-700`}>
                             {selectedOrder.isPaid ? "Is Paid" : "Not Paid"}
                       </Badge></p>
                          </div>
                          <div>
-                             <p className="font-bold">{t('is_client_made_order')}:</p>
+                             <p className="font-bold">{t('is_client_made_order')}</p>
                              <p>{selectedOrder.isClientMadeOrder ? "Yes" : "No"}</p>
                          </div>
                          <div>
-                             <p className="font-bold">{t('is_seller_order')}:</p>
+                             <p className="font-bold">{t('is_seller_order')}</p>
                              <p>{selectedOrder.isSellerOrder ? "Yes" : "No"}</p>
                          </div>
                          {selectedOrder.isSellerOrder && (
                          <div>
-                             <p className="font-bold">{t('seller_store')}:</p>
+                             <p className="font-bold">{t('seller_store')}</p>
                              <p>{selectedOrder.sellerStore}</p>
                          </div>
                         )}
                          <div>
-                             <p className="font-bold">{t('client_name')}:</p>
+                             <p className="font-bold">{t('client_name')}</p>
                              <p>{selectedOrder.clientName}</p>
                          </div>
                          <div>
-                             <p className="font-bold">{t('client_email')}:</p>
+                             <p className="font-bold">{t('client_email')}</p>
                              <p>{selectedOrder.user.email}</p>
                          </div>
                          <div>
-                             <p className="font-bold">{t('client_phone_number')}:</p>
+                             <p className="font-bold">{t('client_phone_number')}</p>
                              <p>{selectedOrder?.phoneNumber}</p>
                          </div>
                          <div>
-                             <p className="font-bold">{t('shipping_address')}:</p>
+                             <p className="font-bold">{t('shipping_address')}</p>
                              <p>{selectedOrder.shippingAddress}</p>
                          </div>
                          <div>
-                             <p className="font-bold">{t('order_amount')}:</p>
+                             <p className="font-bold">{t('order_amount')}</p>
                              <p>{selectedOrder.amount.toFixed(2)} TND</p>
                          </div>
                      </div>
@@ -497,7 +497,7 @@ interface OrderViewProps {
            </div>
          </CardHeader>
          <CardContent>
-            <p className="text-gray-600 font-extrabold mt-6">{t('order_items')}:</p>
+            <p className="text-gray-600 font-extrabold mt-6">{t('order_items')}</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ml-2 md:ml-10 mt-6">
               {selectedOrder.orderItems.map((item, index) => (
                <div key={index} className="relative aspect-square rounded-xl">
@@ -505,11 +505,11 @@ interface OrderViewProps {
                
                {/* Fixing the position of the size badge */}
                <div className="absolute top-2 left-2 z-10">
-                 <Badge className="text-white">{t('size')}: {item.productSize}</Badge>
+                 <Badge className="text-white">{t('size')} {item.productSize}</Badge>
                </div>
 
                <div className="absolute top-2 right-2 z-10">
-                 <Badge className="text-white">{t('quantity')}: {item.quantity}</Badge>
+                 <Badge className="text-white">{t('quantity')} {item.quantity}</Badge>
                </div>
                
                <div className="text-center">

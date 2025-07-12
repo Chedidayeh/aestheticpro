@@ -87,7 +87,7 @@ const ViewRequests = ({ paymentRequests }: ViewProps) => {
           </CardDescription>
              ) : (
 <CardDescription>
-  <div><span className="text-blue-500">{t('pending')}:</span> {t('under_review')}</div>
+  <div><span className="text-blue-500">{t('pending')}</span> {t('under_review')}</div>
   <div><span className="text-blue-500">{t('refresh_page')}</span> {t('view_new_requests')}</div>
 </CardDescription>
 

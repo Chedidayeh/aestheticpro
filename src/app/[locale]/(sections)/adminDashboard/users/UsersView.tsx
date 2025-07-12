@@ -255,31 +255,31 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
         <CardHeader className="space-y-2 bg-muted/50">
           <div className="grid gap-2">
-            <CardTitle>Users</CardTitle>
-            <CardDescription>Total: {users.length}</CardDescription>
+            <CardTitle>{t('users_card_title')}</CardTitle>
+            <CardDescription>{t('users_card_total', {count: users.length})}</CardDescription>
           </div>
 
           <div className='grid md:flex gap-4'>
           <Select onValueChange={handleFilterChange}>
             <SelectTrigger className="w-full md:w-[180px] ">
-              <SelectValue placeholder="Filter By" />
+              <SelectValue placeholder={t('users_filter_by')} />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Select</SelectLabel>
-                <SelectItem value="user">USER</SelectItem>
-                <SelectItem value="seller">SELLER</SelectItem>
-                <SelectItem value="admin">ADMIN</SelectItem>
-                <SelectItem value="factory">FACTORYADMIN</SelectItem>
-                <SelectItem value="affiliate">IS AFFILIATE</SelectItem>
-                <SelectItem value="nonAffiliate">NOT AFFILIATE</SelectItem> 
+                <SelectLabel>{t('users_select')}</SelectLabel>
+                <SelectItem value="user">{t('users_user')}</SelectItem>
+                <SelectItem value="seller">{t('users_seller')}</SelectItem>
+                <SelectItem value="admin">{t('users_admin')}</SelectItem>
+                <SelectItem value="factory">{t('users_factory')}</SelectItem>
+                <SelectItem value="affiliate">{t('users_is_affiliate')}</SelectItem>
+                <SelectItem value="nonAffiliate">{t('users_not_affiliate')}</SelectItem> 
               </SelectGroup>
             </SelectContent>
           </Select>
         <Input
             type="search"
             className="w-full md:w-[40%]"
-            placeholder="Enter users Id, username, email to make a search..."
+            placeholder={t('users_search_placeholder')}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -288,7 +288,7 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
         onClick={handleSearch}
         className="bg-blue-500 text-white px-4 py-2 rounded flex items-center"
         >
-        Search
+        {t('users_search')}
         <Search size={14} className="ml-1" />
         </Button>  
 
@@ -298,7 +298,7 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
                 defaultChecked={allUsers}
                 onClick={handleToggle} // Handle the state change on toggle
             />
-            <Label>All Users</Label>
+            <Label>{t('users_all_users')}</Label>
             </div>
           </div>
         </CardHeader>
@@ -319,15 +319,15 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
         >                 
          <TableHeader>
                   <TableRow>
-                    <TableHead>User Id</TableHead>
-                    <TableHead>User Name</TableHead>
-                    <TableHead>User Email</TableHead>
-                    <TableHead>Is Email verified</TableHead>
-                    <TableHead>Is User banned</TableHead>
-                    <TableHead>Is User Affiliate</TableHead>
-                    <TableHead>User Type</TableHead>
-                    <TableHead>Creation Date</TableHead>
-                    <TableHead>Action</TableHead>
+                    <TableHead>{t('users_table_id')}</TableHead>
+                    <TableHead>{t('users_table_name')}</TableHead>
+                    <TableHead>{t('users_table_email')}</TableHead>
+                    <TableHead>{t('users_table_email_verified')}</TableHead>
+                    <TableHead>{t('users_table_banned')}</TableHead>
+                    <TableHead>{t('users_table_affiliate')}</TableHead>
+                    <TableHead>{t('users_table_type')}</TableHead>
+                    <TableHead>{t('users_table_created')}</TableHead>
+                    <TableHead>{t('users_table_action')}</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -336,20 +336,20 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
                       <TableCell>{user.id}</TableCell>
                       <TableCell>{user.name}</TableCell>
                       <TableCell>{user.email}</TableCell>
-                      <TableCell>{user.emailVerified ? "Yes" : "No"}</TableCell>
-                      <TableCell>{user.isUserBanned ? "Yes" : "No"}</TableCell>
-                      <TableCell>{user.isAffiliate ? "Yes" : "No"}</TableCell>
+                      <TableCell>{user.emailVerified ? t('users_yes') : t('users_no')}</TableCell>
+                      <TableCell>{user.isUserBanned ? t('users_yes') : t('users_no')}</TableCell>
+                      <TableCell>{user.isAffiliate ? t('users_yes') : t('users_no')}</TableCell>
                       <TableCell>
                         <Select
                           defaultValue={user.userType.toLowerCase()}
                           onValueChange={(newValue) => handleRoleChange(user.id, newValue as UserType)}
                         >
                           <SelectTrigger className="w-[180px]">
-                            <SelectValue placeholder="Select User Type" />
+                            <SelectValue placeholder={t('users_select_user_type')} />
                           </SelectTrigger>
                           <SelectContent>
                             <SelectGroup>
-                              <SelectLabel>User Type</SelectLabel>
+                              <SelectLabel>{t('users_user_type')}</SelectLabel>
                               {Object.values(UserType).map((role) => (
                                 <SelectItem key={role.toLowerCase()} value={role.toLowerCase()}>
                                   {role.toUpperCase()}
@@ -392,8 +392,8 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
                     <h1 className="text-center text-3xl font-bold">
                       <CircleAlert />
                     </h1>
-                    <p className="text-center text-sm mt-2">No records of any users found for now !</p>
-                    <p className="text-center text-xs mt-2">New users will appear here.</p>
+                    <p className="text-center text-sm mt-2">{t('users_no_records')}</p>
+                    <p className="text-center text-xs mt-2">{t('users_new_will_appear')}</p>
             
                   </div>
           
@@ -411,26 +411,26 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
 <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
 <CardHeader className="space-y-2 bg-muted/50">
 <div className="grid gap-2">
-      <CardTitle>Affiliates</CardTitle>
-      <CardDescription>Total: {affiliates.length}</CardDescription>
+      <CardTitle>{t('affiliates_card_title')}</CardTitle>
+      <CardDescription>{t('affiliates_card_total', {count: affiliates.length})}</CardDescription>
     </div>
     <div className='grid md:flex gap-4'>
     <Select onValueChange={handleSortChange}>
       <SelectTrigger className="w-full md:w-[180px] ">
-        <SelectValue placeholder="Sort By" />
+        <SelectValue placeholder={t('affiliates_sort_by')} />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Select</SelectLabel>
-          <SelectItem value="revenue">Revenue</SelectItem>
-          <SelectItem value="links">total links</SelectItem>
+          <SelectLabel>{t('affiliates_select')}</SelectLabel>
+          <SelectItem value="revenue">{t('affiliates_revenue')}</SelectItem>
+          <SelectItem value="links">{t('affiliates_total_links')}</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>
     <Input
       type="search"
       className="w-full md:w-[40%]"
-      placeholder="Enter affiliate Id, username, useremail to make a search..."
+      placeholder={t('affiliates_search_placeholder')}
       value={affiliatesSearchQuery}
       onChange={(e) => setAffiliateSearchQuery(e.target.value)}
   />
@@ -439,7 +439,7 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
   onClick={handleAffiliateSearch}
   className="bg-blue-500 text-white px-4 py-2 rounded flex items-center"
   >
-  Search
+  {t('affiliates_search')}
   <Search size={14} className="ml-1" />
   </Button>  
 
@@ -449,7 +449,7 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
           defaultChecked={allAffiliates}
           onClick={handleAffiliateToggle} // Handle the state change on toggle
       />
-      <Label>All affiliates users</Label>
+      <Label>{t('affiliates_all_affiliates')}</Label>
       </div>
     </div>
   </CardHeader>
@@ -467,12 +467,12 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
         >  
           <TableHeader>
             <TableRow>
-              <TableHead>User Name</TableHead>
-              <TableHead>User Email</TableHead>
-              <TableHead>User Phone Number</TableHead>
-              <TableHead>Revenue</TableHead>
-              <TableHead>Total links</TableHead>
-              <TableHead>Creation Date</TableHead>
+              <TableHead>{t('affiliates_table_name')}</TableHead>
+              <TableHead>{t('affiliates_table_email')}</TableHead>
+              <TableHead>{t('affiliates_table_phone')}</TableHead>
+              <TableHead>{t('affiliates_table_revenue')}</TableHead>
+              <TableHead>{t('affiliates_table_total_links')}</TableHead>
+              <TableHead>{t('affiliates_table_created')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -498,8 +498,8 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
     <h1 className="text-center text-3xl font-bold">
       <CircleAlert />
     </h1>
-    <p className="text-center text-sm mt-2">No records of any affiliates users found for now !</p>
-    <p className="text-center text-xs mt-2">New affiliates users will appear here.</p>
+    <p className="text-center text-sm mt-2">{t('affiliates_no_records')}</p>
+    <p className="text-center text-xs mt-2">{t('affiliates_new_will_appear')}</p>
 
   </div>
 
@@ -516,20 +516,18 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
       <AlertDialog open={openDeleteDialog} onOpenChange={setOpenDeleteDialog}>
       <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
       <AlertDialogHeader>
-            <AlertDialogTitle>Delete User</AlertDialogTitle>
+            <AlertDialogTitle>{t('delete_dialog_title')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this user? This action cannot be undone.
+              {t('delete_dialog_desc')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setOpenDeleteDialog(false)}>
-            Cancel
-          </AlertDialogCancel>
+          <AlertDialogCancel onClick={() => setOpenDeleteDialog(false)}>{t('delete_dialog_cancel')}</AlertDialogCancel>
           <AlertDialogAction 
             onClick={handleDelete} 
             className="bg-red-500 hover:bg-red-500 text-white"
           >
-            Delete
+            {t('delete_dialog_action')}
           </AlertDialogAction>
         </AlertDialogFooter>
         </AlertDialogContent>
@@ -538,14 +536,14 @@ const UsersView = ({initialUsers , limit , initialAffiliates }:{initialUsers : U
       <AlertDialog open={openBanDialog} onOpenChange={setOpenBanDialog}>
       <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
       <AlertDialogHeader>
-            <AlertDialogTitle>Ban User</AlertDialogTitle>
+            <AlertDialogTitle>{t('ban_dialog_title')}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to ban this user? This action can be undone later.
+              {t('ban_dialog_desc')}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-          <AlertDialogCancel onClick={() => setOpenBanDialog(false)}>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={handleBan} className="bg-purple-500 hover:bg-purple-500 text-white">Ban</AlertDialogAction>
+          <AlertDialogCancel onClick={() => setOpenBanDialog(false)}>{t('ban_dialog_cancel')}</AlertDialogCancel>
+          <AlertDialogAction onClick={handleBan} className="bg-purple-500 hover:bg-purple-500 text-white">{t('ban_dialog_action')}</AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

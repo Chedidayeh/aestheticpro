@@ -1340,7 +1340,7 @@ const handleFileChange = (file : File) => {
                             <div>
                             <div className='flex items-center'>
                               <Tags className='h-4 w-4' />
-                              <Label className='ml-2'>{t('tagsLabel')}: <p className='text-xs text-zinc-500'>({t('optional')})</p></Label>
+                              <Label className='ml-2'>{t('tagsLabel')} <p className='text-xs text-zinc-500'>({t('optional')})</p></Label>
                               <p className='text-xs text-zinc-500 ml-5'>{t('clickEnterToAddTags')}</p>
                               </div>
                             <div className='mt-2 mb-4'>
@@ -1376,7 +1376,7 @@ const handleFileChange = (file : File) => {
                               <div className='flex'>
                                 <CircleDollarSign className="h-4 w-4"/>
                                 <Label className='ml-2'>{t('yourProfitLabel')}</Label>
-                                <p className='text-xs text-zinc-500 ml-5'>{t('productBasePrice')}: ( {BasePrice.toFixed(2)} TND )</p>
+                                <p className='text-xs text-zinc-500 ml-5'>{t('productBasePrice')} ( {BasePrice.toFixed(2)} TND )</p>
                               </div>     
                               {sellerProfitFieldError ? <p className='text-red-500 text-xs mt-1'>please enter you profit !</p> : ""}                         
                               <div className="mt-2 mb-4">
@@ -1397,8 +1397,8 @@ const handleFileChange = (file : File) => {
                               </div>
                               {sellerProfitError === "" && sellerProfit <= platform.maxProductSellerProfit && sellerProfit >= 1 && (
                               <div className='flex'>
-                                <Label className='ml-2 font-bold'>{t('productFinalPriceLabel')}: ( {productPrice.toFixed(2)} TND )</Label>
-                                <p className='text-xs text-zinc-500 ml-5'>{t('yourProfit')}: ( {sellerProfit.toFixed(2)} TND )</p>
+                                <Label className='ml-2 font-bold'>{t('productFinalPriceLabel')} ( {productPrice.toFixed(2)} TND )</Label>
+                                <p className='text-xs text-zinc-500 ml-5'>{t('yourProfit')} ( {sellerProfit.toFixed(2)} TND )</p>
                               </div>
                                  )}
 
@@ -1407,7 +1407,7 @@ const handleFileChange = (file : File) => {
                                  <div className="border-t text-zinc-500 mt-8"/>
                                 <div className="flex items-center mt-4 space-x-2">
                                 <Switch disabled={isAdding} id="front" defaultChecked={privateProduct} onClick={handlePrivateProductChange } />
-                                <Label htmlFor="front">{t('privateProductLabel')}: {privateProduct ? t('yes') : t('no')}</Label>
+                                <Label htmlFor="front">{t('privateProductLabel')} {privateProduct ? t('yes') : t('no')}</Label>
                                </div>
                                <p className="text-zinc-500 text-sm my-4">{t('privateProductsDescription')}</p>
                               </div>
@@ -1530,7 +1530,7 @@ const handleFileChange = (file : File) => {
                                       handleColorChange(val); // Call handleColorChange to update the selected color
                                     }}
                                   >
-                                    <Label>{t('colorLabel')}: {options.color.label}</Label>
+                                    <Label>{t('colorLabel')} {options.color.label}</Label>
                                     <div className='mt-3 flex flex-wrap gap-2'>
                                       {selectedP.colors.map((color: Color) => ( // Use selectedProduct.colors instead of colors
                                         <RadioGroup.Option
@@ -1666,7 +1666,7 @@ const handleFileChange = (file : File) => {
                                 }}
                               >
                                   <div className="flex items-center justify-center mt-3">
-                                <Label className=''>{t('colorLabel')}: {options.color.label}</Label>
+                                <Label className=''>{t('colorLabel')} {options.color.label}</Label>
                                 </div>
                                 <div className='mt-3 flex items-center space-x-3'>
                                   {selectedP.colors.map((color: Color) => (

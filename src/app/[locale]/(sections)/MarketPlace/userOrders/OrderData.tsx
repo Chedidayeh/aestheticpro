@@ -349,9 +349,9 @@ const OrderData = ({ ordersData }: DesignViewProps) => {
                     <CardHeader className="flex flex-row items-start bg-muted/50">
                       <div className="grid gap-0.5">
                         <CardTitle className="group hidden items-center gap-2 text-lg sm:flex">
-                          {t('order_id')}: <p className="text-xs text-gray-600">{selectedOrder.id}</p>
+                          {t('order_id')} <p className="text-xs text-gray-600">{selectedOrder.id}</p>
                         </CardTitle>
-                        <CardDescription>{t('creation_date')}: <time dateTime={selectedOrder.createdAt ? selectedOrder.createdAt.toISOString() : undefined}>
+                        <CardDescription>{t('creation_date')} <time dateTime={selectedOrder.createdAt ? selectedOrder.createdAt.toISOString() : undefined}>
                           {selectedOrder.updatedAt ? new Date(selectedOrder.updatedAt).toLocaleString() : ''}
                         </time></CardDescription>
                       </div>
@@ -448,8 +448,8 @@ const OrderData = ({ ordersData }: DesignViewProps) => {
                     <CardHeader className="flex flex-row items-start bg-muted/50">
                       <div className="grid gap-0.5">
                         <CardTitle className="group gap-2 text-lg">
-                          {t('order_items')}: <br />
-                          <p className="text-xs text-gray-600">{t('total_items')}: {selectedOrder.orderItems.length}</p>
+                          {t('order_items')} <br />
+                          <p className="text-xs text-gray-600">{t('total_items')} {selectedOrder.orderItems.length}</p>
                         </CardTitle>
                       </div>
                     </CardHeader>
@@ -473,7 +473,7 @@ const OrderData = ({ ordersData }: DesignViewProps) => {
                     </CardContent>
                     <CardFooter className="flex flex-row items-center border-t bg-muted/50 px-6 py-3">
                       <div className="text-xs text-muted-foreground">
-                        {t('total_items')}: {selectedOrder.orderItems.length}
+                        {t('total_items')} {selectedOrder.orderItems.length}
                       </div>
                     </CardFooter>
                   </Card>

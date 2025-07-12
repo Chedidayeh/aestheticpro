@@ -278,7 +278,7 @@ interface fetchedCat extends Category {
 
 
  <p className="text-sm text-muted-foreground mb-2">adminDashboard/stock</p>
- <h1 className="text-2xl font-semibold">Manage Stock</h1>
+ <h1 className="text-2xl font-semibold">{t('manage_stock')}</h1>
 
 
 
@@ -292,7 +292,7 @@ interface fetchedCat extends Category {
         
         <div className='mt-2 sm:col-span-9 md:row-end-1'>
           <h3 className='text-2xl font-bold tracking-tight '>
-            Select a Category
+            {t('select_category')}
           </h3>
         </div>
 
@@ -331,12 +331,12 @@ interface fetchedCat extends Category {
   <>
     {/* Manage Sizes */}
     <div className="flex items-center justify-center my-4">
-      <h3 className="text-lg md:text-xl font-bold tracking-tight">Available Sizes</h3>
+      <h3 className="text-lg md:text-xl font-bold tracking-tight">{t('available_sizes')}</h3>
     </div>
 
     <div className="flex flex-wrap items-center space-y-2 sm:space-y-0 sm:space-x-4">
       {/* Label for delete action */}
-      <p className="text-xs text-red-500">Click to delete</p>
+      <p className="text-xs text-red-500">{t('click_to_delete')}</p>
 
       {/* Badges */}
       <div className="flex flex-wrap gap-2">
@@ -356,7 +356,7 @@ interface fetchedCat extends Category {
     </div>
 
     <div className="flex items-center justify-center my-4">
-      <h3 className="text-lg md:text-xl font-bold tracking-tight">Add Sizes</h3>
+      <h3 className="text-lg md:text-xl font-bold tracking-tight">{t('add_sizes')}</h3>
     </div>
 
     <Card className="col-span-full">
@@ -364,9 +364,9 @@ interface fetchedCat extends Category {
         <Table className="min-w-full">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[50%]">Label</TableHead>
-              <TableHead className="w-[50%]">Value</TableHead>
-              <TableHead>Action</TableHead>
+              <TableHead className="w-[50%]">{t('label')}</TableHead>
+              <TableHead className="w-[50%]">{t('value')}</TableHead>
+              <TableHead>{t('action')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -375,7 +375,7 @@ interface fetchedCat extends Category {
                 <TableCell className="font-semibold">
                   <Input
                     type="text"
-                    placeholder="Small"
+                    placeholder={t('placeholder_size_label')}
                     value={size.label}
                     onChange={(e) => {
                       const Sizes = [...newSizes];
@@ -387,7 +387,7 @@ interface fetchedCat extends Category {
                 <TableCell>
                   <Input
                     type="text"
-                    placeholder="S"
+                    placeholder={t('placeholder_size_value')}
                     value={size.value}
                     onChange={(e) => {
                       const Sizes = [...newSizes];
@@ -410,18 +410,18 @@ interface fetchedCat extends Category {
       <CardFooter className="justify-center border-t p-4">
         <Button size="sm" variant="ghost" className="gap-1" onClick={handleAddnewSize}>
           <PlusCircle className="h-3.5 w-3.5" />
-          Add Size
+          {t('add_size')}
         </Button>
       </CardFooter>
     </Card>
 
     {/* Manage Colors */}
     <div className="flex items-center justify-center my-4">
-      <h3 className="text-lg md:text-xl font-bold tracking-tight">Available Colors</h3>
+      <h3 className="text-lg md:text-xl font-bold tracking-tight">{t('available_colors')}</h3>
     </div>
 
     <div className="flex flex-wrap items-center space-y-2 sm:space-y-0 sm:space-x-4">
-      <p className="text-xs text-red-500">Click to delete</p>
+      <p className="text-xs text-red-500">{t('click_to_delete')}</p>
       <div className="flex flex-wrap gap-2">
         {selectedCat.colors.map((color) => (
           <Badge
@@ -439,7 +439,7 @@ interface fetchedCat extends Category {
     </div>
 
     <div className="flex items-center justify-center my-4">
-      <h3 className="text-lg md:text-xl font-bold tracking-tight">Add Colors</h3>
+      <h3 className="text-lg md:text-xl font-bold tracking-tight">{t('add_colors')}</h3>
     </div>
 
     <Card className="col-span-full">
@@ -447,12 +447,12 @@ interface fetchedCat extends Category {
         <Table className="min-w-full">
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[10%]">Label</TableHead>
-              <TableHead className="w-[10%]">Value</TableHead>
-              <TableHead className="w-[12%]">Tw</TableHead>
-              <TableHead>FrontImageUrl</TableHead>
-              <TableHead>BackImageUrl</TableHead>
-              <TableHead>Action</TableHead>
+              <TableHead className="w-[10%]">{t('label')}</TableHead>
+              <TableHead className="w-[10%]">{t('value')}</TableHead>
+              <TableHead className="w-[12%]">{t('tw')}</TableHead>
+              <TableHead>{t('front_image_url')}</TableHead>
+              <TableHead>{t('back_image_url')}</TableHead>
+              <TableHead>{t('action')}</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -461,7 +461,7 @@ interface fetchedCat extends Category {
                 <TableCell className="font-semibold">
                   <Input
                     type="text"
-                    placeholder="Black"
+                    placeholder={t('placeholder_color_label')}
                     value={color.label}
                     onChange={(e) => {
                       const newColors = [...colors];
@@ -473,7 +473,7 @@ interface fetchedCat extends Category {
                 <TableCell>
                   <Input
                     type="text"
-                    placeholder="black"
+                    placeholder={t('placeholder_color_value')}
                     value={color.value}
                     onChange={(e) => {
                       const newColors = [...colors];
@@ -485,7 +485,7 @@ interface fetchedCat extends Category {
                 <TableCell>
                   <Input
                     type="text"
-                    placeholder="zinc-900"
+                    placeholder={t('placeholder_color_tw')}
                     value={color.tw}
                     onChange={(e) => {
                       const newColors = [...colors];
@@ -534,7 +534,7 @@ interface fetchedCat extends Category {
       <CardFooter className="justify-center border-t p-4">
         <Button size="sm" variant="ghost" className="gap-1" onClick={handleAddColor}>
           <PlusCircle className="h-3.5 w-3.5" />
-          Add Color
+          {t('add_color')}
         </Button>
       </CardFooter>
     </Card>
@@ -542,7 +542,7 @@ interface fetchedCat extends Category {
     <div className="my-4">
       {/* Save Category Button */}
       <Button size="sm" onClick={handleSaveCategory}>
-        Save Category
+        {t('save_category')}
       </Button>
     </div>
   </>
@@ -563,7 +563,7 @@ interface fetchedCat extends Category {
           />
         </div>
         <h3 className='font-semibold text-2xl'>
-          No Categories found for now !
+          {t('no_categories_found')}
         </h3>
       </div>
 ) }
@@ -578,13 +578,12 @@ interface fetchedCat extends Category {
                                            <OctagonAlert className=''/>
                                                </div>
                                               <AlertDialogTitle className="text-xl font-bold text-center">
-                                                 Are you absolutely sure you want to delete this size ?
+                                                 {t('confirm_delete_size')}
                                                </AlertDialogTitle>
                                                    </AlertDialogHeader>
                                                   <AlertDialogFooter>
-                                              <AlertDialogCancel onClick={()=>setIsSizeDeleteOpen(false)}>Cancel</AlertDialogCancel>
-                                      <AlertDialogAction onClick={() => handleSizeDelete()} 
-                                     className='bg-red-500 hover:bg-red-500' >Delete</AlertDialogAction>
+                                              <AlertDialogCancel onClick={()=>setIsSizeDeleteOpen(false)}>{t('cancel')}</AlertDialogCancel>
+                                      <AlertDialogAction onClick={() => handleSizeDelete()} className='bg-red-500 hover:bg-red-500'>{t('delete')}</AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                      </AlertDialog> 
@@ -597,13 +596,12 @@ interface fetchedCat extends Category {
                                            <OctagonAlert className=''/>
                                                </div>
                                               <AlertDialogTitle className="text-xl font-bold text-center">
-                                                 Are you absolutely sure you want to delete this color ?
+                                                 {t('confirm_delete_color')}
                                                </AlertDialogTitle>
                                                    </AlertDialogHeader>
                                                   <AlertDialogFooter>
-                                              <AlertDialogCancel onClick={()=>setIsColorDeleteOpen(false)}>Cancel</AlertDialogCancel>
-                                      <AlertDialogAction onClick={() => handleColorDelete()} 
-                                     className='bg-red-500 hover:bg-red-500' >Delete</AlertDialogAction>
+                                              <AlertDialogCancel onClick={()=>setIsColorDeleteOpen(false)}>{t('cancel')}</AlertDialogCancel>
+                                      <AlertDialogAction onClick={() => handleColorDelete()} className='bg-red-500 hover:bg-red-500'>{t('delete')}</AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                      </AlertDialog> 

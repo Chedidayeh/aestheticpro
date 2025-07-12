@@ -115,11 +115,11 @@ const MobileView = ({ordersData}: ViewProps) => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
         <div className="grid gap-0.5 flex-1 min-w-0">
           <CardTitle className="group flex flex-wrap items-center gap-2 text-sm sm:text-base">
-            {t('order_id')}: <p className="text-xs sm:text-sm text-gray-600 break-all">{currentOrder.id}</p>
+            {t('order_id')} <p className="text-xs sm:text-sm text-gray-600 break-all">{currentOrder.id}</p>
           </CardTitle>
           <CardDescription className="text-xs sm:text-sm">
             <span className="text-green-600 text-xs sm:text-sm">{t('call_confirmation')}</span><br/>
-            {t('creation_date')}: <time dateTime={currentOrder.createdAt ? currentOrder.createdAt.toISOString() : undefined}>
+            {t('creation_date')} <time dateTime={currentOrder.createdAt ? currentOrder.createdAt.toISOString() : undefined}>
               {currentOrder.updatedAt ? new Date(currentOrder.updatedAt).toLocaleString() : ''}
             </time>
           </CardDescription>

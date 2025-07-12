@@ -273,15 +273,15 @@ const ProductsView = ({
 
       <div className="mt-4">
         <p className="text-muted-foreground text-sm">
-          <span className="text-blue-600 font-medium">{t('noteBlue')}: </span>
+          <span className="text-blue-600 font-medium">{t('noteBlue')} </span>
           {t('ordersWithBlueId')}
         </p>
         <p className="text-muted-foreground text-sm">
-          <span className="text-blue-600 font-medium">{t('noteBlue')}: </span>
+          <span className="text-blue-600 font-medium">{t('noteBlue')} </span>
           {t('cannotDeleteClientOrders')}
         </p>
         <p className="text-muted-foreground text-sm">
-          <span className="text-blue-600 font-medium">{t('noteBlue')}: </span>
+          <span className="text-blue-600 font-medium">{t('noteBlue')} </span>
           {t('changesAffectCurrentOrders')}
         </p>
       </div>

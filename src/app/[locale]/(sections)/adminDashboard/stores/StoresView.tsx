@@ -176,8 +176,8 @@ interface StoresViewProps {
       <CardHeader className="space-y-2 bg-muted/50">
       <div className="grid gap-2">
             <CardTitle>{t('stores')}</CardTitle>
-            <CardDescription>{t('total')}: {stores.length}</CardDescription>
-            <CardDescription>{t('total_income')}: {calculateTotalIncome()} TND</CardDescription>
+            <CardDescription>{t('total')} {stores.length}</CardDescription>
+            <CardDescription>{t('total_income')} {calculateTotalIncome()} TND</CardDescription>
           </div>
           <div className='grid md:flex gap-4'>
           <Select onValueChange={handleSortBy}>

@@ -168,7 +168,7 @@ const ManageLinks = ({ Links , platform }: ViewProps) => {
           </p>
           
           <p className="text-muted-foreground text-sm">
-          <span className="text-blue-600 font-medium">{t('guide')}:</span> {t('use_eye_icon')}
+          <span className="text-blue-600 font-medium">{t('guide')}</span> {t('use_eye_icon')}
           </p>
 
         </CardHeader>

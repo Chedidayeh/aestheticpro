@@ -553,7 +553,7 @@ const CreateOrder = ({
                             <div className="grid gap-4 py-4">
                             <div className="grid grid-cols-1 items-center gap-2 sm:gap-4">
                               <Label htmlFor="username" className="text-left sm:col-span-1">
-                                {t('product_size')}:
+                                {t('product_size')}
                               </Label>
                               <Select value={selectedSize} onValueChange={handleSizeChange}>
                                 <SelectTrigger className="w-full sm:w-[180px]">
@@ -571,12 +571,12 @@ const CreateOrder = ({
                             </div>
                               <div className="grid grid-cols-1 items-center gap-2 sm:gap-4">
                                 <Label htmlFor="name" className="text-left sm:col-span-1">
-                                  {t('client_name')}:
+                                  {t('client_name')}
                                 </Label>
                                 <Input id="name" type="text" className="sm:col-span-3" value={name} onChange={handleNameChange} />
                               </div>
                               <div className="grid grid-cols-1 gap-2 sm:gap-4">
-                                  <Label htmlFor="phoneNumber" className="sm:col-span-1">{t('phone_number')}:</Label>
+                                  <Label htmlFor="phoneNumber" className="sm:col-span-1">{t('phone_number')}</Label>
                                   <div className="sm:col-span-3">
                                     <Input 
                                       id="phoneNumber" 
@@ -597,13 +597,13 @@ const CreateOrder = ({
                                 </div>
                               <div className="grid grid-cols-1 items-center gap-2 sm:gap-4">
                                 <Label htmlFor="address" className="text-left sm:col-span-1">
-                                  {t('client_address')}:
+                                  {t('client_address')}
                                 </Label>
                                 <Input id="address" maxLength={20} type="text" className="sm:col-span-3" value={address} onChange={handleAddressChange} />
                               </div>
                               <div className="grid grid-cols-1 items-center gap-2 sm:gap-4">
                                 <Label htmlFor="quantity" className="text-left sm:col-span-1">
-                                  {t('product_quantity')}: <p className="text-xs text-muted-foreground">{t('max_quantity', {max: platform.maxProductQuantity})}</p>
+                                  {t('product_quantity')} <p className="text-xs text-muted-foreground">{t('max_quantity', {max: platform.maxProductQuantity})}</p>
                                 </Label>
                                 <Input id="quantity" type="number" min={1} max={platform.maxProductQuantity} value={quantity} onChange={handleQuantityChange} className="w-full sm:w-[180px] sm:col-span-3" />
                               </div>

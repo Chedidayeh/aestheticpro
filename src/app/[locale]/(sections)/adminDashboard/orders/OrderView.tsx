@@ -233,7 +233,7 @@ interface OrderViewProps {
         <CardHeader className="bg-muted/50">
           <div className="grid gap-2">
             <CardTitle>{t('orders')}</CardTitle>
-            <CardDescription>{t('total_orders')}: {orders.length}</CardDescription>
+            <CardDescription>{t('total_orders')} {orders.length}</CardDescription>
           </div>
           <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center mt-2">
           <Select onValueChange={handleFilterBy1}>
@@ -311,36 +311,36 @@ interface OrderViewProps {
           <TableHeader>
     <TableRow>
       {/* Order Id column */}
-      <TableHead>Order Id</TableHead>
+      <TableHead>{t('order_id')}</TableHead>
 
       {/* Order Status column */}
-      <TableHead>Order Status</TableHead>
+      <TableHead>{t('order_status')}</TableHead>
 
       {/* Order Type column */}
-      <TableHead>Order Type</TableHead>
+      <TableHead>{t('order_type')}</TableHead>
 
-      <TableHead>Creation Date</TableHead>
+      <TableHead>{t('creation_date')}</TableHead>
 
       {/* Is Order Printed column */}
-      <TableHead>Is Order Printed</TableHead>
+      <TableHead>{t('is_order_printed')}</TableHead>
 
       {/* Is Client Made Order column */}
-      <TableHead >Is Client Made Order</TableHead>
+      <TableHead>{t('is_client_made_order')}</TableHead>
 
       {/* Is Seller Order column */}
-      <TableHead >Is Seller Order</TableHead>
+      <TableHead>{t('is_seller_order')}</TableHead>
 
       {/* Is Order Paid column */}
-      <TableHead>Is Order Paid</TableHead>
+      <TableHead>{t('is_order_paid')}</TableHead>
 
       {/* Total Items column */}
-      <TableHead>Total Items</TableHead>
+      <TableHead>{t('total_items')}</TableHead>
 
       {/* Order Amount column */}
-      <TableHead>Order Amount</TableHead>
+      <TableHead>{t('order_amount')}</TableHead>
 
       {/* Actions column */}
-      <TableHead>Actions</TableHead>
+      <TableHead>{t('actions')}</TableHead>
     </TableRow>
   </TableHeader>
   <TableBody>
@@ -361,14 +361,14 @@ interface OrderViewProps {
             'REFUSED': 'bg-red-700',
             'CANCELED': 'bg-red-700'
           }[order.status]} hover:bg-gray-700`}>
-            {order.status}
+            {t(`status_${order.status.toLowerCase()}`)}
           </Badge>
         </TableCell>
 
         {/* Order Type cell */}
         <TableCell >
           <Badge className={`text-white ${order.type === 'CONFIRMED' ? 'bg-green-700' : order.type === 'NOT_CONFIRMED' ? 'bg-orange-400' : order.type === 'CANCELED' ? 'bg-red-700' : 'bg-gray-700'} hover:bg-gray-700`}>
-            {order.type}
+            {t(`type_${order.type.toLowerCase()}`)}
           </Badge>
         </TableCell>
 
@@ -381,25 +381,25 @@ interface OrderViewProps {
         {/* Is Order Printed cell */}
         <TableCell>
           <Badge className={`text-white ${order.printed ? 'bg-green-700' : 'bg-red-700'} hover:bg-gray-700`}>
-            {order.printed ? "Printed" : "Not Printed"}
+            {order.printed ? t('printed') : t('not_printed')}
           </Badge>
         </TableCell>
 
         {/* Is Client Made Order cell */}
-        <TableCell>{order.isClientMadeOrder ? 'Yes' : 'No'}</TableCell>
+        <TableCell>{order.isClientMadeOrder ? t('yes') : t('no')}</TableCell>
 
         {/* Is Seller Order cell */}
-        <TableCell>{order.isSellerOrder ? 'Yes' : 'No'}</TableCell>
+        <TableCell>{order.isSellerOrder ? t('yes') : t('no')}</TableCell>
 
         {/* Is Order Paid cell */}
         <TableCell>
           <Badge className={`text-white ${order.isPaid ? 'bg-green-700' : 'bg-red-700'} hover:bg-gray-700`}>
-            {order.isPaid ? "Yes" : "No"}
+            {order.isPaid ? t('yes_paid') : t('not_paid')}
           </Badge>
         </TableCell>
 
         {/* Total Items cell */}
-        <TableCell >{order.orderItems?.length || 0} items</TableCell>
+        <TableCell >{order.orderItems?.length || 0} {t('items')}</TableCell>
 
 
         {/* Order Amount cell */}
@@ -421,7 +421,7 @@ interface OrderViewProps {
                   />
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>View</p>
+                  <p>{t('view')}</p>
                 </TooltipContent>
               </Tooltip>
 
@@ -437,7 +437,7 @@ interface OrderViewProps {
                   />
                 </TooltipTrigger>
                 <TooltipContent className="bg-red-500">
-                  <p>Delete</p>
+                  <p>{t('delete')}</p>
                 </TooltipContent>
               </Tooltip>
             </div>
@@ -472,77 +472,74 @@ interface OrderViewProps {
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
           <CardHeader className="flex flex-col md:flex-row items-center">
                  <div className="grid gap-2">
-             <CardTitle className="font-extrabold">{t('order_infos')}:</CardTitle>
+             <CardTitle className="font-extrabold">{t('order_infos')}</CardTitle>
              <CardDescription>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mt-2">
                           <div>
-                             <p className="font-bold">Order Id:</p>
+                             <p className="font-bold">{t('order_id')}:</p>
                              <p className="text-xs">{selectedOrder?.id}</p>
                          </div>
                          <div>
-                             <p className="font-bold">Order Status:</p>
-                             <p><Badge className={` text-white ${{
+                             <p className="font-bold">{t('order_status')}:</p>
+                             <Badge className={` text-white ${{
                                'PROCESSING': 'bg-blue-700',
                                'DELIVERED': 'bg-green-700',
                                'REFUSED': 'bg-red-700',
                                'CANCELED': 'bg-red-700'
                              }[selectedOrder.status]} hover:bg-gray-700`}>
-                               {selectedOrder.status}
-                         </Badge></p>
+                               {t(`status_${selectedOrder.status.toLowerCase()}`)}
+                         </Badge>
                          </div>
                          <div>
-                             <p className="font-bold">Order Type:</p>
-                             <p><Badge className={` text-white ${selectedOrder.type === 'CONFIRMED' ? 'bg-green-700' : selectedOrder.type === 'NOT_CONFIRMED' ? 'bg-orange-400' : selectedOrder.type === 'CANCELED' ? 'bg-red-700' : 'bg-gray-700'} hover:bg-gray-700`}>
-                             {selectedOrder.type}
+                             <p className="font-bold">{t('order_type')}:</p>
+                             <Badge className={` text-white ${selectedOrder.type === 'CONFIRMED' ? 'bg-green-700' : selectedOrder.type === 'NOT_CONFIRMED' ? 'bg-orange-400' : selectedOrder.type === 'CANCELED' ? 'bg-red-700' : 'bg-gray-700'} hover:bg-gray-700`}>
+                             {t(`type_${selectedOrder.type.toLowerCase()}`)}
                              </Badge>
-                         </p>
                          </div>
                          <div>
-                             <p className="font-bold">Is Order Paid:</p>
-                             <p><Badge className={` text-white ${selectedOrder.isPaid ? 'bg-green-700' :  'bg-red-700'} hover:bg-gray-700`}>
-                            {selectedOrder.isPaid ? "Is Paid" : "Not Paid"}
-                      </Badge></p>
+                             <p className="font-bold">{t('is_order_paid')}:</p>
+                             <Badge className={` text-white ${selectedOrder.isPaid ? 'bg-green-700' :  'bg-red-700'} hover:bg-gray-700`}>
+                            {selectedOrder.isPaid ? t('yes_paid') : t('not_paid')}
+                      </Badge>
                          </div>
                          <div>
-                             <p className="font-bold">Is client Made Order:</p>
-                             <p>{selectedOrder.isClientMadeOrder ? "Yes" : "No"}</p>
+                             <p className="font-bold">{t('is_client_made_order')}:</p>
+                             <p>{selectedOrder.isClientMadeOrder ? t('yes') : t('no')}</p>
                          </div>
                          <div>
-                             <p className="font-bold">Is Seller Order:</p>
-                             <p>{selectedOrder.isSellerOrder ? "Yes" : "No"}</p>
+                             <p className="font-bold">{t('is_seller_order')}:</p>
+                             <p>{selectedOrder.isSellerOrder ? t('yes') : t('no')}</p>
                          </div>
                          {selectedOrder.isSellerOrder && (
                          <div>
-                             <p className="font-bold">Seller Store:</p>
+                             <p className="font-bold">{t('seller_store')}:</p>
                              <p>{selectedOrder.sellerStore}</p>
                          </div>
                              )}
                          <div>
-                             <p className="font-bold">Client Name:</p>
+                             <p className="font-bold">{t('client_name')}:</p>
                              <p>{selectedOrder.clientName}</p>
                          </div>
                          <div>
-                             <p className="font-bold ">Client Email:</p>
+                             <p className="font-bold ">{t('client_email')}:</p>
                              <p className="text-xs">{selectedOrder.user.email}</p>
                          </div>
                          <div>
-                             <p className="font-bold">Client Phone Number:</p>
+                             <p className="font-bold">{t('client_phone_number')}:</p>
                              <p>{selectedOrder?.phoneNumber}</p>
                          </div>
                          <div>
-                             <p className="font-bold">Shipping Address:</p>
+                             <p className="font-bold">{t('shipping_address')}:</p>
                              <p>{selectedOrder.shippingAddress}</p>
                          </div>
 
                          <div>
-                             <p className="font-bold">order Amount:</p>
+                             <p className="font-bold">{t('order_amount')}:</p>
                              <p>{(selectedOrder.amount).toFixed(2)} TND</p>
                          </div>
 
-
                      </div>
                  </CardDescription>
- 
            </div>
          </CardHeader>
        </Card>

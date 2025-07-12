@@ -458,28 +458,28 @@ const ProductView = ({
                 <AlertDialogDescription className='space-y-1 mt-1'>
                   <div className="grid grid-cols-2 gap-3 p-4 bg-gray-50 rounded-lg">
                     <div className="space-y-1">
-                      <span className="text-sm font-medium text-gray-600">{t('title')}:</span>
+                      <span className="text-sm font-medium text-gray-600">{t('title')}</span>
                       <p className='text-gray-900 font-semibold truncate'>{selectedProduct.title}</p>
                     </div>
                     <div className="space-y-1">
-                      <span className="text-sm font-medium text-gray-600">{t('collection')}:</span>
+                      <span className="text-sm font-medium text-gray-600">{t('collection')}</span>
                       <p className='text-gray-900 font-semibold'>{selectedProduct.collectionName}</p>
                     </div>
                     <div className="space-y-1">
-                      <span className="text-sm font-medium text-gray-600">{t('product_base_price')}:</span>
+                      <span className="text-sm font-medium text-gray-600">{t('product_base_price')}</span>
                       <p className='text-gray-900 font-semibold'>{selectedProduct.basePrice.toFixed(2)} TND</p>
                     </div>
                     <div className="space-y-1">
-                      <span className="text-sm font-medium text-gray-600">{t('price')}:</span>
+                      <span className="text-sm font-medium text-gray-600">{t('price')}</span>
                       <p className='text-gray-900 font-semibold'>{selectedProduct.price.toFixed(2)} TND</p>
                     </div>
                     <div className="space-y-1">
-                      <span className="text-sm font-medium text-gray-600">{t('your_profit')}:</span>
+                      <span className="text-sm font-medium text-gray-600">{t('your_profit')}</span>
                       <p className='text-green-600 font-semibold'>+{selectedProduct.sellerProfit.toFixed(2)} TND</p>
                     </div>
                     {selectedProduct.frontDesignId && selectedProduct.backDesignId && (
                       <div className="space-y-1">
-                        <span className="text-sm font-medium text-gray-600">{t('extra_design_selected')}:</span>
+                        <span className="text-sm font-medium text-gray-600">{t('extra_design_selected')}</span>
                         <p className='text-blue-600 font-semibold'>+ 5 TND</p>
                       </div>
                     )}

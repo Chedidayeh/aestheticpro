@@ -340,16 +340,16 @@ const checkMatch = async (item: ExtraOrderItem) => {
   
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
   <CardHeader className="flex flex-col md:flex-row items-center bg-muted/50">
-    <div className="grid gap-2">
-      <CardTitle className="font-extrabold">{t('order_infos')}:</CardTitle>
+    <div className="grid gap-2 w-full">
+      <CardTitle className="font-extrabold">{t('order_infos')}</CardTitle>
       <CardDescription>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mt-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-8 mt-2 w-full">
           <div>
-            <p className="font-bold">{t('order_id')}:</p>
+            <p className="font-bold">{t('order_id')}</p>
             <p className="text-xs">{order?.id}</p>
           </div>
           <div>
-            <p className="font-bold">{t('order_status')}:</p>
+            <p className="font-bold">{t('order_status')}</p>
             <p>
               <Badge className={`text-white ${{
                 'PROCESSING': 'bg-blue-700',
@@ -362,7 +362,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
             </p>
           </div>
           <div>
-            <p className="font-bold">{t('order_type')}:</p>
+            <p className="font-bold">{t('order_type')}</p>
             <p>
               <Badge className={`text-white ${order.type === 'CONFIRMED' ? 'bg-green-700' : order.type === 'NOT_CONFIRMED' ? 'bg-orange-400' : order.type === 'CANCELED' ? 'bg-red-700' : 'bg-gray-700'} hover:bg-gray-700`}>
                 {order.type}
@@ -370,7 +370,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
             </p>
           </div>
           <div>
-            <p className="font-bold">{t('is_order_paid')}:</p>
+            <p className="font-bold">{t('is_order_paid')}</p>
             <p>
               <Badge className={`text-white ${order.isPaid ? 'bg-green-700' : 'bg-red-700'} hover:bg-gray-700`}>
                 {order.isPaid ? t('is_paid') : t('not_paid')}
@@ -378,7 +378,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
             </p>
           </div>
           <div>
-            <p className="font-bold">{t('is_order_printed')}:</p>
+            <p className="font-bold">{t('is_order_printed')}</p>
             <p>
               <Badge className={` text-white ${order.printed ? 'bg-green-700' : 'bg-red-700'} hover:bg-gray-700`}>
                 {order.printed ? t('printed') : t('not_printed')}
@@ -386,36 +386,36 @@ const checkMatch = async (item: ExtraOrderItem) => {
             </p>
           </div>
           <div>
-            <p className="font-bold">{t('is_seller_order')}:</p>
+            <p className="font-bold">{t('is_seller_order')}</p>
             <p>{order.isSellerOrder ? t('yes') : t('no')}</p>
           </div>
           {order.isSellerOrder && (
                          <div>
-                             <p className="font-bold">{t('seller_store')}:</p>
+                             <p className="font-bold">{t('seller_store')}</p>
                              <p>{order.sellerStore}</p>
                          </div>
                              )}
           <div>
-            <p className="font-bold">{t('client_name')}:</p>
+            <p className="font-bold">{t('client_name')}</p>
             <p>{order.clientName}</p>
           </div>
           <div>
-            <p className="font-bold">{t('client_phone_number')}:</p>
+            <p className="font-bold">{t('client_phone_number')}</p>
             <p>{order?.phoneNumber}</p>
           </div>
           <div>
-            <p className="font-bold">{t('shipping_address')}:</p>
+            <p className="font-bold">{t('shipping_address')}</p>
             <p>{order.shippingAddress}</p>
           </div>
           <div>
-            <p className="font-bold">{t('order_amount')}:</p>
+            <p className="font-bold">{t('order_amount')}</p>
             <p>{(order.amount).toFixed(2)} TND</p>
           </div>
-          <div className="col-span-2 md:col-span-1">
-            <Button onClick={handleChange} variant="link" className="block mb-2 md:mb-0">{t('change_status')} <DatabaseBackup className="ml-1"/></Button>
+          <div className="col-span-1 sm:col-span-2 md:col-span-1">
+            <Button onClick={handleChange} variant="secondary" className="block w-full sm:w-auto mb-2 md:mb-0">{t('change_status')}</Button>
           </div>
-          <div className="col-span-2 md:col-span-1">
-          <Button onClick={handleType} variant="link" className="block">{t('change_type')} <FileType className="ml-1"/></Button>
+          <div className="col-span-1 sm:col-span-2 md:col-span-1">
+            <Button onClick={handleType} variant="secondary" className="block w-full sm:w-auto">{t('change_type')} </Button>
           </div>
         </div>
       </CardDescription>
@@ -423,7 +423,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
   </CardHeader>
   <Separator className="w-full" />
   <CardContent>
-    <p className="text-gray-600 font-extrabold mt-6">{t('order_items')}:</p>
+    <p className="text-gray-600 font-extrabold mt-6">{t('order_items')}</p>
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ml-2 md:ml-10 mt-6">
       {order.orderItems.map((item, index) => (
         <div
@@ -450,26 +450,26 @@ const checkMatch = async (item: ExtraOrderItem) => {
       <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
             <CardHeader className="flex flex-row items-center bg-muted/50">
               <div className="grid gap-2">
-                <CardTitle className="font-extrabold">{t('profit_infos')}: <span className="text-sm text-gray-600">{t('products')}</span></CardTitle>
+                <CardTitle className="font-extrabold">{t('profit_infos')} <span className="text-sm text-gray-600">{t('products')}</span></CardTitle>
                 <CardDescription>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-8 mt-2">
                 <div>
-                            <p className="font-bold">{t('order_amount')}:</p>
+                            <p className="font-bold">{t('order_amount')}</p>
                             <p>{(order.amount).toFixed(2)} TND</p>
                         </div>
                         
                         <div>
-                            <p className="font-bold">{t('total_sellers_profit')}:</p>
+                            <p className="font-bold">{t('total_sellers_profit')}</p>
                             <p>{(profit.totalOrderProfit).toFixed(2)} TND</p>
                         </div>
 
                         <div>
-                            <p className="font-bold">{t('total_affiliate_users_profit')}:</p>
+                            <p className="font-bold">{t('total_affiliate_users_profit')}</p>
                             <p>{(profit.totalAffiliateProfit).toFixed(2)} TND</p>
                         </div>
 
                           <div>
-                            <p className="font-bold">{t('total_platform_profit')}:</p>
+                            <p className="font-bold">{t('total_platform_profit')}</p>
                             <p>
                               {(
                                 order.amount - 
@@ -480,7 +480,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
                           </div>
 
                         <div>
-                            <p className="font-bold">{t('profit_updated')}: </p>
+                            <p className="font-bold">{t('profit_updated')} </p>
                             <p>
                               <Badge className={`text-white ${order.updated ? 'bg-green-700' :  'bg-red-700'} hover:bg-gray-700`}>
                               {order.updated ? t('yes') : t('no')}
@@ -490,13 +490,14 @@ const checkMatch = async (item: ExtraOrderItem) => {
 
                         {order.isPaid && order.status === 'DELIVERED' && !order.updated && (
                           <Button
+                          className="w-44"
                           onClick={() => 
                             handleUpdate(
                               order.id, 
                               order.amount - profit.totalOrderProfit - profit.totalAffiliateProfit
                             )
                           }
-                          variant="link"
+                          variant="secondary"
                           >
                             {t('update_profit_after_sale')}
                           </Button>
@@ -580,55 +581,55 @@ const checkMatch = async (item: ExtraOrderItem) => {
  <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
  <CardHeader className="flex flex-col md:flex-row items-center bg-muted/50">
    <div className="grid gap-2">
-     <CardTitle className="font-extrabold">{t('order_item_infos')}:</CardTitle>
+     <CardTitle className="font-extrabold">{t('order_item_infos')}</CardTitle>
      <CardDescription>
        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-7 gap-8 mt-2">
          <div>
-           <p className="font-bold">{t('product_category')}:</p>
+           <p className="font-bold">{t('product_category')}</p>
            <p>{selectedItem.productCategory}</p>
          </div>
          <div>
-           <p className="font-bold">{t('product_title')}:</p>
+           <p className="font-bold">{t('product_title')}</p>
            <p>{selectedItem.productTitle}</p>
          </div>
          <div>
-           <p className="font-bold">{t('product_quantity')}:</p>
+           <p className="font-bold">{t('product_quantity')}</p>
            <p>{selectedItem.quantity}</p>
          </div>
          <div>
-           <p className="font-bold">{t('product_size')}:</p>
+           <p className="font-bold">{t('product_size')}</p>
            <p>{selectedItem.productSize}</p>
          </div>
          <div>
-           <p className="font-bold">{t('product_color')}:</p>
+           <p className="font-bold">{t('product_color')}</p>
            <p>{selectedItem.productColor}</p>
          </div>
          <div>
-           <p className="font-bold">{t('product_base_price')}:</p>
+           <p className="font-bold">{t('product_base_price')}</p>
            <p>{(selectedItem.product.basePrice).toFixed(2)} TND</p>
          </div>
          <div>
-           <p className="font-bold">{t('product_price')}:</p>
+           <p className="font-bold">{t('product_price')}</p>
            <p>{(selectedItem.productPrice).toFixed(2)} TND</p>
          </div>
          <div>
-           <p className="font-bold">{t('seller_profit')}:</p>
+           <p className="font-bold">{t('seller_profit')}</p>
            <p>{(selectedItem.product.sellerProfit).toFixed(2)} TND</p>
          </div>
          <div>
-           <p className="font-bold">{t('store_name')}:</p>
+           <p className="font-bold">{t('store_name')}</p>
            <p>{selectedItem.product.store.storeName}</p>
          </div>
          {selectedItem.commission && (
           <div>
-              <p className="font-bold">{t('affiliate_user_profit')}:</p>
+              <p className="font-bold">{t('affiliate_user_profit')}</p>
               <p>{(selectedItem.commission.profit).toFixed(2)} TND</p>
           </div>
           )}
 
         {selectedItem.commission && (
           <div>
-              <p className="font-bold">{t('affiliate_user')}:</p>
+              <p className="font-bold">{t('affiliate_user')}</p>
               <p>{selectedItem.commission.affiliateLink.affiliate.user.name}</p>
               <p>{selectedItem.commission.affiliateLink.affiliate.user.email}</p>
 
@@ -636,10 +637,10 @@ const checkMatch = async (item: ExtraOrderItem) => {
           )}
 
          <div>
-           <p className="font-bold">{t('check_match_order')}:</p>
+           <p className="font-bold">{t('check_match_order')}</p>
            <Button
             onClick={() => checkMatch(selectedItem)}
-            variant="link"
+            variant="secondary"
             >          
            {t('check_match')}
           </Button>
@@ -653,32 +654,32 @@ const checkMatch = async (item: ExtraOrderItem) => {
  <Separator className="w-full" />
  <CardContent>
   <div className="mt-6 space-y-4">
-    <Button onClick={() => { downloadMockup(selectedItem.capturedMockup) }} variant="link">{t('download_product_mockup')}</Button>
+    <Button onClick={() => { downloadMockup(selectedItem.capturedMockup) }} variant="secondary">{t('download_product_mockup')}</Button>
 
     <div className="text-sm">
       <div className="flex flex-col md:flex-row md:space-x-10 space-y-2 md:space-y-0">
-        <div className="font-bold">{t('front_design_id')}:</div>
+        <div className="font-bold">{t('front_design_id')}</div>
         <div className="text-gray-600 font-semibold text-xs">{selectedItem.frontsellerDesignId ?? t('na')}</div>
-        <div className="font-bold">{t('front_design_name')}:</div>
+        <div className="font-bold">{t('front_design_name')}</div>
         <div className="text-gray-600 font-semibold">{selectedItem.frontsellerDesign?.name ?? t('na')}</div>
       </div>
       <Button onClick={() => {
         const imageUrl = selectedItem.frontsellerDesign?.imageUrl;
         downloadDesign(imageUrl ?? '');
-      }} variant="link">{t('download_front_design')}</Button>
+      }} variant="secondary">{t('download_front_design')}</Button>
     </div>
 
     <div className="text-sm">
       <div className="flex flex-col md:flex-row md:space-x-10 space-y-2 md:space-y-0">
-        <div className="font-bold">{t('back_design_id')}:</div>
+        <div className="font-bold">{t('back_design_id')}</div>
         <div className="text-gray-600 font-semibold text-xs">{selectedItem.backsellerDesignId ?? t('na')}</div>
-        <div className="font-bold">{t('back_design_name')}:</div>
+        <div className="font-bold">{t('back_design_name')}</div>
         <div className="text-gray-600 font-semibold">{selectedItem.backsellerDesign?.name ?? t('na')}</div>
       </div>
       <Button onClick={() => {
         const imageUrl = selectedItem.backsellerDesign?.imageUrl;
         downloadDesign(imageUrl ?? '');
-      }} variant="link">{t('download_back_design')}</Button>
+      }} variant="secondary">{t('download_back_design')}</Button>
     </div>
   </div>
 </CardContent>

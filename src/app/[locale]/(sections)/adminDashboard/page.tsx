@@ -42,7 +42,7 @@ export default async function Page() {
          {count.awaitingActionProductCount + count.awaitingActionDesignCount > 0 && (
          <Link 
          href={"/adminDashboard/stores"}>
-          <Button variant={"link"} >
+          <Button className="text-xs md:text-base" variant={"link"} >
             {t('under_review_elements', {count: count.awaitingActionProductCount + count.awaitingActionDesignCount})}
             </Button>
           </Link>

@@ -326,7 +326,7 @@ const handleSwitchChange = () => {
       <CardHeader className="bg-muted/50 space-y-2">
       <div className="grid gap-2">
             <CardTitle>{t('designs')}</CardTitle>
-            <CardDescription>{t('total_designs')}: {designs.length}</CardDescription>
+            <CardDescription>{t('total_designs')} {designs.length}</CardDescription>
           </div>
           <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4 mt-2">
         <Input
@@ -505,11 +505,11 @@ const handleSwitchChange = () => {
 <Card className="col-span-full mt-4" x-chunk="dashboard-01-chunk-4">
   <CardHeader className="flex flex-col bg-muted/50 md:flex-row items-center">
     <div className="grid gap-2">
-      <CardTitle className="font-bold">{t('design_infos')}:</CardTitle>
+      <CardTitle className="font-bold">{t('design_infos')}</CardTitle>
       <CardDescription>
         <div className="grid grid-cols-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mt-2">
           <div>
-            <p className="font-bold">{t('design_title')}:</p>
+            <p className="font-bold">{t('design_title')}</p>
             <p >{selectedDesign.name}</p>
           </div>
 
@@ -562,7 +562,7 @@ const handleSwitchChange = () => {
   </CardHeader>
   <Separator className="w-full" />
   <CardContent className="p-4 md:p-6 lg:p-8 max-w-full">
-  <p className=" flex items-center justify-center font-bold my-4">{t('view_design')}:</p>
+  <p className=" flex items-center justify-center font-bold my-4">{t('view_design')}</p>
   <div className='flex items-center justify-center mt-4'>
             <Button variant="default" size="sm" className="w-full sm:w-[30%] text-white" onClick={handleToggleMode}>
               {t('toggle_mode')}
@@ -603,7 +603,7 @@ const handleSwitchChange = () => {
         <Card className="col-span-full" x-chunk="dashboard-01-chunk-4">
           <CardHeader className="bg-muted/50">
           <div className="grid gap-2">
-              <CardTitle className="font-bold">{t('all_designs')}:</CardTitle>
+              <CardTitle className="font-bold">{t('all_designs')}</CardTitle>
               <CardDescription>
               <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 mt-2">
               <Input

@@ -34,6 +34,7 @@ import { useRouter } from "next/navigation";
 import LoadingState from "@/components/LoadingState";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useTranslations } from 'next-intl';
 
 interface ExtraStore extends Store {
     user : User
@@ -52,6 +53,7 @@ const Flouci = ({ paymentRequests }: ViewProps) => {
     
     const { toast } = useToast()
     const router = useRouter();
+    const t = useTranslations('AdminRequestsPage');
     const [open, setOpen] = useState<boolean>(false);
     const [isDeleteOpen, setisDeleteOpen] = useState(false);
     const [selectedRequestId, setselectedRequestId] = useState<string>();
@@ -64,7 +66,7 @@ const handleDelete = async () => {
         setOpen(true)
         await deletePaymentRequestById(selectedRequestId!)
         toast({
-            title: 'Request has been deleted !',
+            title: t('toast_request_deleted'),
             variant: 'default',
           });
         setOpen(false)
@@ -77,8 +79,8 @@ const handleDelete = async () => {
         setisDeleteOpen(false)
         setOpen(false)
         toast({
-            title: 'Error !',
-            description: "Please try again later !",
+            title: t('toast_error'),
+            description: t('toast_try_again_later'),
             variant: 'destructive',
             });
         return
@@ -109,7 +111,7 @@ const handleDelete = async () => {
               setOpen(true)
                 await approveStoreRequest(selectedRequest!)
                 toast({
-                  title: 'Request has been approved !',
+                  title: t('toast_request_approved'),
                   variant: 'default',
                   });
                   router.refresh()
@@ -119,8 +121,8 @@ const handleDelete = async () => {
               console.error(error);
               setOpen(false)
               toast({
-                title: 'Error !',
-                description: "Please try again later !",
+                title: t('toast_error'),
+                description: t('toast_try_again_later'),
                 variant: 'destructive',
                 });
                 
@@ -133,7 +135,7 @@ const handleDelete = async () => {
                     setOpen(true)
                       await rejectStoreRequest(selectedRequest!)
                       toast({
-                        title: 'Request has been rejected !',
+                        title: t('toast_request_rejected'),
                         variant: 'default',
                         });
                         router.refresh()
@@ -143,8 +145,8 @@ const handleDelete = async () => {
                     console.error(error);
                     setOpen(false)
                     toast({
-                      title: 'Error !',
-                      description: "Please try again later !",
+                      title: t('toast_error'),
+                      description: t('toast_try_again_later'),
                       variant: 'destructive',
                       });
                       
@@ -170,14 +172,14 @@ const handleDelete = async () => {
         >  
                 <TableHeader>
           <TableRow>
-            <TableHead >Account Holder</TableHead>
-            <TableHead  >Bank Account RIB</TableHead>
-            <TableHead >Requested Amount</TableHead>
-            <TableHead >Seller Store</TableHead>
-            <TableHead >Seller Email</TableHead>
-            <TableHead >Seller Phone Number</TableHead>
-            <TableHead >Payment Status</TableHead>
-            <TableHead >Actions</TableHead>
+            <TableHead >{t('account_holder')}</TableHead>
+            <TableHead  >{t('bank_account_rib')}</TableHead>
+            <TableHead >{t('requested_amount')}</TableHead>
+            <TableHead >{t('seller_store')}</TableHead>
+            <TableHead >{t('seller_email')}</TableHead>
+            <TableHead >{t('seller_phone_number')}</TableHead>
+            <TableHead >{t('payment_status')}</TableHead>
+            <TableHead >{t('actions')}</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -188,8 +190,8 @@ const handleDelete = async () => {
             onClick={() => handleRowClick(request, index)}
         
             >
-              <TableCell > {request.accountHolder || 'N/A'}</TableCell>
-              <TableCell >{request.bankAccount || 'N/A'}</TableCell>
+              <TableCell > {request.accountHolder || t('na')}</TableCell>
+              <TableCell >{request.bankAccount || t('na')}</TableCell>
               <TableCell >{request.requestedAmount.toFixed(2)} TND</TableCell>
               <TableCell>{request.store.storeName}</TableCell>
               <TableCell >{request.store.user.email}</TableCell>
@@ -204,7 +206,7 @@ const handleDelete = async () => {
                     }[request.status]
                   } hover:bg-gray-700`}
                 >
-                  {request.status}
+                  {t(request.status.toLowerCase())}
                 </Badge>
               </TableCell>
               <TableCell >
@@ -221,7 +223,7 @@ const handleDelete = async () => {
                         />
                       </TooltipTrigger>
                       <TooltipContent className="bg-red-500">
-                        <p>Cancel</p>
+                        <p>{t('cancel')}</p>
                       </TooltipContent>
                     </Tooltip>
                   </>
@@ -239,8 +241,8 @@ const handleDelete = async () => {
 <h1 className="text-center text-3xl font-bold">
   <CircleAlert />
 </h1>
-<p className="text-center text-sm mt-2">No records of any requests made for now !</p>
-<p className="text-center text-xs mt-2">New Flouci requests will appear here.</p>
+<p className="text-center text-sm mt-2">{t('no_requests_found')}</p>
+<p className="text-center text-xs mt-2">{t('new_flouci_requests_appear')}</p>
 
 </div>
 
@@ -255,21 +257,21 @@ const handleDelete = async () => {
       <Card className="col-span-full my-4" x-chunk="dashboard-01-chunk-4">
           <CardHeader className="flex flex-col md:flex-row items-center">
                  <div className="grid gap-2">
-             <CardTitle className="font-extrabold">Request Infos :</CardTitle>
+             <CardTitle className="font-extrabold">{t('request_infos')}</CardTitle>
              <CardDescription>
              <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-10 mt-2">
              <div>
-                             <p className="font-bold">Request Id:</p>
+                             <p className="font-bold">{t('request_id')}</p>
                              <p className="text-xs">{selectedRequest.id}</p>
                          </div>
 
                          <div>
-                             <p className="font-bold">Request date:</p>
+                             <p className="font-bold">{t('request_date')}</p>
                              <p className="text-xs">{new Date(selectedRequest.createdAt).toLocaleString()}</p>
                          </div>
 
                          <div>
-                            <p className="font-bold">Request Status:</p>
+                            <p className="font-bold">{t('request_status')}</p>
                             <p>
                                 <Badge 
                                 className={`text-white ${
@@ -286,38 +288,38 @@ const handleDelete = async () => {
                             </div>
 
                          <div>
-                             <p className="font-bold">Requested Amount:</p>
+                             <p className="font-bold">{t('requested_amount')}</p>
                              <p>{selectedRequest.requestedAmount.toFixed(2)} TND</p>
                          </div>
                          <div>
-                             <p className="font-bold">Seller Email:</p>
+                             <p className="font-bold">{t('seller_email')}</p>
                              <p>{selectedRequest.store.user.email}</p>
                          </div>
                          <div>
-                             <p className="font-bold">Seller Phone Number:</p>
+                             <p className="font-bold">{t('seller_phone_number')}</p>
                              <p>{selectedRequest.store.userPhoneNumber}</p>
                          </div>
                          <div>
-                             <p className="font-bold">Store Revenue:</p>
+                             <p className="font-bold">{t('store_revenue')}</p>
                              <p>{selectedRequest.store.revenue.toFixed(2)} TND</p>
                          </div>
                          <div>
-                             <p className="font-bold">Store Received Payments:</p>
+                             <p className="font-bold">{t('store_received_payments')}</p>
                              <p>{selectedRequest.store.receivedPayments.toFixed(2)} TND</p>
                          </div>
                          <div>
-                             <p className="font-bold">Store UnReceived Payments:</p>
+                             <p className="font-bold">{t('store_unreceived_payments')}</p>
                              <p>{(selectedRequest.store.revenue - selectedRequest.store.receivedPayments).toFixed(2)} TND</p>
                          </div>
                          {selectedRequest.status != "APPROVED" && selectedRequest.status != "REJECTED" && (
                          <div className="col-span-2 md:col-span-1">
-                         <Button onClick={approveRequest} variant="link" className="block mb-2 md:mb-0">Approve Request</Button>
+                         <Button onClick={approveRequest} variant="link" className="block mb-2 md:mb-0">{t('approve_request')}</Button>
                          </div>
                            )}
 
                         {selectedRequest.status != "APPROVED" && selectedRequest.status != "REJECTED" && (
                          <div className="col-span-2 md:col-span-1">
-                         <Button onClick={rejectRequest} variant="link" className="block text-red-500 mb-2 md:mb-0">Reject Request</Button>
+                         <Button onClick={rejectRequest} variant="link" className="block text-red-500 mb-2 md:mb-0">{t('reject_request')}</Button>
                          </div>
                            )}
                      </div>
@@ -335,16 +337,16 @@ const handleDelete = async () => {
                                            <OctagonAlert className=''/>
                                                </div>
                                               <AlertDialogTitle className="text-xl font-bold text-center">
-                                                 Are you absolutely sure you want to delete this request ?
+                                                 {t('delete_dialog_title')}
                                                </AlertDialogTitle>
                                                 <AlertDialogDescription>
-                                                   This action cannot be undone. 
+                                                   {t('delete_dialog_desc')}
                                                     </AlertDialogDescription>
                                                    </AlertDialogHeader>
                                                   <AlertDialogFooter>
-                                              <AlertDialogCancel onClick={()=>setisDeleteOpen(false)}>Cancel</AlertDialogCancel>
+                                              <AlertDialogCancel onClick={()=>setisDeleteOpen(false)}>{t('delete_dialog_cancel')}</AlertDialogCancel>
                                       <AlertDialogAction onClick={() => handleDelete()} 
-                                     className='bg-red-500 hover:bg-red-500' >Delete</AlertDialogAction>
+                                     className='bg-red-500 hover:bg-red-500' >{t('delete_dialog_action')}</AlertDialogAction>
                             </AlertDialogFooter>
                         </AlertDialogContent>
                      </AlertDialog> 

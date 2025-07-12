@@ -101,7 +101,7 @@ const ViewAffiliateRequests = ({  affiliatePaymentRequests }: ViewProps) => {
       <Card className="mt-4">
       <CardHeader className="bg-muted/50 rounded-t-lg">
       <CardTitle>{t('affiliate_users_requests')}</CardTitle>
-          <CardDescription>{t('total')}: {affiliatePaymentRequests.length}</CardDescription>
+          <CardDescription>{t('total')} {affiliatePaymentRequests.length}</CardDescription>
         </CardHeader>
         <CardContent>
         <div className="flex justify-center items-center mt-2">

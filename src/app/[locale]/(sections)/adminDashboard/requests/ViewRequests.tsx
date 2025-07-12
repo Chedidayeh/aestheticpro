@@ -104,7 +104,7 @@ const ViewRequests = ({ paymentRequests }: ViewProps) => {
       <Card>
       <CardHeader className="bg-muted/50 rounded-t-lg">
       <CardTitle>{t('sellers_requests')}</CardTitle>
-          <CardDescription>{t('total')}: {paymentRequests.length}</CardDescription>
+          <CardDescription>{t('total')} {paymentRequests.length}</CardDescription>
         </CardHeader>
         <CardContent>
         <div className="flex justify-center items-center mt-2">

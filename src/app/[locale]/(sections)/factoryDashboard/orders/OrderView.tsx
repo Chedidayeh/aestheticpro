@@ -208,7 +208,7 @@ const handleToggle = async () => {
       <CardHeader className=" bg-muted/50 rounded-t-lg">
       <div className="flex flex-col gap-2">
             <CardTitle>{t('orders')}</CardTitle>
-            <CardDescription>{t('total_orders')}: {orders.length}</CardDescription>
+            <CardDescription>{t('total_orders')} {orders.length}</CardDescription>
           </div>
           <div className="flex mt-4 flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 items-center">
           <Input
@@ -267,7 +267,7 @@ const handleToggle = async () => {
     
         </div>
         <p className="text-blue-600 text-sm mt-4">
-        <span className="text-blue-600 font-medium">{t('guide')}:</span> {t('use_eye_action_to_view_order_details')}
+        <span className="text-blue-600 font-medium">{t('guide')}</span> {t('use_eye_action_to_view_order_details')}
       </p>
         </CardHeader>
         <CardContent>

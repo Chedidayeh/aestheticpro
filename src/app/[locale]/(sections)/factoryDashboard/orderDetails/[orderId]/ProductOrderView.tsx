@@ -272,7 +272,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
                               </p>
                         </div>
                         <div>
-                        <Button onClick={handleChange} variant={"link"}>{t('change_printing_state')}</Button>
+                        <Button onClick={handleChange} variant={"secondary"}>{t('change_printing_state')}</Button>
                         </div>
                     </div>
                 </CardDescription>
@@ -338,7 +338,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
                                    <p className="font-bold">{t('check_match_order_label')}</p>
                                    <Button
                                     onClick={() => checkMatch(selectedItem)}
-                                    variant="link"
+                                    variant="secondary"
                                     >          
                                    {t('check_match')}
                                   </Button>
@@ -353,7 +353,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
         <Separator className="w-full"/>
         <CardContent>
         <div className="mt-6 space-y-4">
-        <Button onClick={()=>{downloadMockup(selectedItem.capturedMockup)}} variant={"link"}>{t('download_product_mockup')}</Button>
+        <Button onClick={()=>{downloadMockup(selectedItem.capturedMockup)}} variant={"secondary"}>{t('download_product_mockup')}</Button>
 
           <div className="text-sm">
           <div className="flex flex-col md:flex-row md:space-x-10 space-y-2 md:space-y-0">
@@ -365,7 +365,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
 
           <Button onClick={()=>{
             const imageUrl = selectedItem.frontsellerDesign?.imageUrl;
-            downloadDesign(imageUrl ?? '')}} variant={"link"}>{t('download_front_design')}</Button>
+            downloadDesign(imageUrl ?? '')}} variant={"secondary"}>{t('download_front_design')}</Button>
           </div>
 
 
@@ -380,7 +380,7 @@ const checkMatch = async (item: ExtraOrderItem) => {
 
               <Button onClick={()=>{
             const imageUrl = selectedItem.backsellerDesign?.imageUrl;
-            downloadDesign(imageUrl ?? '')}} variant={"link"}>{t('download_back_design')}</Button>
+            downloadDesign(imageUrl ?? '')}} variant={"secondary"}>{t('download_back_design')}</Button>
           </div>
 
 

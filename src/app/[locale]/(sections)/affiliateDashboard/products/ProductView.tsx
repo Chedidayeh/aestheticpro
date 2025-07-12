@@ -677,7 +677,7 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
 
 
               <p className="text-muted-foreground mt-4 text-sm">
-                <span className="text-blue-600 font-medium">{t('guide')}:</span> {t('select_product_to_affiliate')}
+                <span className="text-blue-600 font-medium">{t('guide')}</span> {t('select_product_to_affiliate')}
               </p>
               <p className="text-muted-foreground mt-4 text-sm">
                 {t('products_found', { count: totalCountState })}
@@ -848,7 +848,7 @@ const ProductView = ({ initialProducts, totalCount, initialPage, limit, user, af
               {t('affiliate_link_title')}
             </AlertDialogTitle>
             <AlertDialogDescription className="flex flex-col items-center w-full">
-              {t('affiliate_link_description')}:
+              {t('affiliate_link_description')}
               <p className="text-xs mt-4">
                 {t('click_to_copy_link')}
               </p>

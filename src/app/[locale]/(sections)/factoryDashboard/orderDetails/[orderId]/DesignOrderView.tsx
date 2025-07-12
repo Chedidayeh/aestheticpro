@@ -219,7 +219,7 @@ const handleChange = async () =>{
                             <p>{order.shippingAddress}</p>
                         </div>
                         <div>
-                        <Button onClick={handleChange} variant={"link"}>{t('change_printing_state')}</Button>
+                        <Button onClick={handleChange} variant={"secondary"}>{t('change_printing_state')}</Button>
                         </div>
                     </div>
                 </CardDescription>
@@ -230,7 +230,7 @@ const handleChange = async () =>{
         <CardContent>
             <p className="text-gray-600 font-extrabold mt-6">{t('order_items_label')}</p>
             <p className="text-red-600 text-sm">
-        <span className="text-red-600 font-medium">{t('guide')}:</span> {t('click_on_product')}
+        <span className="text-red-600 font-medium">{t('guide')}</span> {t('click_on_product')}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 ml-2 md:ml-10 mt-6">
       {order.orderItems.map((item, index) => (
@@ -287,14 +287,14 @@ const handleChange = async () =>{
         <Separator className="w-full"/>
         <CardContent>
         <div className="mt-6 space-y-4">
-          <Button onClick={()=>{downloadMockup(selectedItem.capturedMockup)}} variant={"link"}>{t('download_product_mockup')}</Button>
+          <Button onClick={()=>{downloadMockup(selectedItem.capturedMockup)}} variant={"secondary"}>{t('download_product_mockup')}</Button>
 
             {/* Personalized Product */}
           {selectedItem.productTitle === "Personalized Product" && (
             <>
           <div className="text-sm">
           <div className="flex flex-col md:flex-row md:space-x-10 space-y-2 md:space-y-0">
-            <div className="font-bold">{t('front_design_name_label')}: <span className="text-gray-600 font-semibold">
+            <div className="font-bold">{t('front_design_name_label')} <span className="text-gray-600 font-semibold">
                 {selectedItem.frontclientDesign?.name ?? selectedItem.frontsellerDesign?.name ?? "N/A"}
               </span>
             </div>
@@ -302,14 +302,14 @@ const handleChange = async () =>{
 
           <Button onClick={()=>{
             const imageUrl = selectedItem.frontclientDesign?.imageUrl ?? selectedItem.frontsellerDesign?.imageUrl;
-            downloadDesign(imageUrl ?? '')}} variant={"link"}>{t('download_front_design')}</Button>
+            downloadDesign(imageUrl ?? '')}} variant={"secondary"}>{t('download_front_design')}</Button>
           </div>
 
 
 
           <div className="text-sm">
           <div className="flex flex-col md:flex-row md:space-x-10 space-y-2 md:space-y-0">
-            <div className="font-bold">{t('back_design_name_label')}: <span className="text-gray-600 font-semibold">
+            <div className="font-bold">{t('back_design_name_label')} <span className="text-gray-600 font-semibold">
                 {selectedItem.backclientDesign?.name ?? selectedItem.backsellerDesign?.name ?? "N/A"}
               </span>
             </div>
@@ -317,7 +317,7 @@ const handleChange = async () =>{
 
               <Button onClick={()=>{
             const imageUrl = selectedItem.backclientDesign?.imageUrl ?? selectedItem.backsellerDesign?.imageUrl;
-            downloadDesign(imageUrl ?? '')}} variant={"link"}>{t('download_back_design')}</Button>
+            downloadDesign(imageUrl ?? '')}} variant={"secondary"}>{t('download_back_design')}</Button>
           </div>
 
 
