@@ -327,7 +327,7 @@ const CreateStoreView = ({ user }: { user: User }) => {
           </div>
 
           <div className="items-center justify-center flex">
-            <ScrollArea className="h-96 w-[60%] rounded-md border mt-6">
+            <ScrollArea className="h-96 md:w-[80%] rounded-md border mt-6">
               <div className="p-4">
                 <h4 className="mb-4 text-sm font-medium leading-none">{t('termsTitle')}</h4>
                 {arabicInfos.map((info, index) => (
@@ -355,9 +355,9 @@ const CreateStoreView = ({ user }: { user: User }) => {
 
 
 
-          <div className=" flex justify-end items-end mt-[10%]">
-            <div>
-              <p className="mr-3 mb-2 text-sm text-muted-foreground">{t('donePrompt')}</p>
+          <div className="flex flex-col sm:flex-row justify-end items-center  mt-[10%] gap-2 w-full">
+            <div className="sm:mr-3 mb-2 sm:mb-0">
+              <p className="text-sm text-muted-foreground">{t('donePrompt')}</p>
             </div>
             <Button disabled={isClicked || isCreating || !logoFile || storeName === "" || !termsAccepted || phoneNumber.length != 8}
               onClick={createStore} className="w-full sm:w-[40%] text-white">{t('createStoreNow')}

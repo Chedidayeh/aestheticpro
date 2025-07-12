@@ -39,13 +39,13 @@ const Page = async () => {
         </AlertDialogDescription>
       </AlertDialogHeader>
 
-      <div className="flex items-center justify-center gap-2">
-      <Link href="/">
-        <Button size={"sm"} variant={"outline"} className="">
-        &larr; {t('returnHome')}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-2 w-full">
+        <Link href="/" className="w-full sm:w-auto">
+          <Button size={"sm"} variant={"outline"} className="w-full sm:w-auto">
+            &larr; {t('returnHome')}
           </Button>
-          </Link>
-        <RedirectToCreateSellerProfile className="text-white" href="/auth/sign-in">
+        </Link>
+        <RedirectToCreateSellerProfile className="text-white w-full sm:w-auto" href="/auth/sign-in">
           {t('login')} &rarr;
         </RedirectToCreateSellerProfile>
       </div>
@@ -70,16 +70,16 @@ const Page = async () => {
             {t('redirectingToDashboard')}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter>
-        <Link href="/">
-        <Button size={"sm"} variant={"outline"} className="">
-        &larr; {t('returnHome')}
-          </Button>
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 w-full mt-2">
+          <Link href="/" className="w-full sm:w-auto">
+            <Button size={"sm"} variant={"outline"} className="w-full sm:w-auto">
+              &larr; {t('returnHome')}
+            </Button>
           </Link>
-          <Link className="text-right" href="/sellerDashboard">
-            <Button className='bg-blue-500 hover:bg-blue-500 text-white' size={"sm"} variant="default">{t('goToDashboard')} &rarr;</Button>
+          <Link className="w-full sm:w-auto text-right" href="/sellerDashboard">
+            <Button className='w-full sm:w-auto bg-blue-500 hover:bg-blue-500 text-white' size={"sm"} variant="default">{t('goToDashboard')} &rarr;</Button>
           </Link>
-        </AlertDialogFooter>
+        </div>
       </AlertDialogContent>
     </AlertDialog>
 )    
@@ -90,21 +90,21 @@ const Page = async () => {
             <AlertDialog open={true}>
             <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
             <AlertDialogHeader className="flex flex-col items-center">
-                <div className="text-red-500 mb-2">
+                <div className="text-blue-500 mb-2">
                   <OctagonAlert/>
                 </div>
-                <AlertDialogTitle className="text-lg font-semibold text-center text-red-500">
+                <AlertDialogTitle className="text-lg font-semibold text-center text-blue-500">
                   {t('storeCreationDisabled')}
                 </AlertDialogTitle>
                 <AlertDialogDescription>
                   {t('returnHomePrompt')}
                 </AlertDialogDescription>
               </AlertDialogHeader>
-              <AlertDialogFooter>
-                <Link className="text-right" href="/">
-                  <Button className='bg-red-500 hover:bg-red-500 text-white' size={"sm"} variant="default">&larr; {t('return')}</Button>
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-2 w-full mt-2">
+                <Link className="w-full sm:w-auto text-right" href="/">
+                  <Button className='w-full sm:w-auto bg-blue-500 hover:bg-blue-500 text-white' size={"sm"} variant="default">&larr; {t('return')}</Button>
                 </Link>
-              </AlertDialogFooter>
+              </div>
             </AlertDialogContent>
           </AlertDialog>
     )
