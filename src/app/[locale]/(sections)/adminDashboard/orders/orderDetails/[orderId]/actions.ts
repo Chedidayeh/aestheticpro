@@ -9,85 +9,85 @@ import { sendAffiliateProductSoldEmail, sendDesignSoldEmail, sendLevelUpEmail, s
 import { getAllReturnedOrders } from "../../../returns/actions";
 
 
-export const getOrderWithItemsAndProducts = async (orderId : string) => {
-    try {
-      const order = await db.order.findUnique({
-        where: { id: orderId },
-        include: {
-          orderItems: {
-            include: {
-              product: {
-                include: {
-                  store : true
-                }
-              },
-              frontsellerDesign : true,
-              backsellerDesign : true,
-              frontclientDesign : true,
-              backclientDesign :true,
-              commission : {
-                include : {
-                  affiliateLink : {
-                    include : {
-                      affiliate : {
-                        include : {
-                          user : true
-                        }
+export const getOrderWithItemsAndProducts = async (orderId: string) => {
+  try {
+    const order = await db.order.findUnique({
+      where: { id: orderId },
+      include: {
+        orderItems: {
+          include: {
+            product: {
+              include: {
+                store: true
+              }
+            },
+            frontsellerDesign: true,
+            backsellerDesign: true,
+            frontclientDesign: true,
+            backclientDesign: true,
+            commission: {
+              include: {
+                affiliateLink: {
+                  include: {
+                    affiliate: {
+                      include: {
+                        user: true
                       }
                     }
                   }
                 }
               }
-            },
+            }
           },
-          user : true,
         },
-      });
-  
-      return order;
-    } catch (error) {
-      console.error('Error retrieving order with items and products:', error);
-      throw new Error('Failed to retrieve order with items and products from database');
-    }
-  };
+        user: true,
+      },
+    });
+
+    return order;
+  } catch (error) {
+    console.error('Error retrieving order with items and products:', error);
+    throw new Error('Failed to retrieve order with items and products from database');
+  }
+};
 
 
-  export const changeStatus = async (orderId: string, status: OrderStatus) => {
-    try {
-      // Define the data object to update based on status
-      let dataToUpdate: any = { status: status };
-  
-      // If status is 'DELIVERED', set isPaid to true; otherwise, set it to false
-      dataToUpdate.isPaid = status === OrderStatus.DELIVERED;
-  
-      // Update the order in the database
-      const updatedOrder = await db.order.update({
-        where: { id: orderId },
-        data: dataToUpdate,
-      });
-  
-      return updatedOrder;
-    } catch (error) {
-      console.error('Error changing order status:', error);
-      throw new Error('Failed to change order status in the database');
-    }
-    
-  };
+export const changeStatus = async (orderId: string, status: OrderStatus) => {
+  try {
+    // Define the data object to update based on status
+    let dataToUpdate: any = { status: status };
 
-  export const changeType = async (orderId: string, type: OrderType) => {
-    try {
-      // Update the order status in the database
-      const updatedOrder = await db.order.update({
-        where: { id: orderId },
-        data: { type: type },
-      });
-  
-      return updatedOrder;
-    } catch (error) {
-      console.error('Error changing order status:', error);
-      throw new Error('Failed to change order status in the database');
-    }
-  };
+    // If status is 'DELIVERED', set isPaid to true; otherwise, set it to false
+    dataToUpdate.isPaid = status === OrderStatus.DELIVERED;
+
+    // Update the order in the database
+    const updatedOrder = await db.order.update({
+      where: { id: orderId },
+      data: dataToUpdate,
+    });
+
+    return updatedOrder;
+  } catch (error) {
+    console.error('Error changing order status:', error);
+    throw new Error('Failed to change order status in the database');
+  }
+
+};
+
+export const changeType = async (orderId: string, type: OrderType) => {
+  try {
+    // Update the order status in the database
+    const updatedOrder = await db.order.update({
+      where: { id: orderId },
+      data: { type: type },
+    });
+
+    return updatedOrder;
+  } catch (error) {
+    console.error('Error changing order status:', error);
+    throw new Error('Failed to change order status in the database');
+  }
+};
 
 
 
@@ -112,29 +112,35 @@ export async function updateStoreLevel(storeId: string) {
       throw new Error("No levels defined in the system.");
     }
 
-    if(store.level != highestLevel.levelNumber) {
+    if (store.level != highestLevel.levelNumber) {
       // Check if the store's total sales meet or exceed the highest level's minSales
-    if (store.totalSales >= highestLevel.minSales) {
-      // If the store has reached the highest level, enable unlimited creation
-      const store =await db.store.update({
-        where: { id: storeId },
-        data: {
-          level: highestLevel.levelNumber,
-          unlimitedCreation: true,
-        },
-        include : {user : true}
-      });
+      if (store.totalSales >= highestLevel.minSales) {
+        // If the store has reached the highest level, enable unlimited creation
+        const store = await db.store.update({
+          where: { id: storeId },
+          data: {
+            level: highestLevel.levelNumber,
+            unlimitedCreation: true,
+          },
+          include: { user: true }
+        });
 
-      console.log(
-        `Store has reached the highest level (${highestLevel.levelNumber}). Unlimited creation enabled.`
-      );
-      const notificationContent = `Great News: Your Store has reached the highest level (${highestLevel.levelNumber}). Unlimited creation enabled`;
+        console.log(
+          `Store has reached the highest level (${highestLevel.levelNumber}). Unlimited creation enabled.`
+        );
+        const notificationContent = `Great News: Your Store has reached the highest level (${highestLevel.levelNumber}). Unlimited creation enabled`;
 
-      await createNotification(store.id,notificationContent , "Admin")
-      await sendLevelUpEmail(store.user.email , store.user.name! , store.storeName, highestLevel.levelNumber , true)
+        await createNotification(store.id, notificationContent, "Admin")
 
-      return;
-    }
+        try {
+          await sendLevelUpEmail(store.user.email, store.user.name!, store.storeName, highestLevel.levelNumber, true)
+        } catch (error) {
+          // Log the error, but do not stop the order process
+          console.error("Failed to send order email:", error);
+        }
+
+        return;
+      }
     }
 
 
@@ -157,14 +163,20 @@ export async function updateStoreLevel(storeId: string) {
           level: nextLevel.levelNumber,
           unlimitedCreation: false, // Keep false for intermediate levels
         },
-        include : {user : true}
+        include: { user: true }
       });
 
       console.log(`Store level updated to ${nextLevel.levelNumber}`);
       const notificationContent = `Great News: Your Store have reached level ${nextLevel.levelNumber}`;
 
-      await createNotification(store.id,notificationContent , "Admin")
-      await sendLevelUpEmail(store.user.email , store.user.name! , store.storeName, nextLevel.levelNumber , false)
+      await createNotification(store.id, notificationContent, "Admin")
+
+      try {
+        await sendLevelUpEmail(store.user.email, store.user.name!, store.storeName, nextLevel.levelNumber, false)
+      } catch (error) {
+        // Log the error, but do not stop the order process
+        console.error("Failed to send order email:", error);
+      }
 
     } else {
       console.log("Store has not reached the next level sales threshold.");
@@ -191,12 +203,12 @@ export async function calculateTotalSellerProfitForProducts(orderId: string) {
               },
             },
             commission: {
-              include : {
-                affiliateLink : {
-                  include : {
-                    affiliate : {
-                      include : {
-                        user : true
+              include: {
+                affiliateLink: {
+                  include: {
+                    affiliate: {
+                      include: {
+                        user: true
                       }
                     }
                   }
@@ -238,7 +250,7 @@ export async function calculateTotalSellerProfitForProducts(orderId: string) {
           productTitle: item.productTitle,
           totalProfit,
           affiliateProfit,
-          affiliateUser : item.commission?.affiliateLink.affiliate.user.email
+          affiliateUser: item.commission?.affiliateLink.affiliate.user.email
         };
       } else {
         return {
@@ -248,7 +260,7 @@ export async function calculateTotalSellerProfitForProducts(orderId: string) {
           productTitle: 'Product not found',
           totalProfit: 0,
           affiliateProfit: 0,
-          affiliateUser : "No affiliate user",
+          affiliateUser: "No affiliate user",
         };
       }
     });
@@ -267,163 +279,173 @@ export async function calculateTotalSellerProfitForProducts(orderId: string) {
 }
 
 
-    // update for products
-  export async function updateRevenueAndSalesForProducts(orderId: string, platformProfit: number , totalIncome : number) {
-    try {
-      // Fetch the order with its items and related products
-      const order = await db.order.findUnique({
-        where: { id: orderId },
-        include: {
-          orderItems: {
-            include: {
-              product: {
-                include: {
-                  store: true, // Include store information for each product
-                },
+// update for products
+export async function updateRevenueAndSalesForProducts(orderId: string, platformProfit: number, totalIncome: number) {
+  try {
+    // Fetch the order with its items and related products
+    const order = await db.order.findUnique({
+      where: { id: orderId },
+      include: {
+        orderItems: {
+          include: {
+            product: {
+              include: {
+                store: true, // Include store information for each product
               },
-              commission : true
             },
+            commission: true
           },
         },
-      });
-  
-      if (!order) {
-        throw new Error('Order not found');
-      }
+      },
+    });
 
-        // Step 1: Handle commissions for each order item
+    if (!order) {
+      throw new Error('Order not found');
+    }
 
-        for (const orderItem of order.orderItems) {
-          if (orderItem.commission) {
-            // Fetch the affiliate link related to this order item
-            const affiliateLink = await db.affiliateLink.findUnique({
-              where: { id: orderItem.commission.affiliateLinkId },
-              include: { affiliate: true }, // Include the affiliate relation to access totalIncome
-            });
+    // Step 1: Handle commissions for each order item
 
-            if (affiliateLink) {
-              // Update total sales for the affiliate link
-              await db.affiliateLink.update({
-                where: { id: affiliateLink.id },
-                data: {
-                  totalSales: { increment: 1 }, // Increment total sales
-                },
-              });
+    for (const orderItem of order.orderItems) {
+      if (orderItem.commission) {
+        // Fetch the affiliate link related to this order item
+        const affiliateLink = await db.affiliateLink.findUnique({
+          where: { id: orderItem.commission.affiliateLinkId },
+          include: { affiliate: true }, // Include the affiliate relation to access totalIncome
+        });
 
-              // Update total income for the affiliate
-              const affiliate = await db.affiliate.update({
-                where: { id: affiliateLink.affiliateId }, // Ensure this field exists in your AffiliateLink
-                data: {
-                  totalIncome: { increment: orderItem.commission.profit }, // Increment total income
-                },
-                include : {
-                  user : true
-                }
-              });
+        if (affiliateLink) {
+          // Update total sales for the affiliate link
+          await db.affiliateLink.update({
+            where: { id: affiliateLink.id },
+            data: {
+              totalSales: { increment: 1 }, // Increment total sales
+            },
+          });
 
-              const product = await db.product.findFirst({
-                where: { id: affiliateLink.productId },
-              });
+          // Update total income for the affiliate
+          const affiliate = await db.affiliate.update({
+            where: { id: affiliateLink.affiliateId }, // Ensure this field exists in your AffiliateLink
+            data: {
+              totalIncome: { increment: orderItem.commission.profit }, // Increment total income
+            },
+            include: {
+              user: true
+            }
+          });
 
-              if (product) {
-                const notificationContent = `Great News: Your affiliate product "${product.title}" has been sold`;
-                await createAffiliateNotification(affiliateLink.affiliateId, notificationContent, 'Admin');
-                // send email
-                await sendAffiliateProductSoldEmail(affiliate.user.email , affiliate.user.name , product.title , orderItem.commission.profit)
-              }
+          const product = await db.product.findFirst({
+            where: { id: affiliateLink.productId },
+          });
+
+          if (product) {
+            const notificationContent = `Great News: Your affiliate product "${product.title}" has been sold`;
+            await createAffiliateNotification(affiliateLink.affiliateId, notificationContent, 'Admin');
+            // send email
+            try {
+              await sendAffiliateProductSoldEmail(affiliate.user.email, affiliate.user.name, product.title, orderItem.commission.profit)
+            } catch (error) {
+              // Log the error, but do not stop the order process
+              console.error("Failed to send order email:", error);
             }
           }
         }
-      
+      }
+    }
 
-  
-      // Filter out order items with null productId
-      const validOrderItems = order.orderItems.filter((item) => item.productId !== null);
-  
-      // Update each product's revenue and increment total sales
-      const updatePromises = validOrderItems.map(async (item) => {
-        if (!item.product) {
-          return
-        }
-  
-        const newRevenue = item.product.sellerProfit * item.quantity;
-  
-        // Update product's revenue and total sales
-        await db.product.update({
-          where: { id: item.productId! },
+
+
+    // Filter out order items with null productId
+    const validOrderItems = order.orderItems.filter((item) => item.productId !== null);
+
+    // Update each product's revenue and increment total sales
+    const updatePromises = validOrderItems.map(async (item) => {
+      if (!item.product) {
+        return
+      }
+
+      const newRevenue = item.product.sellerProfit * item.quantity;
+
+      // Update product's revenue and total sales
+      await db.product.update({
+        where: { id: item.productId! },
+        data: {
+          revenue: { increment: newRevenue },
+          totalSales: { increment: 1 },
+        },
+      });
+
+      await checkAndSetTopSales(item.productId!)
+
+
+
+      // Update store's revenue and total sales
+      if (item.product.store) {
+        const store = await db.store.update({
+          where: { id: item.product.store.id },
           data: {
             revenue: { increment: newRevenue },
             totalSales: { increment: 1 },
           },
+          include: {
+            user: true
+          }
         });
+        const notificationContent = `Great News: Your product "${item.product.title}" has been sold`;
 
-        await checkAndSetTopSales(item.productId!)
+        await createNotification(item.product.store.id, notificationContent, "Admin")
 
-        
-
-        // Update store's revenue and total sales
-        if (item.product.store) {
-          const store = await db.store.update({
-            where: { id: item.product.store.id },
-            data: {
-              revenue: { increment: newRevenue },
-              totalSales: { increment: 1 },
-            },
-            include : {
-              user : true
-            }
-          });
-          const notificationContent = `Great News: Your product "${item.product.title}" has been sold`;
-
-          await createNotification(item.product.store.id,notificationContent , "Admin")
-
-          // to do send email 
-          await sendProductSoldEmail(store.user.email , store.user.name , store.storeName , item.product.title , newRevenue)
-
-          await updateStoreLevel(store.id)
-
-        } else {
-          throw new Error(`Store not found for product ${item.product.id}`);
+        // to do send email 
+        try {
+          await sendProductSoldEmail(store.user.email, store.user.name, store.storeName, item.product.title, newRevenue)
+        } catch (error) {
+          // Log the error, but do not stop the order process
+          console.error("Failed to send order email:", error);
         }
-      });
-  
-      // Wait for all updates to complete
-      await Promise.all(updatePromises);
+
+        await updateStoreLevel(store.id)
+
+      } else {
+        throw new Error(`Store not found for product ${item.product.id}`);
+      }
+    });
+
+    // Wait for all updates to complete
+    await Promise.all(updatePromises);
 
 
 
-  
-      // Mark order as updated
-      await db.order.update({
-        where: { id: order.id },
+
+    // Mark order as updated
+    await db.order.update({
+      where: { id: order.id },
+      data: {
+        updated: true,
+      },
+    });
+
+
+    // Update platform profit
+    const user = await getUser(); // Assuming this function gets the current user
+    if (user) {
+      await db.platform.update({
+        where: { userId: user.id },
         data: {
-          updated: true,
+          profit: { increment: platformProfit },
+          totalIncome: { increment: totalIncome }
         },
       });
-
-  
-      // Update platform profit
-      const user = await getUser(); // Assuming this function gets the current user
-      if (user) {
-        await db.platform.update({
-          where: { userId: user.id },
-          data: {
-            profit: { increment: platformProfit },
-            totalIncome : { increment: totalIncome }
-          },
-        });
-      } else {
-        throw new Error('admin not found');
-      }
-  
-      return {
-        message: 'Product revenue and total sales updated successfully.',
-      };
-    } catch (error) {
-      console.error('Error updating product revenue and total sales:', error);
-      throw error;
+    } else {
+      throw new Error('admin not found');
     }
+
+    return {
+      message: 'Product revenue and total sales updated successfully.',
+    };
+  } catch (error) {
+    console.error('Error updating product revenue and total sales:', error);
+    throw error;
   }
+}
 
 
 
@@ -439,13 +461,13 @@ export async function calculateTotalSellerProfitForDesigns(orderId: string) {
         orderItems: {
           include: {
             frontsellerDesign: {
-              include : {
-                store : true
+              include: {
+                store: true
               }
             },
             backsellerDesign: {
-              include : {
-                store : true
+              include: {
+                store: true
               }
             },
             frontclientDesign: true,
@@ -474,7 +496,7 @@ export async function calculateTotalSellerProfitForDesigns(orderId: string) {
         const frontProfit = item.frontsellerDesign.sellerProfit * item.quantity;
         totalOrderProfit += frontProfit;
         profits.push({
-          store : item.frontsellerDesign.store!.storeName,
+          store: item.frontsellerDesign.store!.storeName,
           designId,
           designName,
           designType: 'front seller Design',
@@ -487,7 +509,7 @@ export async function calculateTotalSellerProfitForDesigns(orderId: string) {
         designId = item.frontclientDesign.id
         designName = item.frontclientDesign.name ?? "client design"
         profits.push({
-          store : "No store",
+          store: "No store",
           designId,
           designName,
           designType: 'front client Design',
@@ -503,7 +525,7 @@ export async function calculateTotalSellerProfitForDesigns(orderId: string) {
         const backProfit = item.backsellerDesign.sellerProfit * item.quantity;
         totalOrderProfit += backProfit;
         profits.push({
-          store : item.backsellerDesign.store!.storeName,
+          store: item.backsellerDesign.store!.storeName,
           designId,
           designName,
           designType: 'back seller Design',
@@ -516,9 +538,9 @@ export async function calculateTotalSellerProfitForDesigns(orderId: string) {
         designId = item.backclientDesign.id
         designName = item.backclientDesign.name ?? "client design"
         profits.push({
-          store : "No store",
+          store: "No store",
           designId,
-          designName,          
+          designName,
           designType: 'back client Design',
           productQuantity: item.quantity,
           totalProfit: 0
@@ -541,7 +563,7 @@ export async function calculateTotalSellerProfitForDesigns(orderId: string) {
 }
 
 // Update revenue and sales for seller designs and their respective stores
-export async function updateRevenueAndSalesForDesigns(orderId: string, platformProfit: number , totalIncome : number) {
+export async function updateRevenueAndSalesForDesigns(orderId: string, platformProfit: number, totalIncome: number) {
   try {
     // Fetch the order with its items and related products
     const order = await db.order.findUnique({
@@ -589,21 +611,28 @@ export async function updateRevenueAndSalesForDesigns(orderId: string, platformP
 
       // Update store's revenue and total sales
       if (design.store) {
-       const store =  await db.store.update({
+        const store = await db.store.update({
           where: { id: design.store.id },
           data: {
             revenue: { increment: newRevenue },
             totalSales: { increment: 1 },
           },
-          include : {
-            user : true
+          include: {
+            user: true
           }
         });
         const notificationContent = `Great News: Your Design "${design.name}" has been sold`;
 
-        await createNotification(design.store.id,notificationContent , "Admin")
+        await createNotification(design.store.id, notificationContent, "Admin")
 
-        await sendDesignSoldEmail(store.user.email , store.user.name , store.storeName , design.name , newRevenue)
+        // to do send email 
+        try {
+          await sendDesignSoldEmail(store.user.email, store.user.name, store.storeName, design.name, newRevenue)
+        } catch (error) {
+          // Log the error, but do not stop the order process
+          console.error("Failed to send order email:", error);
+        }
+
       } else {
         throw new Error(`Store not found for seller design ${designId}`);
       }
@@ -637,7 +666,7 @@ export async function updateRevenueAndSalesForDesigns(orderId: string, platformP
         where: { userId: user.id },
         data: {
           profit: { increment: platformProfit },
-          totalIncome : { increment: totalIncome }
+          totalIncome: { increment: totalIncome }
         },
       });
     } else {
@@ -656,7 +685,7 @@ export async function updateRevenueAndSalesForDesigns(orderId: string, platformP
 
 
 
-async function checkAndSetTopSales(productId : string) {
+async function checkAndSetTopSales(productId: string) {
   try {
     // Find the product by ID
     const product = await db.product.findUnique({
@@ -696,12 +725,12 @@ export async function CheckIfMatches(item: OrderItem) {
           existingItem.productCategory === item.productCategory &&
           existingItem.productSize === item.productSize
         ) {
-          return {match : true , orderId : order.id}; // Found a match
+          return { match: true, orderId: order.id }; // Found a match
         }
       }
     }
 
-    return {match : false , orderId : null}; // Found a match
+    return { match: false, orderId: null }; // Found a match
   } catch (error) {
     console.error('Error checking for matching order item:', error);
     throw new Error('Failed to check for matching order items');

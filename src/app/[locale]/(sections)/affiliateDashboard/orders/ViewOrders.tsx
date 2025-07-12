@@ -127,16 +127,16 @@ const ViewOrders = ({ orderItems }: ViewProps) => {
                 <CardTitle>{t('orders_items')}</CardTitle>
                 <CardDescription>{t('total', {count: orderItems.length})}</CardDescription>
               </div>
-              <div className="flex flex-row  space-x-2 items-center mt-6">
+              <div className="flex flex-col sm:flex-row items-stretch gap-3 w-full mt-6">
                 <Input
                   type="search"
-                  className="md:w-[30%] w-full"
+                  className="w-full sm:w-[300px]"
                   placeholder={t('search_by_commission_id')}
                   value={searchTerm}
                   onChange={handleSearchChange}
                 />
                 <Select onValueChange={handleFilterChange}>
-                  <SelectTrigger className="w-[200px] ">
+                  <SelectTrigger className="w-full sm:w-[200px] ">
                     <SelectValue placeholder={t('filter_by')} />
                   </SelectTrigger>
                   <SelectContent>

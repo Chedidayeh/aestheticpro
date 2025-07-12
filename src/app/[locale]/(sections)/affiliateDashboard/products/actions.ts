@@ -41,9 +41,17 @@ export const generateShortAffiliateLink = async (platform : Platform , originalA
       }
 
       // Generate a cryptographically secure random 6-byte string (12 characters in hex)
-      const code = randomBytes(6).toString('hex');
+      let code: string;
+      let duplicate: boolean;
+      do {
+        code = randomBytes(6).toString('hex');
+        const existingCode = await prisma.affiliateLink.findUnique({
+          where: { code },
+        });
+        duplicate = !!existingCode;
+      } while (duplicate);
 
-      const shortLink = `${process.env.NEXT_PUBLIC_BASE_URL}/${code}`;
+      const shortLink = `${process.env.NEXT_PUBLIC_BASE_URL}/affiliate-code/${code}`;
 
               // fetch the product price :
       const product = await prisma.product.findUnique({
@@ -56,7 +64,7 @@ export const generateShortAffiliateLink = async (platform : Platform , originalA
       const commissionAmount = product?.price! * (platform.affiliateUserProfit / 100);
       console.log(commissionAmount)
       // Create a new affiliate link
-      const affiliateLink = await prisma.affiliateLink.create({
+       await prisma.affiliateLink.create({
         data: {
           affiliateId,
           productId,
@@ -114,7 +122,7 @@ export async function fetchAllProducts(
     disableCategory : false,
     ...(filterByCategory && { category: filterByCategory }), // Filter by category
     ...(filterByCollection && { collectionName: filterByCollection }), // Filter by collection
-    ...(searchQuery && { title: { startsWith: searchQuery, mode: 'insensitive' } }), // Filter by search query
+    ...(searchQuery && { title: { startsWith: searchQuery, mode: 'insensitive' }  }), // Filter by search query
   };
 
     const products = await db.product.findMany({

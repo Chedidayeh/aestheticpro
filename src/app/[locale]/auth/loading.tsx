@@ -3,7 +3,7 @@ import { Loader2Icon } from "lucide-react";
 function loading() {
   return (
     <div
-      className="flex my-[80%] md:my-[25%] w-full items-center
+      className="flex my-[80%] md:my-[15%] w-full items-center
         justify-center"
     >
 

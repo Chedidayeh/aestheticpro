@@ -141,29 +141,27 @@ const ManageLinks = ({ Links , platform }: ViewProps) => {
              )}
 
 
-            <div className="flex flex-row  space-x-2 items-center my-2">
-        <Input
-              type="search"
-               className="md:w-[30%] w-full"
-              placeholder={t('search_by_product_title')}
-              onChange={handleSearchChange}
-              value={searchTerm}
-            /> 
-
-          <Select onValueChange={handleSortChange}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder={t('sort_by')} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>{t('sort_options')}</SelectLabel>
-                <SelectItem value="views">{t('clicks')}</SelectItem>
-                <SelectItem value="profit">{t('profit')}</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          
-          </div>
+            <div className="flex flex-col sm:flex-row items-stretch gap-3 w-full my-2">
+              <Input
+                type="search"
+                className="w-full sm:w-[300px]"
+                placeholder={t('search_by_product_title')}
+                onChange={handleSearchChange}
+                value={searchTerm}
+              />
+              <Select onValueChange={handleSortChange}>
+                <SelectTrigger className="w-full sm:w-[180px]">
+                  <SelectValue placeholder={t('sort_by')} />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    <SelectLabel>{t('sort_options')}</SelectLabel>
+                    <SelectItem value="views">{t('clicks')}</SelectItem>
+                    <SelectItem value="profit">{t('profit')}</SelectItem>
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
 
           <p className="text-muted-foreground text-sm">
         <span className="text-blue-600 font-medium">{t('note')} :</span> {t('profit_depends_on_quantity')}

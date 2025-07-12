@@ -692,6 +692,7 @@
     "toast_try_again": "Please try again later!"
   },
   "AffiliateProductsPage": {
+    "reset" : "Reset products",
     "breadcrumb": "AffiliateDashboard/All Products",
     "title": "All Products",
     "product_infos": "Product Infos:",

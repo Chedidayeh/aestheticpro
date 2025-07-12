@@ -142,7 +142,12 @@ interface FormattedCartProduct {
         revalidatePath("/MarketPlace/cart")
   
         // Step 3: Send the order email after order creation and commission handling
-        await sendOrderEmail(order);
+        try {
+          await sendOrderEmail(order);
+        } catch (error) {
+          // Log the error, but do not stop the order process
+          console.error("Failed to send order email:", error);
+        }
       },{
         maxWait: 10000, // Wait for a connection for up to 10 seconds
         timeout: 50000, // Allow the transaction to run for up to 20 seconds

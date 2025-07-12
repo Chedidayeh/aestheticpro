@@ -703,6 +703,7 @@
     "toast_try_again": "Veuillez réessayer plus tard!"
   },
   "AffiliateProductsPage": {
+    "reset": "Réinitialiser les produits",
     "breadcrumb": "Tableau de bord affilié/Tous les produits",
     "title": "Tous les produits",
     "product_infos": "Informations produit:",
@@ -1078,7 +1079,7 @@
     "toast_try_again": "Veuillez réessayer plus tard!"
   },
   "SellerOrdersPage": {
-    "breadcrumb" : "Tableau de bord vendeur/Toutes les commandes",
+    "breadcrumb": "Tableau de bord vendeur/Toutes les commandes",
     "allOrders": "Toutes les commandes",
     "designsDetails": "Détails des designs",
     "productsDetails": "Détails des produits",
@@ -1203,7 +1204,7 @@
     "toast_store_delete_error_desc": "Une erreur s'est produite lors de la tentative de suppression de votre boutique."
   },
   "SellerStoreLevelPage": {
-    "breadcrumb" : "Tableau de bord vendeur/Niveau de la boutique",
+    "breadcrumb": "Tableau de bord vendeur/Niveau de la boutique",
     "store_level_title": "Niveau de la boutique",
     "your_current_level": "Votre niveau actuel",
     "level_label": "Niveau {level}",

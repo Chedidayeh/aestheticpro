@@ -12,6 +12,7 @@ import { saveRedirectUrl } from '@/store/actions/action';
 import { buttonVariants } from '@/components/ui/button';
 import { useToast } from '@/components/ui/use-toast';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 
 
 interface PageProps {
@@ -24,6 +25,7 @@ const RedirectPage = ({  affiliateLink , user }: PageProps) => {
   const { toast } = useToast()
   const pathname = usePathname();
   const dispatch = useDispatch();
+  const t = useTranslations('CommonComponents');
 
   useEffect(() => {
     const handleAffiliateClick = async () => {
@@ -84,10 +86,10 @@ const RedirectPage = ({  affiliateLink , user }: PageProps) => {
         <AlertDialogHeader className="flex flex-col items-center">
 
             <AlertDialogTitle className="text-xl font-bold text-center">
-              Redirecting...
+              {t('redirecting')}
             </AlertDialogTitle>
             <AlertDialogDescription className="text-center">
-              Please wait while we redirect you to your destination...
+              {t('pleaseWait')}
             </AlertDialogDescription>
             <div className="text-blue-700 mb-2">
               <Loader className="animate-spin" />
@@ -100,13 +102,10 @@ const RedirectPage = ({  affiliateLink , user }: PageProps) => {
       <AlertDialogContent className="rounded-xl max-w-[80%] sm:max-w-[60%] md:max-w-[40%] xl:max-w-[30%]">
         <AlertDialogHeader>
             <AlertDialogTitle className="text-xl text-center font-bold tracking-tight">
-              Sign In to continue
+              {t('signInToContinue')}
             </AlertDialogTitle>
             <AlertDialogDescription className="text-sm text-center py-2">
-              Please login and{" "}
-              <span className="font-medium text-blue-500">
-                you'll be redirected to this page!
-              </span>
+              {t('pleaseLoginRedirect')}
             </AlertDialogDescription>
           </AlertDialogHeader>
 
@@ -119,7 +118,7 @@ const RedirectPage = ({  affiliateLink , user }: PageProps) => {
               })}
               href="/auth/sign-in"
             >
-              Login
+              {t('login')}
             </Link>
           </div>
         </AlertDialogContent>
