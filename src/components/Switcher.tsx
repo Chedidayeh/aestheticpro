@@ -51,7 +51,7 @@ export function Switcher() {
           <Globe className="h-[1.2rem] w-[1.2rem] text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-40" align="start">
+      <DropdownMenuContent className="w-40" align="end">
         <DropdownMenuLabel>Language</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {locales.map(l => (

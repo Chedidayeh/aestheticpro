@@ -106,16 +106,16 @@ useEffect(() => {
           </AlertDialogContent>
           </AlertDialog>
 
-          <div className='flex gap-2 items-center justify-center mt-2'>
+          <div className='flex gap-1 items-center justify-center mt-2'>
             <Input
               type="search"
-              className="w-[500px] rounded-xl border-2 border-blue-500"
+              className="w-[500px] rounded-xl border"
               placeholder={t('searchForProducts')}
               value={searchQuery}
               onChange={handleChange}
               onKeyPress={handleKeyPress}
             />
-            <Button disabled={searchQuery === ""} onClick={handleSearch} className="bg-blue-600 text-white px-4 py-2 rounded-xl">
+            <Button disabled={searchQuery === ""} onClick={handleSearch} className="bg-blue-600 md:flex hidden text-white px-3 py-2 rounded-xl">
               {/* {t('search')} */}
               <Search size={18} className='' />
             </Button>

@@ -21,6 +21,7 @@ import Profile from "./Profile"
 import { User } from "@prisma/client"
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { Switcher } from '../Switcher';
 
 interface Count {
   notPrintedOrders: number;
@@ -171,6 +172,7 @@ const NavBar = ({user , totalCounts} : {user : User , totalCounts : Count}) => {
 <div className='flex items-center space-x-2'>       
 
       <ModeToggle/>
+      <Switcher />
       <Profile user={user!}/>
 
       </div>

@@ -31,6 +31,7 @@ import { User } from "@prisma/client"
 import AdminProfile from "./AdminProfile"
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { Switcher } from '../Switcher';
 
 interface Count {
   printedOrdersCount: number;
@@ -356,9 +357,11 @@ interface Count {
       </div>
 
 
-      <div className='flex items-center space-x-2'>       
-
+      <div className='flex items-center space-x-2'>  
       <ModeToggle/>
+     
+      <Switcher />
+
 
       <AdminProfile user={user!}/>
 

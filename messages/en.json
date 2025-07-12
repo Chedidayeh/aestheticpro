@@ -1066,6 +1066,7 @@
     "toast_try_again": "Please try again later!"
   },
   "SellerOrdersPage": {
+    "breadcrumb" : "SellerDashboard/All Orders",
     "allOrders": "All Orders",
     "designsDetails": "Designs Details",
     "productsDetails": "Products Details",
@@ -1190,6 +1191,7 @@
     "toast_store_delete_error_desc": "An error occurred while attempting to delete your store."
   },
   "SellerStoreLevelPage": {
+    "breadcrumb" : "SellerDhasboard/Store Level",
     "store_level_title": "Store Level",
     "your_current_level": "Your Current Level",
     "level_label": "Level {level}",

@@ -11,8 +11,8 @@ const LevelsView = ({ levels, storeLevel }: { levels: Level[], storeLevel: Level
   const t = useTranslations('SellerStoreLevelPage');
   return (
     <>
-      {/* <p className="text-sm text-muted-foreground mb-2">SellerDashboard/storeLevel</p> */}
-      <h1 className="text-2xl font-semibold">{t('store_level_title')}</h1>
+    <p className="text-sm text-muted-foreground mb-2">{t('breadcrumb')}</p>
+    <h1 className="text-2xl font-semibold">{t('store_level_title')}</h1>
       <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {levels.map((level) => (
         <div key={level.levelNumber} className="w-full flex justify-center">

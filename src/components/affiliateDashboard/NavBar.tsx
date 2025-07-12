@@ -37,6 +37,7 @@ import React from "react"
 import Profile from "./Profile"
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
+import { Switcher } from '../Switcher';
 
   const NavBar = ({user , notifications} : {user : User ,notifications : AffiliateNotification[]}) => {
 
@@ -289,14 +290,16 @@ import { useTranslations } from 'next-intl';
 
       </div>
 
-      <div className='flex items-center space-x-2'>       
-
+      <div className='flex items-center space-x-2'>     
       <ModeToggle/>
+  
+      <Switcher />
+
 
       <DropdownMenu>
   <DropdownMenuTrigger asChild>
-    <Button variant="secondary" size="icon" className="rounded-full">
-    <Bell
+  <Button variant="ghost" size="icon" className="border-muted-foreground dark:bg-slate-600/50 border rounded-full">
+  <Bell
         className={`h-5 w-5 ${notifications.length > 0 ? 'animate-bounce text-yellow-500' : ''}`}
       />
       <span className="sr-only">{t('notifications')}</span>

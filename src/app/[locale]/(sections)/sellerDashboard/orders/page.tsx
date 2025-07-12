@@ -79,7 +79,7 @@ const Page = async () => {
     return (
       <>
 
-    <p className="text-sm text-muted-foreground mb-2">{t('allOrders')}</p>
+    <p className="text-sm text-muted-foreground mb-2">{t('breadcrumb')}</p>
     <h1 className="text-2xl font-semibold mb-8">{t('allOrders')}</h1>
       
       <ProductsView

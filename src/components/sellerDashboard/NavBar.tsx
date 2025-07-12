@@ -39,6 +39,7 @@ import { ModeToggle } from "../ModeToggle"
 import React from "react"
 import SellerProfile from "./SellerProfile"
 import { useTranslations } from 'next-intl';
+import { Switcher } from '../Switcher';
 
 
 const NavBar = ({ user, notifications, storeName }: { user: User, notifications: Notification[], storeName: string }) => {
@@ -337,8 +338,8 @@ const NavBar = ({ user, notifications, storeName }: { user: User, notifications:
       </Sheet>
 
 
-      <div className="w-full flex-1">
-        <div className="relative  ">
+      <div className="w-full flex-1 ">
+        <div className="relative hidden md:flex  ">
           <Button className="animate-borderPulse" variant={"outline"} size={"sm"} onClick={handleButtonClick}>
             {t('viewStore')}
             <ExternalLink className="ml-1 w-4 h-4" />
@@ -348,12 +349,14 @@ const NavBar = ({ user, notifications, storeName }: { user: User, notifications:
 
 
       <div className='flex items-center space-x-2'>
-        <ModeToggle />
+      <ModeToggle />
+
+        <Switcher />
 
 
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="secondary" size="icon" className="rounded-full">
+          <DropdownMenuTrigger className='md:flex hidden' asChild>
+            <Button variant="ghost" size="icon" className="border-muted-foreground dark:bg-slate-600/50 border rounded-full">
               <Bell
                 className={`h-5 w-5 ${notifications.length > 0 ? 'animate-bounce text-yellow-500' : ''}`}
               />
