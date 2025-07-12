@@ -2,7 +2,7 @@
 "use client"
 import NextImage from "next/image"
 
-import { CircleUser, User as U, UserPlus, UserRound, UserRoundPlus, UserRoundX, UserX } from "lucide-react"
+import { CircleDollarSign, CircleUser, Link2, Link2Icon, User as U, UserPlus, UserRound, UserRoundPlus, UserRoundX, UserX } from "lucide-react"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -183,6 +183,41 @@ const UserProfile = ({ user , platform } : {user : User , platform : Platform | 
                   <DropdownMenuSeparator />
 
                   </>
+                  )}
+
+                  {user.userType !== "SELLER" && !user.isAffiliate && user.userType !== "ADMIN" &&user.userType !== "FACTORY" && (
+                    <>
+                      <DropdownMenuItem>
+                        <Link
+                          href="/MarketPlace/create-seller-profile"
+                          className={cn(
+                            buttonVariants({
+                              variant: 'ghost',
+                              size: "sm",
+                              className: 'flex hover:text-green-500 justify-start items-center w-full'
+                            })
+                          )}
+                        >
+                          {t('becomeSeller')} <CircleDollarSign className="ml-1 text-green-500" size={15} />
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem>
+                        <Link
+                          href="/createAffiliateAccount"
+                          className={cn(
+                            buttonVariants({
+                              variant: 'ghost',
+                              size: "sm",
+                              className: 'flex hover:text-purple-500 justify-start items-center w-full'
+                            })
+                          )}
+                        >
+                          {t('affiliateProgram')} <Link2Icon className="ml-1 text-purple-500" size={15} />
+                        </Link>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
+                    </>
                   )}
 
 
